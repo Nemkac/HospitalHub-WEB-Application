@@ -9,10 +9,12 @@ module.exports = {
       inter: ["Inter", "sans-serif"],
     },
     colors:{
-      primary: "#E5D8C4",
-      secondary: "#176148",
-      third: "#F5F6FA",
-      textLightGreen: "#6AB49B"
+      primary: "#DCDDE1",
+      secondary: "#0582CA",
+      third: "#003554",
+      lightBlue: "#00A6FB",
+      white:"#F4F6FA",
+
     },
     screens: {
       xs: "480px",
