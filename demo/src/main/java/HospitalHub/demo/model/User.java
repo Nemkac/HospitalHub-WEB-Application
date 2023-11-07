@@ -6,8 +6,9 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Users")
-public class User {
+public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
