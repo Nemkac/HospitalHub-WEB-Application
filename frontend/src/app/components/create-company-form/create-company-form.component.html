@@ -1,0 +1,29 @@
+<form #createCompanyForm = "ngForm" (ngSubmit)="CreateCompany(createCompanyForm)">
+    <div class="flex w-full h-full px-64 bg-lightBlue/5 justify-center items-center">
+        <div class="flex flex-col bg-[#f5f6fa] w-[500px] h-[350px] py-4 items-center rounded-md justify-between border-[1px] border-secondary/10">
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Company name</p>
+                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Company name"
+                        ngModel name="name">
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Country</p>
+                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Company name"
+                        ngModel name="country">
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">City</p>
+                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Company name"
+                        ngModel name="city">
+            </div>
+            <button class="w-[200px] text-[20px] bg-secondary hover:bg-third transition-[0.5s] font-inter font-semibold 
+                            text-white rounded-md h-[45px]" type="submit"
+                    [disabled]="createCompanyForm.invalid">
+                Create company
+            </button>
+        </div>
+    </div>
+</form>
