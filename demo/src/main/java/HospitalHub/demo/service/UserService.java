@@ -21,9 +21,7 @@ public class UserService {
         if(userDto.getDateOfBirth().isAfter(LocalDate.now())){
             return false;
         }
-        if(!userDto.getPassword().equals(userDto.getRetypePassword())){
-            return false;
-        }
+
         return true;
     }
 }

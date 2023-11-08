@@ -11,6 +11,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
     @Column(name = "name")
     private String name;
@@ -41,6 +42,7 @@ public class User {
 
     @Column(name = "companyInfo")
     private String companyInfo;
+    private boolean Enabled = false;
 
 
     public User(){
@@ -58,6 +60,14 @@ public class User {
         this.city = city;
         this.profession = profession;
         this.companyInfo = companyInfo;
+    }
+
+    public boolean isEnabled() {
+        return Enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        Enabled = enabled;
     }
 
     public Integer getId() {
