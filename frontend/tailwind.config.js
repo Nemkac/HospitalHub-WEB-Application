@@ -14,6 +14,10 @@ module.exports = {
       third: "#003554",
       lightBlue: "#00A6FB",
       white:"#F4F6FA",
+      yellow:"#fbc531",
+      red: "#c23616",
+      purple: "#8c7ae6",
+      darkGreen: "#037971",
 
     },
     screens: {
