@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CompanyService {
@@ -20,5 +21,13 @@ public class CompanyService {
 
     public Company save(Company company){
         return companyRepository.save(company);
+    }
+
+    public Optional<Company> findById(Integer id){
+        return companyRepository.findById(id);
+    }
+
+    public Company getById(Integer id){
+        return companyRepository.getById(id);
     }
 }

@@ -4,3 +4,6 @@ insert into users (date_of_birth,id, city,company_info,country,email,last_name,n
     values ('2002-01-18',2,'Novi Sad','Stagod2','Serbia','nemanjatodorovic132002002@gmail.com','Todorovic','Nemanja','hh123','programer','0644316167');
 
 insert into system_administrators (sys_admin_id, id) values (1,2);
+
+insert into company (avg_rate, id, city, country, name)
+    values (0.0, 1, 'Sremska Mitrovica', 'Serbia', 'Andrea');
