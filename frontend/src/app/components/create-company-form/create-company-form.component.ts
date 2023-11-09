@@ -12,9 +12,7 @@ export class CreateCompanyFormComponent implements OnInit{
 
   constructor(private companyService: CompanyService){}
 
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
+  ngOnInit(): void {}
 
   public CreateCompany(createCompanyForm: NgForm): void{
     this.companyService.createCompany(createCompanyForm.value).subscribe(
