@@ -9,7 +9,7 @@ import { HerosectionComponent } from './components/herosection/herosection.compo
 import { FooterComponent } from './components/footer/footer.component';
 import { ObjectcardComponent } from './components/objectcard/objectcard.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CreateCompanyFormComponent } from './components/create-company-form/create-company-form.component';
+import { AppRoutingModule, routingComponents} from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -18,13 +18,14 @@ import { CreateCompanyFormComponent } from './components/create-company-form/cre
       HerosectionComponent,
       FooterComponent,
       ObjectcardComponent,
-      CreateCompanyFormComponent,
+      routingComponents,
   ],
   imports: [
       BrowserModule,
       HttpClientModule,
       FontAwesomeModule,
-      FormsModule
+      FormsModule,
+      AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
