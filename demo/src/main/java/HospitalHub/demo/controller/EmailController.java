@@ -34,7 +34,7 @@ public class EmailController {
         modelAndView.setViewName("register");
         return modelAndView;
     }
-
+    /*
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     public ModelAndView registerUser(ModelAndView modelAndView, User user)
     {
@@ -55,9 +55,9 @@ public class EmailController {
 
         return modelAndView;
     }
-
-
-    @RequestMapping(value="/confirm-account",method = {RequestMethod.GET,RequestMethod.POST})
+    */
+    /*
+    @RequestMapping(value="/confirm-accountt",method = {RequestMethod.GET,RequestMethod.POST})
     public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken)
     {
         EmailConfirmationToken token = emailConfirmationTokenRepository.findByConfirmationToken(confirmationToken);
@@ -76,7 +76,7 @@ public class EmailController {
 
         return modelAndView;
     }
-
+    */
     }
 
 

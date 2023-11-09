@@ -1,6 +1,7 @@
 package HospitalHub.demo.controller.UserControllers;
 
-import HospitalHub.demo.dto.UserDTO;
+import HospitalHub.demo.dto.UserLoginDTO;
+import HospitalHub.demo.dto.UserRegisterDTO;
 import HospitalHub.demo.model.User;
 import HospitalHub.demo.repository.EmailConfirmationTokenRepository;
 import HospitalHub.demo.repository.UserRepository;
@@ -12,8 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -33,21 +32,21 @@ public class UserController {
 
 
     @PostMapping(value =  "/register")
-    public ResponseEntity<User>register(@RequestBody UserDTO userDto){
+    public ResponseEntity<User>register(@RequestBody UserRegisterDTO userRegisterDto){
 
-        if(userService.checkData(userDto)) {
-
+        if(userService.checkData(userRegisterDto)) {   //Dodati proveru za unique email, i onda napraviti adekvatan exception
+                                                        //I za pasword retype
             User firstUser = new User(
-                    userDto.getName(),
-                    userDto.getLastname(),
-                    userDto.getPassword(),
-                    userDto.getDateOfBirth(),
-                    userDto.getEmail(),
-                    userDto.getPhoneNumber(),
-                    userDto.getCountry(),
-                    userDto.getCity(),
-                    userDto.getProfession(),
-                    userDto.getCompanyInfo()
+                    userRegisterDto.getName(),
+                    userRegisterDto.getLastname(),
+                    userRegisterDto.getPassword(),
+                    userRegisterDto.getDateOfBirth(),
+                    userRegisterDto.getEmail(),
+                    userRegisterDto.getPhoneNumber(),
+                    userRegisterDto.getCountry(),
+                    userRegisterDto.getCity(),
+                    userRegisterDto.getProfession(),
+                    userRegisterDto.getCompanyInfo()
             );
 
             firstUser = userService.save(firstUser);
@@ -58,13 +57,44 @@ public class UserController {
             mailMessage.setSubject("Complete Registration!");
             mailMessage.setFrom("isaisanovicNNBA@gmail.com"); // MENJAJ
             mailMessage.setText("To confirm your account, please click here : "
-                    +"http://localhost:8081/confirm-account?token="+confirmationToken.getConfirmationToken()); //treba dodatio kontroler "/confirm-account," koji kada se pogodi
-                                                                                                                // sa ovog linka, stavlja korisniku enabled na true
+                    +"http://localhost:8081/users/confirm_account?token="+confirmationToken.getConfirmationToken());
+
             emailService.sendEmail(mailMessage);
 
             return new ResponseEntity<>(firstUser, HttpStatus.CREATED);
-        }else{
+        }else {
             return null;
         }
+    }
+    @RequestMapping(value="/confirm_account",method = {RequestMethod.GET,RequestMethod.POST})
+    public ResponseEntity<String> confirmUserAccount(@RequestParam("token")String confirmationToken){
+        EmailConfirmationToken token = emailConfirmationTokenRepository.findByConfirmationToken(confirmationToken);
+        if(token != null)
+        {
+            User user = userRepository.findByEmailIgnoreCase(token.getUser().getEmail());
+            user.setEnabled(true);
+            userRepository.save(user);
+            return new ResponseEntity<>(user.getName()+" "+Boolean.toString(user.isEnabled()),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping(value = "/logIn")
+    public ResponseEntity<UserLoginDTO> logIn(@RequestBody UserLoginDTO userLoginDTO)
+    {
+        User user = userRepository.findByEmailIgnoreCase(userLoginDTO.getEmail());
+        if(user != null)
+        {
+            if(user.isEnabled()) {
+                if (user.getPassword().equals(userLoginDTO.getPassword())) {
+                    return new ResponseEntity<>(userLoginDTO, HttpStatus.OK);
+                }
+            }else{
+                return new ResponseEntity<>(new UserLoginDTO("User not enabled","-1"),HttpStatus.BAD_REQUEST);
+            }
+        }else {
+            return new ResponseEntity<>(new UserLoginDTO("No such username","-2"),HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

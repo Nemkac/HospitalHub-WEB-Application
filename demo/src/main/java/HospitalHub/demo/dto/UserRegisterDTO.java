@@ -2,7 +2,7 @@ package HospitalHub.demo.dto;
 
 import java.time.LocalDate;
 
-public class UserDTO {
+public class UserRegisterDTO {
 
     private String name;
     private String lastName;
@@ -16,7 +16,7 @@ public class UserDTO {
     private String profession;
     private String companyInfo;
 
-    public UserDTO(String name, String lastName, String password, String retypePassword, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
+    public UserRegisterDTO(String name, String lastName, String password, String retypePassword, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
         this.name = name;
         this.lastName = lastName;
         this.password = password;

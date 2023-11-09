@@ -1,6 +1,6 @@
 package HospitalHub.demo.service;
 
-import HospitalHub.demo.dto.UserDTO;
+import HospitalHub.demo.dto.UserRegisterDTO;
 import HospitalHub.demo.model.User;
 import HospitalHub.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +16,9 @@ public class UserService {
     public User save(User user){
         return userRepository.save(user);
     }
-    public boolean checkData(UserDTO userDto){
+    public boolean checkData(UserRegisterDTO userRegisterDto){
 
-        if(userDto.getDateOfBirth().isAfter(LocalDate.now())){
+        if(userRegisterDto.getDateOfBirth().isAfter(LocalDate.now())){
             return false;
         }
 
