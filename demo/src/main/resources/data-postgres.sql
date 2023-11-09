@@ -7,3 +7,5 @@ insert into system_administrators (sys_admin_id, id) values (1,2);
 
 insert into company (avg_rate, id, city, country, name)
     values (0.0, 1, 'Sremska Mitrovica', 'Serbia', 'Andrea');
+insert into company_administrator (comp_admin_id, id)
+values (1, 1);
