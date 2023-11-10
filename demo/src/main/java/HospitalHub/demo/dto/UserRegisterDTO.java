@@ -1,59 +1,26 @@
-package HospitalHub.demo.model;
-
-
-import jakarta.persistence.*;
+package HospitalHub.demo.dto;
 
 import java.time.LocalDate;
 
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "Users")
-public abstract class User {
+public class UserRegisterDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Integer id;
-    @Column(name = "name")
     private String name;
-    @Column(name = "lastName")
     private String lastName;
-
-    @Column(name = "password")
     private String password;
-
-    //'YYYY-MM-DD'
-    @Column(name = "dateOfBirth")
+    private String retypePassword;
     private LocalDate dateOfBirth;
-
-    @Column(name = "email")
     private String email;
-
-    @Column(name = "telephone")
     private String phoneNumber;
-
-    @Column(name = "country")
     private String country;
-
-    @Column(name = "city")
     private String city;
-
-    @Column(name = "profession")
     private String profession;
-
-    @Column(name = "companyInfo")
     private String companyInfo;
-    private boolean Enabled = false;
 
-
-    public User(){
-
-    }
-
-    public User(String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
+    public UserRegisterDTO(String name, String lastName, String password, String retypePassword, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
         this.name = name;
         this.lastName = lastName;
         this.password = password;
+        this.retypePassword = retypePassword;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -61,18 +28,6 @@ public abstract class User {
         this.city = city;
         this.profession = profession;
         this.companyInfo = companyInfo;
-    }
-
-    public boolean isEnabled() {
-        return Enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        Enabled = enabled;
-    }
-
-    public Integer getId() {
-        return id;
     }
 
     public String getName() {
@@ -83,12 +38,12 @@ public abstract class User {
         this.name = name;
     }
 
-    public String getLastName() {
+    public String getLastname() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastname) {
+        this.lastName = lastname;
     }
 
     public String getPassword() {
@@ -97,6 +52,14 @@ public abstract class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRetypePassword() {
+        return retypePassword;
+    }
+
+    public void setRetypePassword(String retypePassword) {
+        this.retypePassword = retypePassword;
     }
 
     public LocalDate getDateOfBirth() {
