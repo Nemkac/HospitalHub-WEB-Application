@@ -19,4 +19,12 @@ public class SystemAdministrator extends User {
         super(name, lastName, password, dateOfBirth, email, phoneNumber, country, city, profession, companyInfo);
         this.sysAdminId = sysAdminId;
     }
+
+    public Integer getSysAdminId() {
+        return sysAdminId;
+    }
+
+    public void setSysAdminId(Integer sysAdminId) {
+        this.sysAdminId = sysAdminId;
+    }
 }
