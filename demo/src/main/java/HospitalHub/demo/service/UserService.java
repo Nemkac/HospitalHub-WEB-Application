@@ -1,11 +1,13 @@
 package HospitalHub.demo.service;
 
+import HospitalHub.demo.dto.UserProfileDTO;
 import HospitalHub.demo.dto.UserRegisterDTO;
 import HospitalHub.demo.model.User;
 import HospitalHub.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -33,4 +35,5 @@ public class UserService {
 
         return true;
     }
+
 }

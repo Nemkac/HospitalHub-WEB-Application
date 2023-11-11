@@ -2,6 +2,7 @@ package HospitalHub.demo.controller;
 
 import HospitalHub.demo.dto.CompanyDTO;
 import HospitalHub.demo.dto.UserDto;
+import HospitalHub.demo.dto.UserProfileDTO;
 import HospitalHub.demo.model.Company;
 import HospitalHub.demo.model.CompanyAdministrator;
 import HospitalHub.demo.model.User;
@@ -56,4 +57,11 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
     }
+
+    @GetMapping(value = "{id}")
+    public ResponseEntity<UserProfileDTO> getUserProfile(@PathVariable Integer id)
+    {
+        return new ResponseEntity<>(new UserProfileDTO(userService.getById(id)),HttpStatus.OK);
+    }
+
 }
