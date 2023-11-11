@@ -15,8 +15,9 @@ public class UserProfileDTO {
     private String city;
     private String profession;
     private Integer penaltyPoints;
+    private String companyInfo;
 
-    public UserProfileDTO(String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, Integer penaltyPoints) {
+    public UserProfileDTO(String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, Integer penaltyPoints, String companyInfo) {
         this.name = name;
         this.lastName = lastName;
         this.password = password;
@@ -27,6 +28,7 @@ public class UserProfileDTO {
         this.city = city;
         this.profession = profession;
         this.penaltyPoints = penaltyPoints;
+        this.companyInfo = companyInfo;
     }
 
     public UserProfileDTO(User user){
@@ -39,6 +41,7 @@ public class UserProfileDTO {
         this.country = user.getCountry();
         this.city = user.getCity();
         this.profession = user.getProfession();
+        this.companyInfo = user.getCompanyInfo();
         this.penaltyPoints = 0; // izmeniti kasnije da kupi iz baze da ga jebem nmp ili da poziva servis neki odma
     }
 
@@ -77,6 +80,9 @@ public class UserProfileDTO {
     public String getProfession() {
         return profession;
     }
+    public String getCompanyInfo() {
+        return companyInfo;
+    }
 
     public Integer getPenaltyPoints() {
         return penaltyPoints;
@@ -84,6 +90,9 @@ public class UserProfileDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+    public void setCompanyInfo(String companyInfo) {
+        this.companyInfo = companyInfo;
     }
 
     public void setLastName(String lastName) {

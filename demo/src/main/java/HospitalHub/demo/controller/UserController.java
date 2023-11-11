@@ -64,4 +64,28 @@ public class UserController {
         return new ResponseEntity<>(new UserProfileDTO(userService.getById(id)),HttpStatus.OK);
     }
 
+    @PutMapping(consumes="aplication/json", value="updateProfile/{id}")
+    public ResponseEntity<UserProfileDTO> updateUser(@RequestBody UserProfileDTO userProfileDTO, @PathVariable Integer id){
+
+        if(userService.getById(id) != null){
+            userService.getById(id).setName(userProfileDTO.getName());
+            userService.getById(id).setLastName(userProfileDTO.getLastName());
+            userService.getById(id).setPassword(userProfileDTO.getPassword());
+            userService.getById(id).setDateOfBirth(userProfileDTO.getDateOfBirth());
+            userService.getById(id).setPhoneNumber(userProfileDTO.getPhoneNumber());
+            userService.getById(id).setCity(userProfileDTO.getCity());
+            userService.getById(id).setCountry(userProfileDTO.getCountry());
+            userService.getById(id).setProfession(userProfileDTO.getProfession());
+            userService.getById(id).setCompanyInfo(userProfileDTO.getCompanyInfo());
+            userService.save(userService.getById(id));
+            return new ResponseEntity<>(new UserProfileDTO(userService.getById(id)),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+    }
+
+
+
+
+
 }
