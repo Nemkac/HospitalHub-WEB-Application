@@ -18,6 +18,10 @@ public class Company {
     @Column(name = "avgRate")
     private Double avgRate;
 
+    /*Treba dodati polje sa relacijom koje ce predstavljati id administratora
+    koji je zaduzen za odredjenu kompaniju.*/
+    //CompanyAdministrator companyAdministrator
+
     public Company() {
 
     }

@@ -19,34 +19,16 @@ public class SystemAdministratorController {
     @Autowired
     public SystemAdministratorService systemAdministratorService;
 
-    //Proveriti da li radi. Pitati gpt kako bi bila bolja ideja da se odradi
-    /*@PostMapping(consumes = "application/json", value = "/save")
-    public ResponseEntity<SystemAdministratorDTO> createNewSystemAdministrator(@RequestBody SystemAdministratorDTO systemAdministratorDTO){
-        List<SystemAdministrator> systemAdministrators = systemAdministratorService.findAll();
 
-        for(SystemAdministrator sysAdmin : systemAdministrators){
-            if(sysAdmin.getId() == systemAdministratorDTO.getUserId()){
-                return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
-            }
-        }
-
-        SystemAdministrator systemAdministrator = new SystemAdministrator();
-        systemAdministrator.setId(systemAdministratorDTO.getUserId());
-        systemAdministrator.setSysAdminId(systemAdministratorDTO.getSysAdminId());
-
-        systemAdministratorService.save(systemAdministrator);
-
-        return new ResponseEntity<>(new SystemAdministratorDTO(systemAdministrator), HttpStatus.CREATED);
-    }*/
-
-    @PostMapping("/makeNewSysAdmin")
-    public ResponseEntity<Object> makeUserSystemAdministrator(@RequestParam Integer userId) {
-        SystemAdministrator systemAdministrator = systemAdministratorService.makeUserSystemAdministrator(userId);
-
-        if (systemAdministrator != null) {
-            return new ResponseEntity<>(systemAdministrator, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>("User is already a system administrator", HttpStatus.BAD_REQUEST);
-        }
-    }
+    /*
+        Treba dodati funkcionalnost dodavanja novog administratora kompanije. Otvaram stranicu za prikaz kompanije.
+        Na njoj imam vidljive informacije o kompaniji i o tome ko je zaduzen za nju. Ako niko nije zaduzen, biram nekog iz
+        liste ponudjenih usera. Tog usera dodajem kao novog companyAdmina, stavljam polje "companyAdministrator" za tu
+        kompaniju na izabranog usera, a polje "company" u izabranom useru stavljam na tu kompaniju. Kada izaberem usera,
+        pravim novog sistem admina od njega i kompanije na kojoj se nalazim.
+        -> Prikaz kompanije (getById)
+        -> Odabir jednog usera iz liste (findAll za usere pa findByEmail posto ce biti unique email)
+        -> Cuvanje odabranog usera u promenljivu selectedUser
+        -> Kreiranje companyUsera od selectedUsera i kompanije na kojoj se nalazim (createNew za companyAdmina i findById za kompaniju)
+    */
 }
