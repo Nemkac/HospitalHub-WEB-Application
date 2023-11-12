@@ -17,7 +17,7 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
      List<Company> getALlByNameIgnoreCase(String name);
 
-     List<Company> getAllByByCityIgnoreCase(String city);
+     List<Company> getAllByCityIgnoreCase(String city);
 
      List<Company> getAllByCountryIgnoreCase(String country);
 

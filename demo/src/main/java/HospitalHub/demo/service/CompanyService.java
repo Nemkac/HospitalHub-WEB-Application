@@ -33,7 +33,7 @@ public class CompanyService {
     }
 
     public List<Company>  getByName(String name) {return companyRepository.getALlByNameIgnoreCase(name);}
-    public List<Company> getByCity(String city) {return companyRepository.getAllByByCityIgnoreCase(city);}
+    public List<Company> getByCity(String city) {return companyRepository.getAllByCityIgnoreCase(city);}
     public List<Company> getByCountry(String country) {return companyRepository.getAllByCountryIgnoreCase(country);}
     public List<Company> getByAvgRate(Double avgRate) {
         List<Company> companies = new ArrayList<>();
