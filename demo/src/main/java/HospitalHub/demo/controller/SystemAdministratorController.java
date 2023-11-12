@@ -1,8 +1,12 @@
 package HospitalHub.demo.controller;
 
 import HospitalHub.demo.dto.SystemAdministratorDTO;
+import HospitalHub.demo.model.Company;
+import HospitalHub.demo.model.CompanyAdministrator;
 import HospitalHub.demo.model.SystemAdministrator;
 import HospitalHub.demo.model.User;
+import HospitalHub.demo.service.CompanyAdministratorService;
+import HospitalHub.demo.service.CompanyService;
 import HospitalHub.demo.service.SystemAdministratorService;
 import HospitalHub.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +22,10 @@ public class SystemAdministratorController {
 
     @Autowired
     public SystemAdministratorService systemAdministratorService;
-
+    @Autowired
+    public CompanyService companyService;
+    @Autowired
+    public CompanyAdministratorService companyAdministratorService;
 
     /*
         Treba dodati funkcionalnost dodavanja novog administratora kompanije. Otvaram stranicu za prikaz kompanije.
@@ -31,4 +38,24 @@ public class SystemAdministratorController {
         -> Cuvanje odabranog usera u promenljivu selectedUser
         -> Kreiranje companyUsera od selectedUsera i kompanije na kojoj se nalazim (createNew za companyAdmina i findById za kompaniju)
     */
+
+    @PutMapping(value = "/makeAdmin")
+    public ResponseEntity<Company> setCompanyAdministrator(@RequestBody Integer companyAdministratorId){
+        List<Company> companies = this.companyService.findAll();
+        Company selectedCompany = new Company();
+
+        for(Company company : companies){
+            int selectedCompanyId = company.getId();
+
+            if(selectedCompanyId == 1){
+                selectedCompany = company;
+            }
+        }
+
+        CompanyAdministrator companyAdmin = this.companyAdministratorService.getById(companyAdministratorId);
+
+        selectedCompany.setCompanyAdministrator(companyAdmin);
+
+        return new ResponseEntity<Company>(selectedCompany, HttpStatus.ACCEPTED);
+    }
 }
