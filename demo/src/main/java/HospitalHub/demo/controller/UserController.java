@@ -70,18 +70,6 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-/*    @GetMapping(value = "/{id}")
-    public ResponseEntity<User> getUserProfile(@PathVariable Integer id)
-    {
-        List<User> users = userService.findAll();
-        for (User user : users){
-            int userId = user.getId();
-            if(userId == id){
-                return new ResponseEntity<>(user,HttpStatus.FOUND);
-            }
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }*/
 
     @PutMapping(consumes="application/json", value="updateProfile/{id}")
     public ResponseEntity<UserProfileDTO> updateUser(@RequestBody UserProfileDTO userProfileDTO, @PathVariable Integer id){
