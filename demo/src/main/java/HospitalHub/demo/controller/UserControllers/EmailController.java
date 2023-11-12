@@ -16,16 +16,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/users")
-public class UserController {
+public class EmailController {
 
     @Autowired
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private EmailConfirmationTokenRepository emailConfirmationTokenRepository;
-
     @Autowired
     private EmailService emailService;
 
@@ -55,7 +53,7 @@ public class UserController {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(firstUser.getEmail());
             mailMessage.setSubject("Complete Registration!");
-            mailMessage.setFrom("isaisanovicNNBA@gmail.com"); // MENJAJ
+            mailMessage.setFrom("isaisanovicNNBA@gmail.com");
             mailMessage.setText("To confirm your account, please click here : "
                     +"http://localhost:8081/users/confirm_account?token="+confirmationToken.getConfirmationToken());
 
@@ -79,7 +77,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping(value = "/logIn")
+    @PostMapping(value = "/logIn")
     public ResponseEntity<UserLoginDTO> logIn(@RequestBody UserLoginDTO userLoginDTO)
     {
         User user = userRepository.findByEmailIgnoreCase(userLoginDTO.getEmail());

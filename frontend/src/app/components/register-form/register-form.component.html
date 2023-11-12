@@ -1,0 +1,78 @@
+<form #RegisterForm="ngForm" (ngSubmit)="register(RegisterForm)">
+    <div class="flex w-full h-[100vh] px-64 bg-lightBlue/5 justify-center items-center">
+        <div class="flex flex-col bg-white w-[500px] h-[350px] py-4 items-center rounded-md justify-between border-[1px] border-secondary/10">
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Name</p>
+                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Name"
+                        ngModel name="name" required>
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Last name</p>
+                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Last name"
+                        ngModel name="lastName" required>
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Password</p>
+                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Password"
+                        ngModel name="password" required>
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Re-type the password</p>
+                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Re-type the password"
+                        ngModel name="retypePassword" required>
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Date of birth</p>
+                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Date of birth"
+                        ngModel name="dateOfBirth" required>
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Email</p>
+                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Email"
+                        ngModel name="email" required>
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Phone number</p>
+                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Phone number"
+                        ngModel name="phoneNumber" required>
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Country</p>
+                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Country"
+                        ngModel name="country" required>
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">City</p>
+                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="City"
+                        ngModel name="city" required>
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Profession</p>
+                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Profession"
+                        ngModel name="profession" required>
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Company info</p>
+                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Company info"
+                        ngModel name="companyInfo" required>
+            </div>
+            <button class="w-[200px] text-[20px] bg-secondary hover:bg-third transition-[0.5s] font-inter font-semibold 
+                            text-white rounded-md h-[45px]" type="submit"
+                    [disabled]="RegisterForm.invalid || !RegisterForm.dirty">
+                Register
+            </button>
+        </div>
+    </div>
+</form>
+

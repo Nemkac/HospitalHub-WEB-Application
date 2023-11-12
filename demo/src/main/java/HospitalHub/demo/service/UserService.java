@@ -6,6 +6,7 @@ import HospitalHub.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -30,7 +31,8 @@ public class UserService {
         if(userRegisterDto.getDateOfBirth().isAfter(LocalDate.now())){
             return false;
         }
-
+        // dodati da li je jedinstven email
+        // dodati da li se sifre poklapaju.
         return true;
     }
 }
