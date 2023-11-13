@@ -1,22 +1,22 @@
-<div>
-    <h2>List of Companies</h2>
-    <table>
+<div class="max-w-2xl mx-auto mt-8"> 
+    <h2 class="text-2xl font-bold mb-4">List of Companies</h2>
+    <table class="min-w-full bg-white border border-gray-300">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>City</th>
-          <th>Country</th>
-          <th>Average Rate</th>
+          <th class="py-2 px-4 border-b">ID</th>
+          <th class="py-2 px-4 border-b">Name</th>
+          <th class="py-2 px-4 border-b">City</th>
+          <th class="py-2 px-4 border-b">Country</th>
+          <th class="py-2 px-4 border-b">Average Rate</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let company of companies">
-          <td>{{ company.id }}</td>
-          <td>{{ company.name }}</td>
-          <td>{{ company.city }}</td>
-          <td>{{ company.country }}</td>
-          <td>{{ company.avgRate }}</td>
+        <tr *ngFor="let company of companies" class="hover:bg-gray-100">
+          <td class="py-2 px-4 border-b">{{ company.id }}</td>
+          <td class="py-2 px-4 border-b">{{ company.name }}</td>
+          <td class="py-2 px-4 border-b">{{ company.city }}</td>
+          <td class="py-2 px-4 border-b">{{ company.country }}</td>
+          <td class="py-2 px-4 border-b">{{ company.avgRate }}</td>
         </tr>
       </tbody>
     </table>

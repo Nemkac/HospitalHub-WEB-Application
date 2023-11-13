@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Company } from "src/company";
@@ -13,10 +13,16 @@ import { Company } from "src/company";
 export class ShowCompaniesService{
 
     private apiServerUrl = 'http://localhost:8081';
-    
+
     constructor(private http : HttpClient){}
 
-    public showCompanies():Observable<Company[]>{
-        return this.http.get<Company[]>(`${this.apiServerUrl}/api/company/getAll`)
+    public showCompanies(name?:string,country?:string,city?:string,avgRate?:number):Observable<Company[]>{
+        let params = new HttpParams();
+        if (name) params = params.set('name',name);
+        if (country) params = params.set('country',country);
+        if (city) params = params.set('city',city);
+        if (avgRate) params = params.set('avgRate',avgRate.toString());
+
+        return this.http.get<Company[]>(`${this.apiServerUrl}/api/user/companies`,{params})
     }
 }

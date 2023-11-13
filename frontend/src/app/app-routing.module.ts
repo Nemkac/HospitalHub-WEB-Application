@@ -11,8 +11,8 @@ const routes: Routes = [
     //Zameniti companies sa profile a komponentu promeniti u zavisnosti od role ulogovanog korisnika
     {path: 'companies', component: CompanyAdminProfilePageComponent},
     {path: '', component: LandingPageComponent},
-    {path: 'api/user/:id', component: UserProfileComponent},
-    {path : 'api/company/getAll', component: ShowCompaniesComponent}
+    {path: 'api/user/profile/:id', component: UserProfileComponent},
+    {path : 'api/user/companies', component: ShowCompaniesComponent}
 ];
 
 @NgModule({

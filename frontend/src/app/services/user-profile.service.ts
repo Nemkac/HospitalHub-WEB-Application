@@ -15,7 +15,7 @@ export class UserProfileService{
     constructor(private http: HttpClient) {}
 
     public showUserProfile(id : number) : Observable<UserProfile> { 
-        return this.http.get<UserProfile>(`${this.apiServerUrl}/api/user/${id}`)
+        return this.http.get<UserProfile>(`${this.apiServerUrl}/api/user/profile/${id}`)
     }
 
 }

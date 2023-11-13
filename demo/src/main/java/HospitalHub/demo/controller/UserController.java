@@ -61,7 +61,7 @@ public class UserController {
 
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/profile/{id}")
     public ResponseEntity<UserProfileDTO> getUserProfile(@PathVariable Integer id) {
         if(userService.getById(id) != null) {
             UserProfileDTO userProfileDTO = new UserProfileDTO(userService.getById(id));
