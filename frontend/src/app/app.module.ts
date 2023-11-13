@@ -10,6 +10,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ObjectcardComponent } from './components/objectcard/objectcard.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule, routingComponents} from './app-routing.module';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { AppRoutingModule, routingComponents} from './app-routing.module';
       FooterComponent,
       ObjectcardComponent,
       routingComponents,
+      UserProfileComponent,
   ],
   imports: [
       BrowserModule,

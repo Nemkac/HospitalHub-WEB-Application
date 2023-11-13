@@ -1,0 +1,51 @@
+<div *ngIf="userProfile">
+        <h2>User Profile</h2>
+        <div>
+          <strong>Name:</strong> {{ userProfile.name }}
+        </div>
+        <div>
+          <strong>Last Name:</strong> {{ userProfile.lastName }}
+        </div>
+        <div>
+          <strong>Date of Birth:</strong> {{ userProfile.dateOfBirth | date: 'yyyy-MM-dd' }}
+        </div>
+        <!-- Add more fields as needed -->
+      
+        <!-- Example: Displaying email only for users who have an email -->
+        <div *ngIf="userProfile.email">
+          <strong>Email:</strong> {{ userProfile.email }}
+        </div>
+      
+        <!-- Example: Displaying company info only for users who have company info -->
+        <div *ngIf="userProfile.companyInfo">
+          <strong>Phone number:</strong> {{ userProfile.phoneNumber }}
+        </div>
+
+        <div *ngIf="userProfile.companyInfo">
+                <strong>Country:</strong> {{ userProfile.country }}
+        </div>
+
+        <div *ngIf="userProfile.companyInfo">
+                <strong>City:</strong> {{ userProfile.city }}
+        </div>
+
+        <div *ngIf="userProfile.companyInfo">
+                <strong>Penalty points:</strong> {{ userProfile.penaltyPoints }}
+        </div>
+
+        <div *ngIf="userProfile.profession">
+                <strong>Profession:</strong> {{ userProfile.profession }}
+        </div>
+
+        
+      
+        <!-- Add more conditional displays for other fields as needed -->
+      </div>
+      
+      <div *ngIf="!userProfile">
+        <p>Loading...</p>
+      </div>
+      
+      <div *ngIf="userProfile === null">
+        <p>Error loading user profile.</p>
+      </div>
