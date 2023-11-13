@@ -28,7 +28,7 @@ public class UserController {
     private CompanyService companyService;
 
     @PutMapping(consumes = "application/json", value = "/update/{id}")
-    public ResponseEntity<UserDto> updateCompany(@RequestBody UserDto userDto, @PathVariable Integer id)
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable Integer id)
     {
         CompanyAdministrator companyAdministrator = companyAdministratorService.getByCompAdminId(id);
 
