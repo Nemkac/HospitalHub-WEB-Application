@@ -64,13 +64,11 @@ public class CompanyController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        // Ažurirajte podatke kompanije
         company.setName(companyDTO.getName());
         company.setCity(companyDTO.getCity());
         company.setCountry(companyDTO.getCountry());
         company.setAvgRate(companyDTO.getAvgRate());
 
-        // Sačuvajte ažuriranu kompaniju
         company = companyService.save(company);
 
         return new ResponseEntity<>(new CompanyDTO(company), HttpStatus.OK);

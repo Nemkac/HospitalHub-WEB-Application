@@ -18,4 +18,10 @@ export class CompanyService {
     public createCompany(company: Company) : Observable<Company> {
         return this.http.post<Company>(`${this.apiServerUrl}/api/company/save`, company);
     }
+
+    public updateCompany(company: Company, id : number): Observable<Company> {
+        console.log("Update Company: ", company);  // Dodaj ovu liniju
+        return this.http.put<Company>(`${this.apiServerUrl}/api/company/update/${id}`, company);
+    }
+
 }
