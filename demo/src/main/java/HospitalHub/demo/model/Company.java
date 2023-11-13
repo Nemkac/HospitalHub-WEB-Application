@@ -18,6 +18,14 @@ public class Company {
     @Column(name = "avgRate")
     private Double avgRate;
 
+    @OneToOne
+    @JoinColumn(name = "company_admin_id") // Use the name of the foreign key column in the database
+    private CompanyAdministrator companyAdministrator;
+
+    /*Treba dodati polje sa relacijom koje ce predstavljati id administratora
+    koji je zaduzen za odredjenu kompaniju.*/
+    //CompanyAdministrator companyAdministrator
+
     public Company() {
 
     }
@@ -27,6 +35,7 @@ public class Company {
         this.city = city;
         this.country = country;
         this.avgRate = 0.0;
+        this.companyAdministrator = null;
     }
 
     public Integer getId() {
@@ -63,5 +72,13 @@ public class Company {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public CompanyAdministrator getCompanyAdministrator() {
+        return companyAdministrator;
+    }
+
+    public void setCompanyAdministrator(CompanyAdministrator companyAdministrator) {
+        this.companyAdministrator = companyAdministrator;
     }
 }

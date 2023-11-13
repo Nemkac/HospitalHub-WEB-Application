@@ -1,9 +1,9 @@
 package HospitalHub.demo.controller;
 
 import HospitalHub.demo.dto.CompanyDTO;
-import HospitalHub.demo.dto.UserDto;
 import HospitalHub.demo.dto.UserProfileDTO;
 import HospitalHub.demo.model.Company;
+import HospitalHub.demo.dto.UserDTO;
 import HospitalHub.demo.model.CompanyAdministrator;
 import HospitalHub.demo.model.User;
 import HospitalHub.demo.service.CompanyAdministratorService;
@@ -21,14 +21,13 @@ import java.util.List;
 public class UserController {
     @Autowired
     private CompanyAdministratorService companyAdministratorService;
-
     @Autowired
     private UserService userService;
     @Autowired
     private CompanyService companyService;
 
     @PutMapping(consumes = "application/json", value = "/update/{id}")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable Integer id)
+    public ResponseEntity<UserDto> updateCompanyAdministrator(@RequestBody UserDto userDto, @PathVariable Integer id)
     {
         CompanyAdministrator companyAdministrator = companyAdministratorService.getByCompAdminId(id);
 
