@@ -15,7 +15,7 @@ public class CompanyAdministrator{
     @OneToOne
     private User user;
 
-    @OneToOne(mappedBy = "companyAdministrator", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
     @JoinColumn(name = "company_id") // Use the name of the foreign key column in the database
     private Company company;
 

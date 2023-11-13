@@ -26,8 +26,8 @@ public class UserController {
     @Autowired
     private CompanyService companyService;
 
-    @PutMapping(consumes = "application/json", value = "/update/{id}")
-    public ResponseEntity<UserDto> updateCompanyAdministrator(@RequestBody UserDto userDto, @PathVariable Integer id)
+    /*@PutMapping(consumes = "application/json", value = "/update/{id}")
+    public ResponseEntity<UserDTO> updateCompanyAdministrator(@RequestBody UserDTO userDTO, @PathVariable Integer id)
     {
         CompanyAdministrator companyAdministrator = companyAdministratorService.getByCompAdminId(id);
 
@@ -39,26 +39,25 @@ public class UserController {
         for(User user : users) {
             if (companyAdministrator.getId() == user.getId())
             {
-                user.setName(userDto.getName());
-                user.setLastName(userDto.getLastName());
-                user.setPassword(userDto.getPassword());
-                user.setDateOfBirth(userDto.getDateOfBirth());
-                user.setEmail(userDto.getEmail());
-                user.setPhoneNumber(userDto.getPhoneNumber());
-                user.setCountry(userDto.getCountry());
-                user.setCity(userDto.getCity());
-                user.setProfession(userDto.getProfession());
-                user.setCompanyInfo(userDto.getCompanyInfo());
+                user.setName(userDTO.getName());
+                user.setLastName(userDTO.getLastName());
+                user.setPassword(userDTO.getPassword());
+                user.setDateOfBirth(userDTO.getDateOfBirth());
+                user.setEmail(userDTO.getEmail());
+                user.setPhoneNumber(userDTO.getPhoneNumber());
+                user.setCountry(userDTO.getCountry());
+                user.setCity(userDTO.getCity());
+                user.setProfession(userDTO.getProfession());
+                user.setCompanyInfo(userDTO.getCompanyInfo());
 
                 userService.save(user);
 
-                return new ResponseEntity<>(new UserDto(userDto), HttpStatus.OK);
+                return new ResponseEntity<>(new UserDTO(userDTO), HttpStatus.OK);
             }
 
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-    }
+    }*/
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserProfileDTO> getUserProfile(@PathVariable Integer id) {

@@ -18,7 +18,7 @@ public class Company {
     @Column(name = "avgRate")
     private Double avgRate;
 
-    @OneToOne
+    @OneToOne(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "company_admin_id") // Use the name of the foreign key column in the database
     private CompanyAdministrator companyAdministrator;
 
