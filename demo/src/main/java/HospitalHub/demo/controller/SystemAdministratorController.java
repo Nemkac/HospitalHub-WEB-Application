@@ -42,35 +42,42 @@ public class SystemAdministratorController {
         -> Kreiranje companyUsera od selectedUsera i kompanije na kojoj se nalazim (createNew za companyAdmina i findById za kompaniju)
     */
 
-    @PutMapping(value = "/newCompanyAdmin")
-    public ResponseEntity<UserDTO> createCompanyAdministrator(@RequestBody UserDTO userDTO){
+    @GetMapping(value = "/getAllUsers")
+    public ResponseEntity<List<User>>getAllUsers(){
         List<User> users = this.userService.findAll();
 
-        //Srediti tako da u slucaju da je email vec u upotrebi, samo doda novog companyAdmina bez dodavanja novog usera.
-        for(User user : users){
-            if(user.getEmail() == userDTO.getEmail()){
-                CompanyAdministrator newCompanyAdministrator = new CompanyAdministrator(user);
-                //newCompanyAdministrator = this.companyAdministratorService.save(newCompanyAdministrator);
-                return new ResponseEntity<>(new UserDTO(user), HttpStatus.CREATED);
-            }
+        return new ResponseEntity<List<User>>(users, HttpStatus.FOUND);
+    }
+
+
+    @PutMapping(value = "/newCompanyAdmin")
+    public ResponseEntity<CompanyAdministrator> createCompanyAdministrator(@RequestBody UserDTO userDTO){
+        User existingUser = this.userService.findByEmail(userDTO.getEmail());
+
+        if(existingUser != null){
+            return new ResponseEntity("User already exists", HttpStatus.FORBIDDEN);
+        } else {
+            Integer userId = this.userService.calculateUserId() + 1;
+
+            User newUser = new User(
+                    userId,
+                    userDTO.getName(),
+                    userDTO.getLastName(),
+                    userDTO.getPassword(),
+                    userDTO.getDateOfBirth(),
+                    userDTO.getEmail(),
+                    userDTO.getPhoneNumber(),
+                    userDTO.getCountry(),
+                    userDTO.getCity(),
+                    userDTO.getProfession(),
+                    userDTO.getCompanyInfo()
+            );
+
+            this.userService.save(newUser);
+            CompanyAdministrator newCompanyAdministrator = new CompanyAdministrator(newUser);
+            newCompanyAdministrator = this.companyAdministratorService.save(newCompanyAdministrator);
+
+            return new ResponseEntity<CompanyAdministrator>(newCompanyAdministrator, HttpStatus.CREATED);
         }
-
-
-
-        CompanyAdministrator newCompanyAdministrator = new CompanyAdministrator(
-                userDTO.getName(),
-                userDTO.getLastName(),
-                userDTO.getPassword(),
-                userDTO.getDateOfBirth(),
-                userDTO.getEmail(),
-                userDTO.getPhoneNumber(),
-                userDTO.getCountry(),
-                userDTO.getCity(),
-                userDTO.getProfession(),
-                userDTO.getCompanyInfo()
-        );
-        newCompanyAdministrator = this.companyAdministratorService.save(newCompanyAdministrator);
-
-        return new ResponseEntity(newCompanyAdministrator, HttpStatus.CREATED);
     }
 }

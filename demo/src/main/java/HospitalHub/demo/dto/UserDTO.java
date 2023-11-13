@@ -5,6 +5,7 @@ import HospitalHub.demo.model.User;
 import java.time.LocalDate;
 
 public class UserDTO {
+    private Integer id;
     private String name;
     private String lastName;
     private String password;
@@ -49,6 +50,14 @@ public class UserDTO {
 
     public UserDTO(UserDTO userDto) {
 
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

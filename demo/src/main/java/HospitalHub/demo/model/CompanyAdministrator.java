@@ -6,28 +6,41 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "CompanyAdministrator")
-public class CompanyAdministrator extends User{
+public class CompanyAdministrator{
 
-    @Column(name = "compAdminId")
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer compAdminId;
+
+    @OneToOne
+    private User user;
 
     @OneToOne(mappedBy = "companyAdministrator", cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "company_id") // Use the name of the foreign key column in the database
     private Company company;
-    //Treba dodati polje sa relacijom koje ce predstavljati id kompanije za koju je admin zaduzen
-    //Company company
 
     public CompanyAdministrator() {
     }
 
-    public CompanyAdministrator(String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
-        super(name, lastName, password, dateOfBirth, email, phoneNumber, country, city, profession, companyInfo);
+    public CompanyAdministrator(User user) {
+        this.user = user;
         this.company = null;
     }
 
-    public CompanyAdministrator(User user) {
+    public Integer getCompAdminId() {
+        return compAdminId;
+    }
 
+    public void setCompAdminId(Integer compAdminId) {
+        this.compAdminId = compAdminId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Company getCompany() {

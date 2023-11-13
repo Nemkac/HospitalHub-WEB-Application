@@ -6,12 +6,10 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @Column(name = "name")
     private String name;
@@ -43,12 +41,25 @@ public class User {
     @Column(name = "companyInfo")
     private String companyInfo;
 
-
     public User(){
 
     }
 
     public User(String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
+        this.name = name;
+        this.lastName = lastName;
+        this.password = password;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.country = country;
+        this.city = city;
+        this.profession = profession;
+        this.companyInfo = companyInfo;
+    }
+
+    public User(Integer id, String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
+        this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.password = password;
