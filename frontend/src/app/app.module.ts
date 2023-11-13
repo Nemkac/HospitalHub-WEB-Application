@@ -11,6 +11,7 @@ import { ObjectcardComponent } from './components/objectcard/objectcard.componen
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule, routingComponents} from './app-routing.module';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { ShowCompaniesComponent } from './components/show-companies/show-companies.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
       ObjectcardComponent,
       routingComponents,
       UserProfileComponent,
+      ShowCompaniesComponent,
   ],
   imports: [
       BrowserModule,
