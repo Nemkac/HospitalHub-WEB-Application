@@ -1,8 +1,10 @@
 package HospitalHub.demo.dto;
 
+import HospitalHub.demo.model.User;
+
 import java.time.LocalDate;
 
-public class UserDto {
+public class UserDTO {
     private String name;
     private String lastName;
     private String password;
@@ -14,7 +16,7 @@ public class UserDto {
     private String profession;
     private String companyInfo;
 
-    public UserDto(String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
+    public UserDTO(String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
         this.name = name;
         this.lastName = lastName;
         this.password = password;
@@ -27,10 +29,25 @@ public class UserDto {
         this.companyInfo = companyInfo;
     }
 
-    public UserDto() {
+    public UserDTO() {
     }
 
-    public UserDto(UserDto userDto) {
+    public UserDTO(User user){
+        this(
+                user.getName(),
+                user.getLastName(),
+                user.getPassword(),
+                user.getDateOfBirth(),
+                user.getEmail(),
+                user.getPhoneNumber(),
+                user.getCountry(),
+                user.getCity(),
+                user.getProfession(),
+                user.getCompanyInfo()
+        );
+    }
+
+    public UserDTO(UserDTO userDto) {
 
     }
 

@@ -1,9 +1,8 @@
 package HospitalHub.demo.controller;
 
-import HospitalHub.demo.dto.SystemAdministratorDTO;
+import HospitalHub.demo.dto.UserDTO;
 import HospitalHub.demo.model.Company;
 import HospitalHub.demo.model.CompanyAdministrator;
-import HospitalHub.demo.model.SystemAdministrator;
 import HospitalHub.demo.model.User;
 import HospitalHub.demo.service.CompanyAdministratorService;
 import HospitalHub.demo.service.CompanyService;
@@ -14,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "api/profile")
@@ -26,6 +27,8 @@ public class SystemAdministratorController {
     public CompanyService companyService;
     @Autowired
     public CompanyAdministratorService companyAdministratorService;
+    @Autowired
+    public UserService userService;
 
     /*
         Treba dodati funkcionalnost dodavanja novog administratora kompanije. Otvaram stranicu za prikaz kompanije.
@@ -39,23 +42,35 @@ public class SystemAdministratorController {
         -> Kreiranje companyUsera od selectedUsera i kompanije na kojoj se nalazim (createNew za companyAdmina i findById za kompaniju)
     */
 
-    @PutMapping(value = "/makeAdmin")
-    public ResponseEntity<Company> setCompanyAdministrator(@RequestBody Integer companyAdministratorId){
-        List<Company> companies = this.companyService.findAll();
-        Company selectedCompany = new Company();
+    @PutMapping(value = "/newCompanyAdmin")
+    public ResponseEntity<UserDTO> createCompanyAdministrator(@RequestBody UserDTO userDTO){
+        List<User> users = this.userService.findAll();
 
-        for(Company company : companies){
-            int selectedCompanyId = company.getId();
-
-            if(selectedCompanyId == 1){
-                selectedCompany = company;
+        //Srediti tako da u slucaju da je email vec u upotrebi, samo doda novog companyAdmina bez dodavanja novog usera.
+        for(User user : users){
+            if(user.getEmail() == userDTO.getEmail()){
+                CompanyAdministrator newCompanyAdministrator = new CompanyAdministrator(user);
+                //newCompanyAdministrator = this.companyAdministratorService.save(newCompanyAdministrator);
+                return new ResponseEntity<>(new UserDTO(user), HttpStatus.CREATED);
             }
         }
 
-        CompanyAdministrator companyAdmin = this.companyAdministratorService.getById(companyAdministratorId);
 
-        selectedCompany.setCompanyAdministrator(companyAdmin);
 
-        return new ResponseEntity<Company>(selectedCompany, HttpStatus.ACCEPTED);
+        CompanyAdministrator newCompanyAdministrator = new CompanyAdministrator(
+                userDTO.getName(),
+                userDTO.getLastName(),
+                userDTO.getPassword(),
+                userDTO.getDateOfBirth(),
+                userDTO.getEmail(),
+                userDTO.getPhoneNumber(),
+                userDTO.getCountry(),
+                userDTO.getCity(),
+                userDTO.getProfession(),
+                userDTO.getCompanyInfo()
+        );
+        newCompanyAdministrator = this.companyAdministratorService.save(newCompanyAdministrator);
+
+        return new ResponseEntity(newCompanyAdministrator, HttpStatus.CREATED);
     }
 }

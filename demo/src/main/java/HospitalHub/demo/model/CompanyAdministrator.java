@@ -9,6 +9,7 @@ import java.time.LocalDate;
 public class CompanyAdministrator extends User{
 
     @Column(name = "compAdminId")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer compAdminId;
 
     @OneToOne(mappedBy = "companyAdministrator", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -19,10 +20,14 @@ public class CompanyAdministrator extends User{
 
     public CompanyAdministrator() {
     }
-    public CompanyAdministrator(String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo, Integer compAdminId) {
+
+    public CompanyAdministrator(String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
         super(name, lastName, password, dateOfBirth, email, phoneNumber, country, city, profession, companyInfo);
-        this.compAdminId = compAdminId;
         this.company = null;
+    }
+
+    public CompanyAdministrator(User user) {
+
     }
 
     public Company getCompany() {

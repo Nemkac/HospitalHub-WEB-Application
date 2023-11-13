@@ -1,8 +1,6 @@
 package HospitalHub.demo.controller;
 
-import HospitalHub.demo.dto.CompanyDTO;
-import HospitalHub.demo.dto.UserDto;
-import HospitalHub.demo.model.Company;
+import HospitalHub.demo.dto.UserDTO;
 import HospitalHub.demo.model.CompanyAdministrator;
 import HospitalHub.demo.model.User;
 import HospitalHub.demo.service.CompanyAdministratorService;
@@ -24,7 +22,7 @@ public class UserController {
     private UserService userService;
 
     @PutMapping(consumes = "application/json", value = "/update/{id}")
-    public ResponseEntity<UserDto> updateCompany(@RequestBody UserDto userDto, @PathVariable Integer id)
+    public ResponseEntity<UserDTO> updateCompany(@RequestBody UserDTO userDto, @PathVariable Integer id)
     {
         CompanyAdministrator companyAdministrator = companyAdministratorService.getByCompAdminId(id);
 
@@ -49,7 +47,7 @@ public class UserController {
 
                 userService.save(user);
 
-                return new ResponseEntity<>(new UserDto(userDto), HttpStatus.OK);
+                return new ResponseEntity<>(new UserDTO(userDto), HttpStatus.OK);
             }
 
         }
