@@ -1,0 +1,73 @@
+<form #createCompanyAdministratorForm="ngForm" (ngSubmit)="CreateCompanyAdministrator(createCompanyAdministratorForm)">
+    <div class="flex w-full h-[100vh] px-64 bg-lightBlue/5 justify-left items-center">
+        <div class="flex flex-col h-[900px] bg-white w-[500px] py-4 items-center rounded-md justify-between border-[1px] border-secondary/10">
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Name</p>
+                <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Name"
+                        ngModel name="name" required>
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Lastname</p>
+                <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Lastname"
+                        ngModel name="lastName" required>
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Password</p>
+                <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Password"
+                        ngModel name="password" required>
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Date of birth</p>
+                <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="YYYY-MM-DD"
+                        ngModel name="dateOfBirth" required>
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Email</p>
+                <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Email"
+                        ngModel name="email" required>
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Phone number</p>
+                <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Phone number"
+                        ngModel name="phoneNumber" required>
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Country</p>
+                <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Country"
+                        ngModel name="country" required>
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">City</p>
+                <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="City"
+                        ngModel name="city" required>
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Profession</p>
+                <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Profession"
+                        ngModel name="profession">
+            </div>
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Company info</p>
+                <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Company info"
+                        ngModel name="companyInfo">
+            </div>
+            
+            <button class="w-[400px] text-[20px] bg-secondary hover:bg-third transition-[0.5s] font-inter font-semibold 
+                            text-white rounded-md h-[45px]" type="submit"
+                    [disabled]="createCompanyAdministratorForm.invalid || !createCompanyAdministratorForm.dirty">
+                Create company administrator
+            </button>
+        </div>
+    </div>
+</form>
+

@@ -11,6 +11,7 @@ import { ObjectcardComponent } from './components/objectcard/objectcard.componen
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule, routingComponents} from './app-routing.module';
 import { UpdateCompanyFormComponent } from './components/update-company-form/update-company-form.component';
+import { CreateCompanyAdministratorFormComponent } from './components/create-company-administrator-form/create-company-administrator-form.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { UpdateCompanyFormComponent } from './components/update-company-form/upd
       ObjectcardComponent,
       routingComponents,
       UpdateCompanyFormComponent,
+      CreateCompanyAdministratorFormComponent,
   ],
   imports: [
       BrowserModule,
