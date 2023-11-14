@@ -12,6 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule, routingComponents} from './app-routing.module';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { ShowCompaniesComponent } from './components/show-companies/show-companies.component';
+import { UpdateUserProfileComponent } from './components/update-user-profile/update-user-profile.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ShowCompaniesComponent } from './components/show-companies/show-compani
       routingComponents,
       UserProfileComponent,
       ShowCompaniesComponent,
+      UpdateUserProfileComponent,
   ],
   imports: [
       BrowserModule,

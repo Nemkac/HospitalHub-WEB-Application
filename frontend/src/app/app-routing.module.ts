@@ -5,6 +5,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { ShowCompaniesComponent } from './components/show-companies/show-companies.component';
+import { UpdateUserProfileComponent } from './components/update-user-profile/update-user-profile.component';
 
 const routes: Routes = [
     //Promeniti kada se doda login da se umesto logina ispise ime usera i onda da se ide na profil usera
@@ -12,7 +13,8 @@ const routes: Routes = [
     {path: 'companies', component: CompanyAdminProfilePageComponent},
     {path: '', component: LandingPageComponent},
     {path: 'api/user/profile/:id', component: UserProfileComponent},
-    {path : 'api/user/companies', component: ShowCompaniesComponent}
+    {path : 'api/user/companies', component: ShowCompaniesComponent},
+    {path : 'api/user/updateProfile/:id', component: UpdateUserProfileComponent }
 ];
 
 @NgModule({

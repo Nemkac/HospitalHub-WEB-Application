@@ -1,0 +1,27 @@
+<form #updateUserProfileForm = "ngForm" (ngSubmit)="updateUserProfile(updateUserProfileForm)">
+    <div class="grid grid-cols-3 gap-4">
+        <!-- Row 1 -->
+        <h2>Update user Profile</h2>
+        <h2>Update user Profile</h2>
+        <h2>Update user Profile</h2>
+        <h2>Update user Profile</h2>
+        <h2>Update user Profile</h2>
+        <h2>Update user Profile</h2>
+        <input ngModel name="name" type="text" class="border p-2" placeholder="ime">
+        <input ngModel name="lastName" type="text" class="border p-2" placeholder="prez">
+        <input ngModel name="password" type="text" class="border p-2" placeholder="sifra">
+    
+        <!-- Row 2 -->
+        <input ngModel name="dateOfBirth" type="text" class="border p-2" placeholder="datum">
+        <input ngModel name="email" type="text" class="border p-2" placeholder="email">
+        <input ngModel name="phoneNumber" type="text" class="border p-2" placeholder="broj">
+    
+        <!-- Row 3 -->
+        <input ngModel name="country" type="text" class="border p-2" placeholder="zemlja">
+        <input ngModel name="city" type="text" class="border p-2" placeholder="grad">
+        <input ngModel name="profession" type="text" class="border p-2" placeholder="profesija">
+        <input ngModel name="companyInfo" type="text" class="border p-2" placeholder="kompani info">
+        <input ngModel name="penaltyPoints" type="text" class="border p-2" placeholder="penali">
+        <button class="border bg-black-500 hover:bg-black-700 text-black font-bold py-2 px-4 rounded" type="submit">Submit</button>
+    </div>
+</form>
