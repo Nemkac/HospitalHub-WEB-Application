@@ -6,7 +6,6 @@ import HospitalHub.demo.model.SystemAdministrator;
 import HospitalHub.demo.model.User;
 import HospitalHub.demo.repository.CompanyRepository;
 import HospitalHub.demo.repository.UserRepository;
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
