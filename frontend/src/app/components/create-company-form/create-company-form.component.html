@@ -1,31 +1,29 @@
 <form #createCompanyForm="ngForm" (ngSubmit)="CreateCompany(createCompanyForm)">
-    <div class="flex w-full h-[100vh] px-64 bg-lightBlue/5 justify-left items-center">
-        <div class="flex flex-col bg-white w-[500px] h-[350px] py-4 items-center rounded-md justify-between border-[1px] border-secondary/10">
-            <div>
-                <p class="font-inter text-third font-medium text-[18px]">Company name</p>
-                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                        placeholder="Company name"
-                        ngModel name="name" required>
-            </div>
-            <div>
-                <p class="font-inter text-third font-medium text-[18px]">Country</p>
-                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                        placeholder="Country"
-                        ngModel name="country" required>
-            </div>
-            <div>
-                <p class="font-inter text-third font-medium text-[18px]">City</p>
-                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                        placeholder="City"
-                        ngModel name="city" required>
-            </div>
-            
-            <button class="w-[200px] text-[20px] bg-secondary hover:bg-third transition-[0.5s] font-inter font-semibold 
-            text-white rounded-md h-[45px]" type="submit"
-                    [disabled]="createCompanyForm.invalid || !createCompanyForm.dirty">
-                Create company
-            </button>
+    <div class="flex flex-col justify-between items-center w-[300px] h-[400px] bg-white py-4 border-[1px] border-secondary/10 rounded-md">
+        <div>
+            <p class="font-inter text-third font-medium text-[18px]">Company name</p>
+            <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                    placeholder="Company name"
+                    ngModel name="name" required>
         </div>
+        <div>
+            <p class="font-inter text-third font-medium text-[18px]">Country</p>
+            <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                    placeholder="Country"
+                    ngModel name="country" required>
+        </div>
+        <div>
+            <p class="font-inter text-third font-medium text-[18px]">City</p>
+            <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                    placeholder="City"
+                    ngModel name="city" required>
+        </div>
+        
+        <button class="w-[200px] text-[20px] bg-secondary hover:bg-third transition-[0.5s] font-inter font-semibold 
+                        text-white rounded-md h-[45px] cursor-pointer" type="submit"
+                [disabled]="createCompanyForm.invalid || !createCompanyForm.dirty">
+            Create company
+        </button>
     </div>
 </form>
 
