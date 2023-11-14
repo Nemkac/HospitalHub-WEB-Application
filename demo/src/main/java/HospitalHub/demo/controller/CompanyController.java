@@ -39,11 +39,8 @@ public class CompanyController {
 
     @PostMapping(consumes = "application/json", value = "/save")
     public ResponseEntity<CompanyDTO> saveCompany(@RequestBody CompanyDTO companyDTO){
-        Integer companyId = this.companyService.calculateCompanyId() + 1;
 
-        //Proveriti zasto ne kreira id kako treba kada se dodaju kompanije preko skripte
         Company company = new Company(
-            //companyId,
             companyDTO.getName(),
             companyDTO.getCity(),
             companyDTO.getCountry()
