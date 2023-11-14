@@ -30,15 +30,23 @@ public class CompanyController {
         return new ResponseEntity<>(companies, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/getId")
+    public ResponseEntity<Integer> getCompanyId(){
+        Integer companyId = this.companyService.calculateCompanyId() + 1;
+
+        return new ResponseEntity<Integer>(companyId, HttpStatus.OK);
+    }
+
     @PostMapping(consumes = "application/json", value = "/save")
     public ResponseEntity<CompanyDTO> saveCompany(@RequestBody CompanyDTO companyDTO){
-        Company company = new Company();
-        company.setName(companyDTO.getName());
-        company.setCity(companyDTO.getCity());
-        company.setCountry(companyDTO.getCountry());
-        company.setAvgRate(companyDTO.getAvgRate());
 
-        company = companyService.save(company);
+        Company company = new Company(
+            companyDTO.getName(),
+            companyDTO.getCity(),
+            companyDTO.getCountry()
+        );
+
+        this.companyService.save(company);
         return new ResponseEntity<>(new CompanyDTO(company), HttpStatus.CREATED);
     }
 
@@ -64,17 +72,16 @@ public class CompanyController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        // Ažurirajte podatke kompanije
         company.setName(companyDTO.getName());
         company.setCity(companyDTO.getCity());
         company.setCountry(companyDTO.getCountry());
         company.setAvgRate(companyDTO.getAvgRate());
 
-        // Sačuvajte ažuriranu kompaniju
         company = companyService.save(company);
 
         return new ResponseEntity<>(new CompanyDTO(company), HttpStatus.OK);
 
     }
+
 
 }

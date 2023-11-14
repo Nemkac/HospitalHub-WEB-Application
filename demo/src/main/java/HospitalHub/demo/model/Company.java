@@ -18,6 +18,14 @@ public class Company {
     @Column(name = "avgRate")
     private Double avgRate;
 
+    @OneToOne(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "company_admin_id") // Use the name of the foreign key column in the database
+    private CompanyAdministrator companyAdministrator;
+
+    /*Treba dodati polje sa relacijom koje ce predstavljati id administratora
+    koji je zaduzen za odredjenu kompaniju.*/
+    //CompanyAdministrator companyAdministrator
+
     public Company() {
 
     }
@@ -27,10 +35,24 @@ public class Company {
         this.city = city;
         this.country = country;
         this.avgRate = 0.0;
+        this.companyAdministrator = null;
+    }
+
+    public Company(Integer id, String name, String city, String country) {
+        this.id = id;
+        this.name = name;
+        this.city = city;
+        this.country = country;
+        this.avgRate = 0.0;
+        this.companyAdministrator = null;
     }
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCity() {
@@ -63,5 +85,13 @@ public class Company {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public CompanyAdministrator getCompanyAdministrator() {
+        return companyAdministrator;
+    }
+
+    public void setCompanyAdministrator(CompanyAdministrator companyAdministrator) {
+        this.companyAdministrator = companyAdministrator;
     }
 }

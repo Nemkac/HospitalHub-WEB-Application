@@ -6,13 +6,11 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Users")
-public abstract class User {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Integer id;
     @Column(name = "name")
     private String name;
@@ -45,7 +43,6 @@ public abstract class User {
     private String companyInfo;
     private boolean Enabled = false;
 
-
     public User(){
 
     }
@@ -70,9 +67,27 @@ public abstract class User {
     public void setEnabled(boolean enabled) {
         Enabled = enabled;
     }
+    
+    public User(Integer id, String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.password = password;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.country = country;
+        this.city = city;
+        this.profession = profession;
+        this.companyInfo = companyInfo;
+    }
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

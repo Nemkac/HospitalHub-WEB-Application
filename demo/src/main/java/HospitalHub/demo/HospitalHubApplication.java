@@ -1,6 +1,12 @@
 package HospitalHub.demo;
 
 
+import HospitalHub.demo.model.Company;
+import HospitalHub.demo.repository.CompanyRepository;
+import HospitalHub.demo.service.InitialDataInsertionService;
+import jakarta.persistence.EntityManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +20,15 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @EnableAsync
 @SpringBootApplication
-public class HospitalHubApplication {
+public class HospitalHubApplication implements CommandLineRunner{
+
+	@Autowired
+	private InitialDataInsertionService initialDataInsertionService;
+
+	private EntityManager entityManager;
+
+	@Autowired
+	private CompanyRepository companyRepository;
 
 	@Bean
 	public ModelMapper getModelMapper() {
@@ -23,6 +37,12 @@ public class HospitalHubApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(HospitalHubApplication.class, args);
+	}
+
+
+	@Override
+	public void run(String[] args) throws Exception {
+		initialDataInsertionService.insertInitialData();
 	}
 
 	@Bean

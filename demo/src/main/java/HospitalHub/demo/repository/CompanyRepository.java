@@ -10,6 +10,17 @@ import java.util.List;
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
      List<Company> findAll();
+
      Company save(Company company);
+
      Company getById(Integer id);
+
+     List<Company> getALlByNameIgnoreCase(String name);
+
+     List<Company> getAllByCityIgnoreCase(String city);
+
+     List<Company> getAllByCountryIgnoreCase(String country);
+
+     List<Company> getAllByNameContainingIgnoreCaseAndCountryContainingIgnoreCaseAndCityContainingIgnoreCaseAndAvgRateGreaterThanEqual(String name, String country, String city, Double avgRate);
+
 }
