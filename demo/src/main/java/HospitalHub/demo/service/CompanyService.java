@@ -1,14 +1,12 @@
 package HospitalHub.demo.service;
 
 import HospitalHub.demo.model.Company;
+import HospitalHub.demo.model.User;
 import HospitalHub.demo.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CompanyService {
@@ -49,5 +47,22 @@ public class CompanyService {
         return companyRepository.getAllByNameContainingIgnoreCaseAndCountryContainingIgnoreCaseAndCityContainingIgnoreCaseAndAvgRateGreaterThanEqual(name,country,city,avgRate);
     }
 
+    public Integer calculateCompanyId(){
+        List<Company> companies = companyRepository.findAll();
+        List<Integer> ids = new ArrayList<>();
+
+        for(Company company : companies) {
+            ids.add(company.getId());
+        }
+
+        Collections.sort(ids);
+
+        if(!ids.isEmpty()){
+            Integer freeId = ids.get(ids.size() - 1);
+            return freeId;
+        } else {
+            return 0;
+        }
+    }
 
 }

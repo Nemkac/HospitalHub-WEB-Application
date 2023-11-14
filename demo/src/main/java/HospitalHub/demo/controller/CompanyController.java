@@ -30,15 +30,26 @@ public class CompanyController {
         return new ResponseEntity<>(companies, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/getId")
+    public ResponseEntity<Integer> getCompanyId(){
+        Integer companyId = this.companyService.calculateCompanyId() + 1;
+
+        return new ResponseEntity<Integer>(companyId, HttpStatus.OK);
+    }
+
     @PostMapping(consumes = "application/json", value = "/save")
     public ResponseEntity<CompanyDTO> saveCompany(@RequestBody CompanyDTO companyDTO){
-        Company company = new Company();
-        company.setName(companyDTO.getName());
-        company.setCity(companyDTO.getCity());
-        company.setCountry(companyDTO.getCountry());
-        company.setAvgRate(companyDTO.getAvgRate());
+        Integer companyId = this.companyService.calculateCompanyId() + 1;
 
-        company = companyService.save(company);
+        //Proveriti zasto ne kreira id kako treba kada se dodaju kompanije preko skripte
+        Company company = new Company(
+            //companyId,
+            companyDTO.getName(),
+            companyDTO.getCity(),
+            companyDTO.getCountry()
+        );
+
+        this.companyService.save(company);
         return new ResponseEntity<>(new CompanyDTO(company), HttpStatus.CREATED);
     }
 

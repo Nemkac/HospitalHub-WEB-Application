@@ -38,8 +38,21 @@ public class Company {
         this.companyAdministrator = null;
     }
 
+    public Company(Integer id, String name, String city, String country) {
+        this.id = id;
+        this.name = name;
+        this.city = city;
+        this.country = country;
+        this.avgRate = 0.0;
+        this.companyAdministrator = null;
+    }
+
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCity() {
