@@ -6,4 +6,5 @@ insert into users (date_of_birth, id, city,company_info,country,email,last_name,
     values ('2002-01-18', 3, 'Novi Sad','Stagod2','Serbia','nemanjatodorovic132002002@gmail.com','Todorovic','Nemanja','hh123','programer','0644316167', 'true');
 
 insert into system_administrators(sys_admin_id, user_id) values (1, 2);
+insert into company_administrator(comp_admin_id, company_id, user_id) values (0, 2, 2);
 
