@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "api/user")
@@ -26,10 +27,11 @@ public class UserController {
     @Autowired
     private CompanyService companyService;
 
-    /*@PutMapping(consumes = "application/json", value = "/update/{id}")
+    @PutMapping(consumes = "application/json", value = "/update/{id}")
     public ResponseEntity<UserDTO> updateCompanyAdministrator(@RequestBody UserDTO userDTO, @PathVariable Integer id)
     {
         CompanyAdministrator companyAdministrator = companyAdministratorService.getByCompAdminId(id);
+        User selectedUser = companyAdministrator.getUser();
 
         List<User> users = userService.findAll();
 
@@ -37,7 +39,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         for(User user : users) {
-            if (companyAdministrator.getId() == user.getId())
+            if (Objects.equals(selectedUser.getId(), user.getId()))
             {
                 user.setName(userDTO.getName());
                 user.setLastName(userDTO.getLastName());
@@ -57,7 +59,7 @@ public class UserController {
 
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }*/
+    }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserProfileDTO> getUserProfile(@PathVariable Integer id) {
