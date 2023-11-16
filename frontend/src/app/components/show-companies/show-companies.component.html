@@ -1,29 +1,28 @@
-<form #filterCompanies ="ngForm" (ngSubmit)="ShowCompanies()">
-    <div class="max-w-2xl mx-auto mt-8"> 
-      <h2 class="text-2xl font-bold mb-4">List of Companies</h2>
-      <table class="min-w-full bg-white border border-gray-300">
-        <thead>
-          <tr>
-            <th class="py-2 px-4 border-b">ID</th>
-            <th class="py-2 px-4 border-b">Name</th>
-            <th class="py-2 px-4 border-b">City</th>
-            <th class="py-2 px-4 border-b">Country</th>
-            <th class="py-2 px-4 border-b">Average Rate</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let company of companies" class="hover:bg-gray-100">
-            <td class="py-2 px-4 border-b">{{ company.id }}</td>
-            <td class="py-2 px-4 border-b">{{ company.name }}</td>
-            <td class="py-2 px-4 border-b">{{ company.city }}</td>
-            <td class="py-2 px-4 border-b">{{ company.country }}</td>
-            <td class="py-2 px-4 border-b">{{ company.avgRate }}</td>
-          </tr>
-        </tbody>
-      </table>
-      <input ngModel name="name" id="name" type="text" class="border p-2" placeholder="ime" [(ngModel)]="byName">
-      <input ngModel name="country" id="country" type="text" class="border p-2" placeholder="drzava" [(ngModel)]="byCountry">
-      <input ngModel name="city" id="city" type="text" class="border p-2" placeholder="grad" [(ngModel)]="byCity">
-      <button routerLink="/api/user/companies" [queryParams]="{name: byName, country:byCountry, city:byCity}" class="border bg-black-500 hover:bg-black-700 text-black font-bold py-2 px-4 rounded" type="submit">Pretrazi</button>
+<form #filterCompanies="ngForm" (ngSubmit)="ShowCompanies()">
+  <div class="flex flex-col items-center">
+    <h2 class="text-2xl font-bold mb-4 text-white">.</h2>
+    <h2 class="text-2xl font-bold mb-4 text-white">.</h2>
+    <h2 class="text-2xl font-bold mb-4 text-blue">List of Companies</h2>
+    <div class="flex mb-4">
+      <input ngModel name="name" id="name" type="text" class="border p-2 mr-2 rounded" placeholder="Name" [(ngModel)]="byName">
+      <input ngModel name="country" id="country" type="text" class="border p-2 mr-2 rounded" placeholder="Country" [(ngModel)]="byCountry">
+      <input ngModel name="city" id="city" type="text" class="border p-2 rounded" placeholder="City" [(ngModel)]="byCity">
+      <button routerLink="/api/user/companies" [queryParams]="{ name: byName, country: byCountry, city: byCity }" class="border bg-black-500 hover:bg-black-700 text-white font-bold py-2 px-4 rounded" type="submit">Search</button>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div *ngFor="let company of companies" class="max-w-lg w-full rounded overflow-hidden shadow-lg m-4 flex">
+        <div class="flex-shrink-0">
+          <img class="w-50 h-40 object-cover " src="./assets/hospital.jpg" alt="Company Logo">
+        </div>
+        <div class="px-6 py-4">
+          <div class="font-bold text-xl mb-2">{{ company.name }}</div>
+          <p class="text-gray-700 text-base mb-2">Country: {{ company.country }}</p>
+          <p class="text-gray-700 text-base mb-2">City: {{ company.city }}</p>
+          <p class="text-gray-700 text-base">Average Rate: {{ company.avgRate }}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </form>
+1

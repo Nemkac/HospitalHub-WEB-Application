@@ -1,25 +1,24 @@
-<form #updateUserProfileForm = "ngForm" (ngSubmit)="updateUserProfile(updateUserProfileForm)">
-    <div class="grid grid-cols-3 gap-4">
-        <!-- Row 1 -->
-        <h2>Update user Profile</h2>
-        <h2>Update user Profile</h2>
-        <h2>Update user Profile</h2>
-        <h2>Update user Profile</h2>
-        <h2>Update user Profile</h2>
-        <h2>Update user Profile</h2>
-        <input ngModel name="name" type="text" class="border p-2" placeholder="ime">
-        <input ngModel name="lastName" type="text" class="border p-2" placeholder="prez">
-        <input ngModel name="password" type="text" class="border p-2" placeholder="sifra">
-    
-        <!-- Row 2 -->
-        <input ngModel name="dateOfBirth" type="text" class="border p-2" placeholder="datum">
-        <input ngModel name="phoneNumber" type="text" class="border p-2" placeholder="broj">
-    
-        <!-- Row 3 -->
-        <input ngModel name="country" type="text" class="border p-2" placeholder="zemlja">
-        <input ngModel name="city" type="text" class="border p-2" placeholder="grad">
-        <input ngModel name="profession" type="text" class="border p-2" placeholder="profesija">
-        <input ngModel name="companyInfo" type="text" class="border p-2" placeholder="kompani info">
-        <button class="border bg-black-500 hover:bg-black-700 text-black font-bold py-2 px-4 rounded" type="submit">Submit</button>
+<form #updateUserProfileForm="ngForm" (ngSubmit)="updateUserProfile(updateUserProfileForm)" class="max-w-md mx-auto mt-8 bg-white p-8 rounded shadow-lg">
+    <div class="grid grid-cols-1 gap-4">
+      <!-- Row 1 -->
+      <h2 class="text-2xl font-bold mb-4">Update User Profile</h2>
+      <h2 class="text-2xl font-bold mb-4 text-center">Update User Profile</h2>
+  
+      <input ngModel name="name" type="text" class="border p-2 rounded" placeholder="{{user.name}}">
+      <input ngModel name="lastName" type="text" class="border p-2 rounded" placeholder="{{user.lastName}}">
+      <input ngModel name="password" type="text" class="border p-2 rounded" placeholder="{{user.password}}">
+  
+      <!-- Row 2 -->
+      <input ngModel name="dateOfBirth" type="text" class="border p-2 rounded" placeholder="{{user.dateOfBirth}}">
+      <input ngModel name="phoneNumber" type="text" class="border p-2 rounded" placeholder="{{user.phoneNumber}}">
+  
+      <!-- Row 3 -->
+      <input ngModel name="country" type="text" class="border p-2 rounded" placeholder="{{user.companyInfo}}">
+      <input ngModel name="city" type="text" class="border p-2 rounded" placeholder="{{user.city}}">
+      <input ngModel name="profession" type="text" class="border p-2 rounded" placeholder="{{user.profession}}">
+      <input ngModel name="companyInfo" type="text" class="border p-2 rounded" placeholder="{{user.companyInfo}}">
+  
+      <button class="bg-black-500 hover:bg-black-700 text-white font-bold py-2 px-4 rounded" type="submit">Submit</button>
     </div>
-</form>
+  </form>
+  

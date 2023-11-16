@@ -1,9 +1,15 @@
-<div *ngIf="userProfile">
-        <h2>User Profile</h2>
-        <div>
-          <h2>test</h2>
-          <h2>test</h2>
-        </div>
+<div *ngIf="userProfile" class="max-w-4xl mx-auto mt-8 bg-white p-8 rounded shadow-lg">
+  <div class="flex items-center mb-8">
+    <!-- Profile Picture Section -->
+    <div class="mr-8">
+      <img class="w-38 h-38 object-cover rounded-full" src="./assets/djolo.jpg" alt="Profile Image">
+    </div>
+
+    <!-- User Information Section -->
+    <div>
+      <h2 class="text-3xl font-bold mb-4">User Profile</h2>
+
+      <div class="grid grid-cols-2 gap-4">
         <div>
           <strong>Name:</strong> {{ userProfile.name }}
         </div>
@@ -13,43 +19,44 @@
         <div>
           <strong>Date of Birth:</strong> {{ userProfile.dateOfBirth | date: 'yyyy-MM-dd' }}
         </div>
+
         <!-- Add more fields as needed -->
-      
+
         <!-- Example: Displaying email only for users who have an email -->
         <div *ngIf="userProfile.email">
           <strong>Email:</strong> {{ userProfile.email }}
         </div>
-      
+
         <!-- Example: Displaying company info only for users who have company info -->
         <div *ngIf="userProfile.companyInfo">
           <strong>Phone number:</strong> {{ userProfile.phoneNumber }}
         </div>
 
         <div *ngIf="userProfile.companyInfo">
-                <strong>Country:</strong> {{ userProfile.country }}
+          <strong>Country:</strong> {{ userProfile.country }}
         </div>
 
         <div *ngIf="userProfile.companyInfo">
-                <strong>City:</strong> {{ userProfile.city }}
+          <strong>City:</strong> {{ userProfile.city }}
         </div>
 
         <div *ngIf="userProfile.companyInfo">
-                <strong>Penalty points:</strong> {{ userProfile.penaltyPoints }}
+          <strong>Penalty points:</strong> {{ userProfile.penaltyPoints }}
         </div>
 
         <div *ngIf="userProfile.profession">
-                <strong>Profession:</strong> {{ userProfile.profession }}
+          <strong>Profession:</strong> {{ userProfile.profession }}
         </div>
-
         
-      
-        <!-- Add more conditional displays for other fields as needed -->
       </div>
-      
-      <div *ngIf="!userProfile">
-        <p>Loading...</p>
-      </div>
-      
-      <div *ngIf="userProfile === null">
-        <p>Error loading user profile.</p>
-      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!userProfile" class="text-center mt-8">
+  <p>Loading...</p>
+</div>
+
+<div *ngIf="userProfile === null" class="text-center mt-8">
+  <p>Error loading user profile.</p>
+</div>
