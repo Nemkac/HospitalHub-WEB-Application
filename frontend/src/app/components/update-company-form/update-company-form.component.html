@@ -1,5 +1,5 @@
 <form #updateCompanyForm="ngForm" (ngSubmit)="onUpdateCompany()">
-  <div class="flex flex-col bg-white w-[500px] h-[350px] py-4 items-center rounded-md justify-between border-[1px] border-secondary/10">
+  <div class="flex flex-col bg-white w-[300px] h-[350px] py-4 items-center rounded-md justify-between border-[1px] border-secondary/10">
     <div>
       <p class="font-inter text-third font-medium text-[18px]">Id</p>
       <input #idInput="ngModel" [(ngModel)]="updateCompany.id" name="id" class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none" placeholder="Id" required>
@@ -18,7 +18,7 @@
     </div>
     <div class="modal-footer">
       <button type="submit" class="w-[200px] text-[20px] bg-secondary hover:bg-third transition-[0.5s] font-inter font-semibold 
-                                  text-white rounded-md h-[45px]">Save changes</button>
+                                  text-white rounded-md h-[45px]">Update company</button>
     </div>
     <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
     <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>

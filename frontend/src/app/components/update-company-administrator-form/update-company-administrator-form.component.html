@@ -1,35 +1,33 @@
 <form #updateCompanyAdministratorForm="ngForm" (ngSubmit)="onUpdateCompanyAdministrator(updateCompanyAdministratorForm)">
-    <div class="flex w-full h-[100vh] px-64 bg-lightBlue/5 justify-left items-center">
-      <div class="flex flex-col bg-white w-[500px] h-[350px] py-4 items-center rounded-md justify-between border-[1px] border-secondary/10">
-        <div>
-          <p class="font-inter text-third font-medium text-[18px]">Id</p>
-          <input type = "number" #idInput="ngModel" [(ngModel)]="updateCompanyAdministrator.id" name="id"
-            class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-            placeholder="Id" required>
-        </div>
-        <div>
-          <p class="font-inter text-third font-medium text-[18px]">Name</p>
-          <input [(ngModel)]="updateCompanyAdministrator.name" name="name"
-            class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-            placeholder="User name" required>
-        </div>
-        <div>
-          <p class="font-inter text-third font-medium text-[18px]">Password</p>
-          <input [(ngModel)]="updateCompanyAdministrator.password" name="password"
-            class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-            placeholder="Password" required>
-        </div>
-        <!-- Dodajte ostale input elemente prema potrebi -->
-  
-        <div class="modal-footer">
-          <button type="submit"
-            class="w-[200px] text-[20px] bg-secondary hover:bg-third transition-[0.5s] font-inter font-semibold text-white rounded-md h-[45px]">
-            Save changes
-          </button>
-        </div>
-        <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
-        <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-      </div>
+  <div class="flex flex-col bg-white w-[300px] h-[350px] py-4 items-center rounded-md justify-between border-[1px] border-secondary/10">
+    <div>
+      <p class="font-inter text-third font-medium text-[18px]">Id</p>
+      <input type = "number" #idInput="ngModel" [(ngModel)]="updateCompanyAdministrator.id" name="id"
+        class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+        placeholder="Id" required>
     </div>
-  </form>
+    <div>
+      <p class="font-inter text-third font-medium text-[18px]">Name</p>
+      <input [(ngModel)]="updateCompanyAdministrator.name" name="name"
+        class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+        placeholder="User name" required>
+    </div>
+    <div>
+      <p class="font-inter text-third font-medium text-[18px]">Password</p>
+      <input [(ngModel)]="updateCompanyAdministrator.password" name="password"
+        class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+        placeholder="Password" required>
+    </div>
+    <!-- Dodajte ostale input elemente prema potrebi -->
+
+    <div class="modal-footer">
+      <button type="submit"
+        class="w-[200px] text-[20px] bg-secondary hover:bg-third transition-[0.5s] font-inter font-semibold text-white rounded-md h-[45px]">
+        Update admin
+      </button>
+    </div>
+    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  </div>
+</form>
   
