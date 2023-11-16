@@ -12,6 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule, routingComponents} from './app-routing.module';
 import { UpdateCompanyFormComponent } from './components/update-company-form/update-company-form.component';
 import { UpdateCompanyAdministratorFormComponent } from './components/update-company-administrator-form/update-company-administrator-form.component';
+import { CreateCompanyAdministratorFormComponent } from './components/create-company-administrator-form/create-company-administrator-form.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { UpdateCompanyAdministratorFormComponent } from './components/update-com
       routingComponents,
       UpdateCompanyFormComponent,
       UpdateCompanyAdministratorFormComponent,
+      CreateCompanyAdministratorFormComponent,
   ],
   imports: [
       BrowserModule,

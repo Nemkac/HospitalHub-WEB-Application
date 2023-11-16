@@ -2,6 +2,8 @@ package HospitalHub.demo.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Company {
 
@@ -21,6 +23,9 @@ public class Company {
     @OneToOne(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "company_admin_id") // Use the name of the foreign key column in the database
     private CompanyAdministrator companyAdministrator;
+
+    @OneToMany(mappedBy="company")
+    private List<MedicalEquipment> medicalEquipmentList;
 
     /*Treba dodati polje sa relacijom koje ce predstavljati id administratora
     koji je zaduzen za odredjenu kompaniju.*/

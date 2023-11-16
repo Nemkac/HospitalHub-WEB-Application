@@ -1,12 +1,12 @@
 export interface UserDTO {
-    name: string;
-    lastname: string;
-    password: string;
-    dateOfBirth: Date;
-    email: string;
-    telephone: string;
-    country: string;
-    city: string;
-    profession: string;
-    companyInfo: string;
+    name : string;
+    lastName : string;
+    password : string;
+    dateOfBirth : string;
+    email : string;
+    phoneNumber : string;
+    country : string;
+    city : string;
+    profession : string;
+    companyInfo : string;
 }

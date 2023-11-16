@@ -1,10 +1,7 @@
 package HospitalHub.demo;
 
 
-import HospitalHub.demo.model.Company;
-import HospitalHub.demo.repository.CompanyRepository;
 import HospitalHub.demo.service.InitialDataInsertionService;
-import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -24,11 +21,6 @@ public class HospitalHubApplication implements CommandLineRunner{
 
 	@Autowired
 	private InitialDataInsertionService initialDataInsertionService;
-
-	private EntityManager entityManager;
-
-	@Autowired
-	private CompanyRepository companyRepository;
 
 	@Bean
 	public ModelMapper getModelMapper() {
