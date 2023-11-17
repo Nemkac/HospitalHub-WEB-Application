@@ -20,8 +20,12 @@ export class CompanyService {
     }
 
     public updateCompany(company: Company, id : number): Observable<Company> {
-        console.log("Update Company: ", company);  // Dodaj ovu liniju
+        console.log("Update Company: ", company); 
         return this.http.put<Company>(`${this.apiServerUrl}/api/company/update/${id}`, company);
+    }
+
+    public getAdminsCompany(): Observable<Company> {
+        return this.http.get<Company>(`${this.apiServerUrl}/api/company/getAdminsCompany`);
     }
 
 }

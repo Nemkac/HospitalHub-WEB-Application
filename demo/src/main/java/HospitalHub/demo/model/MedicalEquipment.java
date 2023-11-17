@@ -1,7 +1,11 @@
 package HospitalHub.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "Equipment")
 public class MedicalEquipment {
@@ -14,11 +18,13 @@ public class MedicalEquipment {
     private String name;
 
     @Column(name = "type")
+    
     private String type;
 
     @Column(name = "description")
     private String description;
 
+    @JsonIgnoreProperties("medicalEquipmentList")
     @ManyToOne
     @JoinColumn(name="company_id", nullable=false)
     private Company company;

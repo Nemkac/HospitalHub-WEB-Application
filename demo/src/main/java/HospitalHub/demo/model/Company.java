@@ -1,9 +1,13 @@
 package HospitalHub.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.List;
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 public class Company {
 
@@ -24,7 +28,8 @@ public class Company {
     @JoinColumn(name = "company_admin_id") // Use the name of the foreign key column in the database
     private CompanyAdministrator companyAdministrator;
 
-    @OneToMany(mappedBy="company")
+    @JsonIgnoreProperties("company")
+    @OneToMany(mappedBy = "company")
     private List<MedicalEquipment> medicalEquipmentList;
 
     /*Treba dodati polje sa relacijom koje ce predstavljati id administratora
@@ -90,6 +95,14 @@ public class Company {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<MedicalEquipment> getMedicalEquipmentList() {
+        return medicalEquipmentList;
+    }
+
+    public void setMedicalEquipmentList(List<MedicalEquipment> medicalEquipmentList) {
+        this.medicalEquipmentList = medicalEquipmentList;
     }
 
     public CompanyAdministrator getCompanyAdministrator() {

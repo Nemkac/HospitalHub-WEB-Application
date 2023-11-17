@@ -27,6 +27,11 @@ public class CompanyAdministrator{
         this.company = null;
     }
 
+    public CompanyAdministrator(User user, Company company) {
+        this.user = user;
+        this.company = company;
+    }
+
     public Integer getCompAdminId() {
         return compAdminId;
     }
