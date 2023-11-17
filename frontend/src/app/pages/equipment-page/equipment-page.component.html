@@ -1,0 +1,42 @@
+<div class="flex flex-col bg-lightBlue/5 flex px-64 py-32 h-[100vh]">
+    <div class="flex flex-row w-full">
+        <input class="h-[60px] w-[90%] rounded-l-full bg-third/20 text-white px-16 text-[24px] font-semibold focus:outline-none">
+        <button class="h-[60px] w-[10%] bg-secondary text-white text-[24px] rounded-r-full items-center justify-center">
+            <fa-icon [icon] = "faSearch"/>
+        </button>
+    </div>
+    <div class="flex flex-row w-full justify-between mt-16">
+        <div class="flex flex-col w-[15%] h-[250px] bg-white rounded-md border-[1px] border-secondary/10 p-4">
+            <p class="font-inter font-medium text-third text-[20px]">Filter by</p>
+            <div class="flex flex-col p-4">
+                <div class="flex flex-row items-center">
+                    <input type="radio" class="w-[17px] h-[17px]">
+                    <p class="font-inter font-medium text-[18px] ml-4 text-third">
+                        Price asc.
+                    </p>
+                </div>
+                <div class="flex flex-row mt-[15px] items-center">
+                    <input type="radio" class="w-[17px] h-[17px]">
+                    <p class="font-inter font-medium text-[18px] ml-4 text-third">
+                        Price desc.
+                    </p>
+                </div>
+                <div class="flex flex-row mt-[15px] items-center">
+                    <input type="radio" class="w-[17px] h-[17px]">
+                    <p class="font-inter font-medium text-[18px] ml-4 text-third">
+                        Rate asc.
+                    </p>
+                </div>
+                <div class="flex flex-row mt-[15px] items-center">
+                    <input type="radio" class="w-[17px] h-[17px]">
+                    <p class="font-inter font-medium text-[18px] ml-4 text-third">
+                        Rate desc.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-wrap justify-between w-[80%] h-auto">
+            <app-equipmentcard/>
+        </div>
+    </div>
+</div>

@@ -1,9 +1,13 @@
 package HospitalHub.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.List;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 public class Company {
 
@@ -24,8 +28,9 @@ public class Company {
     @JoinColumn(name = "company_admin_id") // Use the name of the foreign key column in the database
     private CompanyAdministrator companyAdministrator;
 
-    @OneToMany(mappedBy="company")
+    @OneToMany(mappedBy = "company")
     private List<MedicalEquipment> medicalEquipmentList;
+
 
     /*Treba dodati polje sa relacijom koje ce predstavljati id administratora
     koji je zaduzen za odredjenu kompaniju.*/
