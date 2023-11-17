@@ -10,12 +10,13 @@ import HospitalHub.demo.service.UserService;
 import HospitalHub.demo.token.EmailConfirmationToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class EmailController {
 
     @Autowired
@@ -26,15 +27,13 @@ public class EmailController {
     private EmailConfirmationTokenRepository emailConfirmationTokenRepository;
     @Autowired
     private EmailService emailService;
-
-
-
     @PostMapping(value =  "/register")
     public ResponseEntity<User>register(@RequestBody UserRegisterDTO userRegisterDto){
 
         if(userService.checkData(userRegisterDto)) {   //Dodati proveru za unique email, i onda napraviti adekvatan exception
                                                         //I za pasword retype
             User firstUser = new User(
+                    userRegisterDto.getUsername(),
                     userRegisterDto.getName(),
                     userRegisterDto.getLastname(),
                     userRegisterDto.getPassword(),

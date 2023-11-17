@@ -17,6 +17,7 @@ export class LogInFormComponent implements OnInit {
     public logIn(LogInForm:NgForm):void{
       this.userService.logIn(LogInForm.value).subscribe(
         (response: LogInDTO) => {
+          this.userService.loggedInUser = LogInForm.value.email;
           console.log(response);          
         },
         (error: HttpErrorResponse) => {

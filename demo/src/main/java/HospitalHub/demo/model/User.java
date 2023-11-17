@@ -1,21 +1,24 @@
 package HospitalHub.demo.model;
 
-
 import jakarta.persistence.*;
-
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Date;
+
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Users")
-public class User {
+public class User{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // ovo je bilo na auto mozda nastane problem
     @Column(name = "id")
     private Integer id;
     @Column(name = "name")
     private String name;
+    @Column(name = "username")
+    private String username;
     @Column(name = "lastName")
     private String lastName;
 
@@ -43,14 +46,18 @@ public class User {
 
     @Column(name = "companyInfo")
     private String companyInfo;
+    @Column(name = "enabled")
     private boolean Enabled = false;
+    @Column(name = "last_password_reset_date")
+    private Timestamp lastPasswordResetDate;
 
 
     public User(){
 
     }
 
-    public User(String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
+    public User(String username,String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
+        this.username = username;
         this.name = name;
         this.lastName = lastName;
         this.password = password;
@@ -96,6 +103,7 @@ public class User {
     }
 
     public void setPassword(String password) {
+        Timestamp now = new Timestamp(new Date().getTime());
         this.password = password;
     }
 
@@ -154,4 +162,22 @@ public class User {
     public void setCompanyInfo(String companyInfo) {
         this.companyInfo = companyInfo;
     }
+
+    public Timestamp getLastPasswordResetDate() {
+        return lastPasswordResetDate;
+    }
+
+    public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
+        this.lastPasswordResetDate = lastPasswordResetDate;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    // fale geter i seter za id
+
 }

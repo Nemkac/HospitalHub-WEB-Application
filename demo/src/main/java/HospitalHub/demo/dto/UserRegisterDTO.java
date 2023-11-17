@@ -3,7 +3,7 @@ package HospitalHub.demo.dto;
 import java.time.LocalDate;
 
 public class UserRegisterDTO {
-
+    private String username;
     private String name;
     private String lastName;
     private String password;
@@ -116,5 +116,21 @@ public class UserRegisterDTO {
 
     public void setCompanyInfo(String companyInfo) {
         this.companyInfo = companyInfo;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

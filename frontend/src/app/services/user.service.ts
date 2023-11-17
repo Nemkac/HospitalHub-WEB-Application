@@ -9,7 +9,16 @@ import { User } from "src/User";
 })
 export class UserService{
     private apiServerUrl = 'http://localhost:8081';
-    
+
+    private _loggedInUser?: String = "Log in";
+
+    get loggedInUser(): String {
+        return this._loggedInUser as String;
+    }
+    set loggedInUser(user: String) {
+        this._loggedInUser = user;
+    }
+
     constructor(private http: HttpClient){}
 
     public logIn(logInDTO: LogInDTO):Observable<LogInDTO>{      
