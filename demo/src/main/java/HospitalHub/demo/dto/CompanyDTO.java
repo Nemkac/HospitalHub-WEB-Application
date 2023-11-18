@@ -11,7 +11,6 @@ public class CompanyDTO {
     private Double avgRate;
 
     public  CompanyDTO() {
-
     }
 
     public CompanyDTO(Company company){

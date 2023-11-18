@@ -104,4 +104,12 @@ public class Company {
     public void setCompanyAdministrator(CompanyAdministrator companyAdministrator) {
         this.companyAdministrator = companyAdministrator;
     }
+
+    public List<MedicalEquipment> getMedicalEquipmentList() {
+        return medicalEquipmentList;
+    }
+
+    public void setMedicalEquipmentList(List<MedicalEquipment> medicalEquipmentList) {
+        this.medicalEquipmentList = medicalEquipmentList;
+    }
 }

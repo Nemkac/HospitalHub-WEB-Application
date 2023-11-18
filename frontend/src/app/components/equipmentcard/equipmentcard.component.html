@@ -1,16 +1,18 @@
-<div *ngFor="let equipment of equipments" class="flex flex-row bg-white w-[350px] h-[200px] rounded-md shadow-md cursor-pointer
-            hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
-    <div class="flex p-4 w-[35%]">
-        <img src="../../../assets/heroimg.png" />
-    </div>
-    <div class="flex w-[65%] flex-col p-4 font-inter text-third">
-        <p class="font-semibold text-[20px]">{{equipment?.name}}</p>
-        <p class="font-light text-[16px]">{{equipment?.type}}</p>
-        <hr class="w-full mt-[10px] mb-[5px]">
-        <div class="flex flex-col h-[120px]">
-            <p class="text-[12px] font-light">Description:</p>
-            <p class="text-[16px] font-regular">{{equipment?.description}}</p>
+<div class="flex flex-row flex-start flex-wrap w-full justify-between">
+    <div *ngFor="let equipment of equipments" class="flex flex-row bg-white w-[450px] h-[200px] rounded-md shadow-md cursor-pointer mt-6
+                                                     hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
+        <div class="flex p-4 w-[40%]">
+            <img src="../../../assets/equipment.png"/>
         </div>
-        <hr class="w-full mb-[10px] mt-[5px]">
+        <div class="flex w-[60%] flex-col p-4 font-inter text-third">
+            <p class="font-semibold text-[20px]">{{equipment?.name}}</p>
+            <p class="font-light text-[16px]">{{equipment?.type}}</p>
+            <hr class="w-full mt-[10px] mb-[5px]">
+            <div class="flex flex-col h-[120px]">
+                <p class="text-[12px] font-light">Description:</p>
+                <p class="text-[16px] font-regular">{{equipment?.description}}</p>
+            </div>
+            <hr class="w-full mb-[10px] mt-[5px]">
+        </div>
     </div>
 </div>
