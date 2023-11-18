@@ -11,4 +11,6 @@ public interface MedicalEquipmentRepository extends JpaRepository<MedicalEquipme
 
     MedicalEquipment save(MedicalEquipment medicalEquipment);
     List<MedicalEquipment> findAll();
+    List<MedicalEquipment> findByNameContainingIgnoreCase(String searchTerm);
+    List<MedicalEquipment> findByType(String filterTerm);
 }

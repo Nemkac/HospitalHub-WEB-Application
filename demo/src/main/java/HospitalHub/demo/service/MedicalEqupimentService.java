@@ -21,4 +21,12 @@ public class MedicalEqupimentService {
         return medicalEquipmentRepository.findAll();
     }
 
+    public List<MedicalEquipment> searchByEquipmentName(String searchTerm) {
+        return medicalEquipmentRepository.findByNameContainingIgnoreCase(searchTerm);
+    }
+
+    public List<MedicalEquipment> filterByType(String filterTerm){
+        return medicalEquipmentRepository.findByType(filterTerm);
+    }
+
 }

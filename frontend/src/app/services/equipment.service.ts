@@ -14,4 +14,12 @@ export class EquipmentService {
     public getEquipment() : Observable<Equipment[]> {
         return this.http.get<Equipment[]>(`${this.apiServerUrl}/api/equipment/getAll`);
     }
+
+    public getEquipmentBySearchParameter(searchTerm: string) : Observable<Equipment[]> {
+        return this.http.get<Equipment[]>(`${this.apiServerUrl}/api/equipment/getBySearchParameters?equipmentName=${searchTerm}`);
+    }
+
+    public getEquipmentByFilterParameter(filterTerm: string): Observable<Equipment[]> {
+        return this.http.get<Equipment[]>(`${this.apiServerUrl}/api/equipment/filterByType?selectedType=${filterTerm}`);
+    }
 }
