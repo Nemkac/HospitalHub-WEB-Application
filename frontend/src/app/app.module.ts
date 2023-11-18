@@ -13,8 +13,11 @@ import { AppRoutingModule, routingComponents} from './app-routing.module';
 import { UpdateCompanyFormComponent } from './components/update-company-form/update-company-form.component';
 import { UpdateCompanyAdministratorFormComponent } from './components/update-company-administrator-form/update-company-administrator-form.component';
 import { CreateCompanyAdministratorFormComponent } from './components/create-company-administrator-form/create-company-administrator-form.component';
+
 import { EquipmentPageComponent } from './pages/equipment-page/equipment-page.component';
 import { EquipmentcardComponent } from './components/equipmentcard/equipmentcard.component';
+
+import { CompanyAdminProfilPageComponent } from './pages/company-admin-profil-page/company-admin-profil-page.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,7 @@ import { EquipmentcardComponent } from './components/equipmentcard/equipmentcard
       CreateCompanyAdministratorFormComponent,
       EquipmentPageComponent,
       EquipmentcardComponent,
+      CompanyAdminProfilPageComponent,
   ],
   imports: [
       BrowserModule,

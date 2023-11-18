@@ -103,7 +103,7 @@ public class InitialDataInsertionService {
         SystemAdministrator systemAdministrator = new SystemAdministrator(user4);
         systemAdministratorService.save(systemAdministrator);
 
-        CompanyAdministrator companyAdministrator = new CompanyAdministrator(user3);
+        CompanyAdministrator companyAdministrator = new CompanyAdministrator(user3, company2);
         companyAdministratorService.save(companyAdministrator);
 
         MedicalEquipment equipment1 = new MedicalEquipment("Respirator", "Machine", "Good respirator", company1);

@@ -1,0 +1,22 @@
+<div class="flex flex-row h-[100vh] px-64 py-32 bg-lightBlue/5 justify-between pb-32">
+    <div class="flex flex-col h-auto w-[30%] bg-white rounded-md shadow-xl">
+        <div class="flex flex-row justify-between mx-4 my-4">
+            <p class="font-inter text-[24px] text-third/50 font-light">Name</p>
+            <p class="font-inter text-[24px] text-third font-medium">{{ selectedCompany.name }}</p>
+        </div>
+        <div class="flex flex-row justify-between mx-4 my-4">
+            <p class="font-inter text-[24px] text-third/50 font-light">Address</p>
+            <p class="font-inter text-[24px] text-third font-medium">{{ selectedCompany.city }}, {{ selectedCompany.country }}</p>
+        </div>
+        <div class="flex flex-row justify-between mx-4 my-4">
+            <p class="font-inter text-[24px] text-third/50 font-light">Avg. rate</p>
+            <p class="font-inter text-[24px] text-third font-medium">{{ selectedCompany.avgRate }}</p>
+        </div>
+        <div class="flex flex-row justify-between mx-4 my-4">
+            <p class="font-inter text-[24px] text-third/50 font-light">Medical Equipment</p>
+            <p class="font-inter text-[24px] text-third font-medium">{{ selectedCompany && selectedCompany.medicalEquipmentList && selectedCompany.medicalEquipmentList[0] ? selectedCompany.medicalEquipmentList[0].name : 'N/A' }}</p>
+        </div>
+    </div>
+    <div class="flex h-[100vh] w-[60%] justify-evenly">
+    </div>
+</div>

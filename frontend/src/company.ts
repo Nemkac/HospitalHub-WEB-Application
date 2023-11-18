@@ -4,6 +4,7 @@ export interface Company {
     name: string;
     city: string;
     country: string;
-    avgRate: number;  
+    avgRate: number;
     medicalEquipmentList: Equipment[];
 }
+
