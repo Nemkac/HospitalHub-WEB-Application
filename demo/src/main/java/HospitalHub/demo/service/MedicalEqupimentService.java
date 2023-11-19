@@ -29,4 +29,8 @@ public class MedicalEqupimentService {
         return medicalEquipmentRepository.findByType(filterTerm);
     }
 
+    public List<MedicalEquipment> filterByPriceRange(Double minPrice, Double maxPrice){
+        return medicalEquipmentRepository.findByPriceBetween(minPrice, maxPrice);
+    }
+
 }

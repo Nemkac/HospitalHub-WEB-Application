@@ -23,17 +23,21 @@ public class MedicalEquipment {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "price")
+    private Double price;
+
     @ManyToOne
     @JoinColumn(name="company_id")
     private Company company;
 
     public MedicalEquipment() {}
 
-    public MedicalEquipment(String name, String type, String description, Company company) {
+    public MedicalEquipment(String name, String type, String description, Company company, Double price) {
         this.name = name;
         this.type = type;
         this.description = description;
         this.company = company;
+        this.price = price;
     }
 
     public Integer getId() {
@@ -70,5 +74,13 @@ public class MedicalEquipment {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

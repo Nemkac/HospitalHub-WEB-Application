@@ -3,4 +3,5 @@ export interface Equipment{
     name : string;
     type : string;
     description : string;
+    price: number;
 }

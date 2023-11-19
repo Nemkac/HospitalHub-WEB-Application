@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { faSearch} from '@fortawesome/free-solid-svg-icons';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { Equipment } from 'src/Equipment';
@@ -16,6 +16,10 @@ export class EquipmentPageComponent implements OnInit{
 
   public searchTerm: string = '';
   public filterTerm: string = '';
+  public minPrice : number = 0;  
+  public maxPrice : number = 0;
+
+  @Output() priceRangeChange = new EventEmitter<[number, number]>();
 
   constructor(private equipmentService: EquipmentService) {}
 
@@ -59,4 +63,15 @@ export class EquipmentPageComponent implements OnInit{
     )
   }
 
+  public filterEquipmentByPriceRange(minPrice: number, maxPrice: number): void {
+    this.equipmentService.getEquipmentByPriceRange(minPrice, maxPrice).subscribe(
+      (response: Equipment[]) => {
+        console.log(response);
+        this.filteredEquipments = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
 }

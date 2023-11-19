@@ -34,7 +34,7 @@ public class MedicalEquipmentController {
             });*/
             List<MedicalEquipment> equipments = company.getMedicalEquipmentList();
             for(MedicalEquipment eq : equipments){
-                MedicalEquipmentDTO dto = new MedicalEquipmentDTO(eq.getName(), eq.getType(), eq.getDescription());
+                MedicalEquipmentDTO dto = new MedicalEquipmentDTO(eq.getName(), eq.getType(), eq.getDescription(), eq.getPrice());
                 dtos.add(dto);
             }
         }
@@ -48,7 +48,7 @@ public class MedicalEquipmentController {
         List<MedicalEquipmentDTO> dtos = new ArrayList<>();
 
         for(MedicalEquipment equipment : equipments){
-            MedicalEquipmentDTO dto = new MedicalEquipmentDTO(equipment.getName(), equipment.getType(), equipment.getDescription());
+            MedicalEquipmentDTO dto = new MedicalEquipmentDTO(equipment.getName(), equipment.getType(), equipment.getDescription(), equipment.getPrice());
             dtos.add(dto);
         }
 
@@ -61,7 +61,33 @@ public class MedicalEquipmentController {
         List<MedicalEquipmentDTO> dtos = new ArrayList<>();
 
         for(MedicalEquipment equipment : equipments){
-            MedicalEquipmentDTO dto = new MedicalEquipmentDTO(equipment.getName(), equipment.getType(), equipment.getDescription());
+            MedicalEquipmentDTO dto = new MedicalEquipmentDTO(equipment.getName(), equipment.getType(), equipment.getDescription(), equipment.getPrice());
+            dtos.add(dto);
+        }
+
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/filterByPriceRange")
+    public ResponseEntity<List<MedicalEquipmentDTO>> filterByPriceRange(
+            @RequestParam Double minPrice,
+            @RequestParam Double maxPrice
+    ){
+        List<MedicalEquipment> equipments;
+
+        if(minPrice > 0 && maxPrice > 0 && maxPrice > minPrice) {
+            equipments = medicalEqupimentService.filterByPriceRange(minPrice, maxPrice);
+        }
+        else if(minPrice > maxPrice){
+            equipments = new ArrayList<>();
+        } else {
+            equipments = medicalEqupimentService.findAll();
+        }
+
+        List<MedicalEquipmentDTO> dtos = new ArrayList<>();
+
+        for(MedicalEquipment equipment : equipments){
+            MedicalEquipmentDTO dto = new MedicalEquipmentDTO(equipment.getName(), equipment.getType(), equipment.getDescription(), equipment.getPrice());
             dtos.add(dto);
         }
 

@@ -22,4 +22,8 @@ export class EquipmentService {
     public getEquipmentByFilterParameter(filterTerm: string): Observable<Equipment[]> {
         return this.http.get<Equipment[]>(`${this.apiServerUrl}/api/equipment/filterByType?selectedType=${filterTerm}`);
     }
+
+    public getEquipmentByPriceRange(minPrice: number, maxPrice: number) : Observable<Equipment[]> {
+        return this.http.get<Equipment[]>(`${this.apiServerUrl}/api/equipment/filterByPriceRange?minPrice=${minPrice}&maxPrice=${maxPrice}`);
+    }
 }
