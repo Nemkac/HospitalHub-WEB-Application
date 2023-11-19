@@ -1,6 +1,12 @@
 <form #RegisterForm="ngForm" (ngSubmit)="register(RegisterForm)">
-    <div class="flex w-full h-[100vh] px-64 bg-lightBlue/5 justify-center items-center">
+    <div class="flex w-full h-[1200px] px-64 bg-lightBlue/5 justify-center items-center">
         <div class="flex flex-col bg-white w-[500px] h-[350px] py-4 items-center rounded-md justify-between border-[1px] border-secondary/10">
+            <div>
+                <p class="font-inter text-third font-medium text-[18px]">Username</p>
+                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+                        placeholder="Username"
+                        ngModel name="username" required>
+            </div>
             <div>
                 <p class="font-inter text-third font-medium text-[18px]">Name</p>
                 <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
@@ -17,12 +23,14 @@
                 <p class="font-inter text-third font-medium text-[18px]">Password</p>
                 <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
                         placeholder="Password"
+                        type="password"
                         ngModel name="password" required>
             </div>
             <div>
                 <p class="font-inter text-third font-medium text-[18px]">Re-type the password</p>
                 <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
                         placeholder="Re-type the password"
+                        type="password"
                         ngModel name="retypePassword" required>
             </div>
             <div>

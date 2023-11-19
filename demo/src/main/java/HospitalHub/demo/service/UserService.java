@@ -59,7 +59,14 @@ public class UserService implements UserDetailsService {
             return false;
         }
         // dodati da li je jedinstven email
+        if(userRepository.findByEmailIgnoreCase(userRegisterDto.getEmail()) != null){
+            return false;
+        }
         // dodati da li se sifre poklapaju.
+        if(!userRegisterDto.getPassword().equals(userRegisterDto.getRetypePassword()))
+        {
+            return false;
+        }
         return true;
     }
 }

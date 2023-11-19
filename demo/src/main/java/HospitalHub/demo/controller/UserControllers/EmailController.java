@@ -93,7 +93,7 @@ public class EmailController {
     }
 
     @PostMapping("/logIn")
-    public ResponseEntity<UserLoginDTO> logIn(@RequestBody UserLoginDTO userLoginDTO)
+    public ResponseEntity<UserLoginDTO> logIn(@RequestBody UserLoginDTO userLoginDTO) //Ubaciti ovde authentication iz /generateToken
     {
         User user = userRepository.findByEmailIgnoreCase(userLoginDTO.getEmail());
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -101,7 +101,9 @@ public class EmailController {
         {
             if(user.isEnabled()) {
                 if (encoder.matches(userLoginDTO.getPassword(),user.getPassword())) {
-                    return new ResponseEntity<>(userLoginDTO, HttpStatus.OK);
+                    String token = jwtService.generateToken(user.getUsername()); //Moze biti problema sa logovanjem. Jer se loguje pomocu mejla. A security trazi username(oko generisanja tokena)
+
+                    return new ResponseEntity<>(new UserLoginDTO(token, ""), HttpStatus.OK);
                 }else{
                     return new ResponseEntity<>(new UserLoginDTO("Wrong password","0"),HttpStatus.BAD_REQUEST);
                 }
