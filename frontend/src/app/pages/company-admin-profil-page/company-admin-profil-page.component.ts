@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Equipment } from 'src/Equipment';
 import { CompanyService } from 'src/app/services/company.service';
 import { Company } from 'src/company';
 
@@ -8,6 +9,7 @@ import { Company } from 'src/company';
 })
 export class CompanyAdminProfilPageComponent implements OnInit {
   selectedCompany: Company = {} as Company;  
+  equipments: Equipment[] = [];
 
   constructor(private companyService: CompanyService) { }
 
@@ -19,12 +21,14 @@ export class CompanyAdminProfilPageComponent implements OnInit {
     this.companyService.getAdminsCompany().subscribe(
       (data) => {
         this.selectedCompany = data;
+        this.equipments = data.medicalEquipmentList;     
       },
       (error) => {
-        console.error('Došlo je do greške prilikom dohvatanja podataka o kompaniji.', error);
+        console.error('Error fetching company data.', error);
       }
     );
   }
+  
   
 }
 

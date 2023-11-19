@@ -27,7 +27,7 @@ export class UpdateCompanyAdministratorFormComponent implements OnInit{
     this.userService.updateCompanyAdministrator(UpdateCompanyAdministratorForm.value, this.updateCompanyAdministrator.id).subscribe(
       (response: UserDTO) => {
     console.log('Success:', response);
-    this.successMessage = 'Company administrator updated successfully!';
+    this.successMessage = 'Administrator updated successfully!';
     this.errorMessage = '';
     this.clearForm();
   }, error => {

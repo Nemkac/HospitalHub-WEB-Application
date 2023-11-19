@@ -12,9 +12,27 @@
             <p class="font-inter text-[24px] text-third/50 font-light">Avg. rate</p>
             <p class="font-inter text-[24px] text-third font-medium">{{ selectedCompany.avgRate }}</p>
         </div>
-        <div class="flex flex-row justify-between mx-4 my-4">
+    </div>
+    <div class="flex flex-col w-[60%] justify-center items-center space-y-8">
+        <div class="mx-4 my-4 text-center">
             <p class="font-inter text-[24px] text-third/50 font-light">Medical Equipment</p>
-            <p class="font-inter text-[24px] text-third font-medium">{{ selectedCompany && selectedCompany.medicalEquipmentList && selectedCompany.medicalEquipmentList[0] ? selectedCompany.medicalEquipmentList[0].name : 'N/A' }}</p>
+        </div>
+        <div class="flex flex-row flex-start flex-wrap w-full justify-center">
+            <div *ngFor="let equipment of equipments" class="flex flex-row bg-white w-[500px] h-[220px] rounded-md shadow-md 
+                                                            cursor-pointer mt-6 hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
+                <div class="flex p-4 w-[40%]">
+                    <img src="../../../assets/equipment2.png" />
+                </div>
+                <div class="flex w-[60%] flex-col p-4 font-inter text-third">
+                <p class="font-semibold text-[20px]">{{ equipment?.name }}</p>
+                <p class="font-light text-[16px]">{{ equipment?.type }}</p>
+                <hr class="w-full mt-[10px] mb-[5px]">
+                <div class="flex flex-col h-[120px]">
+                    <p class="text-[12px] font-light">Description:</p>
+                    <p class="text-[16px] font-regular">{{ equipment?.description }}</p>
+                </div>
+                <hr class="w-full mb-[10px] mt-[5px]">
+            </div>
         </div>
     </div>
     <div class="flex h-[100vh] w-[60%] justify-evenly">

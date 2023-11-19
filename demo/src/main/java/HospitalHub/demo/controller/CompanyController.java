@@ -96,7 +96,6 @@ public class CompanyController {
 
         Company selectedCompany = companyAdministrator.getCompany();
 
-        // Uklonite ove linije ako ne želite da se medicalEquipmentList prikazuje u odgovoru
         selectedCompany.getMedicalEquipmentList().forEach(equipment -> {
             equipment.setCompany(null);
         });
