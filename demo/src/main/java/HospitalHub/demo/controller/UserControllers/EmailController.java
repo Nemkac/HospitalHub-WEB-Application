@@ -115,15 +115,25 @@ public class EmailController {
     }
     @PostMapping(value = "/generateToken")
     public String authenticateAndGetToken(@RequestBody AuthRequestDTO authRequest) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-        if (authentication.isAuthenticated()) {
-
-            return jwtService.generateToken(authRequest.getUsername());
+       Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+       if (authentication.isAuthenticated()) {
+        return jwtService.generateToken(authRequest.getUsername());
 
         } else {
 
             throw new UsernameNotFoundException("invalid user request !");
         }
+    }
+
+    @GetMapping(value = "/getTokenUsername")
+    public String getTokenUsername(@RequestBody String token){
+        return jwtService.extractUsername(token);
+    }
+
+    @GetMapping(value = "/users/TestAuthToken")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    public String getTokenTest(){
+        return "RADI BATO";
     }
 
 }

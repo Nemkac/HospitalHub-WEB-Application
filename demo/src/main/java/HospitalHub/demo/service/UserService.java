@@ -36,13 +36,13 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public User findByUsername(String username) throws UsernameNotFoundException {
+    public Optional<User> findByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username);
     }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Optional<User> userDetail = userRepository.findByName(username);
+        Optional<User> userDetail = userRepository.findByUsername(username);
 
         // Converting userDetail to UserDetails
         return userDetail.map(UserInfoDetails::new)
