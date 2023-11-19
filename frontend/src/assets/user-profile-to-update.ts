@@ -3,6 +3,7 @@ export interface UserProfileToUpdate{
     lastName : string,
     password : string,
     dateOfBirth : Date,
+    email : string,
     phoneNumber : string,
     country : string,
     city : string,

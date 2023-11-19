@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { UserProfile } from "src/assets/user-profile";
 import { UserProfileToUpdate } from "src/assets/user-profile-to-update";
+import { Router } from "@angular/router";
 
 
 @Injectable(
@@ -13,7 +14,7 @@ import { UserProfileToUpdate } from "src/assets/user-profile-to-update";
 export class UserProfileService{
     private apiServerUrl = 'http://localhost:8081';
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient,private router:Router) {}
 
     public showUserProfile(id : number) : Observable<UserProfile> { 
         return this.http.get<UserProfile>(`${this.apiServerUrl}/api/user/profile/${id}`)
@@ -21,6 +22,10 @@ export class UserProfileService{
 
     public updateUserProfile(id:number, userProfileToUpdate:UserProfileToUpdate) : Observable<UserProfileToUpdate>{
         return this.http.put<UserProfileToUpdate>(`${this.apiServerUrl}/api/user/updateProfile/${id}`, userProfileToUpdate)
+    }
+
+    public goToUpdateProfile(id:number):void {
+        this.router.navigate([`/api/user/updateProfile/${id}`]);
     }
 
 }

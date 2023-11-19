@@ -78,7 +78,8 @@ public class UserController {
             if(userProfileDTO.getName() != ""){userService.getById(id).setName(userProfileDTO.getName());}
             if(userProfileDTO.getLastName() != ""){userService.getById(id).setLastName(userProfileDTO.getLastName()); }
             if(userProfileDTO.getPassword() != ""){userService.getById(id).setPassword(userProfileDTO.getPassword()); }
-            if(userProfileDTO.getDateOfBirth().toString() != ""){userService.getById(id).setDateOfBirth(userProfileDTO.getDateOfBirth()); }
+            if(userProfileDTO.getEmail() != ""){userService.getById(id).setEmail(userProfileDTO.getEmail()); }
+            if(userProfileDTO.getDateOfBirth().toString() != "" && userProfileDTO.getDateOfBirth()!=null){userService.getById(id).setDateOfBirth(userProfileDTO.getDateOfBirth()); }
             if(userProfileDTO.getPhoneNumber() != ""){userService.getById(id).setPhoneNumber(userProfileDTO.getPhoneNumber()); }
             if(userProfileDTO.getCountry() != ""){userService.getById(id).setCity(userProfileDTO.getCity()); }
             if(userProfileDTO.getCity() != ""){userService.getById(id).setCountry(userProfileDTO.getCountry()); }

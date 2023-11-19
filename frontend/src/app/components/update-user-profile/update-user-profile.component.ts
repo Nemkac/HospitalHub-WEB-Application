@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserProfileService } from 'src/app/services/user-profile.service';
@@ -16,6 +16,7 @@ export class UpdateUserProfileComponent implements OnInit{
   userProfileToUpdate! : UserProfileToUpdate;
   userInfo! : Observable<UserProfile>;
   user! : UserProfile;
+  date = new FormControl(new Date());
   constructor(private userProfileService:UserProfileService,
               private route : ActivatedRoute){}
 
@@ -44,6 +45,11 @@ export class UpdateUserProfileComponent implements OnInit{
         alert(error.message);
       }
     )
+  }
+
+  public getPasswordPlaceholder():string{
+    const passwordLength = this.user.password.length;
+    return '*'.repeat(passwordLength);
   }
 
 

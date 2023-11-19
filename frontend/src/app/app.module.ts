@@ -13,6 +13,11 @@ import { AppRoutingModule, routingComponents} from './app-routing.module';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { ShowCompaniesComponent } from './components/show-companies/show-companies.component';
 import { UpdateUserProfileComponent } from './components/update-user-profile/update-user-profile.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +36,11 @@ import { UpdateUserProfileComponent } from './components/update-user-profile/upd
       HttpClientModule,
       FontAwesomeModule,
       FormsModule,
-      AppRoutingModule
+      AppRoutingModule,
+      BrowserAnimationsModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatDatepickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

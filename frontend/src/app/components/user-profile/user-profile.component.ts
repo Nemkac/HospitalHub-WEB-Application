@@ -36,4 +36,8 @@ export class UserProfileComponent implements OnInit{
     );
   }
 
+  public goToUpdate():void{
+    this.userProfileService.goToUpdateProfile(this.userId);
+  }
+
 }

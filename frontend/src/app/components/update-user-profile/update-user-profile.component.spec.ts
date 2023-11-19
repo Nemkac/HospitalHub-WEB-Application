@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { UpdateUserProfileComponent } from './update-user-profile.component';
 
 describe('UpdateUserProfileComponent', () => {

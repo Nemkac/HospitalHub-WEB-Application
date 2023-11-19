@@ -6,4 +6,4 @@ insert into company (avg_rate, id, city, country, name)
 
 
 insert into users (id,name,last_name,password,date_of_birth,email,telephone,country,city,profession,company_info,enabled)
-    values (1,'vladimir','blanusa','123','1-1-1010','vb@gm','381','srbija','krag','jebac','najjaca firmetino bajo','true')
+    values (1,'vladimir','blanusa','123','1-1-1010','vb@gm','381','srbija','krag','profesn','najjaca firmetino bajo','true')

@@ -11,47 +11,48 @@
 
       <div class="grid grid-cols-2 gap-4">
         <div>
-          <strong>Name:</strong> {{ userProfile.name }}
+          <strong>Name:</strong> <br> {{ userProfile.name }}
         </div>
         <div>
-          <strong>Last Name:</strong> {{ userProfile.lastName }}
+          <strong>Last Name:</strong> <br> {{ userProfile.lastName }}
         </div>
         <div>
-          <strong>Date of Birth:</strong> {{ userProfile.dateOfBirth | date: 'yyyy-MM-dd' }}
+          <strong>Date of Birth:</strong> <br> {{ userProfile.dateOfBirth | date: 'yyyy-MM-dd' }}
         </div>
 
-        <!-- Add more fields as needed -->
-
-        <!-- Example: Displaying email only for users who have an email -->
         <div *ngIf="userProfile.email">
-          <strong>Email:</strong> {{ userProfile.email }}
-        </div>
-
-        <!-- Example: Displaying company info only for users who have company info -->
-        <div *ngIf="userProfile.companyInfo">
-          <strong>Phone number:</strong> {{ userProfile.phoneNumber }}
+          <strong>Email:</strong> <br> {{ userProfile.email }}
         </div>
 
         <div *ngIf="userProfile.companyInfo">
-          <strong>Country:</strong> {{ userProfile.country }}
+          <strong>Phone number:</strong> <br> {{ userProfile.phoneNumber }}
         </div>
 
         <div *ngIf="userProfile.companyInfo">
-          <strong>City:</strong> {{ userProfile.city }}
+          <strong>Country:</strong>  <br> {{ userProfile.country }}
         </div>
 
         <div *ngIf="userProfile.companyInfo">
-          <strong>Penalty points:</strong> {{ userProfile.penaltyPoints }}
+          <strong>City:</strong> <br> {{ userProfile.city }}
+        </div>
+
+        <div *ngIf="userProfile.companyInfo">
+          <strong>Penalty points:</strong> <br> {{ userProfile.penaltyPoints }}
         </div>
 
         <div *ngIf="userProfile.profession">
-          <strong>Profession:</strong> {{ userProfile.profession }}
+          <strong>Profession:</strong> <br> {{ userProfile.profession }}
         </div>
-        
+
       </div>
+      <button class="w-[300px] mr-16  text-center mt-16 text-[20px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
+      text-white rounded-md h-[45px]"(click)="goToUpdate()">Update profile</button>
     </div>
+    
   </div>
+  
 </div>
+
 
 <div *ngIf="!userProfile" class="text-center mt-8">
   <p>Loading...</p>
