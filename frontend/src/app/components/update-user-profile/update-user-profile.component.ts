@@ -39,6 +39,7 @@ export class UpdateUserProfileComponent implements OnInit{
     this.userProfileService.updateUserProfile(this.userId,userProfileToUpdate.value).subscribe(
       (response:UserProfileToUpdate) => {
         this.userProfileToUpdate = response;
+        window.location.reload();
         console.log(response);
       },
       (error:HttpErrorResponse) => {

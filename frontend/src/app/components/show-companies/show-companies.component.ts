@@ -21,6 +21,7 @@ export class ShowCompaniesComponent implements OnInit {
   byName! : string;
   byCountry! : string;
   byCity!: string;
+  byRate!: number;
   constructor(private showCompaniesService : ShowCompaniesService, 
               private route : ActivatedRoute,
               private router : Router) {}

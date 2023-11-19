@@ -81,8 +81,8 @@ public class UserController {
             if(userProfileDTO.getEmail() != ""){userService.getById(id).setEmail(userProfileDTO.getEmail()); }
             if(userProfileDTO.getDateOfBirth().toString() != "" && userProfileDTO.getDateOfBirth()!=null){userService.getById(id).setDateOfBirth(userProfileDTO.getDateOfBirth()); }
             if(userProfileDTO.getPhoneNumber() != ""){userService.getById(id).setPhoneNumber(userProfileDTO.getPhoneNumber()); }
-            if(userProfileDTO.getCountry() != ""){userService.getById(id).setCity(userProfileDTO.getCity()); }
-            if(userProfileDTO.getCity() != ""){userService.getById(id).setCountry(userProfileDTO.getCountry()); }
+            if(userProfileDTO.getCountry() != ""){userService.getById(id).setCountry(userProfileDTO.getCountry()); }
+            if(userProfileDTO.getCity() != ""){userService.getById(id).setCity(userProfileDTO.getCity()); }
             if(userProfileDTO.getProfession() != ""){userService.getById(id).setProfession(userProfileDTO.getProfession()); }
             if(userProfileDTO.getCompanyInfo() != ""){userService.getById(id).setCompanyInfo(userProfileDTO.getCompanyInfo()); }
             userService.save(userService.getById(id));
