@@ -1,6 +1,8 @@
 package HospitalHub.demo.controller;
 
+import HospitalHub.demo.dto.CompanyDTO;
 import HospitalHub.demo.dto.MedicalEquipmentDTO;
+import HospitalHub.demo.dto.SearchEquipmentDTO;
 import HospitalHub.demo.model.Company;
 import HospitalHub.demo.model.MedicalEquipment;
 import HospitalHub.demo.service.CompanyService;
@@ -29,9 +31,6 @@ public class MedicalEquipmentController {
         List<MedicalEquipmentDTO> dtos = new ArrayList<>();
 
         for(Company company : companies){
-            /*company.getMedicalEquipmentList().forEach(equipment -> {
-                equipment.setCompany(null);
-            });*/
             List<MedicalEquipment> equipments = company.getMedicalEquipmentList();
             for(MedicalEquipment eq : equipments){
                 MedicalEquipmentDTO dto = new MedicalEquipmentDTO(eq.getName(), eq.getType(), eq.getDescription(), eq.getPrice());
@@ -43,7 +42,7 @@ public class MedicalEquipmentController {
     }
 
     @GetMapping(value = "/getBySearchParameters")
-    public ResponseEntity<List<MedicalEquipmentDTO>> getEquipmentBySearchParameters(@RequestParam String equipmentName){
+    public ResponseEntity<SearchEquipmentDTO> getEquipmentBySearchParameters(@RequestParam String equipmentName){
         List<MedicalEquipment> equipments = medicalEqupimentService.searchByEquipmentName(equipmentName);
         List<MedicalEquipmentDTO> dtos = new ArrayList<>();
 
@@ -52,7 +51,24 @@ public class MedicalEquipmentController {
             dtos.add(dto);
         }
 
-        return new ResponseEntity<>(dtos, HttpStatus.OK);
+        List<Company> allCompanies = companyService.findAll();
+        List<CompanyDTO> companiesWithResearchedEquipment = new ArrayList<>();
+
+        for(Company company : allCompanies){
+            List<MedicalEquipment> companyEquipment = company.getMedicalEquipmentList();
+            CompanyDTO companyDTO = new CompanyDTO(company);
+            for(MedicalEquipment equipment : equipments){
+                if(companyEquipment.contains(equipment)){
+                    if(!companiesWithResearchedEquipment.contains(companyDTO)){
+                        companiesWithResearchedEquipment.add(companyDTO);
+                    }
+                }
+            }
+        }
+
+        SearchEquipmentDTO response = new SearchEquipmentDTO(dtos, companiesWithResearchedEquipment);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping(value = "/filterByType")
@@ -93,5 +109,4 @@ public class MedicalEquipmentController {
 
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
-
 }

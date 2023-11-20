@@ -1,3 +1,4 @@
+import { SearchEquipmentDTO } from 'src/SearchEquipmentDTO';
 import { Equipment } from './../../Equipment';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
@@ -15,8 +16,8 @@ export class EquipmentService {
         return this.http.get<Equipment[]>(`${this.apiServerUrl}/api/equipment/getAll`);
     }
 
-    public getEquipmentBySearchParameter(searchTerm: string) : Observable<Equipment[]> {
-        return this.http.get<Equipment[]>(`${this.apiServerUrl}/api/equipment/getBySearchParameters?equipmentName=${searchTerm}`);
+    public getEquipmentBySearchParameter(searchTerm: string) : Observable<SearchEquipmentDTO> {
+        return this.http.get<SearchEquipmentDTO>(`${this.apiServerUrl}/api/equipment/getBySearchParameters?equipmentName=${searchTerm}`);
     }
 
     public getEquipmentByFilterParameter(filterTerm: string): Observable<Equipment[]> {

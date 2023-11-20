@@ -22,5 +22,4 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
      List<Company> getAllByCountryIgnoreCase(String country);
 
      List<Company> getAllByNameContainingIgnoreCaseAndCountryContainingIgnoreCaseAndCityContainingIgnoreCaseAndAvgRateGreaterThanEqual(String name, String country, String city, Double avgRate);
-
 }

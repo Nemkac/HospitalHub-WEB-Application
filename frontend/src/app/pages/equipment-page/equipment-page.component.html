@@ -41,7 +41,7 @@
         <div class="w-full h-auto mt-2">
             <div class="flex flex-row flex-start flex-wrap w-full justify-between">
                 <div *ngFor="let equipment of filteredEquipments" class="flex flex-col bg-white w-[300px] h-auto rounded-md shadow-md cursor-pointer mt-6
-                                                                 hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
+                                                                            hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
                     <div class="flex p-4 w-full">
                         <img src="../../../assets/equipment.png"/>
                     </div>
@@ -61,6 +61,36 @@
                             </button>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col mt-16">
+        <p class="font-inter font-medium text-third text-[24px]">
+            The selected equipment is available in the following companies:
+        </p>
+    </div>
+    <div class="flex flex-row justify-between mt-4">
+        <div *ngFor="let company of filteredCompanies" 
+            class="flex flex-col w-[300px] h-auto rounded-md shadow-md cursor-pointer bg-white p-[10px]
+                    hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
+            <img src="../../../assets/mb1.jpg" class="rounded-t-[16px]">
+            <div class="flex flex-col mt-2">
+                <div class="flex flex-row justify-between items-center">
+                    <p class="font-inter font-light text-third text-[16px]">Name:</p>
+                    <p class="font-inter font-medium text-third text-[16px]">{{company?.name}}</p>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <div class="flex flex-row justify-between items-center">
+                    <p class="font-inter font-light text-third text-[16px]">Location:</p>
+                    <p class="font-inter font-medium text-third text-[16px]">{{company?.city}}, {{company?.country}}</p>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <div class="flex flex-row justify-between items-center">
+                    <p class="font-inter font-light text-third text-[16px]">Average Rate:</p>
+                    <p class="font-inter font-medium text-third text-[16px]">{{company?.avgRate}}</p>
                 </div>
             </div>
         </div>

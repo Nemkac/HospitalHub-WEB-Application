@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "Equipment")
@@ -82,5 +84,20 @@ public class MedicalEquipment {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        MedicalEquipment other = (MedicalEquipment) obj;
+        return Objects.equals(name, other.name) &&
+                Objects.equals(type, other.type) &&
+                Objects.equals(description, other.description) &&
+                Objects.equals(price, other.price);
     }
 }
