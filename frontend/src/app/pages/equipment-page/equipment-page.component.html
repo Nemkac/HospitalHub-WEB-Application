@@ -1,10 +1,10 @@
 <div class="flex flex-col bg-lightBlue/5 flex px-64 py-32 h-auto">
     <div class="flex flex-row w-full">
-        <input  [(ngModel)]="searchTerm" 
+        <input  [(ngModel)]="name" 
                 placeholder="Enter product name here"
                 class="h-[60px] w-[90%] rounded-l-full bg-third/20 text-white px-16 text-[24px] font-semibold focus:outline-none">
         <button class="h-[60px] w-[10%] bg-secondary text-white text-[24px] rounded-r-full items-center justify-center"
-                (click)="searchEquipment(searchTerm)">
+                (click)="combinedSearch(name, minPrice, maxPrice, type)">
             <fa-icon [icon] = "faSearch"/>
         </button>
     </div>
@@ -25,12 +25,13 @@
                             [(ngModel)]="maxPrice" />
                 </div>
                 <button class="w-[180px] font-inter text-[18px] mx-4 transition-[0.5s] text-white bg-secondary hover:bg-lightBlue cursor-pointer rounded-md"
-                        (click)="filterEquipmentByPriceRange(minPrice, maxPrice)">Filter by Price</button>                
+                        (click)="combinedSearch(name, minPrice, maxPrice, type)">Filter by Price</button>                
             </div>
             <div class="flex flex-row items-center">
                 <label for="types" class="text-third text-[18px] font-inter font-medium">Equipment type:</label>
                 <select name="types" id="types" class="ml-2 w-[150px] h-[30px] text-third rounded-md font-inter text-[18px]"
-                        [(ngModel)]="filterTerm" (change)="filterEquipmentByType(filterTerm)">
+                        [(ngModel)]="type" (change)="combinedSearch(name, minPrice, maxPrice, type)">
+                    <option value="">Any</option>
                     <option value="Machine">Machines</option>
                     <option value="Diagnostics">Diagnostics</option>
                     <option value="Imaging">Imaging</option>

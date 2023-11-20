@@ -40,73 +40,39 @@ public class MedicalEquipmentController {
 
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
+    
 
-    @GetMapping(value = "/getBySearchParameters")
-    public ResponseEntity<SearchEquipmentDTO> getEquipmentBySearchParameters(@RequestParam String equipmentName){
-        List<MedicalEquipment> equipments = medicalEqupimentService.searchByEquipmentName(equipmentName);
-        List<MedicalEquipmentDTO> dtos = new ArrayList<>();
+    @GetMapping(value = "/combinedSearch")
+    public ResponseEntity<SearchEquipmentDTO> combinedSearch(
+            @RequestParam(required = false)String name,
+            @RequestParam(required = false)Double minPrice,
+            @RequestParam(required = false)Double maxPrice,
+            @RequestParam(required = false)String type
+    ){
+        String searchName,searchType;
+        Double filterMinPrice, filterMaxPrice;
+        if(name == null){ searchName = "";} else {searchName = name;}
+        if(type == null){ searchType = "";} else {searchType = type;}
+        if(minPrice == 0.0){ filterMinPrice = 0.0;} else {filterMinPrice = minPrice;}
+        if(maxPrice == 0.0){ filterMaxPrice = 2000.0;} else {filterMaxPrice = maxPrice;}
 
-        for(MedicalEquipment equipment : equipments){
-            MedicalEquipmentDTO dto = new MedicalEquipmentDTO(equipment.getName(), equipment.getType(), equipment.getDescription(), equipment.getPrice());
-            dtos.add(dto);
-        }
+        List<MedicalEquipment> equipments = medicalEqupimentService.combinedSearching(searchName, filterMinPrice, filterMaxPrice, searchType);
 
-        List<Company> allCompanies = companyService.findAll();
-        List<CompanyDTO> companiesWithResearchedEquipment = new ArrayList<>();
+        List<MedicalEquipmentDTO> DTOs = new ArrayList<>();
+        List<CompanyDTO> companyDTOs = new ArrayList<>();
 
-        for(Company company : allCompanies){
-            List<MedicalEquipment> companyEquipment = company.getMedicalEquipmentList();
+        for(MedicalEquipment eq : equipments){
+            Company company = eq.getCompany();
             CompanyDTO companyDTO = new CompanyDTO(company);
-            for(MedicalEquipment equipment : equipments){
-                if(companyEquipment.contains(equipment)){
-                    if(!companiesWithResearchedEquipment.contains(companyDTO)){
-                        companiesWithResearchedEquipment.add(companyDTO);
-                    }
-                }
+            if(!companyDTOs.contains(companyDTO)){
+                companyDTOs.add(companyDTO);
             }
+            MedicalEquipmentDTO dto = new MedicalEquipmentDTO(eq.getName(), eq.getType(), eq.getDescription(), eq.getPrice());
+            DTOs.add(dto);
         }
 
-        SearchEquipmentDTO response = new SearchEquipmentDTO(dtos, companiesWithResearchedEquipment);
+        SearchEquipmentDTO response = new SearchEquipmentDTO(DTOs, companyDTOs);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/filterByType")
-    public ResponseEntity<List<MedicalEquipmentDTO>> filterByType (@RequestParam String selectedType){
-        List<MedicalEquipment> equipments = medicalEqupimentService.filterByType(selectedType);
-        List<MedicalEquipmentDTO> dtos = new ArrayList<>();
-
-        for(MedicalEquipment equipment : equipments){
-            MedicalEquipmentDTO dto = new MedicalEquipmentDTO(equipment.getName(), equipment.getType(), equipment.getDescription(), equipment.getPrice());
-            dtos.add(dto);
-        }
-
-        return new ResponseEntity<>(dtos, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/filterByPriceRange")
-    public ResponseEntity<List<MedicalEquipmentDTO>> filterByPriceRange(
-            @RequestParam Double minPrice,
-            @RequestParam Double maxPrice
-    ){
-        List<MedicalEquipment> equipments;
-
-        if(minPrice > 0 && maxPrice > 0 && maxPrice > minPrice) {
-            equipments = medicalEqupimentService.filterByPriceRange(minPrice, maxPrice);
-        }
-        else if(minPrice > maxPrice){
-            equipments = new ArrayList<>();
-        } else {
-            equipments = medicalEqupimentService.findAll();
-        }
-
-        List<MedicalEquipmentDTO> dtos = new ArrayList<>();
-
-        for(MedicalEquipment equipment : equipments){
-            MedicalEquipmentDTO dto = new MedicalEquipmentDTO(equipment.getName(), equipment.getType(), equipment.getDescription(), equipment.getPrice());
-            dtos.add(dto);
-        }
-
-        return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 }

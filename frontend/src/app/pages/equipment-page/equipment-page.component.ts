@@ -1,10 +1,10 @@
+import { SearchEquipmentDTO } from './../../../SearchEquipmentDTO';
 import { Company } from './../../../company';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { faSearch} from '@fortawesome/free-solid-svg-icons';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { Equipment } from 'src/Equipment';
-import { SearchEquipmentDTO } from 'src/SearchEquipmentDTO';
 
 @Component({
   selector: 'app-equipment-page',
@@ -17,10 +17,10 @@ export class EquipmentPageComponent implements OnInit{
   public filteredEquipments: Equipment[] = [];
   public filteredCompanies: Company[] = [];
 
-  public searchTerm: string = '';
-  public filterTerm: string = '';
-  public minPrice : number = 0;  
-  public maxPrice : number = 0;
+  public name: string = '';
+  public type: string = '';
+  public minPrice : number = 0.0;  
+  public maxPrice : number = 0.0;
 
   @Output() priceRangeChange = new EventEmitter<[number, number]>();
 
@@ -42,45 +42,19 @@ export class EquipmentPageComponent implements OnInit{
     );
   }
 
-  public searchEquipment(searchTerm: string): void {
-    this.equipmentService.getEquipmentBySearchParameter(searchTerm).subscribe(
+  public combinedSearch(name: string, minPrice: number, maxPrice: number, type: string){
+    this.equipmentService.getEquipmentByCombinedSearching(name, minPrice, maxPrice, type).subscribe(
       (response: SearchEquipmentDTO) => {
-        console.log(response);
         this.filteredEquipments = response.equipmentDTOList;
-        if(searchTerm == ""){
+        if(name == "" && minPrice == 0 && maxPrice == 0 && type == ""){
           this.filteredCompanies = [];
         } else {
           this.filteredCompanies = response.companies;
         }
-        console.log(this.filteredCompanies);
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-  }
-
-  public filterEquipmentByType(filterTerm: string): void{
-    this.equipmentService.getEquipmentByFilterParameter(filterTerm).subscribe(
-      (response: Equipment[]) => {
-        console.log(response);
-        this.filteredEquipments = response;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
     )
-  }
-
-  public filterEquipmentByPriceRange(minPrice: number, maxPrice: number): void {
-    this.equipmentService.getEquipmentByPriceRange(minPrice, maxPrice).subscribe(
-      (response: Equipment[]) => {
-        console.log(response);
-        this.filteredEquipments = response;
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
   }
 }

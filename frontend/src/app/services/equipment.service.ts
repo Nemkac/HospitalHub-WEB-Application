@@ -16,15 +16,7 @@ export class EquipmentService {
         return this.http.get<Equipment[]>(`${this.apiServerUrl}/api/equipment/getAll`);
     }
 
-    public getEquipmentBySearchParameter(searchTerm: string) : Observable<SearchEquipmentDTO> {
-        return this.http.get<SearchEquipmentDTO>(`${this.apiServerUrl}/api/equipment/getBySearchParameters?equipmentName=${searchTerm}`);
-    }
-
-    public getEquipmentByFilterParameter(filterTerm: string): Observable<Equipment[]> {
-        return this.http.get<Equipment[]>(`${this.apiServerUrl}/api/equipment/filterByType?selectedType=${filterTerm}`);
-    }
-
-    public getEquipmentByPriceRange(minPrice: number, maxPrice: number) : Observable<Equipment[]> {
-        return this.http.get<Equipment[]>(`${this.apiServerUrl}/api/equipment/filterByPriceRange?minPrice=${minPrice}&maxPrice=${maxPrice}`);
+    public getEquipmentByCombinedSearching(name: string, minPrice: number, maxPrice: number, type: string) : Observable<SearchEquipmentDTO>{
+        return this.http.get<SearchEquipmentDTO>(`${this.apiServerUrl}/api/equipment/combinedSearch?name=${name}&minPrice=${minPrice}&maxPrice=${maxPrice}&type=${type}`);
     }
 }

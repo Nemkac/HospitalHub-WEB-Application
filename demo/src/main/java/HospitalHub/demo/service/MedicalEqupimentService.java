@@ -33,4 +33,8 @@ public class MedicalEqupimentService {
         return medicalEquipmentRepository.findByPriceBetween(minPrice, maxPrice);
     }
 
+    public List<MedicalEquipment> combinedSearching(String name, Double minPrice, Double maxPrice, String type){
+        return medicalEquipmentRepository.getAllByNameContainingIgnoreCaseAndPriceGreaterThanEqualAndPriceLessThanEqualAndTypeContainingIgnoreCase(name, minPrice, maxPrice, type);
+    }
+
 }
