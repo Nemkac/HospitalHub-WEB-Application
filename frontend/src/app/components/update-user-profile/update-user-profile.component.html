@@ -9,7 +9,7 @@
       <input ngModel name="password" type="password" class="border p-2 rounded" placeholder="{{getPasswordPlaceholder()}}">
       <input ngModel name="country" type="text" class="border p-2 rounded" placeholder="{{user.country}}">
       <input ngModel name="city" type="text" class="border p-2 rounded" placeholder="{{user.city}}">
-      <input ngModel name="dateOfBirth" type="text" class="border p-2 rounded" placeholder="{{user.dateOfBirth}}" >
+      <input ngModel name="dateOfBirth" type="text" class="border p-2 rounded" [(ngModel)]="usersBirthDate" placeholder="{{user.dateOfBirth}}" >
       <input ngModel name="phoneNumber" type="text" class="border p-2 rounded" placeholder="{{user.phoneNumber}}">
       <input ngModel name="profession" type="text" class="border p-2 rounded" placeholder="{{user.profession}}">
       <button class="text-[20px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 

@@ -17,6 +17,7 @@ export class UpdateUserProfileComponent implements OnInit{
   userInfo! : Observable<UserProfile>;
   user! : UserProfile;
   date = new FormControl(new Date());
+  usersBirthDate = "";
   constructor(private userProfileService:UserProfileService,
               private route : ActivatedRoute){}
 
@@ -31,6 +32,7 @@ export class UpdateUserProfileComponent implements OnInit{
     this.userInfo.subscribe(
       (user:UserProfile) =>{
         this.user = user;
+        this.usersBirthDate = user.dateOfBirth.toString();
       }
     )
   }
