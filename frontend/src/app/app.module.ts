@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
 import { NgbModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -40,6 +42,7 @@ import { TestemonialCardComponent } from './components/testemonial-card/testemon
       TestemonialCardComponent,
   ],
   imports: [
+      BrowserAnimationsModule,
       BrowserModule,
       HttpClientModule,
       FontAwesomeModule,
@@ -47,6 +50,7 @@ import { TestemonialCardComponent } from './components/testemonial-card/testemon
       AppRoutingModule,
       NgbModule,
       NgbCarouselModule,
+      CarouselModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

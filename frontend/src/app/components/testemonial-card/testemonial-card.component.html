@@ -1,41 +1,40 @@
-
-<div class="flex w-[1200px] h-[600px]">
-    <div class="flex flex-col relative w-full items-center justify-center">7
-        <div class="flex absolute w-[500px] h-auto left-0 z-[1] shadow-xl">
-            <img src="../../../assets/team-1.jpg"/>
-        </div>
-        <div class="flex flex-col w-[80%] h-full pl-72 pr-8 py-8 bg-white absolute right-0 z-[0] rounded-md justify-between">
-            <div class="flex flex-col justify-end w-full text-right">
-                <p class="font-inter text-[16px] font-light text-third"> 
-                    November 15, 2023
-                </p>
-            </div>
-            <div class="flex w-full justify-start">
-                <p class="font-black font-inter text-[30px] text-third">
-                    "Exceptional Equipment, Exceptional Care"
-                </p>
-            </div>
-            <div class="flex w-full">
-                <p class="font-inter font-medium text-[24px] text-third">
-                    "As the Chief of Cardiology at St. Luke's, I constantly seek the best resources for patient care. 
-                    Our recent collaboration with HospitalHub for renting medical equipment has been transformative. 
-                    The state-of-the-art devices have significantly enhanced our diagnostic capabilities and patient outcomes. 
-                    The reliability and precision of the equipment, coupled with the seamless support from HospitalHub, 
-                    have exceeded our expectations. Grateful for this partnership!"
-                </p>
-            </div>
-            <div class="flex flex-row justify-between items-center">
-                <div class="flex flex-row items-center justify-center">
-                    <fa-icon [icon]="faStar" class="text-[24px] text-yellow"></fa-icon>
-                    <p class="font-inter font-bold text-[30px] ml-[10px] text-yellow">5/5</p>
+<ngb-carousel [interval]="7000" [animation]="true" [pauseOnHover]="false" class="flex pb-20 px-[180px]">
+    <ng-template ngbSlide *ngFor="let image of images">
+        <div class="flex w-[1300px] h-[600px]">
+            <div class="flex flex-col relative w-full items-center justify-center">7
+                <div class="flex absolute w-[500px] h-auto left-0 z-[1] shadow-xl">
+                    <img src="../../../assets/{{image.img}}"/>
                 </div>
-                <div class="flex flex-col justify-end w-full text-right">
-                    <p class="font-inter text-[28px] font-bold text-third"> Dr. James Thompson </p>
-                    <p class="font-inter text-[16px] font-light text-third"> 
-                        St. Luke's Medical Center, Chief of Cardiology
-                    </p>
+                <div class="flex flex-col w-[80%] h-full pl-72 pr-8 py-8 bg-white absolute right-0 z-[0] rounded-md justify-between">
+                    <div class="flex flex-col justify-end w-full text-right">
+                        <p class="font-inter text-[16px] font-light text-third"> 
+                            {{image?.date}}
+                        </p>
+                    </div>
+                    <div class="flex w-full justify-start">
+                        <p class="font-black font-inter text-[28px] text-third">
+                            "{{image?.header}}"
+                        </p>
+                    </div>
+                    <div class="flex w-full my-auto">
+                        <p class="font-inter font-medium text-[23px] text-third h-[350px]">
+                            "{{image?.text}}"
+                        </p>
+                    </div>
+                    <div class="flex flex-row justify-between items-center">
+                        <div class="flex flex-row items-center justify-center">
+                            <fa-icon [icon]="faStar" class="text-[24px] text-yellow"></fa-icon>
+                            <p class="font-inter font-bold text-[30px] ml-[10px] text-yellow">{{image?.rating}}/5</p>
+                        </div>
+                        <div class="flex flex-col justify-end w-full text-right">
+                            <p class="font-inter text-[28px] font-bold text-third">{{image?.doctor}}</p>
+                            <p class="font-inter text-[16px] font-light text-third"> 
+                                {{image?.hospital}}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </ng-template>
+</ngb-carousel>
