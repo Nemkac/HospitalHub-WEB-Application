@@ -3,7 +3,7 @@
         <input  [(ngModel)]="name" 
                 placeholder="Enter product name here"
                 class="h-[60px] w-[90%] rounded-l-full bg-third/20 text-white px-16 text-[24px] font-semibold focus:outline-none">
-        <button class="h-[60px] w-[10%] bg-secondary text-white text-[24px] rounded-r-full items-center justify-center"
+        <button class="h-[60px] w-[10%] bg-secondary hover:bg-lightBlue hover:text-[28px] transition-[0.5s] text-white text-[24px] rounded-r-full items-center justify-center"
                 (click)="combinedSearch(name, minPrice, maxPrice, type)">
             <fa-icon [icon] = "faSearch"/>
         </button>
@@ -24,7 +24,7 @@
                             class="w-[100px] rounded-md text-[16px] font-inter font-medium text-third px-2"
                             [(ngModel)]="maxPrice" />
                 </div>
-                <button class="w-[180px] font-inter text-[18px] mx-4 transition-[0.5s] text-white bg-secondary hover:bg-lightBlue cursor-pointer rounded-md"
+                <button class="w-[180px] font-semibold font-inter text-[18px] mx-4 transition-[0.5s] text-white bg-secondary hover:bg-lightBlue cursor-pointer rounded-md"
                         (click)="combinedSearch(name, minPrice, maxPrice, type)">Filter by Price</button>                
             </div>
             <div class="flex flex-row items-center">

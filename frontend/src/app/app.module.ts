@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
+import { NgbModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -15,6 +16,10 @@ import { UpdateCompanyAdministratorFormComponent } from './components/update-com
 import { CreateCompanyAdministratorFormComponent } from './components/create-company-administrator-form/create-company-administrator-form.component';
 import { EquipmentPageComponent } from './pages/equipment-page/equipment-page.component';
 import { EquipmentcardComponent } from './components/equipmentcard/equipmentcard.component';
+import { CompainesPageComponent } from './pages/compaines-page/compaines-page.component';
+import { TestemonialsPageComponent } from './pages/testemonials-page/testemonials-page.component';
+import { PricingPageComponent } from './pages/pricing-page/pricing-page.component';
+import { TestemonialCardComponent } from './components/testemonial-card/testemonial-card.component';
 
 @NgModule({
   declarations: [
@@ -29,13 +34,19 @@ import { EquipmentcardComponent } from './components/equipmentcard/equipmentcard
       CreateCompanyAdministratorFormComponent,
       EquipmentPageComponent,
       EquipmentcardComponent,
+      CompainesPageComponent,
+      TestemonialsPageComponent,
+      PricingPageComponent,
+      TestemonialCardComponent,
   ],
   imports: [
       BrowserModule,
       HttpClientModule,
       FontAwesomeModule,
       FormsModule,
-      AppRoutingModule
+      AppRoutingModule,
+      NgbModule,
+      NgbCarouselModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

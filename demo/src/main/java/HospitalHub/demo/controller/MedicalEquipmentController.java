@@ -40,7 +40,7 @@ public class MedicalEquipmentController {
 
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
-    
+
 
     @GetMapping(value = "/combinedSearch")
     public ResponseEntity<SearchEquipmentDTO> combinedSearch(
