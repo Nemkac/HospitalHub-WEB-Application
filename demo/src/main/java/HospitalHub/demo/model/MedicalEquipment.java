@@ -28,18 +28,22 @@ public class MedicalEquipment {
     @Column(name = "price")
     private Double price;
 
+    @Column(name = "image")
+    private String image;
+
     @ManyToOne
     @JoinColumn(name="company_id")
     private Company company;
 
     public MedicalEquipment() {}
 
-    public MedicalEquipment(String name, String type, String description, Company company, Double price) {
+    public MedicalEquipment(String name, String type, String description, Company company, Double price, String image) {
         this.name = name;
         this.type = type;
         this.description = description;
         this.company = company;
         this.price = price;
+        this.image = image;
     }
 
     public Integer getId() {
@@ -84,6 +88,14 @@ public class MedicalEquipment {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override

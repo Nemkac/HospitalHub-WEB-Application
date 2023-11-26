@@ -13,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "api/equipment")
@@ -33,7 +35,7 @@ public class MedicalEquipmentController {
         for(Company company : companies){
             List<MedicalEquipment> equipments = company.getMedicalEquipmentList();
             for(MedicalEquipment eq : equipments){
-                MedicalEquipmentDTO dto = new MedicalEquipmentDTO(eq.getName(), eq.getType(), eq.getDescription(), eq.getPrice());
+                MedicalEquipmentDTO dto = new MedicalEquipmentDTO(eq.getName(), eq.getType(), eq.getDescription(), eq.getPrice(), eq.getImage());
                 dtos.add(dto);
             }
         }
@@ -67,7 +69,7 @@ public class MedicalEquipmentController {
             if(!companyDTOs.contains(companyDTO)){
                 companyDTOs.add(companyDTO);
             }
-            MedicalEquipmentDTO dto = new MedicalEquipmentDTO(eq.getName(), eq.getType(), eq.getDescription(), eq.getPrice());
+            MedicalEquipmentDTO dto = new MedicalEquipmentDTO(eq.getName(), eq.getType(), eq.getDescription(), eq.getPrice(), eq.getImage());
             DTOs.add(dto);
         }
 

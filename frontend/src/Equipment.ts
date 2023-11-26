@@ -4,4 +4,5 @@ export interface Equipment{
     type : string;
     description : string;
     price: number;
+    image: string;
 }

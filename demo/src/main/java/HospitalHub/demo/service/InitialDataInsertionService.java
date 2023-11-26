@@ -106,14 +106,14 @@ public class InitialDataInsertionService {
         CompanyAdministrator companyAdministrator = new CompanyAdministrator(user3);
         companyAdministratorService.save(companyAdministrator);
 
-        MedicalEquipment equipment1 = new MedicalEquipment("Respirator", "Machine", "Good respirator", company1, 320.00);
-        MedicalEquipment equipment2 = new MedicalEquipment("EKG", "Diagnostics", "Good ekg", company1, 860.00);
-        MedicalEquipment equipment3 = new MedicalEquipment("CT Scanner", "Imaging", "Good CT", company2, 1230.00);
-        MedicalEquipment equipment4 = new MedicalEquipment("Ultrasound ", "Imaging", "Good ekg", company2, 250.00);
-        MedicalEquipment equipment5 = new MedicalEquipment("Anesthesia machine", "Machine", "Good anesthesia machine", company3, 225.00);
-        MedicalEquipment equipment6 = new MedicalEquipment("Hemodialysis machine", "Machine", "Good hemodialysis machine", company3, 2000.00);
-        MedicalEquipment equipment7 = new MedicalEquipment("Hip prothesis", "Implantable", "Good prothesis", company4, 500.00);
-        MedicalEquipment equipment8 = new MedicalEquipment("Pacemaker", "Implantable", "Good pacemaker", company4, 1250.00);
+        MedicalEquipment equipment1 = new MedicalEquipment("Respirator", "Machine", "Good respirator", company1, 320.00, "respirator.png");
+        MedicalEquipment equipment2 = new MedicalEquipment("EKG", "Diagnostics", "Good ekg", company1, 860.00, "ekg.png");
+        MedicalEquipment equipment3 = new MedicalEquipment("CT Scanner", "Imaging", "Good CT", company2, 1230.00, "ctscanner.png");
+        MedicalEquipment equipment4 = new MedicalEquipment("Ultrasound ", "Imaging", "Good ekg", company2, 250.00, "ultrasound.png");
+        MedicalEquipment equipment5 = new MedicalEquipment("Anesthesia machine", "Machine", "Good anesthesia machine", company3, 225.00, "anesthesia.png");
+        MedicalEquipment equipment6 = new MedicalEquipment("Hemodialysis machine", "Machine", "Good hemodialysis machine", company3, 2000.00, "hemodialysis.png");
+        MedicalEquipment equipment7 = new MedicalEquipment("Hip prothesis", "Implantable", "Good prothesis", company4, 500.00, "prosthesis.png");
+        MedicalEquipment equipment8 = new MedicalEquipment("Pacemaker", "Implantable", "Good pacemaker", company4, 1250.00, "pacemaker.png");
 
         medicalEqupimentService.save(equipment1);
         medicalEqupimentService.save(equipment2);

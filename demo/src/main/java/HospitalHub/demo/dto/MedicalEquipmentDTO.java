@@ -8,20 +8,22 @@ public class MedicalEquipmentDTO {
     private String type;
     private String description;
     private Double price;
+    private String image;
 
     public MedicalEquipmentDTO() {
 
     }
 
     public MedicalEquipmentDTO(MedicalEquipment medicalEquipment) {
-        this(medicalEquipment.getName(), medicalEquipment.getType(), medicalEquipment.getDescription(), medicalEquipment.getPrice());
+        this(medicalEquipment.getName(), medicalEquipment.getType(), medicalEquipment.getDescription(), medicalEquipment.getPrice(), medicalEquipment.getImage());
     }
 
-    public MedicalEquipmentDTO(String name, String type, String description, Double price) {
+    public MedicalEquipmentDTO(String name, String type, String description, Double price, String image) {
         this.name = name;
         this.type = type;
         this.description = description;
         this.price = price;
+        this.image = image;
     }
 
     public Integer getId() {
@@ -54,6 +56,14 @@ public class MedicalEquipmentDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Double getPrice() {
