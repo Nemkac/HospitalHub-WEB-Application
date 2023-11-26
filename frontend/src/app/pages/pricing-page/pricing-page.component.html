@@ -1,3 +1,151 @@
-<div class="flex px-64 bg-lightBlue/5 w-full h-[100vh]">
+<div class="flex flex-col items-center justify-evenly px-64 bg-lightBlue/5 w-full h-[100vh]">
+    <div class="flex flex-col font-inter items-center">
+        <p class="text-[20px] font-medium">PRIVATE HOSPITAL?</p>
+        <div class="flex flex-row w-full items-center">
+            <hr class="w-[300px] mr-[30px] text-third">
+            <p class="font-bold text-third text-[44px]">Choose the right package for you</p>
+            <hr class="w-[300px] ml-[30px] text-third">
+        </div>
+    </div>
+    <div class="flex flex-row justify-evenly items-center w-full">
+        <div class="flex flex-col p-4 w-[350px] h-[500px] bg-white rounded-md shadow-md hover:shadow-2xl transition-[0.5s] hover:translate-y-[-0.5rem] ease-in-out">
+            <p class="font-inter font-bold text-[18px] text-third">Standard</p>
+            <div class="flex flex-row mt-6 items-start">
+                <p class="font-inter font-bold text-[36px] text-third">$64</p>
+                <p class="font-inter font-bold text-[20px] text-third mt-2 ml-2">/ Month</p>
+            </div>
+            <p class="font-semibold font-inter text-[16px] text-third my-2">
+                By choosing standard program, you get the following benefits:
+            </p>
+            <div class="flex flex-col">
+                <div class="flex flex-row items-center my-2">
+                    <fa-icon [icon]="faCheck" class="text-third text-[16px] font-bold"/>
+                    <p class="text-third font-inter font-regular text-[20px] ml-[10px]">
+                        At most 1 type of equipment
+                    </p>
+                </div>
+                <div class="flex flex-row items-center my-2">
+                    <fa-icon [icon]="faCheck" class="text-third text-[16px] font-bold"/>
+                    <p class="text-third font-inter font-regular text-[20px] ml-[10px]">Up to 8 devices
 
+                    </p>
+                </div>
+                <div class="flex flex-row items-center my-2">
+                    <fa-icon [icon]="faCheck" class="text-third text-[16px] font-bold"/>
+                    <p class="text-third font-inter font-regular text-[20px] ml-[10px]">
+                        Up to 3 deliveries per month
+                    </p>
+                </div>
+                <div class="flex flex-row items-center my-2">
+                    <fa-icon [icon]="faCheck" class="text-third/50 text-[16px] font-bold"/>
+                    <p class="text-third/50 font-inter font-regular text-[20px] ml-[10px]">Free delivery</p>
+                </div>
+                <div class="flex flex-row items-center my-2">
+                    <fa-icon [icon]="faCheck" class="text-third/50 text-[16px] font-bold"/>
+                    <p class="text-third/50 font-inter font-regular text-[20px] ml-[10px]">Free equipment service</p>
+                </div>
+            </div>
+            <div class="flex w-full justify-start items-end h-full">
+                <button class="flex text-white bg-third text-[14px] w-[150px] h-[40px] items-center 
+                                justify-center font-inter font-bold rounded-md hover:bg-secondary transition-[0.5s]">
+                    Choose package
+                </button>
+            </div>
+        </div>
+        <div class="flex flex-col p-4 w-[450px] h-[620px] bg-third rounded-md relative shadow-md hover:shadow-2xl transition-[0.5s] hover:translate-y-[-0.5rem] ease-in-out">
+            <img src="../../../assets/price-2.jpg" class="absolute top-0 left-0 opacity-[5%] w-auto h-full z-[1]">
+            <p class="font-inter font-bold text-[24px] text-white">Premium</p>
+            <div class="flex flex-row mt-6 items-start">
+                <p class="font-inter font-bold text-[46px] text-white">$340</p>
+                <p class="font-inter font-bold text-[26px] text-yellow mt-2 ml-2">/ Month</p>
+            </div>
+            <p class="font-semibold font-inter text-[18px] text-white my-2">
+                By choosing <span class="text-yellow">premium</span> program, you get the following benefits:
+            </p>
+            <div class="flex flex-col">
+                <div class="flex flex-row items-center my-2">
+                    <fa-icon [icon]="faCheck" class="text-yellow text-[18px] font-bold"/>
+                    <p class="text-white font-inter font-regular text-[24px] ml-[10px]">
+                        Unlimited types
+                    </p>
+                </div>
+                <div class="flex flex-row items-center my-2">
+                    <fa-icon [icon]="faCheck" class="text-yellow text-[18px] font-bold"/>
+                    <p class="text-white font-inter font-regular text-[24px] ml-[10px]">Up to 20 devices
+
+                    </p>
+                </div>
+                <div class="flex flex-row items-center my-2">
+                    <fa-icon [icon]="faCheck" class="text-yellow text-[18px] font-bold"/>
+                    <p class="text-white font-inter font-regular text-[24px] ml-[10px]">
+                        Unlimited number of deliveries
+                    </p>
+                </div>
+                <div class="flex flex-row items-center my-2">
+                    <fa-icon [icon]="faCheck" class="text-yellow text-[18px] font-bold"/>
+                    <p class="text-white font-inter font-regular text-[24px] ml-[10px]">Free delivery</p>
+                </div>
+                <div class="flex flex-row items-center my-2">
+                    <fa-icon [icon]="faCheck" class="text-yellow text-[18px] font-bold"/>
+                    <p class="text-white font-inter font-regular text-[24px] ml-[10px]">Free equipment service</p>
+                </div>
+                <div class="flex flex-row items-center my-2">
+                    <fa-icon [icon]="faCheck" class="text-yellow text-[18px] font-bold"/>
+                    <p class="text-white font-inter font-regular text-[24px] ml-[10px]">
+                        Free installation of equipment
+                    </p>
+                </div>
+            </div>
+            <div class="flex w-full justify-start h-full items-end">
+                <button class="flex text-third bg-yellow text-[18px] w-[200px] h-[50px] hover:bg-[#f7e116] transition-[0.5s]
+                                items-center justify-center font-inter font-bold rounded-md z-[2]">
+                    Choose package
+                </button>
+            </div>
+        </div>
+        <div class="flex flex-col p-4 w-[350px] h-[500px] bg-white rounded-md shadow-md hover:shadow-2xl transition-[0.5s] hover:translate-y-[-0.5rem] ease-in-out">
+            <p class="font-inter font-bold text-[18px] text-third">Advanced</p>
+            <div class="flex flex-row mt-6 items-start">
+                <p class="font-inter font-bold text-[36px] text-third">$150</p>
+                <p class="font-inter font-bold text-[20px] text-third mt-2 ml-2">/ Month</p>
+            </div>
+            <p class="font-semibold font-inter text-[16px] text-third my-2">
+                By choosing advanced program, you get the following benefits:
+            </p>
+            <div class="flex flex-col">
+                <div class="flex flex-row items-center my-2">
+                    <fa-icon [icon]="faCheck" class="text-third text-[16px] font-bold"/>
+                    <p class="text-third font-inter font-regular text-[20px] ml-[10px]">
+                        At most 2 type of equipment
+                    </p>
+                </div>
+                <div class="flex flex-row items-center my-2">
+                    <fa-icon [icon]="faCheck" class="text-third text-[16px] font-bold"/>
+                    <p class="text-third font-inter font-regular text-[20px] ml-[10px]">Up to 12 devices
+
+                    </p>
+                </div>
+                <div class="flex flex-row items-center my-2">
+                    <fa-icon [icon]="faCheck" class="text-third text-[16px] font-bold"/>
+                    <p class="text-third font-inter font-regular text-[20px] ml-[10px]">
+                        Up to 6 deliveries per month
+                    </p>
+                </div>
+                <div class="flex flex-row items-center my-2">
+                    <fa-icon [icon]="faCheck" class="text-third text-[16px] font-bold"/>
+                    <p class="text-third font-inter font-regular text-[20px] ml-[10px]">Free delivery</p>
+                </div>
+                <div class="flex flex-row items-center my-2">
+                    <fa-icon [icon]="faCheck" class="text-third text-[16px] font-bold"/>
+                    <p class="text-third font-inter font-regular text-[20px] ml-[10px]">Free equipment service</p>
+                </div>
+            </div>
+            <div class="flex w-full justify-start items-end h-full">
+                <button class="flex text-white bg-third text-[14px] w-[150px] h-[40px] hover:bg-secondary transition-[0.5s]
+                                items-center justify-center font-inter font-bold rounded-md">
+                    Choose package
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
