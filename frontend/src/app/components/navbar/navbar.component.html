@@ -1,10 +1,14 @@
-<div class="flex w-full bg-white h-[70px] px-64 fixed z-[5]
-                items-center justify-between shadow-xl">
+<div [ngClass]="{'bg-transparent shadow-none h-[60px] py-12 px-[380px]': isTransparent,
+                'bg-white shadow-xl h-[70px] px-64': !isTransparent}"  class="flex w-full bg-white fixed z-[5]
+                items-center justify-between transition-[2s]">
     <a routerLink="/">
-        <img src="../assets/NavLogo.png" class="w-[200px] cursor-pointer"/>
+        <img src="../assets/NavLogo.png" [ngClass]="{'w-[250px] h-auto': isTransparent,
+                                                    'w-[200px] h-auto': !isTransparent}"  
+            class="w-[200px] cursor-pointer"/>
     </a>
-    <ul class="flex flex-row font-inter font-medium cursor-pointer
-                    text-[16px] text-[#0582ca]">
+    <ul [ngClass]="{'text-[18px]': isTransparent,
+                     'text-[16px]': !isTransparent}" 
+        class="flex flex-row font-inter font-medium cursor-pointer text-[#0582ca]">
         <li class="hover:text-third transition-[0.5s] mx-10">
             <a routerLink="/">
                 HOME

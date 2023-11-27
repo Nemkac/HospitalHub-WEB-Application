@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, NavigationEnd, RouterEvent } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -6,6 +7,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  ngOnInit(): void {} 
+  isTransparent: boolean = true;
 
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.isTransparent = event.url === '/' || event.urlAfterRedirects === '/';
+      }
+    });
+  } 
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll() {
+    if(this.router.url === '/'){
+      this.isTransparent = window.scrollY < 220;
+    } else {
+      this.isTransparent = false;
+    }
+  }
 }
