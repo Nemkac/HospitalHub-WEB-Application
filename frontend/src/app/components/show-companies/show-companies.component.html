@@ -1,0 +1,29 @@
+<form #filterCompanies="ngForm" (ngSubmit)="ShowCompanies()">
+  <div class="flex flex-col items-center">
+    <h2 class="text-2xl font-bold mb-4 text-white">.</h2>
+    <h2 class="text-2xl font-bold mb-4 text-white">.</h2>
+    <h2 class="text-2xl font-bold mb-4 text-blue">List of Companies</h2>
+    <div class="flex mb-4">
+      <input ngModel name="name" id="name" type="text" class="border p-2 mr-2 rounded" placeholder="Name" [(ngModel)]="byName">
+      <input ngModel name="country" id="country" type="text" class="border p-2 mr-2 rounded" placeholder="Country" [(ngModel)]="byCountry">
+      <input ngModel name="city" id="city" type="text" class="border p-2 rounded" placeholder="City" [(ngModel)]="byCity">
+      <input ngModel name="avgRate" id="avgRate" type="text" class="ml-2 border p-2 rounded" placeholder="Minimum rate" [(ngModel)]="byRate">      
+    </div>
+    <button routerLink="/api/user/companies" [queryParams]="{ name: byName, country: byCountry, city: byCity, avgRate : byRate }" class="ml-2 w-[150px] text-[20px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold text-white rounded-md h-[45px]" type="submit">Search</button>
+
+    <div class="flex flex-col items-center">
+      <div *ngFor="let company of companies" class="max-w-lg w-full rounded overflow-hidden shadow-lg m-4 flex">
+        <div class="flex-shrink-0">
+          <img class="w-60 object-cover " src="./assets/hospital.jpg" alt="Company Logo">
+        </div>
+        <div class="px-6 py-4">
+          <div class="font-bold text-xl mb-2">{{ company.name }}</div>
+          <p class="text-gray-700 text-base mb-2">Country: {{ company.country }}</p>
+          <p class="text-gray-700 text-base mb-2">City: {{ company.city }}</p>
+          <p class="text-gray-700 text-base">Average Rate: {{ company.avgRate }} out of 5</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+1

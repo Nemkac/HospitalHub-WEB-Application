@@ -5,6 +5,9 @@ import { CreateCompanyFormComponent } from './components/create-company-form/cre
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { CompanyAdminProfilPageComponent } from './pages/company-admin-profil-page/company-admin-profil-page.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { ShowCompaniesComponent } from './components/show-companies/show-companies.component';
+import { UpdateUserProfileComponent } from './components/update-user-profile/update-user-profile.component';
 
 const routes: Routes = [
     //Promeniti kada se doda login da se umesto logina ispise ime usera i onda da se ide na profil usera
@@ -12,7 +15,12 @@ const routes: Routes = [
     {path: 'companies', component: SystemAdminProfilePageComponent},
     {path: '', component: LandingPageComponent},
     {path: 'equipment', component: EquipmentPageComponent},
-    {path: 'mycompany', component: CompanyAdminProfilPageComponent}
+    {path: 'mycompany', component: CompanyAdminProfilPageComponent},
+    {path: 'companies', component: CompanyAdminProfilPageComponent}, // proveriti da li ovo radi
+    {path: '', component: LandingPageComponent},
+    {path: 'api/user/profile/:id', component: UserProfileComponent},
+    {path : 'api/user/companies', component: ShowCompaniesComponent},
+    {path : 'api/user/updateProfile/:id', component: UpdateUserProfileComponent }
 ];
 
 @NgModule({

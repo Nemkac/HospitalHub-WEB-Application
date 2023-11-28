@@ -61,7 +61,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/profile/{id}")
     public ResponseEntity<UserProfileDTO> getUserProfile(@PathVariable Integer id) {
         if(userService.getById(id) != null) {
             UserProfileDTO userProfileDTO = new UserProfileDTO(userService.getById(id));
@@ -73,17 +73,18 @@ public class UserController {
 
     @PutMapping(consumes="application/json", value="updateProfile/{id}")
     public ResponseEntity<UserProfileDTO> updateUser(@RequestBody UserProfileDTO userProfileDTO, @PathVariable Integer id){
-
+        // ako je neko polje prazno, da uzme staru vrednost
         if(userService.getById(id) != null){
-            userService.getById(id).setName(userProfileDTO.getName());
-            userService.getById(id).setLastName(userProfileDTO.getLastName());
-            userService.getById(id).setPassword(userProfileDTO.getPassword());
-            userService.getById(id).setDateOfBirth(userProfileDTO.getDateOfBirth());
-            userService.getById(id).setPhoneNumber(userProfileDTO.getPhoneNumber());
-            userService.getById(id).setCity(userProfileDTO.getCity());
-            userService.getById(id).setCountry(userProfileDTO.getCountry());
-            userService.getById(id).setProfession(userProfileDTO.getProfession());
-            userService.getById(id).setCompanyInfo(userProfileDTO.getCompanyInfo());
+            if(userProfileDTO.getName() != ""){userService.getById(id).setName(userProfileDTO.getName());}
+            if(userProfileDTO.getLastName() != ""){userService.getById(id).setLastName(userProfileDTO.getLastName()); }
+            if(userProfileDTO.getPassword() != ""){userService.getById(id).setPassword(userProfileDTO.getPassword()); }
+            if(userProfileDTO.getEmail() != ""){userService.getById(id).setEmail(userProfileDTO.getEmail()); }
+            if(userProfileDTO.getDateOfBirth().toString() != "" && userProfileDTO.getDateOfBirth()!=null){userService.getById(id).setDateOfBirth(userProfileDTO.getDateOfBirth()); }
+            if(userProfileDTO.getPhoneNumber() != ""){userService.getById(id).setPhoneNumber(userProfileDTO.getPhoneNumber()); }
+            if(userProfileDTO.getCountry() != ""){userService.getById(id).setCountry(userProfileDTO.getCountry()); }
+            if(userProfileDTO.getCity() != ""){userService.getById(id).setCity(userProfileDTO.getCity()); }
+            if(userProfileDTO.getProfession() != ""){userService.getById(id).setProfession(userProfileDTO.getProfession()); }
+            if(userProfileDTO.getCompanyInfo() != ""){userService.getById(id).setCompanyInfo(userProfileDTO.getCompanyInfo()); }
             userService.save(userService.getById(id));
             return new ResponseEntity<>(new UserProfileDTO(userService.getById(id)),HttpStatus.OK);
         }

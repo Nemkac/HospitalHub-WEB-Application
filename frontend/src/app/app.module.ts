@@ -26,37 +26,53 @@ import { TestemonialCardComponent } from './components/testemonial-card/testemon
 
 import { CompanyAdminProfilPageComponent } from './pages/company-admin-profil-page/company-admin-profil-page.component';
 
+
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { ShowCompaniesComponent } from './components/show-companies/show-companies.component';
+import { UpdateUserProfileComponent } from './components/update-user-profile/update-user-profile.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
 @NgModule({
-  declarations: [
-      AppComponent,
-      NavbarComponent,
-      HerosectionComponent,
-      FooterComponent,
-      ObjectcardComponent,
-      routingComponents,
-      UpdateCompanyFormComponent,
-      UpdateCompanyAdministratorFormComponent,
-      CreateCompanyAdministratorFormComponent,
-      EquipmentPageComponent,
-      EquipmentcardComponent,
-      CompanyAdminProfilPageComponent,
-      CompainesPageComponent,
-      TestemonialsPageComponent,
-      PricingPageComponent,
-      TestemonialCardComponent,
-  ],
-  imports: [
-      BrowserAnimationsModule,
-      BrowserModule,
-      HttpClientModule,
-      FontAwesomeModule,
-      FormsModule,
-      AppRoutingModule,
-      NgbModule,
-      NgbCarouselModule,
-      CarouselModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
+      declarations: [
+          AppComponent,
+          NavbarComponent,
+          HerosectionComponent,
+          FooterComponent,
+          ObjectcardComponent,
+          routingComponents,
+          UpdateCompanyFormComponent,
+          UpdateCompanyAdministratorFormComponent,
+          CreateCompanyAdministratorFormComponent,
+          EquipmentPageComponent,
+          EquipmentcardComponent,
+          CompanyAdminProfilPageComponent,
+          CompainesPageComponent,
+          TestemonialsPageComponent,
+          PricingPageComponent,
+          TestemonialCardComponent,
+          UserProfileComponent,
+          ShowCompaniesComponent,
+          UpdateUserProfileComponent,
+      ],
+      imports: [
+          BrowserAnimationsModule,
+          BrowserModule,
+          HttpClientModule,
+          FontAwesomeModule,
+          FormsModule,
+          AppRoutingModule,
+          NgbModule,
+          NgbCarouselModule,
+          CarouselModule,
+          BrowserAnimationsModule,
+          MatFormFieldModule,
+          MatInputModule,
+          MatDatepickerModule
+      ],
+      providers: [],
+      bootstrap: [AppComponent]
+    })
+    export class AppModule { }
