@@ -16,11 +16,12 @@ const routes: Routes = [
     {path: '', component: LandingPageComponent},
     {path: 'equipment', component: EquipmentPageComponent},
     {path: 'mycompany', component: CompanyAdminProfilPageComponent},
-    {path: 'companies', component: CompanyAdminProfilPageComponent}, // proveriti da li ovo radi
-    {path: '', component: LandingPageComponent},
-    {path: 'api/user/profile/:id', component: UserProfileComponent},
+    {path : 'api/user/updateProfile/:id', component: UpdateUserProfileComponent },
     {path : 'api/user/companies', component: ShowCompaniesComponent},
-    {path : 'api/user/updateProfile/:id', component: UpdateUserProfileComponent }
+    {path: 'api/user/profile/:id', component: UserProfileComponent},
+
+
+
 ];
 
 @NgModule({

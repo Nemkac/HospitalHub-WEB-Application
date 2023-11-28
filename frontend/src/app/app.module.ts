@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
 import { NgbModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 
 import { AppComponent } from './app.component';
@@ -70,7 +69,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
           BrowserAnimationsModule,
           MatFormFieldModule,
           MatInputModule,
-          MatDatepickerModule
+          MatDatepickerModule,
       ],
       providers: [],
       bootstrap: [AppComponent]
