@@ -2,9 +2,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ShowCompaniesService } from 'src/app/services/show-companies.service';
+import { CompanyService } from 'src/app/services/company.service';
 import { FilterCompanies } from 'src/assets/filter-companies';
 import { Company } from 'src/company';
+
 
 @Component({
   selector: 'app-show-companies',
@@ -22,7 +23,7 @@ export class ShowCompaniesComponent implements OnInit {
   byCountry! : string;
   byCity!: string;
   byRate!: number;
-  constructor(private showCompaniesService : ShowCompaniesService, 
+  constructor(private showCompaniesService : CompanyService, 
               private route : ActivatedRoute,
               private router : Router) {}
 

@@ -16,12 +16,9 @@ const routes: Routes = [
     {path: '', component: LandingPageComponent},
     {path: 'equipment', component: EquipmentPageComponent},
     {path: 'mycompany', component: CompanyAdminProfilPageComponent},
-    {path : 'api/user/updateProfile/:id', component: UpdateUserProfileComponent },
-    {path : 'api/user/companies', component: ShowCompaniesComponent},
+    {path: 'api/user/updateProfile/:id', component: UpdateUserProfileComponent },
+    {path: 'api/user/companies', component: ShowCompaniesComponent},
     {path: 'api/user/profile/:id', component: UserProfileComponent},
-
-
-
 ];
 
 @NgModule({

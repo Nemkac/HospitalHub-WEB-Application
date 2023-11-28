@@ -1,5 +1,5 @@
 import { Company } from './../../company';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs'
 
@@ -26,6 +26,20 @@ export class CompanyService {
 
     public getAdminsCompany(): Observable<Company> {
         return this.http.get<Company>(`${this.apiServerUrl}/api/company/getAdminsCompany`);
+    }
+
+    public showCompanies(name?:string,country?:string,city?:string,avgRate?:number):Observable<Company[]>{
+        let params = new HttpParams();
+        if (name) params = params.set('name',name);
+        if (country) params = params.set('country',country);
+        if (city) params = params.set('city',city);
+        if (avgRate) params = params.set('avgRate',avgRate.toString());
+
+        return this.http.get<Company[]>(`${this.apiServerUrl}/api/user/companies`,{params})
+    }
+
+    public showCompaniesnew(name: string, country:string, city:string, avgRate: number):Observable<Company[]>{
+        return this.http.get<Company[]>(`${this.apiServerUrl}/api/user/companies?name=${name}&country=${country}&city=${city}&avgRate=${avgRate}`)
     }
 
 }

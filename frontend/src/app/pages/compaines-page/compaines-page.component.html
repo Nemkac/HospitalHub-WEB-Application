@@ -1,35 +1,80 @@
-<div class="flex px-64 bg-lightBlue/5 relative">
-    <div class="flex flex-col bg-white justify-between rounded-md shadow-md px-16 py-8 w-full h-[300px]">
-        <p class="font-inter font-bold text-[28px] text-third">Search companies by:</p>
-        <div class="flex flex-row justify-between">
-            <div class="flex flex-col">
-                <p class="font-inter font-light text-[20px] text-third">Name</p>
-                <input class="w-[250px] shadow-md focus:outline-none h-[40px] font-inter font-regular text-[16px] px-4 rounded-md "
-                        placeholder="Company name"/>
+<form #filterCompanies="ngForm" (ngSubmit)="ShowCompanies()">
+    <div class="flex px-64 bg-lightBlue/5 relative">
+        <div class="flex flex-col bg-white justify-between rounded-md shadow-md px-16 py-8 w-full h-[300px]">
+            <p class="font-inter font-bold text-[28px] text-third">Search companies by:</p>
+            <div class="flex flex-row justify-between">
+                <div class="flex flex-col">
+                    <p class="font-inter font-light text-[20px] text-third">Name</p>
+                    <input ngModel name="name" [(ngModel)]="byName" name="name" id="name" type="text"
+                            class="w-[250px] shadow-md focus:outline-none h-[40px] font-inter font-regular text-[16px] px-4 rounded-md "
+                            placeholder="Company name"/>
+                </div>
+                <div class="flex flex-col">
+                    <p class="font-inter font-light text-[20px] text-third">Country</p>
+                    <input ngModel name="country" id="country" type="text" [(ngModel)]="byCountry"
+                            class="w-[250px] shadow-md focus:outline-none h-[40px] font-inter font-regular text-[16px] px-4 rounded-md "
+                            placeholder="Country"/>
+                </div>
+                <div class="flex flex-col">
+                    <p class="font-inter font-light text-[20px] text-third">City</p>
+                    <input ngModel name="city" id="city" type="text" [(ngModel)]="byCity"
+                            class="w-[250px] shadow-md focus:outline-none h-[40px] font-inter font-regular text-[16px] px-4 rounded-md "
+                            placeholder="City"/>
+                </div>
+                <div class="flex flex-col">
+                    <p class="font-inter font-light text-[20px] text-third">Rate</p>
+                    <input ngModel name="avgRate" id="avgRate" type="text" [(ngModel)]="byRate"
+                            class="w-[250px] shadow-md focus:outline-none h-[40px] font-inter font-regular text-[16px] px-4 rounded-md "
+                            placeholder="Average rate"/>
+                </div>
             </div>
-            <div class="flex flex-col">
-                <p class="font-inter font-light text-[20px] text-third">Country</p>
-                <input class="w-[250px] shadow-md focus:outline-none h-[40px] font-inter font-regular text-[16px] px-4 rounded-md "
-                        placeholder="Country"/>
+            <div class="flex w-full justify-end">
+                <button routerLink="" [queryParams]="{ name: byName, country: byCountry, city: byCity, avgRate : byRate }" type="submit"
+                        class="rounded-md w-[250px] h-[45px] bg-[#0582ca] text-white font-inter font-semibold text-[20px]
+                                hover:bg-lightBlue transition-[0.5s]">
+                    Search
+                </button>
             </div>
-            <div class="flex flex-col">
-                <p class="font-inter font-light text-[20px] text-third">City</p>
-                <input class="w-[250px] shadow-md focus:outline-none h-[40px] font-inter font-regular text-[16px] px-4 rounded-md "
-                        placeholder="City"/>
-            </div>
-            <div class="flex flex-col">
-                <p class="font-inter font-light text-[20px] text-third">Rate</p>
-                <input class="w-[250px] shadow-md focus:outline-none h-[40px] font-inter font-regular text-[16px] px-4 rounded-md "
-                        placeholder="Average rate"/>
-            </div>
-        </div>
-        <div class="flex w-full justify-end">
-            <button class="rounded-md w-[250px] h-[45px] bg-[#0582ca] text-white font-inter font-semibold text-[20px]
-                            hover:bg-lightBlue transition-[0.5s]">
-                Search
-            </button>
         </div>
     </div>
-</div>
 
-<app-objectcard></app-objectcard>
+    <div class="bg-lightBlue/5">
+        <div class="px-64 pt-16 pb-32 flex flex-row justify-between flex-wrap ">
+            <div *ngFor="let company of companies" class="flex flex-col w-[400px] h-auto bg-white
+                                                            rounded-md my-6 border-[1px] border-secondary/10 relative">
+                <div class="flex flex-row items-center justify-end px-4 absolute top-0 right-0 pt-2">
+                    <div class="flex mr-[5px] items-center justify-center">
+                        <button class="rounded-full hover:bg-red w-[40px] h-[40px] transition-[0.5s] items-center justify-center text-red hover:text-white">
+                            <fa-icon [icon]="faHeart" class="text-[22px]"></fa-icon>
+                        </button>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <button class="rounded-full hover:bg-darkGreen transition-[0.5s] w-[40px] h-[40px] items-center justify-center text-darkGreen hover:text-white">
+                            <fa-icon [icon]="faBookmark" class="text-[22px]"></fa-icon>
+                        </button>
+                    </div>
+                </div>
+                <img src="../assets/mb1.jpg" class="w-full h-auto rounded-t-md"/>
+                <div class="flex flex-col p-4">
+                    <p class="font-inter font-bold text-[24px] text-third">{{company?.name}}</p>
+                    <hr class="w-full text-third/30 my-[10px]">
+                    <div class="flex flex-row justify-between items-center">
+                        <p class="font-inter font-regular text-[14px] text-third">Address</p>
+                        <p class="font-inter font-bold text-[14px] text-third">{{company?.city}}, {{company?.country}}</p>
+                    </div>
+                    <div class="flex flex-row justify-between items-center">
+                        <p class="font-inter font-regular text-[14px] text-third">Average rate</p>
+                        <div class="flex flex-row items-center">
+                            <p class="font-inter font-bold text-[14px] text-third">{{company?.avgRate}}</p>
+                            <fa-icon [icon]="faStar" class="text-[14px] text-yellow"></fa-icon>
+                        </div>
+                    </div>
+                    <hr class="w-full text-third/30 mt-[10px]">
+                </div>
+                <button class="w-full text-[20px] bg-[#0582ca] hover:bg-lightBlue transition-[0.5s] font-inter font-semibold text-white rounded-b-md h-[45px]">
+                    Visit company
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
