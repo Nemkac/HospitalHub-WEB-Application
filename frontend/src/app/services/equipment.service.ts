@@ -1,3 +1,4 @@
+import { SearchEquipmentDTO } from 'src/SearchEquipmentDTO';
 import { Equipment } from './../../Equipment';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
@@ -13,5 +14,9 @@ export class EquipmentService {
 
     public getEquipment() : Observable<Equipment[]> {
         return this.http.get<Equipment[]>(`${this.apiServerUrl}/api/equipment/getAll`);
+    }
+
+    public getEquipmentByCombinedSearching(name: string, minPrice: number, maxPrice: number, type: string) : Observable<SearchEquipmentDTO>{
+        return this.http.get<SearchEquipmentDTO>(`${this.apiServerUrl}/api/equipment/combinedSearch?name=${name}&minPrice=${minPrice}&maxPrice=${maxPrice}&type=${type}`);
     }
 }

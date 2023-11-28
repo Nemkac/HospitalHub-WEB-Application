@@ -1,7 +1,10 @@
 <div class="flex flex-col bg-lightBlue/5 flex px-64 py-32 h-auto">
     <div class="flex flex-row w-full">
-        <input class="h-[60px] w-[90%] rounded-l-full bg-third/20 text-white px-16 text-[24px] font-semibold focus:outline-none">
-        <button class="h-[60px] w-[10%] bg-secondary text-white text-[24px] rounded-r-full items-center justify-center">
+        <input  [(ngModel)]="name" 
+                placeholder="Enter product name here"
+                class="h-[60px] w-[90%] rounded-l-full bg-third/20 text-white px-16 text-[24px] font-semibold focus:outline-none">
+        <button class="h-[60px] w-[10%] bg-[#0582ca] hover:bg-lightBlue hover:text-[28px] transition-[0.5s] text-white text-[24px] rounded-r-full items-center justify-center"
+                (click)="combinedSearch(name, minPrice, maxPrice, type)">
             <fa-icon [icon] = "faSearch"/>
         </button>
     </div>
@@ -9,29 +12,88 @@
         <div class="flex flex-row w-full h-[50px] bg-white rounded-md justify-between border-[1px] border-secondary/10 p-4 items-center">
             <p class="font-inter font-medium text-third text-[20px]">FILTER BY</p>
             <div class="flex flex-row items-center">
-                <input type="radio" class="w-[17px] h-[17px]">
-                <p class="font-inter font-medium text-[18px] ml-2 text-third">
-                    Rate asc.
-                </p>
-            </div>
-            <div class="flex flex-row items-center">
-                <input type="radio" class="w-[17px] h-[17px]">
-                <p class="font-inter font-medium text-[18px] ml-2 text-third">
-                    Rate asc.
-                </p>
+                <div class="flex flex-row items-center">
+                    <label for="minPrice" class="font-inter text-[16px] text-third font-light mx-2">Min Price:</label>
+                    <input type="number" id="minPrice"  
+                            class="w-[100px] rounded-md text-[16px] font-inter font-medium text-third px-2 shadow-md"
+                            [(ngModel)]="minPrice" />
+                </div>
+                <div>
+                    <label for="maxPrice" class="font-inter text-[16px] text-third font-light mx-2">Max Price:</label>
+                    <input type="number" id="maxPrice" 
+                            class="w-[100px] rounded-md text-[16px] font-inter font-medium text-third px-2 shadow-md"
+                            [(ngModel)]="maxPrice" />
+                </div>
+                <button class="w-[180px] font-semibold font-inter text-[18px] mx-4 transition-[0.5s] text-white bg-[#0582ca] hover:bg-lightBlue cursor-pointer rounded-md"
+                        (click)="combinedSearch(name, minPrice, maxPrice, type)">Filter by Price</button>                
             </div>
             <div class="flex flex-row items-center">
                 <label for="types" class="text-third text-[18px] font-inter font-medium">Equipment type:</label>
-                <select name="cars" id="cars" class="ml-2 w-[150px] h-[30px] text-third rounded-md font-inter text-[18px]">
-                    <option value="mahine">Machines</option>
-                    <option value="diagnostics">Diagnostics</option>
-                    <option value="imaging">Imaging</option>
-                    <option value="implantable">Implantables</option>
+                <select name="types" id="types" class="ml-2 w-[150px] h-[30px] text-third rounded-md font-inter text-[18px] shadow-md"
+                        [(ngModel)]="type" (change)="combinedSearch(name, minPrice, maxPrice, type)">
+                        <option value="">Any</option>
+                        <option value="Machine">Machines</option>
+                        <option value="Diagnostics">Diagnostics</option>
+                        <option value="Imaging">Imaging</option>
+                        <option value="Implantable">Implantables</option>
                 </select>
             </div>
         </div>
         <div class="w-full h-auto mt-2">
-            <app-equipmentcard/>
+            <div class="flex flex-row flex-start flex-wrap w-full justify-between">
+                <div *ngFor="let equipment of filteredEquipments" class="flex flex-col bg-white w-[300px] h-[630px] rounded-md shadow-md cursor-pointer mt-6
+                                                                            hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
+                    <div class="flex p-4 w-full items-center">
+                        <img [src]="'../../../assets/'+equipment.image" class="w-full h-[300px]">
+                    </div>
+                    <div class="flex w-full flex-col p-4 font-inter text-third">
+                        <p class="font-semibold text-[20px]">{{equipment?.name}}</p>
+                        <p class="font-light text-[16px]">{{equipment?.type}}</p>
+                        <hr class="w-full mt-[10px] mb-[5px] text-third/30">
+                        <div class="flex flex-col h-[120px]">
+                            <p class="text-[12px] font-light">Description:</p>
+                            <p class="text-[16px] font-regular">{{equipment?.description}}</p>
+                        </div>
+                        <hr class="w-full text-third/30 mb-[10px] mt-[5px]">
+                        <div class="flex flex-row justify-between items-center">
+                            <p class="font-semibold text-[20px]">${{equipment?.price}}</p>
+                            <button class="w-[130px] text-[16px] bg-[#0582ca] hover:bg-lightBlue transition-[0.5s] font-inter font-semibold text-white rounded-md h-[35px]">
+                                Add to chart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col mt-16">
+        <p class="font-inter font-medium text-third text-[24px]">
+            The equipment you searched for is available from the following companies:
+        </p>
+    </div>
+    <div class="flex flex-row justify-between mt-4">
+        <div *ngFor="let company of filteredCompanies" 
+            class="flex flex-col w-[300px] h-auto rounded-md shadow-md cursor-pointer bg-white p-[10px]
+                    hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
+            <img src="../../../assets/mb1.jpg" class="rounded-t-[16px]">
+            <div class="flex flex-col mt-2">
+                <div class="flex flex-row justify-between items-center">
+                    <p class="font-inter font-light text-third text-[16px]">Name:</p>
+                    <p class="font-inter font-medium text-third text-[16px]">{{company?.name}}</p>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <div class="flex flex-row justify-between items-center">
+                    <p class="font-inter font-light text-third text-[16px]">Location:</p>
+                    <p class="font-inter font-medium text-third text-[16px]">{{company?.city}}, {{company?.country}}</p>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <div class="flex flex-row justify-between items-center">
+                    <p class="font-inter font-light text-third text-[16px]">Average Rate:</p>
+                    <p class="font-inter font-medium text-third text-[16px]">{{company?.avgRate}}</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

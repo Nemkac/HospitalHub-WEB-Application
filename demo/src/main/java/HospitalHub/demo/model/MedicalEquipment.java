@@ -8,6 +8,8 @@ import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
+import java.util.Objects;
+
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "Equipment")
@@ -27,6 +29,12 @@ public class MedicalEquipment {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "price")
+    private Double price;
+
+    @Column(name = "image")
+    private String image;
+
     @JsonIgnoreProperties("medicalEquipmentList")
     @ManyToOne
     @JoinColumn(name="company_id")
@@ -34,11 +42,13 @@ public class MedicalEquipment {
 
     public MedicalEquipment() {}
 
-    public MedicalEquipment(String name, String type, String description, Company company) {
+    public MedicalEquipment(String name, String type, String description, Company company, Double price, String image) {
         this.name = name;
         this.type = type;
         this.description = description;
         this.company = company;
+        this.price = price;
+        this.image = image;
     }
 
     public Integer getId() {
@@ -75,5 +85,36 @@ public class MedicalEquipment {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        MedicalEquipment other = (MedicalEquipment) obj;
+        return Objects.equals(name, other.name) &&
+                Objects.equals(type, other.type) &&
+                Objects.equals(description, other.description) &&
+                Objects.equals(price, other.price);
     }
 }

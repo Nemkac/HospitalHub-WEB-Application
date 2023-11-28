@@ -1,8 +1,8 @@
 <div class="bg-lightBlue/5">
-    <div class="px-64 flex flex-row justify-between flex-wrap ">
+    <div class="px-64 pt-16 pb-32 flex flex-row justify-between flex-wrap ">
         <div *ngFor="let company of companies" class="flex flex-col w-[400px] h-auto bg-white
                                                         rounded-md my-6 border-[1px] border-secondary/10 relative">
-            <div class="flex flex-row items-center justify-end px-5 absolute top-0 right-0 pt-2">
+            <div class="flex flex-row items-center justify-end px-4 absolute top-0 right-0 pt-2">
                 <div class="flex mr-[5px] items-center justify-center">
                     <button class="rounded-full hover:bg-red w-[40px] h-[40px] transition-[0.5s] items-center justify-center text-red hover:text-white">
                         <fa-icon [icon]="faHeart" class="text-[22px]"></fa-icon>
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <img src="../assets/mb1.jpg" class="w-full h-auto rounded-t-md"/>
-            <div class="flex flex-col p-5">
+            <div class="flex flex-col p-4">
                 <p class="font-inter font-bold text-[24px] text-third">{{company?.name}}</p>
                 <hr class="w-full text-third/30 my-[10px]">
                 <div class="flex flex-row justify-between items-center">
@@ -31,7 +31,7 @@
                 </div>
                 <hr class="w-full text-third/30 mt-[10px]">
             </div>
-            <button class="w-full text-[20px] bg-secondary hover:bg-lightBlue transition-[0.5s] font-inter font-semibold text-white rounded-b-md h-[45px]">
+            <button class="w-full text-[20px] bg-[#0582ca] hover:bg-lightBlue transition-[0.5s] font-inter font-semibold text-white rounded-b-md h-[45px]">
                 Visit company
             </button>
         </div>

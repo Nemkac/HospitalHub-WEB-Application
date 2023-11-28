@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
+import { NgbModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -16,6 +19,10 @@ import { CreateCompanyAdministratorFormComponent } from './components/create-com
 
 import { EquipmentPageComponent } from './pages/equipment-page/equipment-page.component';
 import { EquipmentcardComponent } from './components/equipmentcard/equipmentcard.component';
+import { CompainesPageComponent } from './pages/compaines-page/compaines-page.component';
+import { TestemonialsPageComponent } from './pages/testemonials-page/testemonials-page.component';
+import { PricingPageComponent } from './pages/pricing-page/pricing-page.component';
+import { TestemonialCardComponent } from './components/testemonial-card/testemonial-card.component';
 
 import { CompanyAdminProfilPageComponent } from './pages/company-admin-profil-page/company-admin-profil-page.component';
 
@@ -33,13 +40,21 @@ import { CompanyAdminProfilPageComponent } from './pages/company-admin-profil-pa
       EquipmentPageComponent,
       EquipmentcardComponent,
       CompanyAdminProfilPageComponent,
+      CompainesPageComponent,
+      TestemonialsPageComponent,
+      PricingPageComponent,
+      TestemonialCardComponent,
   ],
   imports: [
+      BrowserAnimationsModule,
       BrowserModule,
       HttpClientModule,
       FontAwesomeModule,
       FormsModule,
-      AppRoutingModule
+      AppRoutingModule,
+      NgbModule,
+      NgbCarouselModule,
+      CarouselModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
