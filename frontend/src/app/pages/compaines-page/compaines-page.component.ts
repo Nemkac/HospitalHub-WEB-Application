@@ -18,10 +18,6 @@ export class CompainesPageComponent implements OnInit{
   filterCity : string = '';
   filterAvgRate : number = 0.0;
   filterCompanies! : FilterCompanies;
-  byName! : string;
-  byCountry! : string;
-  byCity!: string;
-  byRate!: number;
 
   faStar = faStar;
   faHeart = faHeart;
@@ -32,15 +28,28 @@ export class CompainesPageComponent implements OnInit{
               private router : Router) {}
 
   ngOnInit() : void {
-    this.ShowCompanies();                  
+    this.DisplayCompanies();                  
   }
 
-  public ShowCompanies():void{
+  public DisplayCompanies():void{
+    this.showCompaniesService.showCompanies(this.filterName,this.filterCountry,this.filterCity,this.filterAvgRate).subscribe(
+      (response:Company[]) => {
+        this.showCompaniesService.showCompanies(this.filterName,this.filterCountry,this.filterCity,this.filterAvgRate);
+        this.companies = response;
+        console.log(this.companies);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
+  }
+
+  public SearchCompanies(name: string, country: string, city: string, avgRate: number):void{
     this.route.queryParams.subscribe(params => {
-      this.filterName = params['name'];
-      this.filterCountry = params['country'];
-      this.filterCity = params['city'];
-      this.filterAvgRate = params['avgRate'];
+      this.filterName = name;
+      this.filterCountry = country;
+      this.filterCity = city;
+      this.filterAvgRate = avgRate;
     });
 
     this.showCompaniesService.showCompanies(this.filterName,this.filterCountry,this.filterCity,this.filterAvgRate).subscribe(

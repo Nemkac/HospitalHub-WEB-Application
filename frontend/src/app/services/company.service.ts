@@ -37,9 +37,4 @@ export class CompanyService {
 
         return this.http.get<Company[]>(`${this.apiServerUrl}/api/user/companies`,{params})
     }
-
-    public showCompaniesnew(name: string, country:string, city:string, avgRate: number):Observable<Company[]>{
-        return this.http.get<Company[]>(`${this.apiServerUrl}/api/user/companies?name=${name}&country=${country}&city=${city}&avgRate=${avgRate}`)
-    }
-
 }
