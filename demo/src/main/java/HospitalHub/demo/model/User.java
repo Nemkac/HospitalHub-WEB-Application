@@ -90,7 +90,6 @@ public class User {
         this.profession = profession;
         this.companyInfo = companyInfo;
     }
-
     public boolean isEnabled() {
         return Enabled;
     }
@@ -98,6 +97,7 @@ public class User {
     public void setEnabled(boolean enabled) {
         Enabled = enabled;
     }
+
     
     public User(Integer id, String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
         this.id = id;
@@ -112,6 +112,7 @@ public class User {
         this.profession = profession;
         this.companyInfo = companyInfo;
     }
+
 
     public Integer getId() {
         return id;

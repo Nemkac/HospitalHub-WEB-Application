@@ -1,13 +1,14 @@
-export interface User {
+export interface User{
     id: number;
     name: string;
-    lastname: string;
+    username:string;
+    lastName: string;
     password: string;
     dateOfBirth: Date;
     email: string;
-    telephone: string;
+    phoneNumber: string; 
     country: string;
-    city: string;
-    profession: string;
-    companyInfo: string;
+    city: string; 
+    profession: string; 
+    companyInfo: string; 
 }

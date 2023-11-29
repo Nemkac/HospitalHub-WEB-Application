@@ -41,6 +41,7 @@ public class InitialDataInsertionService {
 
         LocalDate user1BirthDate = LocalDate.ofEpochDay(2002-26-1);
         User user1 = new User(
+                "Blanushaolin",
                 "Vladimir",
                 "Blanusa",
                 "vb123",
@@ -55,6 +56,7 @@ public class InitialDataInsertionService {
 
         LocalDate user2BirthDate = LocalDate.ofEpochDay(2001-15-7);
         User user2 = new User(
+                "Ranita",
                 "Nemanja",
                 "Ranitovic",
                 "nr123",
@@ -69,6 +71,7 @@ public class InitialDataInsertionService {
 
         LocalDate user3BirthDate = LocalDate.ofEpochDay(2002-25-1);
         User user3 = new User(
+                "Lele",
                 "Andrea",
                 "Mitic",
                 "am123",
@@ -83,6 +86,7 @@ public class InitialDataInsertionService {
 
         LocalDate user4BirthDate = LocalDate.ofEpochDay(2002-18-1);
         User user4 = new User(
+                "Nemkac",
                 "Nemanja",
                 "Todorovic",
                 "nt123",

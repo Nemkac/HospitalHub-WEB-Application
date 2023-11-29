@@ -31,18 +31,13 @@ public class CompanyAdministrator{
         this.user = user;
         this.company = company;
     }
-
-    public CompanyAdministrator(String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo, Integer compAdminId) {
-        super(email,name, lastName, password, dateOfBirth, email, phoneNumber, country, city, profession, companyInfo);
-        this.compAdminId = compAdminId;
-    }
-
     public Integer getCompAdminId() {
         return compAdminId;
     }
 
     public void setCompAdminId(Integer compAdminId) {
-   
+        this.compAdminId = compAdminId;
+    }
     public User getUser() {
         return user;
     }
