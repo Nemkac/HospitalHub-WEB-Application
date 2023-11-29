@@ -1,12 +1,8 @@
 package HospitalHub.demo.service;
 
-import HospitalHub.demo.model.Company;
-import HospitalHub.demo.model.CompanyAdministrator;
-import HospitalHub.demo.model.SystemAdministrator;
-import HospitalHub.demo.model.User;
+import HospitalHub.demo.model.*;
 import HospitalHub.demo.repository.CompanyRepository;
 import HospitalHub.demo.repository.UserRepository;
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +24,9 @@ public class InitialDataInsertionService {
     @Autowired
     private SystemAdministratorService systemAdministratorService;
 
+    @Autowired
+    private MedicalEqupimentService medicalEqupimentService;
+
     @Transactional
     public void insertInitialData() {
         Company company1 = new Company(1, "Kompanija 1", "Sremska Mitrovica", "Serbia");
@@ -42,6 +41,7 @@ public class InitialDataInsertionService {
 
         LocalDate user1BirthDate = LocalDate.ofEpochDay(2002-26-1);
         User user1 = new User(
+                "Blanushaolin",
                 "Vladimir",
                 "Blanusa",
                 "vb123",
@@ -56,6 +56,7 @@ public class InitialDataInsertionService {
 
         LocalDate user2BirthDate = LocalDate.ofEpochDay(2001-15-7);
         User user2 = new User(
+                "Ranita",
                 "Nemanja",
                 "Ranitovic",
                 "nr123",
@@ -70,6 +71,7 @@ public class InitialDataInsertionService {
 
         LocalDate user3BirthDate = LocalDate.ofEpochDay(2002-25-1);
         User user3 = new User(
+                "Lele",
                 "Andrea",
                 "Mitic",
                 "am123",
@@ -84,6 +86,7 @@ public class InitialDataInsertionService {
 
         LocalDate user4BirthDate = LocalDate.ofEpochDay(2002-18-1);
         User user4 = new User(
+                "Nemkac",
                 "Nemanja",
                 "Todorovic",
                 "nt123",
@@ -104,11 +107,26 @@ public class InitialDataInsertionService {
         SystemAdministrator systemAdministrator = new SystemAdministrator(user4);
         systemAdministratorService.save(systemAdministrator);
 
-        CompanyAdministrator companyAdministrator = new CompanyAdministrator(user3);
+        CompanyAdministrator companyAdministrator = new CompanyAdministrator(user3, company2);
         companyAdministratorService.save(companyAdministrator);
 
+        MedicalEquipment equipment1 = new MedicalEquipment("Respirator", "Machine", "Good respirator", company1, 320.00, "respirator.png");
+        MedicalEquipment equipment2 = new MedicalEquipment("EKG", "Diagnostics", "Good ekg", company1, 860.00, "ekg.png");
+        MedicalEquipment equipment3 = new MedicalEquipment("CT Scanner", "Imaging", "Good CT", company2, 1230.00, "ctscanner.png");
+        MedicalEquipment equipment4 = new MedicalEquipment("Ultrasound ", "Imaging", "Good ekg", company2, 250.00, "ultrasound.png");
+        MedicalEquipment equipment5 = new MedicalEquipment("Anesthesia machine", "Machine", "Good anesthesia machine", company3, 225.00, "anesthesia.png");
+        MedicalEquipment equipment6 = new MedicalEquipment("Hemodialysis machine", "Machine", "Good hemodialysis machine", company3, 2000.00, "hemodialysis.png");
+        MedicalEquipment equipment7 = new MedicalEquipment("Hip prothesis", "Implantable", "Good prothesis", company4, 500.00, "prosthesis.png");
+        MedicalEquipment equipment8 = new MedicalEquipment("Pacemaker", "Implantable", "Good pacemaker", company4, 1250.00, "pacemaker.png");
 
-
+        medicalEqupimentService.save(equipment1);
+        medicalEqupimentService.save(equipment2);
+        medicalEqupimentService.save(equipment3);
+        medicalEqupimentService.save(equipment4);
+        medicalEqupimentService.save(equipment5);
+        medicalEqupimentService.save(equipment6);
+        medicalEqupimentService.save(equipment7);
+        medicalEqupimentService.save(equipment8);
     }
 
 }

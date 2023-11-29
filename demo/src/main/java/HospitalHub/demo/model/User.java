@@ -1,19 +1,25 @@
 package HospitalHub.demo.model;
 
-
 import jakarta.persistence.*;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Date;
+
 
 @Entity
 @Table(name = "Users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // ovo je bilo na auto mozda nastane problem
+    @Column(name = "id")
     private Integer id;
     @Column(name = "name")
     private String name;
+    @Column(name = "username")
+    private String username;
     @Column(name = "lastName")
     private String lastName;
 
@@ -41,13 +47,38 @@ public class User {
 
     @Column(name = "companyInfo")
     private String companyInfo;
+    @Column(name = "enabled")
     private boolean Enabled = false;
+    private String roles;
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
 
     public User(){
 
     }
 
-    public User(String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
+    public User(String username,String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo,String role) {
+        this.username = username;
+        this.name = name;
+        this.lastName = lastName;
+        this.password = password;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.country = country;
+        this.city = city;
+        this.profession = profession;
+        this.companyInfo = companyInfo;
+        this.roles = role;
+    }
+    public User(String username,String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
+        this.username = username;
         this.name = name;
         this.lastName = lastName;
         this.password = password;
@@ -59,7 +90,6 @@ public class User {
         this.profession = profession;
         this.companyInfo = companyInfo;
     }
-
     public boolean isEnabled() {
         return Enabled;
     }
@@ -67,6 +97,7 @@ public class User {
     public void setEnabled(boolean enabled) {
         Enabled = enabled;
     }
+
     
     public User(Integer id, String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
         this.id = id;
@@ -81,6 +112,7 @@ public class User {
         this.profession = profession;
         this.companyInfo = companyInfo;
     }
+
 
     public Integer getId() {
         return id;
@@ -110,9 +142,7 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public void setPassword(String password) { this.password = password; }
 
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
@@ -169,4 +199,12 @@ public class User {
     public void setCompanyInfo(String companyInfo) {
         this.companyInfo = companyInfo;
     }
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 }

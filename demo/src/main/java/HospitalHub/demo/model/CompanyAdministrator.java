@@ -27,6 +27,10 @@ public class CompanyAdministrator{
         this.company = null;
     }
 
+    public CompanyAdministrator(User user, Company company) {
+        this.user = user;
+        this.company = company;
+    }
     public Integer getCompAdminId() {
         return compAdminId;
     }
@@ -34,7 +38,6 @@ public class CompanyAdministrator{
     public void setCompAdminId(Integer compAdminId) {
         this.compAdminId = compAdminId;
     }
-
     public User getUser() {
         return user;
     }

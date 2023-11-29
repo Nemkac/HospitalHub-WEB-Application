@@ -1,0 +1,65 @@
+<div *ngIf="userProfile" class="max-w-4xl mx-auto mt-8 bg-white p-8 rounded shadow-lg">
+  <div class="flex items-center mb-8">
+    <div class="mr-8"> <br> <br>
+      <img class="w-38 h-38 object-cover rounded-full" src="./assets/djolo.jpg" alt="Profile Image">
+    </div>
+
+    <div> <br> <br>
+      <h2 class="text-3xl font-bold mb-4">User Profile</h2>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <strong>Name:</strong> <br> {{ userProfile.name }}
+        </div>
+        <div>
+          <strong>Last name:</strong> <br> {{ userProfile.lastName }}
+        </div>
+        <div>
+          <strong>Date of Birth:</strong> <br> {{ userProfile.dateOfBirth | date: 'yyyy-MM-dd' }}
+        </div>
+
+        <div *ngIf="userProfile.email">
+          <strong>Email:</strong> <br> {{ userProfile.email }}
+        </div>
+
+        <div *ngIf="userProfile.companyInfo">
+          <strong>Phone number:</strong> <br> {{ userProfile.phoneNumber }}
+        </div>
+
+        <div *ngIf="userProfile.companyInfo">
+          <strong>Country:</strong>  <br> {{ userProfile.country }}
+        </div>
+
+        <div *ngIf="userProfile.companyInfo">
+          <strong>City:</strong> <br> {{ userProfile.city }}
+        </div>
+
+        <div *ngIf="userProfile.companyInfo">
+          <strong>Penalty points:</strong> <br> {{ userProfile.penaltyPoints }}
+        </div>
+
+        <div *ngIf="userProfile.profession">
+          <strong>Profession:</strong> <br> {{ userProfile.profession }}
+        </div>
+
+        <div>
+          <strong>Loyalty membership:</strong> <br> No available loyalty programs
+        </div>
+
+      </div>
+      <button class="w-[300px] mx-16  text-center mt-16 text-[20px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
+      text-white rounded-md h-[45px]"(click)="goToUpdate()">Update profile</button>
+    </div>
+    
+  </div>
+  
+</div>
+
+
+<div *ngIf="!userProfile" class="text-center mt-8">
+  <p>Loading...</p>
+</div>
+
+<div *ngIf="userProfile === null" class="text-center mt-8">
+  <p>Error loading user profile.</p>
+</div>

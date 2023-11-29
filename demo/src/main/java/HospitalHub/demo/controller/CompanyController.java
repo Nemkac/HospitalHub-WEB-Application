@@ -1,7 +1,11 @@
 package HospitalHub.demo.controller;
 
 import HospitalHub.demo.dto.CompanyDTO;
+import HospitalHub.demo.dto.UserDTO;
 import HospitalHub.demo.model.Company;
+import HospitalHub.demo.model.CompanyAdministrator;
+import HospitalHub.demo.model.User;
+import HospitalHub.demo.service.CompanyAdministratorService;
 import HospitalHub.demo.service.CompanyService;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "api/company")
@@ -22,28 +23,30 @@ public class CompanyController {
 
     @Autowired
     private CompanyService companyService;
+    @Autowired
+    private CompanyAdministratorService companyAdministratorService;
 
     @GetMapping(value = "/getAll")
-    public ResponseEntity<List<Company>> getAllCompanies(){
+    public ResponseEntity<List<Company>> getAllCompanies() {
         List<Company> companies = companyService.findAll();
 
         return new ResponseEntity<>(companies, HttpStatus.OK);
     }
 
     @GetMapping(value = "/getId")
-    public ResponseEntity<Integer> getCompanyId(){
+    public ResponseEntity<Integer> getCompanyId() {
         Integer companyId = this.companyService.calculateCompanyId() + 1;
 
         return new ResponseEntity<Integer>(companyId, HttpStatus.OK);
     }
 
     @PostMapping(consumes = "application/json", value = "/save")
-    public ResponseEntity<CompanyDTO> saveCompany(@RequestBody CompanyDTO companyDTO){
+    public ResponseEntity<CompanyDTO> saveCompany(@RequestBody CompanyDTO companyDTO) {
 
         Company company = new Company(
-            companyDTO.getName(),
-            companyDTO.getCity(),
-            companyDTO.getCountry()
+                companyDTO.getName(),
+                companyDTO.getCity(),
+                companyDTO.getCountry()
         );
 
         this.companyService.save(company);
@@ -51,12 +54,12 @@ public class CompanyController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Company> getCompanyById(@PathVariable Integer id){
+    public ResponseEntity<Company> getCompanyById(@PathVariable Integer id) {
         List<Company> companies = companyService.findAll();
 
-        for(Company company : companies){
+        for (Company company : companies) {
             int companyId = company.getId();
-            if(companyId == id){
+            if (companyId == id) {
                 return new ResponseEntity<>(company, HttpStatus.FOUND);
             }
         }
@@ -64,8 +67,7 @@ public class CompanyController {
     }
 
     @PutMapping(consumes = "application/json", value = "/update/{id}")
-    public ResponseEntity<CompanyDTO> updateCompany(@RequestBody CompanyDTO companyDTO, @PathVariable Integer id)
-    {
+    public ResponseEntity<CompanyDTO> updateCompany(@RequestBody CompanyDTO companyDTO, @PathVariable Integer id) {
         Company company = companyService.getById(id);
 
         if (company == null) {
@@ -81,6 +83,24 @@ public class CompanyController {
 
         return new ResponseEntity<>(new CompanyDTO(company), HttpStatus.OK);
 
+    }
+
+
+    @GetMapping(value = "/getAdminsCompany")
+    public ResponseEntity<Company> getAdminsCompany() {
+        CompanyAdministrator companyAdministrator = companyAdministratorService.getByCompAdminId(1);
+
+        if (companyAdministrator == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Company selectedCompany = companyAdministrator.getCompany();
+
+        selectedCompany.getMedicalEquipmentList().forEach(equipment -> {
+            equipment.setCompany(null);
+        });
+
+        return new ResponseEntity<>(selectedCompany, HttpStatus.OK);
     }
 
 

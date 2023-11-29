@@ -10,7 +10,7 @@ module.exports = {
     },
     colors:{
       primary: "#DCDDE1",
-      secondary: "#0582CA",
+      secondary: "#0582cb",
       third: "#003554",
       lightBlue: "#00A6FB",
       white:"#F5F6FA",
@@ -18,8 +18,7 @@ module.exports = {
       red: "#c23616",
       purple: "#8c7ae6",
       darkGreen: "#037971",
-      gray: "#7f8fa6",
-
+      gray: "#7f8fa6"
     },
     screens: {
       xs: "480px",

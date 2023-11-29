@@ -36,6 +36,7 @@ public class SystemAdministrator{
     }
 
     public void setSysAdminId(Integer sysAdminId) {
+    
         this.sysAdminId = sysAdminId;
     }
 }

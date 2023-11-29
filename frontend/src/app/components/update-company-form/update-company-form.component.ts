@@ -29,12 +29,10 @@ export class UpdateCompanyFormComponent {
       });
   }
 
-  // Dodaj funkciju za čišćenje forme
   clearForm() {
     this.updateCompany = {};
   }
 
-  // Dodaj funkciju za čišćenje ID-a i postavljanje fokusa
   clearIdAndFocus() {
     this.updateCompany.id = null;
     const idInput = document.getElementById('idInput') as HTMLInputElement;

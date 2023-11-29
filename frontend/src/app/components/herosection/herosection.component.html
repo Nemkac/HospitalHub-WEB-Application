@@ -1,27 +1,34 @@
-<div class="flex flex-col h-screen">
+<div class="flex flex-col h-screen relative">
     <div class="flex flex-row bg-lightBlue/5 items-center w-full h-full justify-center">
-        <div class="flex w-[50%] h-[90%] py-auto items-center">
-            <div class="flex flex-col">
+        <div class="flex w-[60%] h-[90%] py-auto items-center">
+            <div class="flex flex-col z-[1]">
                 <div class="flex items-center justify-center w-[450px] h-[40px] bg-third px-auto mb-[30px]">
                     <p class="text-white font-inter font-semibold text-[20px]">
                         Up to 30% Off On Every Product
                     </p>
                 </div>
-                <h1 class="font-bold font-inter text-[72px] text-secondary leading-[60px]">
-                    Welcome to HospitalHub
-                    <span class="text-[34px]">Your Trusted Source for Medical Equipment Delivery</span>
+                <h1 class="font-bold font-inter text-[80px] text-[#0582ca] leading-[60px]">
+                    WELCOME TO HOSPITALHUB
                 </h1>
-                <p class="text-[21px] font-inter text-third mt-[20px]">
+                <div class="flex flex-row justify-between items-center mt-[10px]">
+                    <hr class="w-[100px] text-[#0582ca]">
+                    <p class="text-[34px] font-bold font-inter text-[#0582ca] leading-[60px]">Your Trusted Source for Medical Equipment Delivery</p>
+                    <hr class="w-[100px] text-[#0582ca]">
+                </div>
+                <p class="text-[21px] font-inter text-third">
                     At HospitalHub, we understand the critical importance of timely access to high-quality medical equipment.
                     We're dedicated to providing healthcare professionals and institutions with a seamless and dependable solution for all their medical equipment needs.
                 </p>
-                <button class="w-[200px] bg-secondary hover:bg-lightBlue transition-[0.5s] h-[50px] text-[20px] font-inter font-semibold text-white rounded-md shadow-md mt-[30px]">
-                    Shop Now
+                <button class="w-[200px] bg-third hover:bg-secondary transition-[0.5s] h-[50px] text-[20px] 
+                                font-inter font-semibold text-white rounded-md shadow-md mt-[30px]">
+                    <a routerLink="/equipment">
+                        Shop Now
+                    </a>
                 </button>
             </div>
         </div>
-        <div class="flex w-auto h-[90%] items-center justify-start">
-            <img src="./assets/heroimg.png" class="w-[450px] h-auto"/>
+        <div class="flex w-auto items-center justify-start absolute">
+            <img src="./assets/heroimg.jpg" class="top-0 left-0 z-[0] opacity-[30%]"/>
         </div>
     </div>
 </div>

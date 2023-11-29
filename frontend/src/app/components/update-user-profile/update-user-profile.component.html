@@ -1,0 +1,21 @@
+<form #updateUserProfileForm="ngForm" (ngSubmit)="updateUserProfile(updateUserProfileForm)" class="max-w-md mx-auto mt-8 bg-white p-8 rounded shadow-lg">
+    <div class="grid grid-cols-1 gap-4 items-center" >
+      <h2 class="text-2xl font-bold mb-4 text-white">.</h2>
+      <h2 class="text-2xl font-bold mb-4 text-center">Update User Profile</h2>
+  
+      <input ngModel name="name" type="text" class="border p-2 rounded" placeholder="{{user.name}}">
+      <input ngModel name="lastName" type="text" class="border p-2 rounded" placeholder="{{user.lastName}}">
+      <input ngModel name="email" type="text" class="border p-2 rounded" placeholder="{{user.email}}">
+      <input ngModel name="password" type="password" class="border p-2 rounded" placeholder="{{getPasswordPlaceholder()}}">
+      <input ngModel name="country" type="text" class="border p-2 rounded" placeholder="{{user.country}}">
+      <input ngModel name="city" type="text" class="border p-2 rounded" placeholder="{{user.city}}">
+      <input ngModel name="phoneNumber" type="text" class="border p-2 rounded" placeholder="{{user.phoneNumber}}">
+      <input ngModel name="profession" type="text" class="border p-2 rounded" placeholder="{{user.profession}}">
+      <input ngModel name="dateOfBirth" type="date" class="border p-2 rounded" [(ngModel)]="usersBirthDate"  >
+      <button class="text-[20px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
+                            text-white rounded-md h-[45px]" type="submit">
+                            Update profile
+      </button>
+      
+    </div>
+  </form>
