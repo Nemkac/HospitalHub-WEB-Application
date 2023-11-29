@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd, RouterEvent } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +10,7 @@ export class NavbarComponent implements OnInit {
 
   isTransparent: boolean = true;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,public user: UserService) {}
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {

@@ -23,7 +23,8 @@ import { CompainesPageComponent } from './pages/compaines-page/compaines-page.co
 import { TestemonialsPageComponent } from './pages/testemonials-page/testemonials-page.component';
 import { PricingPageComponent } from './pages/pricing-page/pricing-page.component';
 import { TestemonialCardComponent } from './components/testemonial-card/testemonial-card.component';
-
+import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { LogInFormComponent } from './components/log-in-form/log-in-form.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { ShowCompaniesComponent } from './components/show-companies/show-companies.component';
 import { UpdateUserProfileComponent } from './components/update-user-profile/update-user-profile.component';
@@ -55,6 +56,8 @@ import { BackToTopButtonComponent } from './components/back-to-top-button/back-t
           ShowCompaniesComponent,
           UpdateUserProfileComponent,
           BackToTopButtonComponent,
+          RegisterFormComponent,
+          LogInFormComponent,
       ],
       imports: [
           BrowserAnimationsModule,

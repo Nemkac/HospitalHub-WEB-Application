@@ -22,6 +22,10 @@ public class SystemAdministrator{
     public SystemAdministrator(User user) {
         this.user = user;
     }
+    
+    public SystemAdministrator(String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo, Integer sysAdminId) {
+        super(email,name, lastName, password, dateOfBirth, email, phoneNumber, country, city, profession, companyInfo);
+    }
 
     public User getUser() {
         return user;
@@ -36,6 +40,7 @@ public class SystemAdministrator{
     }
 
     public void setSysAdminId(Integer sysAdminId) {
+    
         this.sysAdminId = sysAdminId;
     }
 }
