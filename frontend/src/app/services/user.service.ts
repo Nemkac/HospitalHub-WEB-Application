@@ -4,7 +4,7 @@ import { HttpClient, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LogInDTO } from "src/LogInDTO";
 import { catchError, map ,tap} from 'rxjs/operators';
-import { User } from 'src/User';
+import { User } from "src/user";
 
 @Injectable({
   providedIn: 'root'

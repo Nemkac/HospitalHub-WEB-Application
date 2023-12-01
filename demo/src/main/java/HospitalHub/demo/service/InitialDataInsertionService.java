@@ -5,6 +5,7 @@ import HospitalHub.demo.repository.CompanyRepository;
 import HospitalHub.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -26,6 +27,12 @@ public class InitialDataInsertionService {
 
     @Autowired
     private MedicalEqupimentService medicalEqupimentService;
+
+    @Autowired
+    private PasswordEncoder encoder;
+
+    @Autowired
+    private UserService userService;
 
     @Transactional
     public void insertInitialData() {
@@ -51,7 +58,8 @@ public class InitialDataInsertionService {
                 "Serbia",
                 "Kragujevac",
                 "Programer",
-                "None"
+                "None",
+                "ROLE_USER"
         );
 
         LocalDate user2BirthDate = LocalDate.ofEpochDay(2001-15-7);
@@ -66,7 +74,8 @@ public class InitialDataInsertionService {
                 "Serbia",
                 "Novi Sad",
                 "Programer",
-                "None"
+                "None",
+                "ROLE_USER"
         );
 
         LocalDate user3BirthDate = LocalDate.ofEpochDay(2002-25-1);
@@ -81,7 +90,8 @@ public class InitialDataInsertionService {
                 "Serbia",
                 "Jagodina",
                 "Programer",
-                "None"
+                "None",
+                "ROLE_COMPANYADMIN"
         );
 
         LocalDate user4BirthDate = LocalDate.ofEpochDay(2002-18-1);
@@ -96,13 +106,19 @@ public class InitialDataInsertionService {
                 "Serbia",
                 "Sremska Mitrovica",
                 "Programer",
-                "None"
+                "None",
+                "ROLE_SYSADMIN"
         );
 
-        userRepository.save(user1);
+        userService.addUser(user1);
+        userService.addUser(user2);
+        userService.addUser(user3);
+        userService.addUser(user4);
+
+        /*userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
-        userRepository.save(user4);
+        userRepository.save(user4);*/
 
         SystemAdministrator systemAdministrator = new SystemAdministrator(user4);
         systemAdministratorService.save(systemAdministrator);
