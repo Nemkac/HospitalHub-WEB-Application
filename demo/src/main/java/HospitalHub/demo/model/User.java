@@ -16,10 +16,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // ovo je bilo na auto mozda nastane problem
     @Column(name = "id")
     private Integer id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "username")
     private String username;
+
     @Column(name = "lastName")
     private String lastName;
 
@@ -47,14 +50,17 @@ public class User {
 
     @Column(name = "companyInfo")
     private String companyInfo;
+
     @Column(name = "enabled")
     private boolean Enabled = false;
+
     private String roles;
 
     public User(){
 
     }
 
+    //Registering new user constructor
     public User(String username,String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo,String role) {
         this.username = username;
         this.name = name;
@@ -69,6 +75,23 @@ public class User {
         this.companyInfo = companyInfo;
         this.roles = role;
     }
+    //Initial data insertion constructor
+    public User(String username,String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo,String role, boolean enabled) {
+        this.username = username;
+        this.name = name;
+        this.lastName = lastName;
+        this.password = password;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.country = country;
+        this.city = city;
+        this.profession = profession;
+        this.companyInfo = companyInfo;
+        this.roles = role;
+        this.Enabled = enabled;
+    }
+
     public User(String username,String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
         this.username = username;
         this.name = name;
@@ -82,15 +105,7 @@ public class User {
         this.profession = profession;
         this.companyInfo = companyInfo;
     }
-    public boolean isEnabled() {
-        return Enabled;
-    }
 
-    public void setEnabled(boolean enabled) {
-        Enabled = enabled;
-    }
-
-    
     public User(Integer id, String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
         this.id = id;
         this.name = name;
@@ -191,6 +206,7 @@ public class User {
     public void setCompanyInfo(String companyInfo) {
         this.companyInfo = companyInfo;
     }
+
     public String getUsername() {
         return username;
     }
@@ -205,6 +221,14 @@ public class User {
 
     public void setRoles(String roles) {
         this.roles = roles;
+    }
+
+    public boolean isEnabled() {
+        return Enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        Enabled = enabled;
     }
 
 }

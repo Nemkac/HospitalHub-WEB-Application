@@ -29,9 +29,6 @@ public class InitialDataInsertionService {
     private MedicalEqupimentService medicalEqupimentService;
 
     @Autowired
-    private PasswordEncoder encoder;
-
-    @Autowired
     private UserService userService;
 
     @Transactional
@@ -59,7 +56,8 @@ public class InitialDataInsertionService {
                 "Kragujevac",
                 "Programer",
                 "None",
-                "ROLE_USER"
+                "ROLE_USER",
+                true
         );
 
         LocalDate user2BirthDate = LocalDate.ofEpochDay(2001-15-7);
@@ -75,7 +73,8 @@ public class InitialDataInsertionService {
                 "Novi Sad",
                 "Programer",
                 "None",
-                "ROLE_USER"
+                "ROLE_USER",
+                true
         );
 
         LocalDate user3BirthDate = LocalDate.ofEpochDay(2002-25-1);
@@ -91,7 +90,8 @@ public class InitialDataInsertionService {
                 "Jagodina",
                 "Programer",
                 "None",
-                "ROLE_COMPANYADMIN"
+                "ROLE_COMPANYADMIN",
+                true
         );
 
         LocalDate user4BirthDate = LocalDate.ofEpochDay(2002-18-1);
@@ -107,18 +107,14 @@ public class InitialDataInsertionService {
                 "Sremska Mitrovica",
                 "Programer",
                 "None",
-                "ROLE_SYSADMIN"
+                "ROLE_SYSADMIN",
+                true
         );
 
         userService.addUser(user1);
         userService.addUser(user2);
         userService.addUser(user3);
         userService.addUser(user4);
-
-        /*userRepository.save(user1);
-        userRepository.save(user2);
-        userRepository.save(user3);
-        userRepository.save(user4);*/
 
         SystemAdministrator systemAdministrator = new SystemAdministrator(user4);
         systemAdministratorService.save(systemAdministrator);
