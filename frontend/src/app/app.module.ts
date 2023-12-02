@@ -33,6 +33,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BackToTopButtonComponent } from './components/back-to-top-button/back-to-top-button.component';
+import { CreateNewSysAdmninistratorFormComponent } from './components/create-new-sys-admninistrator-form/create-new-sys-admninistrator-form.component';
 
 @NgModule({
       declarations: [
@@ -58,6 +59,7 @@ import { BackToTopButtonComponent } from './components/back-to-top-button/back-t
           BackToTopButtonComponent,
           RegisterFormComponent,
           LogInFormComponent,
+          CreateNewSysAdmninistratorFormComponent,
       ],
       imports: [
           BrowserAnimationsModule,

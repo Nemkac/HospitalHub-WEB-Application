@@ -3,6 +3,7 @@ package HospitalHub.demo.controller;
 import HospitalHub.demo.dto.UserDTO;
 import HospitalHub.demo.model.Company;
 import HospitalHub.demo.model.CompanyAdministrator;
+import HospitalHub.demo.model.SystemAdministrator;
 import HospitalHub.demo.model.User;
 import HospitalHub.demo.service.CompanyAdministratorService;
 import HospitalHub.demo.service.CompanyService;
@@ -48,7 +49,7 @@ public class SystemAdministratorController {
             Integer userId = this.userService.calculateUserId() + 1;
 
             User newUser = new User(
-                    userId,
+                    userDTO.getUsername(),
                     userDTO.getName(),
                     userDTO.getLastName(),
                     userDTO.getPassword(),
@@ -58,14 +59,48 @@ public class SystemAdministratorController {
                     userDTO.getCountry(),
                     userDTO.getCity(),
                     userDTO.getProfession(),
-                    userDTO.getCompanyInfo()
+                    userDTO.getCompanyInfo(),
+                    "ROLE_COMPANYADMIN",
+                    true
             );
 
-            this.userService.save(newUser);
+            this.userService.addUser(newUser);
             CompanyAdministrator newCompanyAdministrator = new CompanyAdministrator(newUser);
             newCompanyAdministrator = this.companyAdministratorService.save(newCompanyAdministrator);
 
             return new ResponseEntity<CompanyAdministrator>(newCompanyAdministrator, HttpStatus.CREATED);
+        }
+    }
+
+    @PutMapping(value = "/newSysAdmin")
+    public ResponseEntity<SystemAdministrator> createSystemAdministrator(@RequestBody UserDTO userDTO){
+        User existingUser = this.userService.findByEmail(userDTO.getEmail());
+
+        if(existingUser != null){
+            return new ResponseEntity("User already exists", HttpStatus.FORBIDDEN);
+        } else {
+            User newUser = new User(
+                    userDTO.getUsername(),
+                    userDTO.getName(),
+                    userDTO.getLastName(),
+                    userDTO.getPassword(),
+                    userDTO.getDateOfBirth(),
+                    userDTO.getEmail(),
+                    userDTO.getPhoneNumber(),
+                    userDTO.getCountry(),
+                    userDTO.getCity(),
+                    userDTO.getProfession(),
+                    userDTO.getCompanyInfo(),
+                    "ROLE_SYSADMIN",
+                    true
+            );
+
+            this.userService.addUser(newUser);
+
+            SystemAdministrator newSystemAdministrator = new SystemAdministrator(newUser);
+            newSystemAdministrator = this.systemAdministratorService.save(newSystemAdministrator);
+
+            return new ResponseEntity<SystemAdministrator>(newSystemAdministrator, HttpStatus.CREATED);
         }
     }
 }

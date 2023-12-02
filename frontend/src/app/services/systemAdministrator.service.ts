@@ -15,4 +15,8 @@ export class SystemAdministratorService {
     public createCompanyAdministrator(userDTO : UserDTO) : Observable<UserDTO> {
         return this.http.put<UserDTO>(`${this.apiServerUrl}/api/profile/newCompanyAdmin`, userDTO);
     }
+
+    public createSystemAdministrator(userDTO : UserDTO) : Observable<UserDTO> {
+        return this.http.put<UserDTO>(`${this.apiServerUrl}/api/profile/newSysAdmin`, userDTO);
+    }
 }
