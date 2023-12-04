@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd, RouterEvent } from '@angular/router';
+import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class NavbarComponent implements OnInit {
         this.isTransparent = event.url === '/' || event.urlAfterRedirects === '/';
       }
     });
+
   } 
 
   @HostListener('window:scroll', ['$event'])

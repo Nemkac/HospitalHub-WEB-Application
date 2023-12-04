@@ -22,7 +22,7 @@ const routes: Routes = [
     {path: 'api/user/profile/:id', component: UserProfileComponent},
     {path: '', component: LandingPageComponent},  
     {path: 'logIn',component:LogInFormComponent},
-    {path: 'register',component:RegisterFormComponent}
+    {path: 'register',component:RegisterFormComponent},
 ];
 
 @NgModule({

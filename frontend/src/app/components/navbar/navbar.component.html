@@ -29,10 +29,25 @@
                 MY COMPANY
             </a>
         </li>
-        <li class="hover:text-third transition-[0.5s] ml-10">
-            <a href="/logIn">
-                {{user.loggedInUser}}
-            </a>
-        </li>
+        <ng-container *ngIf="user.loggedInUser === 'LOGIN'; else loggedInUser">
+            <li class="hover:text-third transition-[0.5s] ml-10">
+                <a routerLink="/logIn">
+                    {{ user.loggedInUser }}
+                </a>
+            </li>
+        </ng-container>
+        <ng-template #loggedInUser>
+            <li class="hover:text-third transition-[0.5s] ml-10">
+                <div class="relative" ngbDropdown>
+                    <a class="nav-link dropdown-toggle" ngbDropdownToggle>
+                        {{ user.loggedInUser }}
+                    </a>
+                    <div ngbDropdownMenu>
+                        <a class="dropdown-item" routerLink="api/user/profile/1">Profile</a>
+                        <a class="dropdown-item" href="#">Settings</a>
+                    </div>
+                </div>
+            </li>
+        </ng-template>
     </ul>
 </div>
