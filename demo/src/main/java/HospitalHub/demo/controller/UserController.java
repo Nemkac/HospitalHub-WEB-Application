@@ -5,9 +5,11 @@ import HospitalHub.demo.dto.UserProfileDTO;
 import HospitalHub.demo.model.Company;
 import HospitalHub.demo.dto.UserDTO;
 import HospitalHub.demo.model.CompanyAdministrator;
+import HospitalHub.demo.model.SystemAdministrator;
 import HospitalHub.demo.model.User;
 import HospitalHub.demo.service.CompanyAdministratorService;
 import HospitalHub.demo.service.CompanyService;
+import HospitalHub.demo.service.JwtService;
 import HospitalHub.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "api/user")
@@ -26,6 +30,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private CompanyService companyService;
+    @Autowired
+    JwtService jwtService;
 
     @PutMapping(consumes = "application/json", value = "/update/{id}")
     public ResponseEntity<UserDTO> updateCompanyAdministrator(@RequestBody UserDTO userDTO, @PathVariable Integer id)
@@ -111,5 +117,21 @@ public class UserController {
             return new ResponseEntity<>(companies,HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping(value = "/getUserByToken/{token}")
+    public ResponseEntity<User> getUserByToken(@PathVariable String token) {
+        try {
+            String username = jwtService.extractUsername(token);
+            User user = userService.getByUsername(username);
+
+            if (user != null) {
+                return new ResponseEntity<User>(user, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

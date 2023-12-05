@@ -52,6 +52,7 @@ public class UserService implements UserDetailsService {
         return userDetail.map(UserInfoDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found " + username));
     }
+
     public User addUser(User userInfo) {
         userInfo.setPassword(encoder.encode(userInfo.getPassword()));
         userRepository.save(userInfo);
@@ -78,21 +79,9 @@ public class UserService implements UserDetailsService {
         return userRepository.findByEmail(email);
     }
 
-    public Integer calculateUserId(){
-        List<User> users = userRepository.findAll();
-        List<Integer> ids = new ArrayList<>();
-
-        for(User user : users) {
-            ids.add(user.getId());
-        }
-
-        Collections.sort(ids);
-
-        if(!ids.isEmpty()){
-            Integer freeId = ids.get(ids.size() - 1);
-            return freeId;
-        } else {
-            return 0;
-        }
+    public User getByUsername(String username){
+        return userRepository.getByUsername(username);
     }
+
+
 }

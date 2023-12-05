@@ -43,4 +43,12 @@ public class SystemAdministrator{
         this.sysAdminId = sysAdminId;
         this.passwordChanged = false;
     }
+
+    public boolean isPasswordChanged() {
+        return passwordChanged;
+    }
+
+    public void setPasswordChanged(boolean passwordChanged) {
+        this.passwordChanged = passwordChanged;
+    }
 }

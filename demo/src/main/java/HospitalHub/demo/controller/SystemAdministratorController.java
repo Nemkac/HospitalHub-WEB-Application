@@ -46,7 +46,6 @@ public class SystemAdministratorController {
         if(existingUser != null){
             return new ResponseEntity("User already exists", HttpStatus.FORBIDDEN);
         } else {
-            Integer userId = this.userService.calculateUserId() + 1;
 
             User newUser = new User(
                     userDTO.getUsername(),
@@ -103,4 +102,18 @@ public class SystemAdministratorController {
             return new ResponseEntity<SystemAdministrator>(newSystemAdministrator, HttpStatus.CREATED);
         }
     }
+
+    @GetMapping(value = "/isPasswordChanged/{id}")
+    public boolean isPasswordChanged(@PathVariable Integer id){
+        User user = this.userService.getById(id);
+        SystemAdministrator systemAdministrator = this.systemAdministratorService.getByUser(user);
+
+        return systemAdministrator.isPasswordChanged();
+    }
+
+    /*TODO - change password implementation*/
+    /*@PutMapping(value = "/changePassword")
+    public ResponseEntity<SystemAdministrator> changeSystemAdministratorPassword(@RequestBody String password){
+        User loggedInUser =
+    }*/
 }

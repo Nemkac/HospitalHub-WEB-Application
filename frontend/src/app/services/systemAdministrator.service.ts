@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserDTO } from 'src/userDTO';
+import { User } from 'src/user';
 
 
 @Injectable({
@@ -18,5 +19,9 @@ export class SystemAdministratorService {
 
     public createSystemAdministrator(userDTO : UserDTO) : Observable<UserDTO> {
         return this.http.put<UserDTO>(`${this.apiServerUrl}/api/profile/newSysAdmin`, userDTO);
+    }
+
+    public isPasswordChanged(id: number): Observable<boolean>{
+        return this.http.get<boolean>(`${this.apiServerUrl}/api/profile/isPasswordChanged/${id}`);
     }
 }

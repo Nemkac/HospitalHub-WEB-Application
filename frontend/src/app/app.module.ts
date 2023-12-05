@@ -34,6 +34,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BackToTopButtonComponent } from './components/back-to-top-button/back-to-top-button.component';
 import { CreateNewSysAdmninistratorFormComponent } from './components/create-new-sys-admninistrator-form/create-new-sys-admninistrator-form.component';
+import { PasswordChangeModalComponent } from './components/password-change-modal/password-change-modal.component';
 
 @NgModule({
       declarations: [
@@ -60,6 +61,7 @@ import { CreateNewSysAdmninistratorFormComponent } from './components/create-new
           RegisterFormComponent,
           LogInFormComponent,
           CreateNewSysAdmninistratorFormComponent,
+          PasswordChangeModalComponent,
       ],
       imports: [
           BrowserAnimationsModule,

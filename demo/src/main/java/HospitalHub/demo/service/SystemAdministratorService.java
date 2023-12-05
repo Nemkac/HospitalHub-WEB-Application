@@ -24,4 +24,8 @@ public class SystemAdministratorService {
         return systemAdministratorRepository.findAll();
     }
 
+    public SystemAdministrator getByUser(User user){
+        return systemAdministratorRepository.getByUser(user);
+    }
+
 }
