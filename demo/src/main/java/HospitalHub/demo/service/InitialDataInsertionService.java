@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 public class InitialDataInsertionService {
@@ -30,6 +31,9 @@ public class InitialDataInsertionService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ComplaintService complaintService;
 
     @Transactional
     public void insertInitialData() {
@@ -139,6 +143,20 @@ public class InitialDataInsertionService {
         medicalEqupimentService.save(equipment6);
         medicalEqupimentService.save(equipment7);
         medicalEqupimentService.save(equipment8);
+
+        LocalDateTime complaint1Date = LocalDateTime.of(2023, 1, 12, 14, 32);
+        Complaint complaint1 = new Complaint(complaint1Date, "Los admin", "Nije los", false, true);
+        LocalDateTime complaint2Date = LocalDateTime.of(2023, 2, 2, 4, 22);
+        Complaint complaint2 = new Complaint(complaint2Date, "Losa kompanija", "", true, false);
+        LocalDateTime complaint3Date = LocalDateTime.of(2023, 6, 18, 23, 0);
+        Complaint complaint3 = new Complaint(complaint3Date, "Jos gori admin", "Tako je, los je", false, true);
+        LocalDateTime complaint4Date = LocalDateTime.of(2023, 2, 2, 8, 30);
+        Complaint complaint4 = new Complaint(complaint4Date, "Najgora kompanija", "", true, false);
+
+        complaintService.save(complaint1);
+        complaintService.save(complaint2);
+        complaintService.save(complaint3);
+        complaintService.save(complaint4);
     }
 
 }

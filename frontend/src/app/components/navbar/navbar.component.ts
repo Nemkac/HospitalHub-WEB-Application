@@ -3,6 +3,8 @@ import { ActivatedRoute, Router, NavigationEnd, RouterEvent } from '@angular/rou
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/user';
+import { faBell as fasBell } from '@fortawesome/free-solid-svg-icons';
+import { faBell as farBell } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-navbar',
@@ -14,6 +16,8 @@ export class NavbarComponent implements OnInit {
   userRole: string = "ROLE_USER";
   token = localStorage.getItem('token');
   isTransparent: boolean = true;
+  noNotification = farBell;
+  notification = fasBell;
 
   constructor(private router: Router,
               public user: UserService,
