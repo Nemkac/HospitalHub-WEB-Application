@@ -35,7 +35,7 @@ export class UserService {
               localStorage.setItem('token', response.email);
         })
     )}
- 
+
     public register(userDto:User):Observable<User>{
         return this.http.post<User>(`${this.apiServerUrl}/register`, userDto);
     }

@@ -24,15 +24,10 @@
                 EQUIPMENT
             </a>
         </li>
-        <li class="hover:text-third transition-[0.5s] mx-10">
-            <a routerLink="/mycompany">
-                MY COMPANY
-            </a>
-        </li>
-        <ng-container *ngIf="user.loggedInUser === 'LOGIN'; else loggedInUser">
+        <ng-container *ngIf="username === 'LOGIN'; else loggedInUser">
             <li class="hover:text-third transition-[0.5s] ml-10">
                 <a routerLink="/logIn">
-                    {{ user.loggedInUser }}
+                    {{ username }}
                 </a>
             </li>
         </ng-container>
@@ -40,12 +35,23 @@
             <li class="hover:text-third transition-[0.5s] ml-10">
                 <div class="relative" ngbDropdown>
                     <a class="nav-link dropdown-toggle" ngbDropdownToggle>
-                        {{ user.loggedInUser }}
+                        {{ username }}
                     </a>
                     <div ngbDropdownMenu>
-                        <a class="dropdown-item" routerLink="api/user/profile/{{userId}}">Profile</a>
-                        <a class="dropdown-item" href="#">Settings</a>
-                        <a class="dropdown-item" href="#">LogOut</a>
+                        <div class="flex w-full text-third hover:bg-third hover:text-white px-2 ">
+                            <a class="font-inter font-regular text-[18px]" routerLink="api/user/profile/{{userId}}">Profile</a>
+                        </div>
+                        <ng-container *ngIf="userRole === 'ROLE_COMPANYADMIN'">
+                            <div class="flex w-full text-third hover:bg-third hover:text-white px-2">
+                                <a class="font-inter font-regular text-[18px]" routerLink="/mycompany">My company</a>
+                            </div>
+                        </ng-container>
+                        <div class="flex w-full text-third hover:bg-third hover:text-white px-2">
+                            <a class="font-inter font-regular text-[18px]" href="#">Settings</a>
+                        </div>
+                        <div class="flex w-full text-third hover:bg-third hover:text-white px-2">
+                            <a class="font-inter font-regular text-[18px]"  (click)="logOut()" href="#">LogOut</a>
+                        </div>
                     </div>
                 </div>
             </li>
