@@ -145,13 +145,15 @@ public class InitialDataInsertionService {
         medicalEqupimentService.save(equipment8);
 
         LocalDateTime complaint1Date = LocalDateTime.of(2023, 1, 12, 14, 32);
-        Complaint complaint1 = new Complaint(complaint1Date, "Los admin", "Nije los", false, true);
+        Complaint complaint1 = new Complaint(complaint1Date, "Los admin", false, true);
+        complaint1.setReply("Nije los");
         LocalDateTime complaint2Date = LocalDateTime.of(2023, 2, 2, 4, 22);
-        Complaint complaint2 = new Complaint(complaint2Date, "Losa kompanija", "", true, false);
+        Complaint complaint2 = new Complaint(complaint2Date, "Losa kompanija", true, false);
         LocalDateTime complaint3Date = LocalDateTime.of(2023, 6, 18, 23, 0);
-        Complaint complaint3 = new Complaint(complaint3Date, "Jos gori admin", "Tako je, los je", false, true);
+        Complaint complaint3 = new Complaint(complaint3Date, "Jos gori admin", false, true);
+        complaint3.setReply("Tako je, los je");
         LocalDateTime complaint4Date = LocalDateTime.of(2023, 2, 2, 8, 30);
-        Complaint complaint4 = new Complaint(complaint4Date, "Najgora kompanija", "", true, false);
+        Complaint complaint4 = new Complaint(complaint4Date, "Najgora kompanija", true, false);
 
         complaintService.save(complaint1);
         complaintService.save(complaint2);

@@ -5,6 +5,8 @@ import HospitalHub.demo.repository.ComplaintRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ComplaintService {
 
@@ -13,5 +15,9 @@ public class ComplaintService {
 
     public Complaint save(Complaint complaint) {
         return complaintRepository.save(complaint);
+    }
+
+    public List<Complaint> findAll(){
+        return complaintRepository.findAll();
     }
 }

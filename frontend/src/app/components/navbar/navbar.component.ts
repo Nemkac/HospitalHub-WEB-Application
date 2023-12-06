@@ -5,6 +5,7 @@ import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/user';
 import { faBell as fasBell } from '@fortawesome/free-solid-svg-icons';
 import { faBell as farBell } from '@fortawesome/free-regular-svg-icons';
+import { ComplaintService } from 'src/app/services/complaint.service';
 
 @Component({
   selector: 'app-navbar',
@@ -18,10 +19,12 @@ export class NavbarComponent implements OnInit {
   isTransparent: boolean = true;
   noNotification = farBell;
   notification = fasBell;
+  notificationFlag = false;
 
   constructor(private router: Router,
               public user: UserService,
-              private cdr: ChangeDetectorRef) {}
+              private cdr: ChangeDetectorRef,
+              private complaintService: ComplaintService) {}
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {

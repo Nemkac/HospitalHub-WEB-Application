@@ -1,46 +1,30 @@
-package HospitalHub.demo.model;
+package HospitalHub.demo.dto;
 
-import jakarta.persistence.*;
+import HospitalHub.demo.model.Complaint;
+import jakarta.persistence.Column;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "complaints")
-public class Complaint {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class ComplaintDTO {
     private Integer id;
-
-    @Column(name = "date")
     private LocalDateTime date;
-
-    @Column(name = "text")
     private String text;
-
-    @Column(name = "reply")
     private String reply;
-
-    @Column
     private boolean onCompany;
-
-    @Column
     private boolean onAdministrator;
 
-    public Complaint() {}
+    public ComplaintDTO() {}
 
-    public Complaint(LocalDateTime date, String text, boolean onCompany, boolean onAdministrator) {
+    public ComplaintDTO(Complaint complaint) {
+        this(complaint.getDate(), complaint.getText(), complaint.getReply(), complaint.isOnCompany(), complaint.isOnAdministrator());
+    }
+
+    public ComplaintDTO(LocalDateTime date, String text, String reply, boolean onCompany, boolean onAdministrator) {
         this.date = date;
         this.text = text;
+        this.reply = reply;
         this.onCompany = onCompany;
         this.onAdministrator = onAdministrator;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public LocalDateTime getDate() {
