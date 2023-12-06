@@ -24,4 +24,8 @@ export class SystemAdministratorService {
     public isPasswordChanged(id: number): Observable<boolean>{
         return this.http.get<boolean>(`${this.apiServerUrl}/api/profile/isPasswordChanged/${id}`);
     }
+
+    public updatePassword(id: any, password: string): Observable<User> {
+        return this.http.put<User>(`${this.apiServerUrl}/api/profile/changePassword/${id}`, password);
+    }
 }

@@ -12,6 +12,7 @@ import HospitalHub.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -30,6 +31,8 @@ public class SystemAdministratorController {
     public CompanyAdministratorService companyAdministratorService;
     @Autowired
     public UserService userService;
+    @Autowired
+    private PasswordEncoder encoder;
 
     @GetMapping(value = "/getAllUsers")
     public ResponseEntity<List<User>>getAllUsers(){
@@ -111,9 +114,16 @@ public class SystemAdministratorController {
         return systemAdministrator.isPasswordChanged();
     }
 
-    /*TODO - change password implementation*/
-    /*@PutMapping(value = "/changePassword")
-    public ResponseEntity<SystemAdministrator> changeSystemAdministratorPassword(@RequestBody String password){
-        User loggedInUser =
-    }*/
+    @PutMapping(value = "/changePassword/{id}")
+    public ResponseEntity<User> changeSystemAdministratorPassword(@PathVariable Integer id, @RequestBody String password){
+        User loggedInUser = userService.getById(id);
+        SystemAdministrator systemAdministrator = systemAdministratorService.getByUser(loggedInUser);
+        loggedInUser.setPassword(password);
+        systemAdministrator.setPasswordChanged(true);
+
+        userService.addUser(loggedInUser);
+        systemAdministratorService.save(systemAdministrator);
+
+        return new ResponseEntity<User>(loggedInUser, HttpStatus.OK);
+    }
 }
