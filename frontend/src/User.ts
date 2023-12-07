@@ -10,5 +10,6 @@ export interface User{
     country: string;
     city: string; 
     profession: string; 
-    companyInfo: string; 
+    companyInfo: string;
+    roles: string; 
 }

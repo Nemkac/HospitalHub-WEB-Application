@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 public class UserDTO {
     private Integer id;
+    private String username;
     private String name;
     private String lastName;
     private String password;
@@ -17,7 +18,8 @@ public class UserDTO {
     private String profession;
     private String companyInfo;
 
-    public UserDTO(String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
+    public UserDTO(String username, String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
+        this.username = username;
         this.name = name;
         this.lastName = lastName;
         this.password = password;
@@ -35,6 +37,7 @@ public class UserDTO {
 
     public UserDTO(User user){
         this(
+                user.getUsername(),
                 user.getName(),
                 user.getLastName(),
                 user.getPassword(),
@@ -54,6 +57,14 @@ public class UserDTO {
 
     public Integer getId() {
         return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setId(Integer id) {

@@ -15,12 +15,16 @@ public class SystemAdministrator{
     @OneToOne
     private User user;
 
+    @Column
+    private boolean passwordChanged;
+
     public SystemAdministrator() {
 
     }
 
     public SystemAdministrator(User user) {
         this.user = user;
+        this.passwordChanged = false;
     }
 
     public User getUser() {
@@ -36,7 +40,15 @@ public class SystemAdministrator{
     }
 
     public void setSysAdminId(Integer sysAdminId) {
-    
         this.sysAdminId = sysAdminId;
+        this.passwordChanged = false;
+    }
+
+    public boolean isPasswordChanged() {
+        return passwordChanged;
+    }
+
+    public void setPasswordChanged(boolean passwordChanged) {
+        this.passwordChanged = passwordChanged;
     }
 }

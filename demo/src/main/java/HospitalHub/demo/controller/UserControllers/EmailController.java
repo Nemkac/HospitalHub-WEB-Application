@@ -113,7 +113,6 @@ public class EmailController {
         }else {
             return new ResponseEntity<>(new UserLoginDTO("No such username","-2"),HttpStatus.BAD_REQUEST);
         }
-
     }
     @PostMapping(value = "/generateToken")
     public String authenticateAndGetToken(@RequestBody AuthRequestDTO authRequest) {

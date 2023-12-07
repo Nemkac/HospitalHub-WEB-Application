@@ -5,9 +5,11 @@ import HospitalHub.demo.repository.CompanyRepository;
 import HospitalHub.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 public class InitialDataInsertionService {
@@ -26,6 +28,12 @@ public class InitialDataInsertionService {
 
     @Autowired
     private MedicalEqupimentService medicalEqupimentService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ComplaintService complaintService;
 
     @Transactional
     public void insertInitialData() {
@@ -51,7 +59,9 @@ public class InitialDataInsertionService {
                 "Serbia",
                 "Kragujevac",
                 "Programer",
-                "None"
+                "None",
+                "ROLE_USER",
+                true
         );
 
         LocalDate user2BirthDate = LocalDate.ofEpochDay(2001-15-7);
@@ -66,7 +76,9 @@ public class InitialDataInsertionService {
                 "Serbia",
                 "Novi Sad",
                 "Programer",
-                "None"
+                "None",
+                "ROLE_USER",
+                true
         );
 
         LocalDate user3BirthDate = LocalDate.ofEpochDay(2002-25-1);
@@ -81,7 +93,9 @@ public class InitialDataInsertionService {
                 "Serbia",
                 "Jagodina",
                 "Programer",
-                "None"
+                "None",
+                "ROLE_COMPANYADMIN",
+                true
         );
 
         LocalDate user4BirthDate = LocalDate.ofEpochDay(2002-18-1);
@@ -96,13 +110,15 @@ public class InitialDataInsertionService {
                 "Serbia",
                 "Sremska Mitrovica",
                 "Programer",
-                "None"
+                "None",
+                "ROLE_SYSADMIN",
+                true
         );
 
-        userRepository.save(user1);
-        userRepository.save(user2);
-        userRepository.save(user3);
-        userRepository.save(user4);
+        userService.addUser(user1);
+        userService.addUser(user2);
+        userService.addUser(user3);
+        userService.addUser(user4);
 
         SystemAdministrator systemAdministrator = new SystemAdministrator(user4);
         systemAdministratorService.save(systemAdministrator);
@@ -127,6 +143,22 @@ public class InitialDataInsertionService {
         medicalEqupimentService.save(equipment6);
         medicalEqupimentService.save(equipment7);
         medicalEqupimentService.save(equipment8);
+
+        LocalDateTime complaint1Date = LocalDateTime.of(2023, 1, 12, 14, 32);
+        Complaint complaint1 = new Complaint(complaint1Date, "Los admin", false, true);
+        complaint1.setReply("Nije los");
+        LocalDateTime complaint2Date = LocalDateTime.of(2023, 2, 2, 4, 22);
+        Complaint complaint2 = new Complaint(complaint2Date, "Losa kompanija", true, false);
+        LocalDateTime complaint3Date = LocalDateTime.of(2023, 6, 18, 23, 0);
+        Complaint complaint3 = new Complaint(complaint3Date, "Jos gori admin", false, true);
+        complaint3.setReply("Tako je, los je");
+        LocalDateTime complaint4Date = LocalDateTime.of(2023, 2, 2, 8, 30);
+        Complaint complaint4 = new Complaint(complaint4Date, "Najgora kompanija", true, false);
+
+        complaintService.save(complaint1);
+        complaintService.save(complaint2);
+        complaintService.save(complaint3);
+        complaintService.save(complaint4);
     }
 
 }

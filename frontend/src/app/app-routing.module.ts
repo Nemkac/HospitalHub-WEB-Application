@@ -1,3 +1,4 @@
+import { Complaint } from './models/Complaint';
 import { EquipmentPageComponent } from './pages/equipment-page/equipment-page.component';
 import { SystemAdminProfilePageComponent } from './pages/system-admin-profile-page/system-admin-profile-page.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
@@ -10,6 +11,7 @@ import { ShowCompaniesComponent } from './components/show-companies/show-compani
 import { UpdateUserProfileComponent } from './components/update-user-profile/update-user-profile.component';
 import { LogInFormComponent } from './components/log-in-form/log-in-form.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { ComplaintsPageComponent } from './pages/complaints-page/complaints-page.component';
 
 const routes: Routes = [
     //Promeniti kada se doda login da se umesto logina ispise ime usera i onda da se ide na profil usera
@@ -22,7 +24,8 @@ const routes: Routes = [
     {path: 'api/user/profile/:id', component: UserProfileComponent},
     {path: '', component: LandingPageComponent},  
     {path: 'logIn',component:LogInFormComponent},
-    {path: 'register',component:RegisterFormComponent}
+    {path: 'register',component:RegisterFormComponent},
+    {path: 'complaints', component:ComplaintsPageComponent}
 ];
 
 @NgModule({

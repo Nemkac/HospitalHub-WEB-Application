@@ -1,4 +1,4 @@
-<form #createCompanyAdministratorForm="ngForm" (ngSubmit)="CreateCompanyAdministrator(createCompanyAdministratorForm)">
+<form #createSysAdministratorForm="ngForm" (ngSubmit)="CreateSysAdministrator(createSysAdministratorForm)">
     <div class="flex flex-col h-[900px] bg-white w-[500px] py-4 items-center rounded-md justify-between border-[1px] border-secondary/10">
         <div>
             <p class="font-inter text-third font-medium text-[18px]">Username</p>
@@ -69,8 +69,8 @@
         
         <button class="w-[400px] text-[20px] bg-[#0582ca] hover:bg-lightBlue cursor-pointer transition-[0.5s] font-inter font-semibold 
                         text-white rounded-md h-[45px]" type="submit"
-                [disabled]="createCompanyAdministratorForm.invalid || !createCompanyAdministratorForm.dirty">
-            Create company administrator
+                [disabled]="createSysAdministratorForm.invalid || !createSysAdministratorForm.dirty">
+            Create system administrator
         </button>
     </div>
 </form>
