@@ -2,7 +2,7 @@
     <div class="flex flex-row w-full">
         <input  [(ngModel)]="name" 
                 placeholder="Enter product name here"
-                class="h-[60px] w-[90%] rounded-l-full bg-third/20 text-white px-16 text-[24px] font-semibold focus:outline-none">
+                class="h-[60px] w-[90%] rounded-l-full shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)] bg-white text-third px-16 text-[24px] font-semibold focus:outline-none">
         <button class="h-[60px] w-[10%] bg-[#0582ca] hover:bg-lightBlue hover:text-[28px] transition-[0.5s] text-white text-[24px] rounded-r-full items-center justify-center"
                 (click)="combinedSearch(name, minPrice, maxPrice, type)">
             <fa-icon [icon] = "faSearch"/>

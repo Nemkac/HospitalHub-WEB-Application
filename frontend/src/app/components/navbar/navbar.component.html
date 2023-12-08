@@ -24,7 +24,7 @@
                 EQUIPMENT
             </a>
         </li>
-        <div class="flex items-center justify-between w-[160px]">
+        <div class="flex items-center justify-between w-auto">
             <ng-container *ngIf="username === 'LOGIN'; else loggedInUser">
                 <li class="hover:text-third transition-[0.5s] ml-10">
                     <a routerLink="/logIn">
@@ -33,7 +33,7 @@
                 </li>
             </ng-container>
             <ng-template #loggedInUser>
-                <li class="hover:text-third transition-[0.5s] ml-10">
+                <li class="hover:text-third transition-[0.5s]">
                     <div class="relative" ngbDropdown>
                         <a class="nav-link dropdown-toggle" ngbDropdownToggle>
                             {{ username }}

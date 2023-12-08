@@ -16,17 +16,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/complaints")
+@RequestMapping(value = "api/complaints")
 public class ComplaintController {
 
     @Autowired
     private ComplaintService complaintService;
 
-    @GetMapping(value = "/getAll")
-    @PreAuthorize("hasAuthority('ROLE_SYSADMIN')")
-    public ResponseEntity<List<Complaint>> getAllComplaints(){
-        List<Complaint> complaints = complaintService.findAll();
+    /*
+        TODO: Preurediti endpoint tako da vraca samo one na koje postoji odgovor.
+         Dodati jos jedan endpoint koji vraca sve one na koje ne postoji odgovor.
+         Kada admin dodje na stranicu za zalbe prikazuju mu se sve na koje ne postoji odgovor.
+         Ako nema nijedne, prikazuje mu poruku "Nothing to show" i link "View processed complaints".
+         Klikom na link prikazuju mu se sve na koje postoji odgovor.
+         Na njih nije moguce odgovoriti. Mogu se samo pregledati.
+    */
 
-        return new ResponseEntity<List<Complaint>>(complaints, HttpStatus.FOUND);
+    @GetMapping(value = "/getAll")
+    public ResponseEntity<List<Complaint>> getAllComplaints(){
+        /*try{
+            List<Complaint> complaints = complaintService.findAll();
+            List<ComplaintDTO> dtos = new ArrayList<>();
+
+            for(Complaint complaint : complaints){
+                ComplaintDTO dto = new ComplaintDTO(complaint);
+                dtos.add(dto);
+            }
+
+            return new ResponseEntity<List<ComplaintDTO>>(dtos, HttpStatus.FOUND);
+        } catch (Exception e){
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }*/
+        List<Complaint> complaints = complaintService.findAll();
+        List<ComplaintDTO> dtos = new ArrayList<>();
+
+        for(Complaint complaint : complaints){
+            ComplaintDTO dto = new ComplaintDTO(complaint);
+            dtos.add(dto);
+        }
+
+        return new ResponseEntity<List<Complaint>>(complaints, HttpStatus.OK);
     }
 }
