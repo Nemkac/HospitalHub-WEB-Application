@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,13 +24,45 @@ public class ComplaintController {
     private ComplaintService complaintService;
 
     /*
-        TODO: Preurediti endpoint tako da vraca samo one na koje postoji odgovor.
-         Dodati jos jedan endpoint koji vraca sve one na koje ne postoji odgovor.
-         Kada admin dodje na stranicu za zalbe prikazuju mu se sve na koje ne postoji odgovor.
-         Ako nema nijedne, prikazuje mu poruku "Nothing to show" i link "View processed complaints".
-         Klikom na link prikazuju mu se sve na koje postoji odgovor.
-         Na njih nije moguce odgovoriti. Mogu se samo pregledati.
+        TODO: Dodati boolean controller koji proverava da li je otvorena zalba odgovorena ili ne.
+         Na osnovu toga videti da li se prikazuje polje za dodavanje odgovora na zalbu ili ne.
     */
+
+    @GetMapping(value = "/getProcessed")
+    public ResponseEntity<List<Complaint>> getAllProcessedComplaints(){
+        List<Complaint> complaints = complaintService.findAll();
+        List<Complaint> processedComplaints = new ArrayList<>();
+
+        for(Complaint complaint : complaints){
+            if(complaint.getReply() != null){
+                processedComplaints.add(complaint);
+            }
+        }
+
+        return new ResponseEntity<List<Complaint>>(processedComplaints, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getUnprocessed")
+    public ResponseEntity<List<Complaint>> getAllUnprocessedComplaints(){
+        List<Complaint> complaints = complaintService.findAll();
+        List<Complaint> unprocessedComplaints = new ArrayList<>();
+
+        for(Complaint complaint : complaints){
+            if(complaint.getReply() == null){
+                unprocessedComplaints.add(complaint);
+            }
+        }
+
+        return new ResponseEntity<List<Complaint>>(unprocessedComplaints, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getComplaintById/{id}")
+    public ResponseEntity<ComplaintDTO> getComplaintById(@PathVariable Integer id){
+        Complaint complaint = complaintService.getById(id);
+        ComplaintDTO dto = new ComplaintDTO(complaint);
+
+        return new ResponseEntity<ComplaintDTO>(dto, HttpStatus.OK);
+    }
 
     @GetMapping(value = "/getAll")
     public ResponseEntity<List<Complaint>> getAllComplaints(){

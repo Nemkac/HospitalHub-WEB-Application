@@ -14,4 +14,16 @@ export class ComplaintService {
   public getAllComplaints() : Observable<Complaint[]>{
     return this.http.get<Complaint[]>(`${this.apiServerUrl}/api/complaints/getAll`);
   }
+
+  public getAllProcessedComplaints() : Observable<Complaint[]>{
+    return this.http.get<Complaint[]>(`${this.apiServerUrl}/api/complaints/getProcessed`)
+  }
+
+  public getAllUnprocessedComplaints() : Observable<Complaint[]>{
+    return this.http.get<Complaint[]>(`${this.apiServerUrl}/api/complaints/getUnprocessed`);
+  }
+
+  public getComplaintById(id: number): Observable<Complaint> {
+    return this.http.get<Complaint>(`${this.apiServerUrl}/api/complaints/getComplaintById/${id}`);
+  }
 }

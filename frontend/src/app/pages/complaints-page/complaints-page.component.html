@@ -1,10 +1,12 @@
 <div class="flex flex-row w-full h-[100vh] justify-between bg-lightBlue/5 flex px-64 pt-32 pb-16">
     <div class="flex justify-between flex-col h-full w-[30%]">
-        <p class="font-inter font-bold text-[24px] text-third">Complaints (6)</p>
+        <p class="font-inter font-bold text-[24px] text-third">Complaints</p>
         <div class="bg-white w-full h-full rounded-md shadow-xl px-4 overflow-scroll">
-            <div *ngFor="let complaint of complaints"  
-                class="flex flex-col shadow-md justify-evenly w-full rounded-xl cursor-pointer
-                        my-4 px-[20px] py-2 h-[100px] border-[1px] border-third/10 hover:bg-[#dcdde1] transition-[0.5s]">
+            <ng-container *ngIf="complaintsFlag; else noComplaints">
+                <div *ngFor="let complaint of complaints"  
+                    (click)="selectComplaint(complaint.id)"
+                    class="flex flex-col shadow-md justify-evenly w-full rounded-xl cursor-pointer
+                            my-4 px-[20px] py-2 h-[100px] border-[1px] border-third/10 hover:bg-[#dcdde1] transition-[0.5s]">
                 <div class="flex flex-row justify-between items-center">
                     <p class="font-inter font-semibold text-third text-[18px]">COMPLAINT NUMBER {{complaint.id}}</p>
                     <fa-icon [icon]="faTrash" class="text-third text-[16px] hover:text-lightBlue cursor-pointer transition-[0.5s]"/>
@@ -18,8 +20,31 @@
                     <p class="font-inter font-medium text-third text-[14px] ml-4">{{complaint.date}}</p>
                 </div>
             </div>
-
+            </ng-container>
+            <ng-template #noComplaints>
+                <div class="flex flex-col items-center justify-center mt-4">
+                    <p class="font-inter text-third font-semibold text-[24px]">No unprocessed complaints</p>
+                    <p class="font-inter text-third cursor-pointer text-[18px] font-medium hover:text-lightBlue transition-[0.4s]" (click)="getProcessedComplaints()">Click here to see all complaints</p>
+                </div>
+            </ng-template>
         </div>
     </div>
-    <div class="flex h-full w-[65%] bg-white rounded-md shadow-xl"></div>
+    <div class="flex h-full w-[65%] bg-white rounded-md shadow-xl">
+        <div *ngIf="selectedComplaint" class="p-4 font-inter flex flex-col text-third w-full">
+            <p class="text-[24px] font-bold ">COMPLAINT NUMBER: {{selectedComplaint.id}}</p>
+            <div class="flex flex-row items-center">
+                <p class="font-inter font-light text-third text-[18px]">From: </p>
+                <p class="font-inter font-medium text-third text-[18px] ml-4">{{selectedComplaint.fromUser}}</p>
+            </div>
+            <div class="flex flex-row items-center">
+                <p class="font-inter font-light text-third text-[18px]">Date: </p>
+                <p class="font-inter font-medium text-third text-[18px] ml-4">{{selectedComplaint.date}}</p>
+            </div>
+            <hr class="w-full text-third my-2">
+            <div class="flex flex-col">
+                <p class="font-inter font-light text-third text-[18px]">Text: </p>
+                <p class="font-inter font-medium text-third text-[18px]">{{selectedComplaint.text}}</p>
+            </div>
+        </div>
+    </div>
 </div>
