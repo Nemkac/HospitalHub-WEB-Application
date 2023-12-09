@@ -1,5 +1,6 @@
 package HospitalHub.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -11,7 +12,11 @@ public class Complaint {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Column(name = "fromUser")
+    private String fromUser;
+
     @Column(name = "date")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date;
 
     @Column(name = "text")
@@ -19,6 +24,10 @@ public class Complaint {
 
     @Column(name = "reply")
     private String reply;
+
+    @Column(name ="replyDate")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime replyDate;
 
     @Column
     private boolean onCompany;
@@ -28,7 +37,8 @@ public class Complaint {
 
     public Complaint() {}
 
-    public Complaint(LocalDateTime date, String text, boolean onCompany, boolean onAdministrator) {
+    public Complaint(String fromUser, LocalDateTime date, String text, boolean onCompany, boolean onAdministrator) {
+        this.fromUser = fromUser;
         this.date = date;
         this.text = text;
         this.onCompany = onCompany;
@@ -41,6 +51,14 @@ public class Complaint {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getFromUser() {
+        return fromUser;
+    }
+
+    public void setFromUser(String fromUser) {
+        this.fromUser = fromUser;
     }
 
     public LocalDateTime getDate() {
@@ -81,5 +99,13 @@ public class Complaint {
 
     public void setOnAdministrator(boolean onAdministrator) {
         this.onAdministrator = onAdministrator;
+    }
+
+    public LocalDateTime getReplyDate() {
+        return replyDate;
+    }
+
+    public void setReplyDate(LocalDateTime replyDate) {
+        this.replyDate = replyDate;
     }
 }

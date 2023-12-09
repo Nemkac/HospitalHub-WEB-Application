@@ -1,50 +1,71 @@
 <div class="flex flex-row w-full h-[100vh] justify-between bg-lightBlue/5 flex px-64 pt-32 pb-16">
     <div class="flex justify-between flex-col h-full w-[30%]">
-        <p class="font-inter font-bold text-[24px] text-third">Complaints (6)</p>
+        <p class="font-inter font-bold text-[24px] text-third">Complaints</p>
         <div class="bg-white w-full h-full rounded-md shadow-xl px-4 overflow-scroll">
-            <div class="flex flex-col shadow-md justify-evenly w-full rounded-xl cursor-pointer
-                        my-4 px-[20px] py-2 h-[100px] border-[1px] border-third/10 hover:bg-[#dcdde1] transition-[0.5s]">
+            <ng-container *ngIf="complaintsFlag; else noComplaints">
+                <div *ngFor="let complaint of complaints"  
+                    (click)="selectComplaint(complaint.id)"
+                    class="flex flex-col shadow-md justify-evenly w-full rounded-xl cursor-pointer
+                            my-4 px-[20px] py-2 h-[100px] border-[1px] border-third/10 hover:bg-[#dcdde1] transition-[0.5s]">
                 <div class="flex flex-row justify-between items-center">
-                    <p class="font-inter font-semibold text-third text-[18px]">COMPLAINT NUMBER 123</p>
+                    <p class="font-inter font-semibold text-third text-[18px]">COMPLAINT NUMBER {{complaint.id}}</p>
                     <fa-icon [icon]="faTrash" class="text-third text-[16px] hover:text-lightBlue cursor-pointer transition-[0.5s]"/>
                 </div>
                 <div class="flex flex-row items-center">
                     <p class="font-inter font-light text-third text-[14px]">From: </p>
-                    <p class="font-inter font-medium text-third text-[14px] ml-4">Nemkac</p>
+                    <p class="font-inter font-medium text-third text-[14px] ml-4">{{complaint.fromUser}}</p>
                 </div>
                 <div class="flex flex-row items-center">
                     <p class="font-inter font-light text-third text-[14px]">Date: </p>
-                    <p class="font-inter font-medium text-third text-[14px] ml-4">18/02/2020</p>
+                    <p class="font-inter font-medium text-third text-[14px] ml-4">{{complaint.date}}</p>
                 </div>
             </div>
-            <div class="flex bg-white w-full rounded-xl my-4 h-[100px] border-[1px] border-third/10">
-                
-            </div>
-            <div class="flex bg-white w-full rounded-xl my-4 h-[100px] border-[1px] border-third/10">
-                
-            </div>
-            <div class="flex bg-white w-full rounded-xl my-4 h-[100px] border-[1px] border-third/10">
-                
-            </div>
-            <div class="flex bg-white w-full rounded-xl my-4 h-[100px] border-[1px] border-third/10">
-                
-            </div>
-            <div class="flex bg-white w-full rounded-xl my-4 h-[100px] border-[1px] border-third/10">
-                
-            </div>
-            <div class="flex bg-white w-full rounded-xl my-4 h-[100px] border-[1px] border-third/10">
-                
-            </div>
-            <div class="flex bg-white w-full rounded-xl my-4 h-[100px] border-[1px] border-third/10">
-                
-            </div>
-            <div class="flex bg-white w-full rounded-xl my-4 h-[100px] border-[1px] border-third/10">
-                
-            </div>
-            <div class="flex bg-white w-full rounded-xl my-4 h-[100px] border-[1px] border-third/10">
-                
-            </div>
+            </ng-container>
+            <ng-template #noComplaints>
+                <div class="flex flex-col items-center justify-center mt-4">
+                    <p class="font-inter text-third font-semibold text-[24px]">No unprocessed complaints</p>
+                    <p class="font-inter text-third cursor-pointer text-[18px] font-medium hover:text-lightBlue transition-[0.4s]" (click)="getProcessedComplaints()">Click here to see all complaints</p>
+                </div>
+            </ng-template>
         </div>
     </div>
-    <div class="flex h-full w-[65%] bg-white rounded-md shadow-xl"></div>
+    <div class="flex h-full w-[65%] h-full bg-white rounded-md shadow-xl">
+        <div *ngIf="selectedComplaint" class="p-4 font-inter flex flex-col text-third w-full">
+            <p class="text-[24px] font-bold ">COMPLAINT NUMBER: {{selectedComplaint.id}}</p>
+            <div class="flex flex-row items-center">
+                <p class="font-inter font-light text-third text-[18px]">From: </p>
+                <p class="font-inter font-medium text-third text-[18px] ml-4">{{selectedComplaint.fromUser}}</p>
+            </div>
+            <div class="flex flex-row items-center">
+                <p class="font-inter font-light text-third text-[18px]">Date: </p>
+                <p class="font-inter font-medium text-third text-[18px] ml-4">{{selectedComplaint.date}}</p>
+            </div>
+            <hr class="w-full text-third my-2">
+            <div class="flex flex-col h-[40%]">
+                <p class="font-inter font-light text-third text-[18px]">Text: </p>
+                <p class="font-inter font-medium text-third text-[18px]">{{selectedComplaint.text}}</p>
+            </div>
+            <hr class="w-full text-third my-2">
+            <ng-container *ngIf="replied; else notReplied">
+                <div class="flex h-[45%] justify-end text-right">
+                    <div class="flex flex-col bg-white w-full">
+                        <p class="font-inter font-light text-third text-[18px]">Reply: </p>
+                        <p class="font-inter font-medium text-third text-[18px]">{{selectedComplaint.reply}}</p>
+                        <p class="font-inter font-light text-thrid text-[16px] text-end mt-auto">Replied by: Nemkac at {{selectedComplaint.replyDate}}</p>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-template #notReplied>
+                <div class="flex flex-row h-[45%] w-full items-end">
+                    <div class="items-center bg-white rounded-full shadow-md w-full justify-evenly flex flex-row">
+                        <input [(ngModel)]="reply" id="reply"
+                                class="bg-white rounded-full h-[60px] w-[90%] focus:outline-none text-third font-inter font-medium text-[20px]">
+                        <button class="h-[45px] w-[45px] rounded-full bg-third items-center hover:bg-lightBlue transition-[0.5s]">
+                            <fa-icon [icon]="faPaperPlane" class="text-[24px] text-white" (click)="replyOnComplaint(selectedComplaint.id, reply)"></fa-icon>
+                        </button>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
 </div>
