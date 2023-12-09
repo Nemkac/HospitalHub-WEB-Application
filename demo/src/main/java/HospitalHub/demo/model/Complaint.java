@@ -1,5 +1,6 @@
 package HospitalHub.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ public class Complaint {
     private String fromUser;
 
     @Column(name = "date")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date;
 
     @Column(name = "text")
@@ -24,6 +26,7 @@ public class Complaint {
     private String reply;
 
     @Column(name ="replyDate")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime replyDate;
 
     @Column

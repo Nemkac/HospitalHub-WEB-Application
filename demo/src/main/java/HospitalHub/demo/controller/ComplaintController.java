@@ -1,6 +1,7 @@
 package HospitalHub.demo.controller;
 
 import HospitalHub.demo.dto.ComplaintDTO;
+import HospitalHub.demo.dto.ReplyDTO;
 import HospitalHub.demo.model.Complaint;
 import HospitalHub.demo.service.ComplaintService;
 import org.apache.coyote.Response;
@@ -62,10 +63,11 @@ public class ComplaintController {
     }
 
     @PutMapping(value = "/reply/{id}")
-    public ResponseEntity<ComplaintDTO> reply(@PathVariable Integer id, @RequestBody String reply){
+    public ResponseEntity<ComplaintDTO> reply(@PathVariable Integer id, @RequestBody ReplyDTO replyDTO){
         try{
             Complaint complaint = complaintService.getById(id);
-            complaint.setReply(reply);
+            complaint.setReply(replyDTO.getReply());
+            complaint.setReplyDate(replyDTO.getReplyDate());
             complaintService.save(complaint);
 
             ComplaintDTO dto = new ComplaintDTO(complaint);

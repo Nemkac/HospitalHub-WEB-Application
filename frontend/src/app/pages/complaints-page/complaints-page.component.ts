@@ -1,9 +1,11 @@
+import { Reply } from './../../models/Reply';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Complaint } from 'src/app/models/Complaint';
 import { ComplaintService } from 'src/app/services/complaint.service';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-complaints-page',
@@ -17,6 +19,8 @@ export class ComplaintsPageComponent implements OnInit {
   public replied : boolean = false;
   faPaperPlane = faPaperPlane;
   public reply : string = "";
+  public replyDateAndTime: string = '';
+  public complaintReply: Reply | null = null;
 
   constructor(private complaintService: ComplaintService) {}
 
@@ -83,7 +87,12 @@ export class ComplaintsPageComponent implements OnInit {
   }
 
   public replyOnComplaint(id:number, reply:string) : void{
-    this.complaintService.replyOnComplaint(id, reply).subscribe(
+    this.reply = reply;
+    const replyData: Reply = {
+      reply: reply,
+      replyDate: format(new Date(), 'yyyy-MM-dd HH:mm:ss')
+    };
+    this.complaintService.replyOnComplaint(id, replyData).subscribe(
       (response: Complaint) => {
         this.replied = true;
         this.selectedComplaint = response;

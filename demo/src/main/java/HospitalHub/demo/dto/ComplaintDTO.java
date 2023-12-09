@@ -1,6 +1,7 @@
 package HospitalHub.demo.dto;
 
 import HospitalHub.demo.model.Complaint;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 
 import java.time.LocalDateTime;
@@ -8,9 +9,11 @@ import java.time.LocalDateTime;
 public class ComplaintDTO {
     private Integer id;
     private String fromUser;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date;
     private String text;
     private String reply;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime replyDate;
     private boolean onCompany;
     private boolean onAdministrator;
