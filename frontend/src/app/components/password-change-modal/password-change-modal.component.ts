@@ -1,8 +1,9 @@
-import { SystemAdministratorService } from 'src/app/services/systemAdministrator.service';
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { User } from 'src/user';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { SystemAdministratorService } from 'src/app/services/systemAdministrator.service';
+import { CompanyAdministratorService } from 'src/app/services/companyAdministrator.service';
 
 @Component({
   selector: 'app-password-change-modal',
@@ -19,25 +20,42 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 })
 export class PasswordChangeModalComponent {
   @Input() userId: any;
+  @Input() isAdminCompany: boolean = false;
 
   newPassword: string = '';
   repeatPassword: string = '';
   passwordMismatch: boolean = false;
 
-  constructor(public activeModal: NgbActiveModal,
-              private systemAdministratorService: SystemAdministratorService) {}
+  constructor(
+    public activeModal: NgbActiveModal,
+    private systemAdministratorService: SystemAdministratorService,
+    private companyAdministratorService: CompanyAdministratorService
+  ) {}
 
   changePassword() {
     if (this.newPassword === this.repeatPassword) {
-      this.systemAdministratorService.updatePassword(this.userId, this.newPassword).subscribe(
-        (user: User) => {
-          console.log('Password changed successfully:', user);
-          this.activeModal.close();
-        },
-        (error) => {
-          console.error('Error changing password:', error);
-        }
-      );
+      if (this.isAdminCompany) {
+        // Handle company admin logic
+        this.companyAdministratorService.updateCompanyAdminPassword(this.userId, this.newPassword).subscribe(
+          (user: User) => {
+            console.log('Password changed successfully:', user);
+            this.activeModal.close();
+          },
+          (error) => {
+            console.error('Error changing password:', error);
+          }
+        );
+      } else {
+        this.systemAdministratorService.updatePassword(this.userId, this.newPassword).subscribe(
+          (user: User) => {
+            console.log('Password changed successfully:', user);
+            this.activeModal.close();
+          },
+          (error) => {
+            console.error('Error changing password:', error);
+          }
+        );
+      }
     } else {
       this.passwordMismatch = true;
     }

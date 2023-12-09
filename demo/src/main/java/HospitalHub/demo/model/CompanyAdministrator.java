@@ -22,7 +22,8 @@ public class CompanyAdministrator{
 
     @OneToMany(mappedBy = "companyAdministrator")
     private List<EquipmentAvailability> equipmentAvailabilityList;
-
+    @Column
+    private boolean passwordChanged;
 
     public CompanyAdministrator() {
     }
@@ -30,11 +31,13 @@ public class CompanyAdministrator{
     public CompanyAdministrator(User user) {
         this.user = user;
         this.company = null;
+        this.passwordChanged = false;
     }
 
     public CompanyAdministrator(User user, Company company) {
         this.user = user;
         this.company = company;
+        this.passwordChanged = false;
     }
     public Integer getCompAdminId() {
         return compAdminId;
@@ -66,4 +69,18 @@ public class CompanyAdministrator{
     public void setEquipmentAvailabilityList(List<EquipmentAvailability> equipmentAvailabilityList) {
         this.equipmentAvailabilityList = equipmentAvailabilityList;
     }
+
+    public void setSysAdminId(Integer compAdminId) {
+        this.compAdminId = compAdminId;
+        this.passwordChanged = false;
+    }
+
+    public boolean isPasswordChanged() {
+        return passwordChanged;
+    }
+
+    public void setPasswordChanged(boolean passwordChanged) {
+        this.passwordChanged = passwordChanged;
+    }
 }
+
