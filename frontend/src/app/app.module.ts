@@ -36,6 +36,7 @@ import { BackToTopButtonComponent } from './components/back-to-top-button/back-t
 import { CreateNewSysAdmninistratorFormComponent } from './components/create-new-sys-admninistrator-form/create-new-sys-admninistrator-form.component';
 import { PasswordChangeModalComponent } from './components/password-change-modal/password-change-modal.component';
 import { ComplaintsPageComponent } from './pages/complaints-page/complaints-page.component';
+import { VisitCompanyComponentComponent } from './pages/visit-company-component/visit-company-component.component';
 
 @NgModule({
       declarations: [
@@ -64,6 +65,7 @@ import { ComplaintsPageComponent } from './pages/complaints-page/complaints-page
           CreateNewSysAdmninistratorFormComponent,
           PasswordChangeModalComponent,
           ComplaintsPageComponent,
+          VisitCompanyComponentComponent,
       ],
       imports: [
           BrowserAnimationsModule,
