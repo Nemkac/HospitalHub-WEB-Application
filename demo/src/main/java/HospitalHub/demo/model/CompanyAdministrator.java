@@ -3,6 +3,7 @@ package HospitalHub.demo.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "CompanyAdministrator")
@@ -18,6 +19,10 @@ public class CompanyAdministrator{
     @OneToOne
     @JoinColumn(name = "company_id") // Use the name of the foreign key column in the database
     private Company company;
+
+    @OneToMany(mappedBy = "companyAdministrator")
+    private List<EquipmentAvailability> equipmentAvailabilityList;
+
 
     public CompanyAdministrator() {
     }
@@ -52,5 +57,13 @@ public class CompanyAdministrator{
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public List<EquipmentAvailability> getEquipmentAvailabilityList() {
+        return equipmentAvailabilityList;
+    }
+
+    public void setEquipmentAvailabilityList(List<EquipmentAvailability> equipmentAvailabilityList) {
+        this.equipmentAvailabilityList = equipmentAvailabilityList;
     }
 }

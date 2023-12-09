@@ -7,6 +7,7 @@ import HospitalHub.demo.model.CompanyAdministrator;
 import HospitalHub.demo.model.User;
 import HospitalHub.demo.service.CompanyAdministratorService;
 import HospitalHub.demo.service.CompanyService;
+import HospitalHub.demo.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,8 @@ public class CompanyController {
     private CompanyService companyService;
     @Autowired
     private CompanyAdministratorService companyAdministratorService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping(value = "/getAll")
     public ResponseEntity<List<Company>> getAllCompanies() {
@@ -86,9 +89,27 @@ public class CompanyController {
     }
 
 
-    @GetMapping(value = "/getAdminsCompany")
+   /* @GetMapping(value = "/getAdminsCompany")
     public ResponseEntity<Company> getAdminsCompany() {
+
         CompanyAdministrator companyAdministrator = companyAdministratorService.getByCompAdminId(1);
+
+        if (companyAdministrator == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Company selectedCompany = companyAdministrator.getCompany();
+
+        selectedCompany.getMedicalEquipmentList().forEach(equipment -> {
+            equipment.setCompany(null);
+        });
+
+        return new ResponseEntity<>(selectedCompany, HttpStatus.OK);
+    }*/
+    @GetMapping(value = "/getAdminsCompany/{id}")
+    public ResponseEntity<Company> getAdminsCompany(@PathVariable Integer id) {
+        User loggedInUser = userService.getById(id);
+        CompanyAdministrator companyAdministrator = companyAdministratorService.getByUser(loggedInUser);
 
         if (companyAdministrator == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -21,6 +21,14 @@ public class Company {
     private String city;
     @Column(name = "country")
     private String country;
+
+    @Column(name = "address")
+    private String address;
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
     @Column(name = "avgRate")
     private Double avgRate;
 
@@ -32,6 +40,8 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private List<MedicalEquipment> medicalEquipmentList;
 
+    @OneToMany(mappedBy = "company")
+    private List<EquipmentAvailability> equipmentAvailabilityList;
 
     /*Treba dodati polje sa relacijom koje ce predstavljati id administratora
     koji je zaduzen za odredjenu kompaniju.*/
@@ -49,11 +59,14 @@ public class Company {
         this.companyAdministrator = null;
     }
 
-    public Company(Integer id, String name, String city, String country) {
+    public Company(Integer id, String name, String city, String country, String address, double latitude, double longitude) {
         this.id = id;
         this.name = name;
         this.city = city;
         this.country = country;
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.avgRate = 0.0;
         this.companyAdministrator = null;
     }
@@ -105,6 +118,13 @@ public class Company {
     public void setMedicalEquipmentList(List<MedicalEquipment> medicalEquipmentList) {
         this.medicalEquipmentList = medicalEquipmentList;
     }
+    public List<EquipmentAvailability> getEquipmentAvailabilityList() {
+        return equipmentAvailabilityList;
+    }
+
+    public void setEquipmentAvailabilityList(List<EquipmentAvailability> equipmentAvailabilityList) {
+        this.equipmentAvailabilityList = equipmentAvailabilityList;
+    }
 
     public CompanyAdministrator getCompanyAdministrator() {
         return companyAdministrator;
@@ -112,5 +132,29 @@ public class Company {
 
     public void setCompanyAdministrator(CompanyAdministrator companyAdministrator) {
         this.companyAdministrator = companyAdministrator;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 }

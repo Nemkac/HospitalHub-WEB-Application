@@ -1,6 +1,7 @@
 import { Company } from './../../company';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { id } from 'date-fns/locale';
 import { Observable } from 'rxjs'
 
 @Injectable({
@@ -24,9 +25,10 @@ export class CompanyService {
         return this.http.put<Company>(`${this.apiServerUrl}/api/company/update/${id}`, company);
     }
 
-    public getAdminsCompany(): Observable<Company> {
-        return this.http.get<Company>(`${this.apiServerUrl}/api/company/getAdminsCompany`);
+    public getAdminsCompany(userId: number): Observable<Company> {
+        return this.http.get<Company>(`${this.apiServerUrl}/api/company/getAdminsCompany/${userId}`);
     }
+    
 
     public showCompanies(name?:string,country?:string,city?:string,avgRate?:number):Observable<Company[]>{
         let params = new HttpParams();

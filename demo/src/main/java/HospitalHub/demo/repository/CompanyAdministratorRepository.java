@@ -1,6 +1,8 @@
 package HospitalHub.demo.repository;
 
 import HospitalHub.demo.model.CompanyAdministrator;
+import HospitalHub.demo.model.SystemAdministrator;
+import HospitalHub.demo.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +15,6 @@ public interface CompanyAdministratorRepository extends JpaRepository<CompanyAdm
 
     CompanyAdministrator getByCompAdminId(Integer compAdminId);
     CompanyAdministrator save(CompanyAdministrator companyAdministrator);
+
+    CompanyAdministrator getByUser(User user);
 }

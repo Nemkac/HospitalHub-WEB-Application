@@ -17,6 +17,7 @@
         <div class="mx-4 my-4 text-center">
             <p class="font-inter text-[24px] text-third/50 font-light">Medical Equipment</p>
         </div>
+        
         <div class="flex flex-row flex-start flex-wrap w-full justify-center">
             <div *ngFor="let equipment of equipments" class="flex flex-row bg-white w-[500px] h-[220px] rounded-md shadow-md 
                                                             cursor-pointer mt-6 hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
@@ -33,7 +34,10 @@
                 </div>
                 <hr class="w-full mb-[10px] mt-[5px]">
             </div>
+            
         </div>
+        <div #mapContainer class="flex h-[100vh] w-[60%]"></div>
+
     </div>
     <div class="flex h-[100vh] w-[60%] justify-evenly">
     </div>

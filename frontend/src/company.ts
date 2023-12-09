@@ -4,6 +4,9 @@ export interface Company {
     name: string;
     city: string;
     country: string;
+    address: string;
+    latitude: number;
+    longitude: number;
     avgRate: number;
     medicalEquipmentList: Equipment[];
 }

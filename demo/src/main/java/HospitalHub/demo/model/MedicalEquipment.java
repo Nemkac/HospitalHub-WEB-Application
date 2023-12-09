@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
+import java.util.List;
 import java.util.Objects;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -39,6 +40,10 @@ public class MedicalEquipment {
     @ManyToOne
     @JoinColumn(name="company_id")
     private Company company;
+
+    @OneToMany(mappedBy = "medicalEquipment")
+    private List<EquipmentAvailability> equipmentAvailabilityList;
+
 
     public MedicalEquipment() {}
 
@@ -101,6 +106,14 @@ public class MedicalEquipment {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public List<EquipmentAvailability> getEquipmentAvailabilityList() {
+        return equipmentAvailabilityList;
+    }
+
+    public void setEquipmentAvailabilityList(List<EquipmentAvailability> equipmentAvailabilityList) {
+        this.equipmentAvailabilityList = equipmentAvailabilityList;
     }
 
     @Override
