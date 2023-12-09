@@ -23,6 +23,9 @@ public class Complaint {
     @Column(name = "reply")
     private String reply;
 
+    @Column(name ="replyDate")
+    private LocalDateTime replyDate;
+
     @Column
     private boolean onCompany;
 
@@ -93,5 +96,13 @@ public class Complaint {
 
     public void setOnAdministrator(boolean onAdministrator) {
         this.onAdministrator = onAdministrator;
+    }
+
+    public LocalDateTime getReplyDate() {
+        return replyDate;
+    }
+
+    public void setReplyDate(LocalDateTime replyDate) {
+        this.replyDate = replyDate;
     }
 }

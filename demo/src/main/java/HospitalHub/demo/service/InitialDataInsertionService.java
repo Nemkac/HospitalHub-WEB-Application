@@ -149,11 +149,18 @@ public class InitialDataInsertionService {
         LocalDateTime complaint1Date = LocalDateTime.of(2023, 1, 12, 14, 32);
         Complaint complaint1 = new Complaint(user1.getUsername(), complaint1Date, "Los admin", false, true);
         complaint1.setReply("Nije los");
+        LocalDateTime complaint1ReplyDate = LocalDateTime.of(2023, 1, 12, 15, 32);
+        complaint1.setReplyDate(complaint1ReplyDate);
+
         LocalDateTime complaint2Date = LocalDateTime.of(2023, 2, 2, 4, 22);
         Complaint complaint2 = new Complaint(user2.getUsername(), complaint2Date, "Losa kompanija", true, false);
+
         LocalDateTime complaint3Date = LocalDateTime.of(2023, 6, 18, 23, 0);
         Complaint complaint3 = new Complaint(user1.getUsername(), complaint3Date, "Jos gori admin", false, true);
         complaint3.setReply("Tako je, los je");
+        LocalDateTime complaint3ReplyDate = LocalDateTime.of(2023, 6, 18, 23, 32);
+        complaint3.setReplyDate(complaint3ReplyDate);
+
         LocalDateTime complaint4Date = LocalDateTime.of(2023, 2, 2, 8, 30);
         Complaint complaint4 = new Complaint(user2.getUsername(), complaint4Date, "Najgora kompanija", true, false);
 

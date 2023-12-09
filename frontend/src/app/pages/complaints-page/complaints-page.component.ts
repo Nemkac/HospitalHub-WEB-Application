@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Complaint } from 'src/app/models/Complaint';
 import { ComplaintService } from 'src/app/services/complaint.service';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-complaints-page',
@@ -13,12 +14,15 @@ export class ComplaintsPageComponent implements OnInit {
   public complaints: Complaint[] = [];
   public complaintsFlag : boolean = true;
   public selectedComplaint : Complaint | null = null;
+  public replied : boolean = false;
+  faPaperPlane = faPaperPlane;
+  public reply : string = "";
 
   constructor(private complaintService: ComplaintService) {}
 
   ngOnInit(): void { 
-    this.getComplaints();
-    //this.getUnprocessedComplaints(); <------TREBA VRATITI OVO
+    //this.getComplaints();
+    this.getUnprocessedComplaints();
   }
 
   public getUnprocessedComplaints() : void{
@@ -66,10 +70,38 @@ export class ComplaintsPageComponent implements OnInit {
     this.complaintService.getComplaintById(id).subscribe(
       (response: Complaint) => {
         this.selectedComplaint = response;
+        if(this.selectedComplaint.reply === null){
+          this.replied = false;
+        } else {
+          this.replied = true;
+        }
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
+  }
+
+  public replyOnComplaint(id:number, reply:string) : void{
+    this.complaintService.replyOnComplaint(id, reply).subscribe(
+      (response: Complaint) => {
+        this.replied = true;
+        this.selectedComplaint = response;
+        this.complaintService.getAllUnprocessedComplaints().subscribe(
+          (response: Complaint[]) => {
+            this.complaints = response;
+            if(this.complaints.length === 0){
+              this.complaintsFlag = false;
+            }
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        )
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
   }
 }

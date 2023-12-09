@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +59,21 @@ public class ComplaintController {
         ComplaintDTO dto = new ComplaintDTO(complaint);
 
         return new ResponseEntity<ComplaintDTO>(dto, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/reply/{id}")
+    public ResponseEntity<ComplaintDTO> reply(@PathVariable Integer id, @RequestBody String reply){
+        try{
+            Complaint complaint = complaintService.getById(id);
+            complaint.setReply(reply);
+            complaintService.save(complaint);
+
+            ComplaintDTO dto = new ComplaintDTO(complaint);
+
+            return new ResponseEntity<ComplaintDTO>(dto, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping(value = "/getAll")

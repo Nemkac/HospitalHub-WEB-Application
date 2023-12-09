@@ -26,4 +26,9 @@ export class ComplaintService {
   public getComplaintById(id: number): Observable<Complaint> {
     return this.http.get<Complaint>(`${this.apiServerUrl}/api/complaints/getComplaintById/${id}`);
   }
+
+  public replyOnComplaint(id:number, reply:string) : Observable<Complaint>{
+    return this.http.put<Complaint>(`${this.apiServerUrl}/api/complaints/reply/${id}`, reply);
+  }
+
 }
