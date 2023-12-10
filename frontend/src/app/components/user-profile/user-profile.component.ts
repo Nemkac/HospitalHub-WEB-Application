@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UserProfileService } from 'src/app/services/user-profile.service';
-import { UserProfile } from 'src/assets/user-profile';
+import { UserProfile } from 'src/app/models/user-profile';
 import { ActivatedRoute } from '@angular/router';
+import { faGear, faUser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-user-profile',
@@ -13,6 +14,9 @@ export class UserProfileComponent implements OnInit{
   userProfile!: UserProfile;
   constructor(private userProfileService:UserProfileService,
               private route: ActivatedRoute){}
+
+  faGear = faGear;
+  faUser = faUser;
 
   ngOnInit(): void {
     const idFromRoute = this.route.snapshot.paramMap.get('id');

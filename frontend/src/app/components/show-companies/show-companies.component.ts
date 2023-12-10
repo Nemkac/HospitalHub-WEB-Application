@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CompanyService } from 'src/app/services/company.service';
-import { FilterCompanies } from 'src/assets/filter-companies';
+import { FilterCompanies } from 'src/app/models/filter-companies';
 import { Company } from 'src/company';
 
 

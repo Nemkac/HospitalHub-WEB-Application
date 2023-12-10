@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CompanyService } from 'src/app/services/company.service';
-import { FilterCompanies } from 'src/assets/filter-companies';
+import { FilterCompanies } from 'src/app/models/filter-companies';
 import { Company } from 'src/company';
 import { faStar, faHeart, faBookmark } from '@fortawesome/free-solid-svg-icons';
 

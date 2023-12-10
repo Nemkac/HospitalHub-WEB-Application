@@ -4,8 +4,8 @@ import { FormControl, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserProfileService } from 'src/app/services/user-profile.service';
-import { UserProfile } from 'src/assets/user-profile';
-import { UserProfileToUpdate } from 'src/assets/user-profile-to-update';
+import { UserProfile } from 'src/app/models/user-profile';
+import { UserProfileToUpdate } from 'src/app/models/user-profile-to-update';
 
 @Component({
   selector: 'app-update-user-profile',

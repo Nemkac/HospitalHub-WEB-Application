@@ -1,62 +1,73 @@
-<div class="flex w-full h-[100vh] justify-center items-center">
-  <div *ngIf="userProfile" class="max-w-4xl h-[700px] mx-auto pt-8 bg-white p-8 rounded shadow-lg">
-    <div class="flex items-center mb-8">
-      <div class="mr-8"> <br> <br>
-        <img class="w-38 h-38 object-cover rounded-full" src="./assets/djolo.jpg" alt="Profile Image">
-      </div>
-  
-      <div> <br> <br>
-        <h2 class="text-3xl font-bold mb-4">User Profile</h2>
-  
-        <div class="grid grid-cols-2 gap-4">
-          <div>
-            <strong>Name:</strong> <br> {{ userProfile.name }}
-          </div>
-          <div>
-            <strong>Last name:</strong> <br> {{ userProfile.lastName }}
-          </div>
-          <div>
-            <strong>Date of Birth:</strong> <br> {{ userProfile.dateOfBirth | date: 'yyyy-MM-dd' }}
-          </div>
-  
-          <div *ngIf="userProfile.email">
-            <strong>Email:</strong> <br> {{ userProfile.email }}
-          </div>
-  
-          <div *ngIf="userProfile.companyInfo">
-            <strong>Phone number:</strong> <br> {{ userProfile.phoneNumber }}
-          </div>
-  
-          <div *ngIf="userProfile.companyInfo">
-            <strong>Country:</strong>  <br> {{ userProfile.country }}
-          </div>
-  
-          <div *ngIf="userProfile.companyInfo">
-            <strong>City:</strong> <br> {{ userProfile.city }}
-          </div>
-  
-          <div *ngIf="userProfile.companyInfo">
-            <strong>Penalty points:</strong> <br> {{ userProfile.penaltyPoints }}
-          </div>
-  
-          <div *ngIf="userProfile.profession">
-            <strong>Profession:</strong> <br> {{ userProfile.profession }}
-          </div>
-  
-          <div>
-            <strong>Loyalty membership:</strong> <br> No available loyalty programs
-          </div>
-  
-        </div>
-        <button class="w-[300px] mx-16  text-center mt-16 text-[20px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
-        text-white rounded-md h-[45px]"(click)="goToUpdate()">Update profile</button>
-      </div>
-      
+<div class="flex flex-row h-auto px-64 py-32 bg-lightBlue/5 justify-between pb-32">
+  <div class="flex flex-col p-4 h-[1100px] w-[35%] bg-white rounded-md shadow-xl relative">
+    <div class="flex rounded-full bg-third mx-auto my-2 h-[130px] w-[130px] items-center transition-[0.5s]">
+        <fa-icon [icon]="faUser" class="mx-auto text-white text-[48px] cursor-pointer"/>
     </div>
-    
+    <p class="font-inter text-third font-bold mx-auto text-[30px]">{{ userProfile.name }}</p>
+    <div class="flex flex-row items-center mx-auto w-full items-center justify-center">
+      <p class="font-inter font-light text-[#7f8fa6]">Penalty points:</p>
+      <p class="font-inter font-light text-[#7f8fa6] ml-[10px]">{{ userProfile.penaltyPoints }}</p>
+    </div>
+    <div class="flex flex-row items-center mx-auto w-full items-center justify-center">
+        <p class="font-inter font-light text-[#7f8fa6]">Loyalty membership:</p>
+        <p class="font-inter font-light text-[#7f8fa6] ml-[10px]">No available programs</p>
+    </div>
+    <hr class="w-full bg-gray mt-4 mb-4">
+    <div class="flex flex-col w-full">
+      <p class="text-third font-inter font-medium text-[14px]">Personal info</p>
+      <div class="flex flex-row w-full justify-between mt-2">
+        <p class="text-gray font-inter font-light text-[18px]">First name:</p>
+        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile.name }}</p>
+      </div>
+      <div class="flex flex-row w-full justify-between mt-2">
+        <p class="text-gray font-inter font-light text-[18px]">Last name:</p>
+        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile.lastName }}</p>
+      </div>
+      <div class="flex flex-row w-full justify-between mt-2">
+        <p class="text-gray font-inter font-light text-[18px]">Date of birth:</p>
+        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile.dateOfBirth }}</p>
+      </div>
+      <div *ngIf="userProfile.city" class="flex flex-row w-full justify-between mt-2">
+        <p class="text-gray font-inter font-light text-[18px]">Location:</p>
+        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile.city }}, {{ userProfile.country }}</p>
+      </div>
+    </div>
+    <hr class="w-full bg-gray mt-4 mb-4">
+    <div class="flex flex-col w-full">
+      <p class="text-third font-inter font-medium text-[14px]">Contact</p>
+      <div *ngIf="userProfile.email" class="flex flex-row w-full justify-between mt-2">
+        <p class="text-gray font-inter font-light text-[18px]">Email:</p>
+        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile.email }}</p>
+      </div>
+      <div *ngIf="userProfile.phoneNumber" class="flex flex-row w-full justify-between mt-2">
+        <p class="text-gray font-inter font-light text-[18px]">Phone number:</p>
+        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile.phoneNumber }}</p>
+      </div>
+    </div>
+    <hr class="w-full bg-gray mt-4 mb-4">
+    <div class="flex flex-col w-full">
+      <p class="text-third font-inter font-medium text-[14px]">Professional</p>
+      <div class="flex flex-row w-full justify-between mt-2">
+        <p class="text-gray font-inter font-light text-[18px]">Profession:</p>
+        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile.profession }}</p>
+      </div>
+      <hr class="w-full bg-gray mt-4 mb-4">
+      <div class="flex flex-col w-full h-[200px]">
+        <p class="text-gray font-inter font-light text-[18px]">Bio / Company info:</p>
+        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile.companyInfo }}</p>
+      </div>
+      <hr class="w-full bg-gray mt-4 mb-4">
+    </div>
+    <button class="w-full text-center text-[24px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
+                  text-white rounded-md h-[55px]"(click)="goToUpdate()">
+            Update profile
+    </button>
   </div>
-  
-  
+  <div class="flex flex-col w-[60%] items-center space-y-8">
+      
+
+  </div>
+
   <div *ngIf="!userProfile" class="text-center mt-8">
     <p>Loading...</p>
   </div>
@@ -64,5 +75,5 @@
   <div *ngIf="userProfile === null" class="text-center mt-8">
     <p>Error loading user profile.</p>
   </div>
-  
+
 </div>

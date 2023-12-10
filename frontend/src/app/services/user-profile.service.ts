@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { UserProfile } from "src/assets/user-profile";
-import { UserProfileToUpdate } from "src/assets/user-profile-to-update";
+import { UserProfile } from "src/app/models/user-profile";
+import { UserProfileToUpdate } from "src/app/models/user-profile-to-update";
 import { Router } from "@angular/router";
 
 
