@@ -20,13 +20,9 @@ const routes: Routes = [
     {path: 'companies', component: SystemAdminProfilePageComponent},
     {path: 'equipment', component: EquipmentPageComponent},
     {path: 'mycompany', component: CompanyAdminProfilPageComponent},
-    {path: 'api/user/updateProfile/:id', component: UpdateUserProfileComponent },
     {path: 'api/user/companies', component: ShowCompaniesComponent},
-
-    {path: 'api/user/profile/:id', component: UserProfileComponent},
     {path: 'profile', component: UserProfileComponent},
     {path: 'update-profile', component: UpdateUserProfileComponent},
-
     {path: '', component: LandingPageComponent},  
     {path: 'logIn',component:LogInFormComponent},
     {path: 'register',component:RegisterFormComponent},
