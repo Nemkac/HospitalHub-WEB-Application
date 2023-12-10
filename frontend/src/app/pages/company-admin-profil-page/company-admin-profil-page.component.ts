@@ -5,6 +5,7 @@ import { CompanyService } from 'src/app/services/company.service';
 import { Company } from 'src/company';
 import { UserService } from 'src/app/services/user.service';
 import { icon, Marker } from 'leaflet';
+import { faStar, faTrash, faGear, faCamera, faSearch } from '@fortawesome/free-solid-svg-icons';
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
 const shadowUrl = 'assets/marker-shadow.png';
@@ -32,6 +33,12 @@ export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
   selectedCompany: Company = {} as Company;
   equipments: Equipment[] = [];
   token = localStorage.getItem('token');
+
+  faStar = faStar;
+  faTrash = faTrash;
+  faGear = faGear;
+  faCamera = faCamera
+  faSearch = faSearch;
 
   @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
 
