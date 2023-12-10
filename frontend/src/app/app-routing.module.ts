@@ -12,6 +12,7 @@ import { UpdateUserProfileComponent } from './components/update-user-profile/upd
 import { LogInFormComponent } from './components/log-in-form/log-in-form.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { ComplaintsPageComponent } from './pages/complaints-page/complaints-page.component';
+import { VisitCompanyPageComponent } from './pages/visit-company-page/visit-company-page.component';
 
 const routes: Routes = [
     //Promeniti kada se doda login da se umesto logina ispise ime usera i onda da se ide na profil usera
@@ -21,10 +22,15 @@ const routes: Routes = [
     {path: 'mycompany', component: CompanyAdminProfilPageComponent},
     {path: 'api/user/updateProfile/:id', component: UpdateUserProfileComponent },
     {path: 'api/user/companies', component: ShowCompaniesComponent},
+
     {path: 'api/user/profile/:id', component: UserProfileComponent},
+    {path: 'profile', component: UserProfileComponent},
+    {path: 'update-profile', component: UpdateUserProfileComponent},
+
     {path: '', component: LandingPageComponent},  
     {path: 'logIn',component:LogInFormComponent},
     {path: 'register',component:RegisterFormComponent},
+    {path: 'company/:id',component:VisitCompanyPageComponent},
     {path: 'complaints', component:ComplaintsPageComponent}
 ];
 

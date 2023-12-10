@@ -37,7 +37,7 @@ import { CreateNewSysAdmninistratorFormComponent } from './components/create-new
 import { PasswordChangeModalComponent } from './components/password-change-modal/password-change-modal.component';
 import { ComplaintsPageComponent } from './pages/complaints-page/complaints-page.component';
 import { MapComponent } from './map/map.component';
-import { VisitCompanyComponentComponent } from './pages/visit-company-component/visit-company-component.component';
+import { VisitCompanyPageComponent } from './pages/visit-company-page/visit-company-page.component';
 
 @NgModule({
       declarations: [
@@ -67,7 +67,7 @@ import { VisitCompanyComponentComponent } from './pages/visit-company-component/
           PasswordChangeModalComponent,
           ComplaintsPageComponent,
           MapComponent,
-          VisitCompanyComponentComponent,
+          VisitCompanyPageComponent,
       ],
       imports: [
           BrowserAnimationsModule,

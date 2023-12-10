@@ -18,6 +18,7 @@ export class CompainesPageComponent implements OnInit{
   filterCity : string = '';
   filterAvgRate : number = 0.0;
   filterCompanies! : FilterCompanies;
+  companyId : number | undefined;
 
   faStar = faStar;
   faHeart = faHeart;
@@ -42,6 +43,10 @@ export class CompainesPageComponent implements OnInit{
         alert(error.message);
       }
     )
+  }
+
+  public goToCompany(id:number) : void {
+    this.showCompaniesService.goToCompany(id);
   }
 
   public SearchCompanies(name: string, country: string, city: string, avgRate: number):void{

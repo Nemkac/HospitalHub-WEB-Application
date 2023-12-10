@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { LogInDTO } from "src/LogInDTO";
 import { catchError, map ,tap} from 'rxjs/operators';
 import { User } from "src/user";
+import { UserProfile } from 'src/assets/user-profile';
 
 @Injectable({
   providedIn: 'root'
@@ -42,5 +43,9 @@ export class UserService {
 
     public getUserByToken(token: string): Observable<User> {
         return this.http.get<User>(`${this.apiServerUrl}/api/user/getUserByToken/${token}`);
+    }
+
+    public getUserProfileByToken(token: string): Observable<UserProfile> {
+        return this.http.get<UserProfile>(`${this.apiServerUrl}/api/user/getUserProfileByToken/${token}`);
     }
 }
