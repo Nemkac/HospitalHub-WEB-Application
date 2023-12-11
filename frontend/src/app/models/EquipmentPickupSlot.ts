@@ -2,7 +2,7 @@ import { CompanyAdministrator } from "./CompanyAdministrator";
 
 export interface EquipmentPickupSlot{
     id: number;
-    dateTime: string;
+    dateTime: Date;
     duration: number;
     companyAdministrator: CompanyAdministrator;
 }

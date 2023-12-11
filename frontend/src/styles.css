@@ -9,3 +9,17 @@
     transition: transform 0.65s ease-in-out; /* Adjust the duration and timing function as needed */
     width: calc(100% + 20px);
 }   
+
+.fc-daygrid-day {
+    height: 80px; /* Prilagodite visinu prema potrebi */
+  }
+  
+/* Omogućavanje scroll-a unutar polja za datum */
+.fc-daygrid-day-events {
+    overflow-y: auto;
+    max-height: 140px; /* Prilagodite visinu prema potrebi */
+}
+
+.fc-more {
+    cursor: pointer;
+}

@@ -188,6 +188,8 @@ public class InitialDataInsertionService {
         EquipmentPickupSlot slot7 = new EquipmentPickupSlot(slot7DateTime, 60, companyAdministrator);
         LocalDateTime slot8DateTime = LocalDateTime.of(2022, 9, 2, 10, 30);
         EquipmentPickupSlot slot8 = new EquipmentPickupSlot(slot8DateTime, 30, companyAdministrator);
+        LocalDateTime slot9DateTime = LocalDateTime.of(2023, 5, 2, 10, 30);
+        EquipmentPickupSlot slot9 = new EquipmentPickupSlot(slot9DateTime, 30, companyAdministrator);
 
         equipmentPickupSlotService.save(slot1);
         equipmentPickupSlotService.save(slot2);
@@ -197,6 +199,7 @@ public class InitialDataInsertionService {
         equipmentPickupSlotService.save(slot6);
         equipmentPickupSlotService.save(slot7);
         equipmentPickupSlotService.save(slot8);
+        equipmentPickupSlotService.save(slot9);
 
     }
 

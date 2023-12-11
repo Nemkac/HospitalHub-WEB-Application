@@ -73,7 +73,15 @@
         <p>{{slot.companyAdministrator.user.name}}</p>
       </div>
     </div>-->
-
+    <full-calendar class="w-full h-auto max-h-[800px]" [options]="calendarOptions">
+      <ng-template #eventContent let-arg class="overflow-scroll">
+        <div *ngIf="arg.event.extendedProps" class="flex flex-col bg-third font-inter text-white p-[5px] w-full rounded-md">
+          <p>Start: {{ arg.event.start | date: 'HH:mm' }}</p>
+          <p>Duration: {{ arg.event.extendedProps.duration }} min</p>
+          <p>{{ arg.event.extendedProps.firstname }} {{ arg.event.extendedProps.lastname }}</p>
+        </div>
+      </ng-template>
+    </full-calendar>
 
   </div>
 

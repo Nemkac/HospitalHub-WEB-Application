@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserProfileService } from 'src/app/services/user-profile.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { ActivatedRoute } from '@angular/router';
@@ -10,6 +10,11 @@ import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/user';
 import { EquipmentPickupSlotService } from 'src/app/services/equipment-pickup-slot.service';
 import { EquipmentPickupSlot } from 'src/app/models/EquipmentPickupSlot';
+import { CalendarOptions } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction'
+import { start } from '@popperjs/core';
+import { isSameDay } from 'date-fns';
 
 @Component({
   selector: 'app-user-profile',
@@ -23,6 +28,15 @@ export class UserProfileComponent implements OnInit{
   isUser : boolean = false;
   equipmentPickupSlots : EquipmentPickupSlot[] = [];
   token = localStorage.getItem('token');
+
+  @ViewChild('calendar') calendarRef!: ElementRef;
+
+  calendarOptions: CalendarOptions = {
+    plugins: [dayGridPlugin, interactionPlugin],
+    initialView: 'dayGridMonth',
+    weekends: false,
+    events: [],  // Postavi events na prazan niz prilikom inicijalizacije
+  };
 
   constructor(private equipmentPickupSlotService : EquipmentPickupSlotService,
               private userService : UserService,
@@ -64,6 +78,17 @@ export class UserProfileComponent implements OnInit{
     this.equipmentPickupSlotService.getAdminsSlots(id).subscribe(
       (response: EquipmentPickupSlot[]) => {
         this.equipmentPickupSlots = response;
+        this.calendarOptions.events = this.equipmentPickupSlots.map((slot) => ({
+          title: slot.companyAdministrator.user.name,
+          start: new Date(slot.dateTime),
+          duration: slot.duration,
+          extendedProps: {
+            start: slot.dateTime,
+            duration: slot.duration,
+            firstname: slot.companyAdministrator.user.name,
+            lastname: slot.companyAdministrator.user.lastName,
+          },
+        }));
       },
       (error : HttpErrorResponse) => {
         alert(error.message);
