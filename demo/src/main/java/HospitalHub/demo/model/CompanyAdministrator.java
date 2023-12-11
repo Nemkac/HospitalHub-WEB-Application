@@ -22,6 +22,10 @@ public class CompanyAdministrator{
 
     @OneToMany(mappedBy = "companyAdministrator")
     private List<EquipmentAvailability> equipmentAvailabilityList;
+
+    @OneToMany(mappedBy = "companyAdministrator")
+    private List<EquipmentPickupSlot> equipmentPickupSlots;
+
     @Column
     private boolean passwordChanged;
 
@@ -81,6 +85,14 @@ public class CompanyAdministrator{
 
     public void setPasswordChanged(boolean passwordChanged) {
         this.passwordChanged = passwordChanged;
+    }
+
+    public List<EquipmentPickupSlot> getEquipmentPickupSlots() {
+        return equipmentPickupSlots;
+    }
+
+    public void setEquipmentPickupSlots(List<EquipmentPickupSlot> equipmentPickupSlots) {
+        this.equipmentPickupSlots = equipmentPickupSlots;
     }
 }
 

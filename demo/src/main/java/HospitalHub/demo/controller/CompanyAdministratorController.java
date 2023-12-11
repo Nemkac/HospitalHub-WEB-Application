@@ -1,6 +1,7 @@
 package HospitalHub.demo.controller;
 
 import HospitalHub.demo.model.CompanyAdministrator;
+import HospitalHub.demo.model.EquipmentPickupSlot;
 import HospitalHub.demo.model.SystemAdministrator;
 import HospitalHub.demo.model.User;
 import HospitalHub.demo.service.CompanyAdministratorService;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/companyAdmin")
@@ -39,5 +42,15 @@ public class CompanyAdministratorController {
         companyAdministratorService.save(companyAdministrator);
 
         return new ResponseEntity<User>(loggedInUser, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getSlots/{userId}")
+    public ResponseEntity<List<EquipmentPickupSlot>> getAdminsSlots(@PathVariable Integer userId){
+        User user = userService.getById(userId);
+        CompanyAdministrator companyAdministrator = companyAdministratorService.getByUser(user);
+
+        List<EquipmentPickupSlot> slots = companyAdministrator.getEquipmentPickupSlots();
+
+        return new ResponseEntity<List<EquipmentPickupSlot>>(slots, HttpStatus.OK);
     }
 }

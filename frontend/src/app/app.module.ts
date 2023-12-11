@@ -4,6 +4,10 @@ import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
 import { NgbModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { DateFnsModule } from 'ngx-date-fns';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -81,8 +85,14 @@ import { VisitCompanyComponentComponent } from './pages/visit-company-component/
           MatFormFieldModule,
           MatInputModule,
           MatDatepickerModule,
+          CommonModule,
+          CalendarModule.forRoot({
+            provide: DateAdapter,
+            useFactory: adapterFactory,
+          }),
+          DateFnsModule.forRoot(),
       ],
       providers: [],
-      bootstrap: [AppComponent]
+      bootstrap: [AppComponent],
     })
     export class AppModule { }

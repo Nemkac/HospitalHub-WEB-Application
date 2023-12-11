@@ -59,12 +59,21 @@
       <hr class="w-full bg-gray mt-4 mb-4">
     </div>
     <button class="w-full text-center text-[24px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
-                  text-white rounded-md h-[55px]"(click)="goToUpdate()">
+                  text-white rounded-md h-[55px]" (click)="goToUpdate()">
             Update profile
     </button>
   </div>
   <div class="flex flex-col w-[60%] items-center space-y-8">
-      
+    <!--<div class="flex flex-row h-[400px] w-full p-4 bg-white rounded-md shadow-md overflow-scroll justify-evenly">
+      <div *ngFor="let slot of equipmentPickupSlots" 
+            class="flex flex-col shadow-md justify-evenly w-[200px] rounded-xl cursor-pointer
+                   mx-4 h-[100px] border-[1px] border-third/10 hover:bg-[#dcdde1] transition-[0.5s]">
+        <p>{{slot.dateTime}}</p>
+        <p>{{slot.duration}}</p>
+        <p>{{slot.companyAdministrator.user.name}}</p>
+      </div>
+    </div>-->
+
 
   </div>
 

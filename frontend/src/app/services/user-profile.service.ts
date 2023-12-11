@@ -24,8 +24,8 @@ export class UserProfileService{
         return this.http.put<UserProfileToUpdate>(`${this.apiServerUrl}/api/user/updateProfile/${id}`, userProfileToUpdate)
     }
 
-    public goToUpdateProfile(id:number):void {
-        this.router.navigate([`/api/user/updateProfile/${id}`]);
+    public goToProfile(id:number):void {
+        this.router.navigate([`/api/user/profile/${id}`]);
     }
 
 }

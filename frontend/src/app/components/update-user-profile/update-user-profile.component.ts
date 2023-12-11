@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { UserProfileService } from 'src/app/services/user-profile.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { UserProfileToUpdate } from 'src/app/models/user-profile-to-update';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-update-user-profile',
@@ -18,8 +20,12 @@ export class UpdateUserProfileComponent implements OnInit{
   user! : UserProfile;
   date = new FormControl(new Date());
   usersBirthDate = "";
+
+  faClose = faClose;
+
   constructor(private userProfileService:UserProfileService,
-              private route : ActivatedRoute){}
+              private route : ActivatedRoute,
+              private modalService: NgbActiveModal){}
 
   ngOnInit(): void {
     const idFromRoute = this.route.snapshot.paramMap.get('id');
@@ -55,6 +61,8 @@ export class UpdateUserProfileComponent implements OnInit{
     return '*'.repeat(passwordLength);
   }
 
-
+  public closeModal(): void {
+    this.modalService.close();
   }
+}
   

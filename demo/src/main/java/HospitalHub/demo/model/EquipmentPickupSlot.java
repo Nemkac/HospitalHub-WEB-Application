@@ -1,0 +1,65 @@
+package HospitalHub.demo.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
+
+@Entity
+public class EquipmentPickupSlot {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    @Column(name = "dateAndTime")
+    private LocalDateTime dateTime;
+
+    @Column(name = "durationInMinutes")
+    private Integer duration;
+
+    @ManyToOne
+    @JoinColumn(name = "compAdminId")
+    @JsonIgnoreProperties("equipmentPickupSlots")
+    private CompanyAdministrator companyAdministrator;
+
+    public EquipmentPickupSlot(){}
+
+    public EquipmentPickupSlot(LocalDateTime dateTime, Integer duration, CompanyAdministrator companyAdministrator) {
+        this.dateTime = dateTime;
+        this.duration = duration;
+        this.companyAdministrator = companyAdministrator;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public CompanyAdministrator getCompanyAdministrator() {
+        return companyAdministrator;
+    }
+
+    public void setCompanyAdministrator(CompanyAdministrator companyAdministrator) {
+        this.companyAdministrator = companyAdministrator;
+    }
+}
