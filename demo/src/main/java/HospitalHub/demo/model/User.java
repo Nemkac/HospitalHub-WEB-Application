@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -57,6 +58,9 @@ public class User {
     private boolean Enabled = false;
 
     private String roles;
+
+    @OneToMany(mappedBy = "reservedBy")
+    private List<EquipmentPickupSlot> equipmentPickupSlots;
 
     public User(){
 
@@ -233,4 +237,11 @@ public class User {
         Enabled = enabled;
     }
 
+    public List<EquipmentPickupSlot> getEquipmentPickupSlots() {
+        return equipmentPickupSlots;
+    }
+
+    public void setEquipmentPickupSlots(List<EquipmentPickupSlot> equipmentPickupSlots) {
+        this.equipmentPickupSlots = equipmentPickupSlots;
+    }
 }

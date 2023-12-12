@@ -19,6 +19,11 @@ public class EquipmentPickupSlot {
     private Integer duration;
 
     @ManyToOne
+    @JoinColumn(name = "userId")
+    @JsonIgnoreProperties("equipmentPickupSlots")
+    private User reservedBy;
+
+    @ManyToOne
     @JoinColumn(name = "compAdminId")
     @JsonIgnoreProperties("equipmentPickupSlots")
     private CompanyAdministrator companyAdministrator;
@@ -61,5 +66,13 @@ public class EquipmentPickupSlot {
 
     public void setCompanyAdministrator(CompanyAdministrator companyAdministrator) {
         this.companyAdministrator = companyAdministrator;
+    }
+
+    public User getReservedBy() {
+        return reservedBy;
+    }
+
+    public void setReservedBy(User reservedBy) {
+        this.reservedBy = reservedBy;
     }
 }
