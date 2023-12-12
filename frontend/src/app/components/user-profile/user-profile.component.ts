@@ -66,14 +66,8 @@ export class UserProfileComponent implements OnInit{
         }
       );
     }
-    const idFromRoute = this.route.snapshot.paramMap.get('id');
-    if(idFromRoute != null) {
-    this.userId =+ idFromRoute
     this.showUserProfile();
-   // } else {
-    //  console.error('User ID not found in the route');
-    //}
-  } }
+  }
 
   public getEquipmentPickupSlots(id: number) : void{
     this.equipmentPickupSlotService.getAdminsSlots(id).subscribe(
@@ -96,17 +90,6 @@ export class UserProfileComponent implements OnInit{
       }
     )
   }
-  public showUserProfile1():void{
-    this.userProfileService.showUserProfile(this.userId).subscribe(
-      (response:UserProfile) => {
-        this.userProfile = response;
-        console.log(this.userProfile);
-      },
-      (error:HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-  }
 
   public showUserProfile():void{
     if(this.token) {
@@ -118,7 +101,7 @@ export class UserProfileComponent implements OnInit{
               this.userProfile = response;
               console.log(this.userProfile);
             }
-          )       
+          )
         }
       )
     }

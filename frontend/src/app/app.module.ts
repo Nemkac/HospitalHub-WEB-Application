@@ -37,7 +37,6 @@ import { BackToTopButtonComponent } from './components/back-to-top-button/back-t
 import { CreateNewSysAdmninistratorFormComponent } from './components/create-new-sys-admninistrator-form/create-new-sys-admninistrator-form.component';
 import { PasswordChangeModalComponent } from './components/password-change-modal/password-change-modal.component';
 import { ComplaintsPageComponent } from './pages/complaints-page/complaints-page.component';
-import { MapComponent } from './map/map.component';
 import { VisitCompanyPageComponent } from './pages/visit-company-page/visit-company-page.component';
 
 @NgModule({
@@ -67,7 +66,6 @@ import { VisitCompanyPageComponent } from './pages/visit-company-page/visit-comp
           CreateNewSysAdmninistratorFormComponent,
           PasswordChangeModalComponent,
           ComplaintsPageComponent,
-          MapComponent,
           VisitCompanyPageComponent,
       ],
       imports: [

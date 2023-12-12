@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { LogInDTO } from "src/LogInDTO";
 import { catchError, map ,tap} from 'rxjs/operators';
 import { User } from "src/user";
-import { UserProfile } from 'src/assets/user-profile';
+import { UserProfile } from '../models/user-profile';
 
 @Injectable({
   providedIn: 'root'
