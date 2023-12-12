@@ -28,6 +28,7 @@ export class UserProfileComponent implements OnInit{
   isUser : boolean = false;
   equipmentPickupSlots : EquipmentPickupSlot[] = [];
   token = localStorage.getItem('token');
+  user !: User ;
 
   @ViewChild('calendar') calendarRef!: ElementRef;
 
@@ -69,10 +70,10 @@ export class UserProfileComponent implements OnInit{
     if(idFromRoute != null) {
     this.userId =+ idFromRoute
     this.showUserProfile();
-    } else {
-      console.error('User ID not found in the route');
-    }
-  }
+   // } else {
+    //  console.error('User ID not found in the route');
+    //}
+  } }
 
   public getEquipmentPickupSlots(id: number) : void{
     this.equipmentPickupSlotService.getAdminsSlots(id).subscribe(
@@ -95,8 +96,7 @@ export class UserProfileComponent implements OnInit{
       }
     )
   }
-
-  public showUserProfile():void{
+  public showUserProfile1():void{
     this.userProfileService.showUserProfile(this.userId).subscribe(
       (response:UserProfile) => {
         this.userProfile = response;
@@ -106,6 +106,22 @@ export class UserProfileComponent implements OnInit{
         alert(error.message);
       }
     );
+  }
+
+  public showUserProfile():void{
+    if(this.token) {
+      this.userService.getUserByToken(this.token).subscribe(
+        (user) => {
+          this.user = user;
+          this.userProfileService.showUserProfile(user.id).subscribe(
+            (response:UserProfile) => {
+              this.userProfile = response;
+              console.log(this.userProfile);
+            }
+          )       
+        }
+      )
+    }
   }
 
   public goToUpdate():void{

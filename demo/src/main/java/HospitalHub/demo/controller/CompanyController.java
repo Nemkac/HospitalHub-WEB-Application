@@ -63,7 +63,7 @@ public class CompanyController {
         for (Company company : companies) {
             int companyId = company.getId();
             if (companyId == id) {
-                return new ResponseEntity<>(company, HttpStatus.FOUND);
+                return new ResponseEntity<>(company, HttpStatus.OK);
             }
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);

@@ -3,14 +3,16 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { id } from 'date-fns/locale';
 import { Observable } from 'rxjs'
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
 })
+
 export class CompanyService {
     private apiServerUrl = 'http://localhost:8081';
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient,private router:Router) {}
 
     public getCompanies() : Observable<Company[]> {
         return this.http.get<Company[]>(`${this.apiServerUrl}/api/company/getAll`);
@@ -28,7 +30,14 @@ export class CompanyService {
     public getAdminsCompany(userId: number): Observable<Company> {
         return this.http.get<Company>(`${this.apiServerUrl}/api/company/getAdminsCompany/${userId}`);
     }
+
+    public getCompany(id : number) : Observable<Company> {
+        return this.http.get<Company>(`${this.apiServerUrl}/api/company/${id}`);
+    }
     
+    public goToCompany(id:number):void {
+        this.router.navigate([`/company/${id}`]);
+    }
 
     public showCompanies(name?:string,country?:string,city?:string,avgRate?:number):Observable<Company[]>{
         let params = new HttpParams();

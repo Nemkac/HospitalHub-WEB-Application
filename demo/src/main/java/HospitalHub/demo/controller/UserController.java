@@ -134,4 +134,21 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping(value = "/getUserProfileByToken/{token}")
+    public ResponseEntity<UserProfileDTO> getUserProfileByToken(@PathVariable String token) {
+        try {
+            String username = jwtService.extractUsername(token);
+            User user = userService.getByUsername(username);
+            UserProfileDTO userProfile = new UserProfileDTO(user);
+
+            if (user != null) {
+                return new ResponseEntity<UserProfileDTO>(userProfile, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
