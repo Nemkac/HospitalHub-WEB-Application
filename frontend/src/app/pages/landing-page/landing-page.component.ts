@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PasswordChangeModalComponent } from 'src/app/components/password-change-modal/password-change-modal.component';
 import { SystemAdministratorService } from 'src/app/services/systemAdministrator.service';
 import { CompanyAdministratorService } from 'src/app/services/companyAdministrator.service';
+import { NavbarComponent } from 'src/app/components/navbar/navbar.component';
 
 @Component({
   selector: 'app-landing-page',
@@ -15,6 +16,8 @@ export class LandingPageComponent implements OnInit {
   token = localStorage.getItem('token');
   passwordChanged: boolean = true;
   user: User | undefined;
+
+
 
   constructor(
     private userService: UserService,
@@ -29,7 +32,9 @@ export class LandingPageComponent implements OnInit {
         (user: User) => {
           this.user = user;
           console.log('Logged in user:', this.user);
-
+          //deo za navbar
+          console.log("landing generisan")
+         
           if (user.roles === 'ROLE_SYSADMIN') {
             this.checkAndOpenPasswordModal(
               this.systemAdministratorService,

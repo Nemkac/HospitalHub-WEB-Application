@@ -19,9 +19,8 @@ export class UserService {
         console.log("Update Company Administrator: ", userDTO);  
         return this.http.put<UserDTO>(`${this.apiServerUrl}/api/user/update/${id}`, userDTO);
     }
-
-    
-    private _loggedInUser?: String = "LOGIN";
+   
+    protected _loggedInUser?: String = "LOGIN";
 
     get loggedInUser(): String {
         return this._loggedInUser as String;
@@ -29,11 +28,27 @@ export class UserService {
     set loggedInUser(user: String) {
         this._loggedInUser = user;
     }
-  
+
+    protected _loggedInUserId? :Number ;
+    get loggedInUserId():Number{
+        return this._loggedInUserId as Number;
+    }
+    set loggedInUserId(id:Number){
+        this._loggedInUserId = id;
+    }
+    protected _loggedInUserRole? :String = "ROLE_USER" ;
+
+    get loggedInUserRole():String{
+        return this._loggedInUserRole as String;
+    }
+    set loggedInUserRole(id:String){
+        this._loggedInUserRole = id;
+    }
+
     public logIn(logInDTO: LogInDTO):Observable<LogInDTO>{      
         return this.http.post<LogInDTO>(`${this.apiServerUrl}/logIn`, logInDTO).pipe(
           tap((response:LogInDTO)=>{
-              localStorage.setItem('token', response.email);
+              localStorage.setItem('token', response.email);              
         })
     )}
 
@@ -48,4 +63,6 @@ export class UserService {
     public getUserProfileByToken(token: string): Observable<UserProfile> {
         return this.http.get<UserProfile>(`${this.apiServerUrl}/api/user/getUserProfileByToken/${token}`);
     }
+
+    
 }
