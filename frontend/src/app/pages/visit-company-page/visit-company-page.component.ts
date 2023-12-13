@@ -9,6 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateUserProfileComponent } from 'src/app/components/update-user-profile/update-user-profile.component';
 import { UpcomingAppointmentsComponent } from 'src/app/components/upcoming-appointments/upcoming-appointments.component';
+import { BookEquipmentComponent } from 'src/app/components/book-equipment/book-equipment.component';
 
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
@@ -97,8 +98,8 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   public goToBookEquipment():void{
     //this.userProfileService.goToUpdateProfile(this.userId);
     const modalRef = this.modalService.open(
-			UpcomingAppointmentsComponent,
-			{ backdrop: 'static', keyboard: true }
+			BookEquipmentComponent,
+			{ backdrop: 'static', keyboard: true, centered:true}
 		  );
   
 		  // Pass userId and isAdminCompany to the modal
