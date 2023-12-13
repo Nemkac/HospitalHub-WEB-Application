@@ -6,6 +6,10 @@ import { Company } from 'src/company';
 import { icon, Marker } from 'leaflet';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UpdateUserProfileComponent } from 'src/app/components/update-user-profile/update-user-profile.component';
+import { UpcomingAppointmentsComponent } from 'src/app/components/upcoming-appointments/upcoming-appointments.component';
+
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -42,7 +46,8 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   constructor(
     private companyService: CompanyService,
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -87,6 +92,17 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   
       L.marker([this.companyLatitude, this.companyLongitude]).addTo(map);
     }
+  }
+
+  public goToBookEquipment():void{
+    //this.userProfileService.goToUpdateProfile(this.userId);
+    const modalRef = this.modalService.open(
+			UpcomingAppointmentsComponent,
+			{ backdrop: 'static', keyboard: true }
+		  );
+  
+		  // Pass userId and isAdminCompany to the modal
+		  //modalRef.componentInstance.userId = 1;
   }
   
   
