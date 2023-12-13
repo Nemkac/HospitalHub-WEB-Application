@@ -1,5 +1,7 @@
 package HospitalHub.demo.repository;
 
+import HospitalHub.demo.model.Company;
+import HospitalHub.demo.model.EquipmentAvailability;
 import HospitalHub.demo.model.EquipmentPickupSlot;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,5 +13,4 @@ public interface EquipmentPickupSlotRepository extends JpaRepository<EquipmentPi
 
     EquipmentPickupSlot save(EquipmentPickupSlot slot);
     //List<EquipmentPickupSlot> getAllByCompanyAdministrator(Integer id);
-
 }

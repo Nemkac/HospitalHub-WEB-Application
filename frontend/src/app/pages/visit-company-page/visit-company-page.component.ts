@@ -56,8 +56,7 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
     if(idFromRoute != null) {
     this.companyId =+ idFromRoute
     this.getCompanyData();
-    } else {
-      console.error('User ID not found in the route');
+    console.log('Company ID:', this.companyId);
     }
   }
 
@@ -101,9 +100,7 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
 			BookEquipmentComponent,
 			{ backdrop: 'static', keyboard: true, centered:true}
 		  );
-  
-		  // Pass userId and isAdminCompany to the modal
-		  //modalRef.componentInstance.userId = 1;
+  		modalRef.componentInstance.companyId = this.companyId;
   }
   
   

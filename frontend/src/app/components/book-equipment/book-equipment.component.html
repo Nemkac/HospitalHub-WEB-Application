@@ -1,13 +1,9 @@
 <form #upcomingAppoitmentsForm="ngForm" >
     <div class="grid grid-cols-1 gap" >
         <h2 class="text-2xl font-bold mb-4 text-center">You can chose one of following dates: </h2>
-        <ul class="text-center space-y-4">
-            <li><a href="#" onclick="doSome()">2023-12-01</a></li>
-            <li><a href="#"  onclick="doSome()">2023-12-02</a></li>
-            <li><a href="#"  onclick="doSome()">2023-12-03</a></li>
-            <li><a href="#"  onclick="doSome()">2023-12-04</a></li>
-            <li><a href="#"  onclick="doSome()">2023-12-05</a></li>
-          </ul>
+        <li *ngFor="let date of availableDates" class="text-center space-y-4">
+            {{ date | date:'yyyy-MM-dd'}}
+        </li>
         <div class="flex flex-col w-full mb-4 space-y-4">
             <br>
             <p class="font-inter text-third font-medium mx-auto text-[24px]">Or you can chose one by yourself: </p>

@@ -3,6 +3,7 @@ import { Equipment } from './../../Equipment';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Injectable } from '@angular/core';
+import { O } from '@fullcalendar/core/internal-common';
 
 @Injectable({
     providedIn: 'root',
@@ -18,5 +19,9 @@ export class EquipmentService {
 
     public getEquipmentByCombinedSearching(name: string, minPrice: number, maxPrice: number, type: string) : Observable<SearchEquipmentDTO>{
         return this.http.get<SearchEquipmentDTO>(`${this.apiServerUrl}/api/equipment/combinedSearch?name=${name}&minPrice=${minPrice}&maxPrice=${maxPrice}&type=${type}`);
+    }
+
+    public getAvailableDaysInFollowinTen(companyId : number) : Observable<Date[]>{
+        return this.http.get<Date[]>(`http://localhost:8081/api/company/getAvailableDays/${companyId}`);
     }
 }
