@@ -52,34 +52,44 @@
         </div>
 
         <div class="flex flex-row w-full">
-            <input  placeholder="Enter equipment name here"
-                    class="h-[60px] w-[90%] rounded-l-full shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)] bg-white text-third px-16 text-[24px] font-semibold focus:outline-none">
-            <button class="h-[60px] w-[10%] bg-[#0582ca] hover:bg-lightBlue hover:text-[28px] transition-[0.5s] text-white text-[24px] rounded-r-full items-center justify-center">
-                <fa-icon [icon] = "faSearch"/>
+            <input
+                placeholder="Enter equipment name here"
+                class="h-[60px] w-[90%] rounded-l-full shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)] bg-white text-third px-16 text-[24px] font-semibold focus:outline-none"
+                [(ngModel)]="searchInput"  
+                (input)="searchEquipment()"/>
+            <button
+            class="h-[60px] w-[10%] bg-[#0582ca] hover:bg-lightBlue hover:text-[28px] transition-[0.5s] text-white text-[24px] rounded-r-full items-center justify-center"
+>
+  <fa-icon [icon]="faSearch" />
             </button>
         </div>
         
         <div class="flex flex-row flex-start flex-wrap w-full justify-center justify-between">
-            <div *ngFor="let equipment of equipments" class="flex flex-row bg-white w-[455px] h-[220px] rounded-md shadow-md relative justify-between
-                                                            cursor-pointer hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
-                
+            <div class="flex flex-col items-center justify-center border-[2px] border-gray hover:bg-third hover:text-white text-gray w-[455px] h-[220px] cursor-pointer transition-[0.5s] rounded-md"
+                >
+                <fa-icon [icon]="faPlus" class="text-[44px] font-bold"/>
+                <p class="font-inter font-semibold text-[28px]">Add new equipment</p>
+            </div>
+            <div *ngFor="let equipment of filteredEquipments" 
+                 class="flex flex-row bg-white my-2 w-[455px] h-[220px] rounded-md shadow-md relative justify-between cursor-pointer hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
                 <div class="flex flex-row absolute top-0 right-0 p-[10px]">
-                    <fa-icon [icon]="faTrash" class="text-third text-[16px] hover:text-lightBlue cursor-pointer transition-[0.5s]"/>
-                    <fa-icon [icon]="faGear" class="text-third text-[16px] hover:text-lightBlue cursor-pointer transition-[0.5s] ml-2"/>
+                    <fa-icon [icon]="faTrash" class="text-third text-[16px] hover:text-lightBlue cursor-pointer transition-[0.5s]" (click)="deleteEquipment(equipment.id)"></fa-icon>
+                    <fa-icon [icon]="faGear" class="text-third text-[16px] hover:text-lightBlue cursor-pointer transition-[0.5s] ml-2" (click)="openUpdateForm(equipment)"></fa-icon>            
                 </div>
                 <div class="flex p-2 w-[40%]">
                     <img src="../../../assets/{{equipment.image}}" />
                 </div>
                 <div class="flex w-[60%] flex-col p-4 font-inter text-third">
-                <p class="font-semibold text-[20px]">{{ equipment?.name }}</p>
-                <p class="font-light text-[16px]">{{ equipment?.type }}</p>
-                <hr class="w-full mt-[10px] mb-[5px]">
-                <div class="flex flex-col h-[120px]">
-                    <p class="text-[12px] font-light">Description:</p>
-                    <p class="text-[16px] font-regular">{{ equipment?.description }}</p>
+                    <p class="font-semibold text-[20px]">{{ equipment?.name }}</p>
+                    <p class="font-light text-[16px]">{{ equipment?.type }}</p>
+                    <hr class="w-full mt-[10px] mb-[5px]">
+                    <div class="flex flex-col h-[120px]">
+                        <p class="text-[12px] font-light">Description:</p>
+                        <p class="text-[16px] font-regular">{{ equipment?.description }}</p>
+                    </div>
+                    <hr class="w-full mb-[10px] mt-[5px]">
                 </div>
-                <hr class="w-full mb-[10px] mt-[5px]">
             </div>
-        </div>
     </div>
 </div>
+

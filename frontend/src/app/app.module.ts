@@ -38,6 +38,7 @@ import { CreateNewSysAdmninistratorFormComponent } from './components/create-new
 import { PasswordChangeModalComponent } from './components/password-change-modal/password-change-modal.component';
 import { ComplaintsPageComponent } from './pages/complaints-page/complaints-page.component';
 import { VisitCompanyPageComponent } from './pages/visit-company-page/visit-company-page.component';
+import { UpdateEquipmentMyCompanyComponent } from './components/update-equipment-my-company/update-equipment-my-company.component';
 
 @NgModule({
       declarations: [
@@ -67,6 +68,7 @@ import { VisitCompanyPageComponent } from './pages/visit-company-page/visit-comp
           PasswordChangeModalComponent,
           ComplaintsPageComponent,
           VisitCompanyPageComponent,
+          UpdateEquipmentMyCompanyComponent,
       ],
       imports: [
           BrowserAnimationsModule,

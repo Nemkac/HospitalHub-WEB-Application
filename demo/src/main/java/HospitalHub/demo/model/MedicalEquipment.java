@@ -36,7 +36,7 @@ public class MedicalEquipment {
     @Column(name = "image")
     private String image;
 
-    @JsonIgnoreProperties("medicalEquipmentList")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne
     @JoinColumn(name="company_id")
     private Company company;

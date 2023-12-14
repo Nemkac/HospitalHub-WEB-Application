@@ -5,7 +5,12 @@ import { CompanyService } from 'src/app/services/company.service';
 import { Company } from 'src/company';
 import { UserService } from 'src/app/services/user.service';
 import { icon, Marker } from 'leaflet';
-import { faStar, faTrash, faGear, faCamera, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faTrash, faGear, faCamera, faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { EquipmentService } from 'src/app/services/equipment.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UpdateEquipmentMyCompanyComponent } from 'src/app/components/update-equipment-my-company/update-equipment-my-company.component';
+
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
 const shadowUrl = 'assets/marker-shadow.png';
@@ -33,18 +38,24 @@ export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
   selectedCompany: Company = {} as Company;
   equipments: Equipment[] = [];
   token = localStorage.getItem('token');
+  searchInput: string = '';
+  filteredEquipments: Equipment[] = [];
+  selectedEquipmentForUpdate: Equipment | null = null;
 
   faStar = faStar;
   faTrash = faTrash;
   faGear = faGear;
   faCamera = faCamera
   faSearch = faSearch;
+  faPlus = faPlus;
 
   @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
 
   constructor(
     private companyService: CompanyService,
-    private userService: UserService
+    private userService: UserService,
+    private equipmentService: EquipmentService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -55,6 +66,7 @@ export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
     this.loadMap();
   }
 
+  
   getAdminsCompanyData() {
     if (this.token) {
       this.userService.getUserByToken(this.token).subscribe(
@@ -65,8 +77,9 @@ export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
               this.equipments = data.medicalEquipmentList;
               this.companyLatitude = data.latitude; 
               this.companyLongitude = data.longitude;
-  
-              // Pozovi loadMap() ovde
+              this.filteredEquipments = this.equipments; 
+
+          
               this.loadMap();
             },
             (error) => {
@@ -82,7 +95,49 @@ export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
   
   }
 
+  searchEquipment() {
+    if (this.equipments && this.equipments.length > 0) {
+      this.filteredEquipments = this.equipments.filter((equipment) =>
+        equipment.name.toLowerCase().includes(this.searchInput.toLowerCase())
+      );
+    }
+  }
+
+  deleteEquipment(equipmentId: number) {
+    this.equipmentService.deleteEquipment(equipmentId).subscribe(
+      () => {
+        console.log('Equipment deleted successfully.');
+        this.getAdminsCompanyData();
+        this.equipments = this.equipments.filter(e => e.id !== equipmentId);
+      },
+      (error) => {
+        if (error instanceof HttpErrorResponse && error.status === 200) {
+          console.log('Equipment deleted successfully.');
+          this.getAdminsCompanyData();
+        } else {
+          console.error('Failed to delete equipment:', error);
+        }
+      }
+    );  
+  }
+
+   openUpdateForm(equipment: Equipment) {
+    this.selectedEquipmentForUpdate = equipment;
+    this.goToUpdate();
+  }
   
+  public goToUpdate(): void {
+    const modalRef = this.modalService.open(
+      UpdateEquipmentMyCompanyComponent,
+      { backdrop: 'static', keyboard: true }
+    );
+  
+    modalRef.componentInstance.selectedEquipmentForUpdate = this.selectedEquipmentForUpdate;
+  }
+  
+  
+
+
   loadMap() {
     if (this.mapContainer && this.companyLatitude !== 0 && this.companyLongitude !== 0) {
       const map = L.map(this.mapContainer.nativeElement).setView(
