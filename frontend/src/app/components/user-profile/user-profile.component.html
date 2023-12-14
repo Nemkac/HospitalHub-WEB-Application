@@ -64,7 +64,7 @@
     </button>
   </div>
   <div class="flex flex-col w-[60%] items-center space-y-8">
-    <div class="flex w-full p-[12px] bg-white h-auto max-h-[800px] rounded-md shadow-md">
+    <div class="flex flex-col w-full p-[12px] bg-white h-auto max-h-[800px] rounded-md shadow-md">
       <full-calendar class="w-full" [options]="calendarOptions">
         <ng-template #eventContent let-arg class="overflow-scroll">
           <div *ngIf="arg.event.extendedProps" (click)="displayEquipmentPickupSlot(arg.event.extendedProps.slot)"
@@ -83,8 +83,10 @@
           </div>
         </ng-template>
       </full-calendar>
+      <button class="w-full text-center h-[60px] mt-4 rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium">
+        <p>Add new appointment</p>
+      </button>
     </div>
-
   </div>
 
   <div *ngIf="!userProfile" class="text-center mt-8">
