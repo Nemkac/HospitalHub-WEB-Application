@@ -40,6 +40,7 @@ import { ComplaintsPageComponent } from './pages/complaints-page/complaints-page
 import { VisitCompanyPageComponent } from './pages/visit-company-page/visit-company-page.component';
 import { UpdateEquipmentMyCompanyComponent } from './components/update-equipment-my-company/update-equipment-my-company.component';
 import { AddEquipmentMyCompanyFormComponent } from './components/add-equipment-my-company-form/add-equipment-my-company-form.component';
+import { EquipmentPickupSlotDisplayModalComponent } from './components/equipment-pickup-slot-display-modal/equipment-pickup-slot-display-modal.component';
 
 @NgModule({
       declarations: [
@@ -71,6 +72,7 @@ import { AddEquipmentMyCompanyFormComponent } from './components/add-equipment-m
           VisitCompanyPageComponent,
           UpdateEquipmentMyCompanyComponent,
           AddEquipmentMyCompanyFormComponent,
+          EquipmentPickupSlotDisplayModalComponent,
       ],
       imports: [
           BrowserAnimationsModule,

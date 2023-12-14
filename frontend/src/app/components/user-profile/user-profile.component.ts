@@ -12,9 +12,11 @@ import { EquipmentPickupSlotService } from 'src/app/services/equipment-pickup-sl
 import { EquipmentPickupSlot } from 'src/app/models/EquipmentPickupSlot';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction'
+import interactionPlugin from '@fullcalendar/interaction';
+import timeGridPlugin from '@fullcalendar/timegrid' ;
 import { start } from '@popperjs/core';
 import { isSameDay } from 'date-fns';
+import { EquipmentPickupSlotDisplayModalComponent } from '../equipment-pickup-slot-display-modal/equipment-pickup-slot-display-modal.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -22,7 +24,7 @@ import { isSameDay } from 'date-fns';
 })
 export class UserProfileComponent implements OnInit{
   userId! : number;
-  userProfile!: UserProfile;
+  userProfile: UserProfile | undefined;
   isCompanyAdmin : boolean = false;
   isSystemAdmin : boolean = false;
   isUser : boolean = false;
@@ -33,10 +35,16 @@ export class UserProfileComponent implements OnInit{
   @ViewChild('calendar') calendarRef!: ElementRef;
 
   calendarOptions: CalendarOptions = {
-    plugins: [dayGridPlugin, interactionPlugin],
+    plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
     initialView: 'dayGridMonth',
     weekends: false,
-    events: [],  // Postavi events na prazan niz prilikom inicijalizacije
+    displayEventEnd: true,
+    events: [],
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay,dayGridYear'
+    },
   };
 
   constructor(private equipmentPickupSlotService : EquipmentPickupSlotService,
@@ -74,14 +82,16 @@ export class UserProfileComponent implements OnInit{
       (response: EquipmentPickupSlot[]) => {
         this.equipmentPickupSlots = response;
         this.calendarOptions.events = this.equipmentPickupSlots.map((slot) => ({
-          title: slot.companyAdministrator.user.name,
           start: new Date(slot.dateTime),
+          end: new Date(slot.dateTime).getMinutes() + slot.duration,
           duration: slot.duration,
+          reservedBy : slot.reservedBy,
           extendedProps: {
-            start: slot.dateTime,
+            slot: slot,
+            start: new Date(slot.dateTime),
             duration: slot.duration,
-            firstname: slot.companyAdministrator.user.name,
-            lastname: slot.companyAdministrator.user.lastName,
+            firstname: slot.reservedBy ? slot.reservedBy.name : null,
+            lastname: slot.reservedBy ? slot.reservedBy.lastName : null,
           },
         }));
       },
@@ -116,5 +126,24 @@ export class UserProfileComponent implements OnInit{
   
 		  // Pass userId and isAdminCompany to the modal
 		  modalRef.componentInstance.userId = this.userId;
+  }
+
+  public displayEquipmentPickupSlot(slot: EquipmentPickupSlot) : void{
+    const modalRef = this.modalService.open(
+      EquipmentPickupSlotDisplayModalComponent,
+      {
+        backdrop: 'static', keyboard: true
+      }
+    );
+
+    modalRef.componentInstance.slot = slot;
+  }
+
+  getEventStyles(extendedProps: any): any {
+    if (!extendedProps.reservedBy) {
+      return { 'background-color': '#037971' };
+    } else {
+      return { 'background-color' : '#003554' }
+    }
   }
 }

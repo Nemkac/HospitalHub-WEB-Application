@@ -3,10 +3,10 @@
     <div class="flex rounded-full bg-third mx-auto my-2 h-[130px] w-[130px] items-center transition-[0.5s]">
         <fa-icon [icon]="faUser" class="mx-auto text-white text-[48px] cursor-pointer"/>
     </div>
-    <p class="font-inter text-third font-bold mx-auto text-[30px]">{{ userProfile.name }}</p>
+    <p class="font-inter text-third font-bold mx-auto text-[30px]">{{ userProfile?.name }}</p>
     <div class="flex flex-row items-center mx-auto w-full items-center justify-center">
       <p class="font-inter font-light text-[#7f8fa6]">Penalty points:</p>
-      <p class="font-inter font-light text-[#7f8fa6] ml-[10px]">{{ userProfile.penaltyPoints }}</p>
+      <p class="font-inter font-light text-[#7f8fa6] ml-[10px]">{{ userProfile?.penaltyPoints }}</p>
     </div>
     <div class="flex flex-row items-center mx-auto w-full items-center justify-center">
         <p class="font-inter font-light text-[#7f8fa6]">Loyalty membership:</p>
@@ -15,33 +15,33 @@
     <hr class="w-full bg-gray mt-4 mb-4">
     <div class="flex flex-col w-full">
       <p class="text-third font-inter font-medium text-[14px]">Personal info</p>
-      <div class="flex flex-row w-full justify-between mt-2">
+      <div *ngIf="userProfile?.name" class="flex flex-row w-full justify-between mt-2">
         <p class="text-gray font-inter font-light text-[18px]">First name:</p>
-        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile.name }}</p>
+        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.name }}</p>
       </div>
-      <div class="flex flex-row w-full justify-between mt-2">
+      <div *ngIf="userProfile?.name" class="flex flex-row w-full justify-between mt-2">
         <p class="text-gray font-inter font-light text-[18px]">Last name:</p>
-        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile.lastName }}</p>
+        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.lastName }}</p>
       </div>
-      <div class="flex flex-row w-full justify-between mt-2">
+      <div *ngIf="userProfile?.dateOfBirth" class="flex flex-row w-full justify-between mt-2">
         <p class="text-gray font-inter font-light text-[18px]">Date of birth:</p>
-        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile.dateOfBirth }}</p>
+        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.dateOfBirth }}</p>
       </div>
-      <div *ngIf="userProfile.city" class="flex flex-row w-full justify-between mt-2">
+      <div *ngIf="userProfile?.city" class="flex flex-row w-full justify-between mt-2">
         <p class="text-gray font-inter font-light text-[18px]">Location:</p>
-        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile.city }}, {{ userProfile.country }}</p>
+        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.city }}, {{ userProfile?.country }}</p>
       </div>
     </div>
     <hr class="w-full bg-gray mt-4 mb-4">
     <div class="flex flex-col w-full">
       <p class="text-third font-inter font-medium text-[14px]">Contact</p>
-      <div *ngIf="userProfile.email" class="flex flex-row w-full justify-between mt-2">
+      <div *ngIf="userProfile?.email" class="flex flex-row w-full justify-between mt-2">
         <p class="text-gray font-inter font-light text-[18px]">Email:</p>
-        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile.email }}</p>
+        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.email }}</p>
       </div>
-      <div *ngIf="userProfile.phoneNumber" class="flex flex-row w-full justify-between mt-2">
+      <div *ngIf="userProfile?.phoneNumber" class="flex flex-row w-full justify-between mt-2">
         <p class="text-gray font-inter font-light text-[18px]">Phone number:</p>
-        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile.phoneNumber }}</p>
+        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.phoneNumber }}</p>
       </div>
     </div>
     <hr class="w-full bg-gray mt-4 mb-4">
@@ -49,12 +49,12 @@
       <p class="text-third font-inter font-medium text-[14px]">Professional</p>
       <div class="flex flex-row w-full justify-between mt-2">
         <p class="text-gray font-inter font-light text-[18px]">Profession:</p>
-        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile.profession }}</p>
+        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.profession }}</p>
       </div>
       <hr class="w-full bg-gray mt-4 mb-4">
       <div class="flex flex-col w-full h-[200px]">
         <p class="text-gray font-inter font-light text-[18px]">Bio / Company info:</p>
-        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile.companyInfo }}</p>
+        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.companyInfo }}</p>
       </div>
       <hr class="w-full bg-gray mt-4 mb-4">
     </div>
@@ -64,24 +64,26 @@
     </button>
   </div>
   <div class="flex flex-col w-[60%] items-center space-y-8">
-    <!--<div class="flex flex-row h-[400px] w-full p-4 bg-white rounded-md shadow-md overflow-scroll justify-evenly">
-      <div *ngFor="let slot of equipmentPickupSlots" 
-            class="flex flex-col shadow-md justify-evenly w-[200px] rounded-xl cursor-pointer
-                   mx-4 h-[100px] border-[1px] border-third/10 hover:bg-[#dcdde1] transition-[0.5s]">
-        <p>{{slot.dateTime}}</p>
-        <p>{{slot.duration}}</p>
-        <p>{{slot.companyAdministrator.user.name}}</p>
-      </div>
-    </div>-->
-    <full-calendar class="w-full h-auto max-h-[800px]" [options]="calendarOptions">
-      <ng-template #eventContent let-arg class="overflow-scroll">
-        <div *ngIf="arg.event.extendedProps" class="flex flex-col bg-third font-inter text-white p-[5px] w-full rounded-md">
-          <p>Start: {{ arg.event.start | date: 'HH:mm' }}</p>
-          <p>Duration: {{ arg.event.extendedProps.duration }} min</p>
-          <p>{{ arg.event.extendedProps.firstname }} {{ arg.event.extendedProps.lastname }}</p>
-        </div>
-      </ng-template>
-    </full-calendar>
+    <div class="flex w-full p-[12px] bg-white h-auto max-h-[800px] rounded-md shadow-md">
+      <full-calendar class="w-full" [options]="calendarOptions">
+        <ng-template #eventContent let-arg class="overflow-scroll">
+          <div *ngIf="arg.event.extendedProps" (click)="displayEquipmentPickupSlot(arg.event.extendedProps.slot)"
+                [ngStyle]="getEventStyles(arg.event.extendedProps)"
+                class="flex flex-col font-inter text-white p-[5px] w-full rounded-md cursor-pointer">
+            <p>Start: {{ arg.event.start | date: 'HH:mm' }}</p>
+            <p>Duration: {{ arg.event.extendedProps.duration }} min</p>
+            <p>
+              <ng-container *ngIf="arg.event.extendedProps.firstname && arg.event.extendedProps.lastname">
+                {{ arg.event.extendedProps.firstname }} {{ arg.event.extendedProps.lastname }}
+              </ng-container>
+              <ng-container *ngIf="!arg.event.extendedProps.firstname && !arg.event.extendedProps.lastname">
+                Free appointment
+              </ng-container>
+            </p>
+          </div>
+        </ng-template>
+      </full-calendar>
+    </div>
 
   </div>
 
