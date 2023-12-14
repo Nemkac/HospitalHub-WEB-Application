@@ -3,7 +3,9 @@ package HospitalHub.demo.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class EquipmentPickupSlot {
@@ -27,6 +29,18 @@ public class EquipmentPickupSlot {
     @JoinColumn(name = "compAdminId")
     @JsonIgnoreProperties("equipmentPickupSlots")
     private CompanyAdministrator companyAdministrator;
+
+    @Column(name = "orderedEquipment")
+    //@JsonIgnoreProperties("equipmentPickupSlots")
+    private int[] equipment;
+
+    public int[] getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(int[] equipment) {
+        this.equipment = equipment;
+    }
 
     public EquipmentPickupSlot(){}
 

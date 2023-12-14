@@ -30,8 +30,7 @@ export class LogInFormComponent implements OnInit {
     }
       // Now you can use the updated value outside the function
     console.log(service.loggedInUser);
-  
-      // Continue with other operations
+    // Continue with other operations
     this.router.navigate(['/']);
     } 
 }

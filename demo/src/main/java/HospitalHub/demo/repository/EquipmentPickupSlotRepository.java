@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface EquipmentPickupSlotRepository extends JpaRepository<EquipmentPickupSlot, Integer> {
 
-    EquipmentPickupSlot save(EquipmentPickupSlot slot);
+    //EquipmentPickupSlot save(EquipmentPickupSlot slot);
     //List<EquipmentPickupSlot> getAllByCompanyAdministrator(Integer id);
 
 }
