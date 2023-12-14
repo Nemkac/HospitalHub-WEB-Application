@@ -1,5 +1,7 @@
 package HospitalHub.demo.controller;
 
+import HospitalHub.demo.dto.EquipmentPickupSlotDTO;
+import HospitalHub.demo.dto.UserDTO;
 import HospitalHub.demo.model.CompanyAdministrator;
 import HospitalHub.demo.model.EquipmentPickupSlot;
 import HospitalHub.demo.model.SystemAdministrator;
@@ -11,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -45,12 +48,23 @@ public class CompanyAdministratorController {
     }
 
     @GetMapping(value = "/getSlots/{userId}")
-    public ResponseEntity<List<EquipmentPickupSlot>> getAdminsSlots(@PathVariable Integer userId){
+    public ResponseEntity<List<EquipmentPickupSlotDTO>> getAdminsSlots(@PathVariable Integer userId){
         User user = userService.getById(userId);
         CompanyAdministrator companyAdministrator = companyAdministratorService.getByUser(user);
-
         List<EquipmentPickupSlot> slots = companyAdministrator.getEquipmentPickupSlots();
 
-        return new ResponseEntity<List<EquipmentPickupSlot>>(slots, HttpStatus.OK);
+        List<EquipmentPickupSlotDTO> dtos = new ArrayList<>();
+
+        for(EquipmentPickupSlot slot : slots){
+            EquipmentPickupSlotDTO dto = new EquipmentPickupSlotDTO(slot);
+
+            if(slot.getReservedBy() != null){
+                dto.setReservedBy(slot.getReservedBy());
+            }
+
+            dtos.add(dto);
+        }
+
+        return new ResponseEntity<List<EquipmentPickupSlotDTO>>(dtos, HttpStatus.OK);
     }
 }
