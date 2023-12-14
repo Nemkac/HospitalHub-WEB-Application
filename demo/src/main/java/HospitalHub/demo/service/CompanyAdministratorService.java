@@ -21,6 +21,9 @@ public class CompanyAdministratorService {
         return companyAdministratorRepository.findById(id).orElseGet(null);
     }
 
+    public CompanyAdministrator getByUserId1(Integer userId){
+        return companyAdministratorRepository.findByUserId(userId);
+    }
     public CompanyAdministrator getByCompAdminId(Integer compAdminId) {
         return companyAdministratorRepository.getByCompAdminId(compAdminId);
     }
@@ -30,6 +33,7 @@ public class CompanyAdministratorService {
     }
 
     public CompanyAdministrator getByUser(User user){
+
         return companyAdministratorRepository.getByUser(user);
     }
 

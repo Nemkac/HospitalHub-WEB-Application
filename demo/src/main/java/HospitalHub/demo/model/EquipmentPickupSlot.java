@@ -1,5 +1,6 @@
 package HospitalHub.demo.model;
 
+import HospitalHub.demo.dto.EquipmentPickupSlotDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 

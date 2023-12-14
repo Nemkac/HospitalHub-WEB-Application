@@ -15,4 +15,10 @@ export class EquipmentPickupSlotService {
     return this.http.get<EquipmentPickupSlot[]>(`${this.apiServerUrl}/api/companyAdmin/getSlots/${id}`);
   }
 
+  public addNewSlot(newSlot: EquipmentPickupSlot, userId: number): Observable<EquipmentPickupSlot> {
+    const url = `${this.apiServerUrl}/api/slots/createPredefinedSlot/${userId}`;
+    return this.http.post<EquipmentPickupSlot>(url, newSlot);
+  } 
+
 }
+

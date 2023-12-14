@@ -1,15 +1,15 @@
 package HospitalHub.demo.controller;
 
+import HospitalHub.demo.dto.EquipmentPickupSlotDTO;
+import HospitalHub.demo.model.CompanyAdministrator;
 import HospitalHub.demo.model.EquipmentPickupSlot;
+import HospitalHub.demo.service.CompanyAdministratorService;
 import HospitalHub.demo.service.EquipmentPickupSlotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,5 +19,23 @@ public class EquipmentPickupSlotController {
 
     @Autowired
     private EquipmentPickupSlotService equipmentPickupSlotService;
+    @Autowired
+    private CompanyAdministratorService companyAdministratorService;
+
+
+    @PostMapping("/createPredefinedSlot/{userId}")
+    public ResponseEntity<EquipmentPickupSlot> createPredefinedSlot(@RequestBody EquipmentPickupSlotDTO slotDTO, @PathVariable Integer userId) {
+
+        CompanyAdministrator companyAdministrator = companyAdministratorService.getByUserId1(userId);
+        EquipmentPickupSlot newSlot = new EquipmentPickupSlot(
+            slotDTO.getDateTime(),
+            slotDTO.getDuration(),
+            companyAdministrator
+        );
+
+        EquipmentPickupSlot savedEquipmentPickupSlot =  equipmentPickupSlotService.save(newSlot);
+
+        return new ResponseEntity<>(savedEquipmentPickupSlot, HttpStatus.CREATED);
+    }
 
 }

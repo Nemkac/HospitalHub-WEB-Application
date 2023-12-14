@@ -83,10 +83,10 @@
           </div>
         </ng-template>
       </full-calendar>
-      <button class="w-full text-center h-[60px] mt-4 rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium">
+      <button class="w-full text-center h-[60px] mt-4 rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="openCreatePickupSlotForm()">
         <p>Add new appointment</p>
       </button>
-    </div>
+    </div>  
   </div>
 
   <div *ngIf="!userProfile" class="text-center mt-8">

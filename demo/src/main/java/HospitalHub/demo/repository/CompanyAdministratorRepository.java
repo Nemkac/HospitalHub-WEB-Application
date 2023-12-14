@@ -17,4 +17,6 @@ public interface CompanyAdministratorRepository extends JpaRepository<CompanyAdm
     CompanyAdministrator save(CompanyAdministrator companyAdministrator);
 
     CompanyAdministrator getByUser(User user);
+    CompanyAdministrator findByUserId(Integer userId);
+
 }
