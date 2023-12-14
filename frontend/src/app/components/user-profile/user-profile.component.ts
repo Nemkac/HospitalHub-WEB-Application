@@ -16,6 +16,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid' ;
 import { start } from '@popperjs/core';
 import { isSameDay } from 'date-fns';
+import { EquipmentPickupSlotDisplayModalComponent } from '../equipment-pickup-slot-display-modal/equipment-pickup-slot-display-modal.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -125,6 +126,17 @@ export class UserProfileComponent implements OnInit{
   
 		  // Pass userId and isAdminCompany to the modal
 		  modalRef.componentInstance.userId = this.userId;
+  }
+
+  public displayEquipmentPickupSlot(slot: EquipmentPickupSlot) : void{
+    const modalRef = this.modalService.open(
+      EquipmentPickupSlotDisplayModalComponent,
+      {
+        backdrop: 'static', keyboard: true
+      }
+    );
+
+    modalRef.componentInstance.slot = slot;
   }
 
   getEventStyles(extendedProps: any): any {

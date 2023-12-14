@@ -67,7 +67,7 @@
     <div class="flex w-full p-[12px] bg-white h-auto max-h-[800px] rounded-md shadow-md">
       <full-calendar class="w-full" [options]="calendarOptions">
         <ng-template #eventContent let-arg class="overflow-scroll">
-          <div *ngIf="arg.event.extendedProps" 
+          <div *ngIf="arg.event.extendedProps" (click)="displayEquipmentPickupSlot(arg.event.extendedProps.slot)"
                 [ngStyle]="getEventStyles(arg.event.extendedProps)"
                 class="flex flex-col font-inter text-white p-[5px] w-full rounded-md cursor-pointer">
             <p>Start: {{ arg.event.start | date: 'HH:mm' }}</p>
@@ -77,7 +77,7 @@
                 {{ arg.event.extendedProps.firstname }} {{ arg.event.extendedProps.lastname }}
               </ng-container>
               <ng-container *ngIf="!arg.event.extendedProps.firstname && !arg.event.extendedProps.lastname">
-                Free termin
+                Free appointment
               </ng-container>
             </p>
           </div>
