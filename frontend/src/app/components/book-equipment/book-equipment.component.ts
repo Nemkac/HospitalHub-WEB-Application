@@ -9,9 +9,10 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 })
 export class BookEquipmentComponent implements OnInit{
 
-  pickUpDate! : Date;
+  addedDate! : Date;
   companyId! : number;
   availableDates! : Date[];
+  chosenDate! : Date;
 
   constructor(private route:ActivatedRoute,
               private equipmentService : EquipmentService) {}
@@ -28,6 +29,11 @@ export class BookEquipmentComponent implements OnInit{
         console.log(response);
       }
     )
+  }
+
+  doSome(event:Event, date:Date){
+    event.preventDefault();
+    this.chosenDate = date;
   }
 
 }

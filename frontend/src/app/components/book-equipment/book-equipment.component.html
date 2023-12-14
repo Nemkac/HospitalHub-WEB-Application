@@ -1,14 +1,14 @@
-<form #upcomingAppoitmentsForm="ngForm" >
+<form #bookEquipmentForm="ngForm" >
     <div class="grid grid-cols-1 gap" >
         <h2 class="text-2xl font-bold mb-4 text-center">You can chose one of following dates: </h2>
-        <li *ngFor="let date of availableDates" class="text-center space-y-4">
-            {{ date | date:'yyyy-MM-dd'}}
-        </li>
+        <ul *ngFor="let date of availableDates" class="text-center space-y-4 ">
+            <a href="#" (click)="doSome($event,date)"> {{ date | date:'yyyy-MM-dd'}} </a>
+        </ul>
         <div class="flex flex-col w-full mb-4 space-y-4">
             <br>
             <p class="font-inter text-third font-medium mx-auto text-[24px]">Or you can chose one by yourself: </p>
             <div class="flex justify-center items-center h-16">
-                <input ngModel name="endingDate" type="date" class="border p-2 rounded" [(ngModel)]="pickUpDate" >
+                <input ngModel name="addedDate" type="date" class="border p-2 rounded" [(ngModel)]="addedDate" >
             </div>
         </div>
     </div>
