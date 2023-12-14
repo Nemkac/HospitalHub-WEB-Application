@@ -39,6 +39,7 @@ import { PasswordChangeModalComponent } from './components/password-change-modal
 import { ComplaintsPageComponent } from './pages/complaints-page/complaints-page.component';
 import { VisitCompanyPageComponent } from './pages/visit-company-page/visit-company-page.component';
 import { UpdateEquipmentMyCompanyComponent } from './components/update-equipment-my-company/update-equipment-my-company.component';
+import { AddEquipmentMyCompanyFormComponent } from './components/add-equipment-my-company-form/add-equipment-my-company-form.component';
 
 @NgModule({
       declarations: [
@@ -69,6 +70,7 @@ import { UpdateEquipmentMyCompanyComponent } from './components/update-equipment
           ComplaintsPageComponent,
           VisitCompanyPageComponent,
           UpdateEquipmentMyCompanyComponent,
+          AddEquipmentMyCompanyFormComponent,
       ],
       imports: [
           BrowserAnimationsModule,

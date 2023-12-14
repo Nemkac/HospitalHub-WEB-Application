@@ -10,6 +10,7 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateEquipmentMyCompanyComponent } from 'src/app/components/update-equipment-my-company/update-equipment-my-company.component';
+import { AddEquipmentMyCompanyFormComponent } from 'src/app/components/add-equipment-my-company-form/add-equipment-my-company-form.component';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -134,6 +135,15 @@ export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
   
     modalRef.componentInstance.selectedEquipmentForUpdate = this.selectedEquipmentForUpdate;
   }
+
+  openAddForm() {
+    const modalRef = this.modalService.open(
+      AddEquipmentMyCompanyFormComponent,
+        { backdrop: 'static', keyboard: true }
+    );
+
+    modalRef.componentInstance.companyId = this.selectedCompany.id;
+}
   
   
 

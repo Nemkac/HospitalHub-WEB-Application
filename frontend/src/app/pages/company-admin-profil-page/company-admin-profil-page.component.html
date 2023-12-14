@@ -66,10 +66,10 @@
         
         <div class="flex flex-row flex-start flex-wrap w-full justify-center justify-between">
             <div class="flex flex-col items-center justify-center border-[2px] border-gray hover:bg-third hover:text-white text-gray w-[455px] h-[220px] cursor-pointer transition-[0.5s] rounded-md"
-                >
-                <fa-icon [icon]="faPlus" class="text-[44px] font-bold"/>
-                <p class="font-inter font-semibold text-[28px]">Add new equipment</p>
-            </div>
+            (click)="openAddForm()">
+           <fa-icon [icon]="faPlus" class="text-[44px] font-bold"/>
+           <p class="font-inter font-semibold text-[28px]">Add new equipment</p>
+       </div>
             <div *ngFor="let equipment of filteredEquipments" 
                  class="flex flex-row bg-white my-2 w-[455px] h-[220px] rounded-md shadow-md relative justify-between cursor-pointer hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
                 <div class="flex flex-row absolute top-0 right-0 p-[10px]">

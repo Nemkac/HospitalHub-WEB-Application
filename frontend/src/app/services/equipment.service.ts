@@ -36,5 +36,10 @@ export class EquipmentService {
     getEquipmentById(equipmentId: number): Observable<Equipment> {
         const url = `${this.baseUrl}/${equipmentId}`;
         return this.http.get<Equipment>(url);
+    }
+
+    addEquipment(equipment: Equipment, companyId: number): Observable<Equipment> {
+        const url = `${this.baseUrl}/addEquipment/${companyId}`;
+        return this.http.post<Equipment>(url, equipment);
       }
 }
