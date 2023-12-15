@@ -13,6 +13,7 @@ import { LogInFormComponent } from './components/log-in-form/log-in-form.compone
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { ComplaintsPageComponent } from './pages/complaints-page/complaints-page.component';
 import { VisitCompanyPageComponent } from './pages/visit-company-page/visit-company-page.component';
+import { UpcomingAppointmentsComponent } from './components/upcoming-appointments/upcoming-appointments.component';
 
 const routes: Routes = [
     //Promeniti kada se doda login da se umesto logina ispise ime usera i onda da se ide na profil usera
@@ -27,7 +28,8 @@ const routes: Routes = [
     {path: 'logIn',component:LogInFormComponent},
     {path: 'register',component:RegisterFormComponent},
     {path: 'company/:id',component:VisitCompanyPageComponent},
-    {path: 'complaints', component:ComplaintsPageComponent}
+    {path: 'complaints', component:ComplaintsPageComponent},
+    {path: 'profile/upcoming-appoitments', component:UpcomingAppointmentsComponent}
 ];
 
 @NgModule({

@@ -43,7 +43,8 @@
         
         <div class="flex flex-row flex-start flex-wrap w-full justify-center justify-between">
             <div *ngFor="let equipment of equipments" class="flex flex-row bg-white w-[440px] h-[220px] rounded-md shadow-md 
-                                                            cursor-pointer hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
+                                                            cursor-pointer hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out"
+                                                            (click)="goToBookEquipment()">
                 <div class="flex p-2 w-[40%]">
                     <img src="../../../assets/{{equipment.image}}" />
                 </div>

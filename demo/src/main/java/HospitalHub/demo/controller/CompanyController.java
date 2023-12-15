@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @RestController
@@ -128,6 +129,18 @@ public class CompanyController {
         });
 
         return new ResponseEntity<>(selectedCompany, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getAvailableDays/{id}")
+    public ResponseEntity<List<LocalDate>> getCompaniesAvailableDaysInFollowingTen(@PathVariable Integer id){
+        Company company = companyService.getById(id);
+        if(company != null){
+            if(companyService.getAvailableDaysInFollowingTen(id) != null) {
+                return new ResponseEntity<>(companyService.getAvailableDaysInFollowingTen(id),HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 

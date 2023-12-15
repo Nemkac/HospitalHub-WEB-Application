@@ -58,4 +58,5 @@ export class NavbarComponent implements OnInit {
     localStorage.clear();
     location.reload();
   }
+
 }

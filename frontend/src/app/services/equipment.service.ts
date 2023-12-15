@@ -5,6 +5,7 @@ import { Observable, Subject } from "rxjs";
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { EquipmentToUpdate } from '../EquipmentToUpdate';
+import { O } from '@fullcalendar/core/internal-common';
 
 @Injectable({
     providedIn: 'root',
@@ -42,4 +43,8 @@ export class EquipmentService {
         const url = `${this.baseUrl}/addEquipment/${companyId}`;
         return this.http.post<Equipment>(url, equipment);
       }
+
+    public getAvailableDaysInFollowinTen(companyId : number) : Observable<Date[]>{
+        return this.http.get<Date[]>(`http://localhost:8081/api/company/getAvailableDays/${companyId}`);
+    }
 }

@@ -42,6 +42,8 @@ import { UpdateEquipmentMyCompanyComponent } from './components/update-equipment
 import { AddEquipmentMyCompanyFormComponent } from './components/add-equipment-my-company-form/add-equipment-my-company-form.component';
 import { EquipmentPickupSlotDisplayModalComponent } from './components/equipment-pickup-slot-display-modal/equipment-pickup-slot-display-modal.component';
 import { CreatePickupSlotFormComponent } from './components/create-pickup-slot-form/create-pickup-slot-form.component';
+import { UpcomingAppointmentsComponent } from './components/upcoming-appointments/upcoming-appointments.component';
+import { BookEquipmentComponent } from './components/book-equipment/book-equipment.component';
 
 @NgModule({
       declarations: [
@@ -75,6 +77,8 @@ import { CreatePickupSlotFormComponent } from './components/create-pickup-slot-f
           AddEquipmentMyCompanyFormComponent,
           EquipmentPickupSlotDisplayModalComponent,
           CreatePickupSlotFormComponent,
+          UpcomingAppointmentsComponent,
+          BookEquipmentComponent,
       ],
       imports: [
           BrowserAnimationsModule,

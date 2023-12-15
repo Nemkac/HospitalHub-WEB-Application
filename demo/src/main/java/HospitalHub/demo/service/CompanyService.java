@@ -1,11 +1,13 @@
 package HospitalHub.demo.service;
 
-import HospitalHub.demo.model.Company;
-import HospitalHub.demo.model.User;
+import HospitalHub.demo.model.*;
 import HospitalHub.demo.repository.CompanyRepository;
+import HospitalHub.demo.repository.EquipmentAvailabilityRepository;
+import HospitalHub.demo.repository.EquipmentPickupSlotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -13,6 +15,8 @@ public class CompanyService {
 
     @Autowired
     private CompanyRepository companyRepository;
+    @Autowired
+    private EquipmentAvailabilityRepository equipmentAvailabilityRepository;
 
     public List<Company> findAll(){
         return companyRepository.findAll();
@@ -63,6 +67,47 @@ public class CompanyService {
         } else {
             return 0;
         }
+    }
+
+    public EquipmentAvailability getEquipmentAvailabilityByCompanyId(Integer companyId){
+        List<EquipmentAvailability> availabilities = equipmentAvailabilityRepository.findAll();
+        if(availabilities != null) {
+            for (EquipmentAvailability availability : availabilities) {
+                if (availability.getCompany().getId() == companyId) {
+                    return availability;
+                }
+            }
+        }
+        return null;
+    }
+
+    public List<Termin> getCompaniesTakenPeriods(Integer CompanyId){
+        EquipmentAvailability equipment = getEquipmentAvailabilityByCompanyId(CompanyId);
+        if(equipment != null){
+            return equipment.getTerminList();
+        }
+        return null;
+    }
+
+    public List<LocalDate> getAvailableDaysInFollowingTen(Integer CompanyId){
+        List<LocalDate> freeDays = new ArrayList<>();
+        for(int i = 0; i < 10; i++){
+            freeDays.add(LocalDate.now().plusDays(i));
+        }
+        List<Termin> takenPeriods = getCompaniesTakenPeriods(CompanyId);
+        if(takenPeriods != null) {
+            for (Termin termin : takenPeriods) {
+                // logika koja izbacuje dane iz liste slobodnih dana ukoliko je dan zauzet
+            }
+            return freeDays;
+        }
+        return  freeDays;
+    }
+
+    public Boolean isThereAvailableSlotsInDate(Integer CompanyId, LocalDate day){
+        List<Termin> takenPeriods = getCompaniesTakenPeriods(CompanyId);
+        // ista ona logika odozgo koja treba da proveri da li ima slobodnih termina u danu
+        return true;
     }
 
 }
