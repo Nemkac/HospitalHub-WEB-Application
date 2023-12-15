@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from 'src/app/services/user.service';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-update-company-form',
@@ -12,8 +14,10 @@ export class UpdateCompanyFormComponent implements OnInit{
   errorMessage: string = '';
   token = localStorage.getItem('token');
 
+  faClose = faClose;
 
-  constructor(private http: HttpClient, private userService: UserService) { }
+  constructor(private http: HttpClient, private userService: UserService,
+              private modalService : NgbActiveModal) { }
   
   ngOnInit(): void {
     this.getAdminsCompanyData();
@@ -65,4 +69,8 @@ export class UpdateCompanyFormComponent implements OnInit{
       idInput.focus();
     }
   }
+
+  public closeModal(): void {
+		this.modalService.close();
+	}
 }

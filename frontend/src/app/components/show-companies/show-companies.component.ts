@@ -51,4 +51,7 @@ export class ShowCompaniesComponent implements OnInit {
       }
     )
   }
+  public goToCompany(id:number) : void {
+    this.showCompaniesService.goToCompany(id);
+  }
 }

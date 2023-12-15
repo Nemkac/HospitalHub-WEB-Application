@@ -87,7 +87,6 @@ public class CompanyController {
         company.setLatitude(companyDTO.getLatitude());
         company.setLongitude(companyDTO.getLongitude());
         company.setDescription(companyDTO.getDescription());
-        company.setAvgRate(companyDTO.getAvgRate());
 
         company = companyService.save(company);
 

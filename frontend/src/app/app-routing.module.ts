@@ -17,7 +17,7 @@ import { VisitCompanyPageComponent } from './pages/visit-company-page/visit-comp
 const routes: Routes = [
     //Promeniti kada se doda login da se umesto logina ispise ime usera i onda da se ide na profil usera
     //Zameniti companies sa profile a komponentu promeniti u zavisnosti od role ulogovanog korisnika
-    {path: 'companies', component: SystemAdminProfilePageComponent},
+    {path: 'companies', component: ShowCompaniesComponent},
     {path: 'equipment', component: EquipmentPageComponent},
     {path: 'mycompany', component: CompanyAdminProfilPageComponent},
     {path: 'api/user/companies', component: ShowCompaniesComponent},
