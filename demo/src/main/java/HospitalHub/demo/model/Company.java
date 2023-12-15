@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
@@ -39,9 +40,8 @@ public class Company {
     @Column(name = "description")
     private String description;
 
-    @OneToOne(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "company_admin_id") // Use the name of the foreign key column in the database
-    private CompanyAdministrator companyAdministrator;
+    @OneToMany(mappedBy = "company")
+    private List<CompanyAdministrator> companyAdministrators;
 
     @JsonIgnoreProperties("company")
     @OneToMany(mappedBy = "company")
@@ -50,9 +50,6 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private List<EquipmentAvailability> equipmentAvailabilityList;
 
-    /*Treba dodati polje sa relacijom koje ce predstavljati id administratora
-    koji je zaduzen za odredjenu kompaniju.*/
-    //CompanyAdministrator companyAdministrator
 
     public Company() {
 
@@ -64,7 +61,7 @@ public class Company {
         this.country = country;
         this.description = description;
         this.avgRate = 0.0;
-        this.companyAdministrator = null;
+        this.companyAdministrators = new ArrayList<>();
     }
 
     public Company(Integer id, String name, String city, String country, String address, double latitude, double longitude, String description) {
@@ -77,7 +74,7 @@ public class Company {
         this.longitude = longitude;
         this.avgRate = 0.0;
         this.description = description;
-        this.companyAdministrator = null;
+        this.companyAdministrators = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -135,12 +132,12 @@ public class Company {
         this.equipmentAvailabilityList = equipmentAvailabilityList;
     }
 
-    public CompanyAdministrator getCompanyAdministrator() {
-        return companyAdministrator;
+    public List<CompanyAdministrator> getCompanyAdministrator() {
+        return companyAdministrators;
     }
 
-    public void setCompanyAdministrator(CompanyAdministrator companyAdministrator) {
-        this.companyAdministrator = companyAdministrator;
+    public void setCompanyAdministrator(List<CompanyAdministrator> companyAdministrator) {
+        this.companyAdministrators = companyAdministrator;
     }
 
     public String getAddress() {
