@@ -40,10 +40,10 @@ public class InitialDataInsertionService {
 
     @Transactional
     public void insertInitialData() {
-        Company company1 = new Company(1, "Kompanija 1", "Sremska Mitrovica", "Serbia","Bulevar cara Lazara 75", 45.241173, 19.830888);
-        Company company2 = new Company(2, "Kompanija 2", "Novi Sad", "Serbia","Bulevar cara Lazara 75",45.241173, 19.830888);
-        Company company3 = new Company(3, "Kompanija 3", "Kragujevac", "Serbia", "Bulevar cara Lazara 75",45.241173, 19.830888);
-        Company company4 = new Company(4, "Kompanija 4", "Jagodina", "Serbia","Bulevar cara Lazara 75",45.241173, 19.830888);
+        Company company1 = new Company(1, "Kompanija 1", "Sremska Mitrovica", "Serbia","Bulevar cara Lazara 75", 45.241173, 19.830888, "Najbolja kompanija u gradu");
+        Company company2 = new Company(2, "Kompanija 2", "Novi Sad", "Serbia","Bulevar cara Lazara 75",45.241173, 19.830888, "Ovo je najbolja kompanija");
+        Company company3 = new Company(3, "Kompanija 3", "Kragujevac", "Serbia", "Bulevar cara Lazara 75",45.241173, 19.830888, "Najjaca firmetina");
+        Company company4 = new Company(4, "Kompanija 4", "Jagodina", "Serbia","Bulevar cara Lazara 75",45.241173, 19.830888, "Mi imamo najbolju opremu");
 
         companyRepository.save(company1);
         companyRepository.save(company2);

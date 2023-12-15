@@ -11,6 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateEquipmentMyCompanyComponent } from 'src/app/components/update-equipment-my-company/update-equipment-my-company.component';
 import { AddEquipmentMyCompanyFormComponent } from 'src/app/components/add-equipment-my-company-form/add-equipment-my-company-form.component';
+import { UpdateCompanyFormComponent } from 'src/app/components/update-company-form/update-company-form.component';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -122,7 +123,7 @@ export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
     );  
   }
 
-   openUpdateForm(equipment: Equipment) {
+  openUpdateForm(equipment: Equipment) {
     this.selectedEquipmentForUpdate = equipment;
     this.goToUpdate();
   }
@@ -136,6 +137,15 @@ export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
     modalRef.componentInstance.selectedEquipmentForUpdate = this.selectedEquipmentForUpdate;
   }
 
+  public goToUpdateCompany() : void {
+    const modalRef = this.modalService.open(
+      UpdateCompanyFormComponent,
+      { backdrop: 'static', keyboard: true }
+    );
+  
+    modalRef.componentInstance.company = this.selectedCompany;
+  }
+
   openAddForm() {
     const modalRef = this.modalService.open(
       AddEquipmentMyCompanyFormComponent,
@@ -143,11 +153,8 @@ export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
     );
 
     modalRef.componentInstance.companyId = this.selectedCompany.id;
-}
+  }
   
-  
-
-
   loadMap() {
     if (this.mapContainer && this.companyLatitude !== 0 && this.companyLongitude !== 0) {
       const map = L.map(this.mapContainer.nativeElement).setView(
@@ -159,6 +166,5 @@ export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
       L.marker([this.companyLatitude, this.companyLongitude]).addTo(map);
     }
   }
-  
   
 }

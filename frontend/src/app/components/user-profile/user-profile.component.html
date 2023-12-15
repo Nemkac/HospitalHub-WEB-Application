@@ -64,29 +64,44 @@
     </button>
   </div>
   <div class="flex flex-col w-[60%] items-center space-y-8">
-    <div class="flex flex-col w-full p-[12px] bg-white h-auto max-h-[800px] rounded-md shadow-md">
-      <full-calendar class="w-full" [options]="calendarOptions">
-        <ng-template #eventContent let-arg class="overflow-scroll">
-          <div *ngIf="arg.event.extendedProps" (click)="displayEquipmentPickupSlot(arg.event.extendedProps.slot)"
-                [ngStyle]="getEventStyles(arg.event.extendedProps)"
-                class="flex flex-col font-inter text-white p-[5px] w-full rounded-md cursor-pointer">
-            <p>Start: {{ arg.event.start | date: 'HH:mm' }}</p>
-            <p>Duration: {{ arg.event.extendedProps.duration }} min</p>
-            <p>
-              <ng-container *ngIf="arg.event.extendedProps.firstname && arg.event.extendedProps.lastname">
-                {{ arg.event.extendedProps.firstname }} {{ arg.event.extendedProps.lastname }}
-              </ng-container>
-              <ng-container *ngIf="!arg.event.extendedProps.firstname && !arg.event.extendedProps.lastname">
-                Free appointment
-              </ng-container>
-            </p>
-          </div>
-        </ng-template>
-      </full-calendar>
-      <button class="w-full text-center h-[60px] mt-4 rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="openCreatePickupSlotForm()">
-        <p>Add new appointment</p>
-      </button>
-    </div>  
+    <ng-form *ngIf="user.roles === 'ROLE_COMPANYADMIN'" class="flex w-full">
+      <div class="flex flex-col w-full p-[12px] bg-white h-auto max-h-[800px] rounded-md shadow-md">
+        <full-calendar class="w-full" [options]="calendarOptions">
+          <ng-template #eventContent let-arg class="overflow-scroll">
+            <div *ngIf="arg.event.extendedProps" (click)="displayEquipmentPickupSlot(arg.event.extendedProps.slot)"
+                  [ngStyle]="getEventStyles(arg.event.extendedProps)"
+                  class="flex flex-col font-inter text-white p-[5px] w-full rounded-md cursor-pointer">
+              <p>Start: {{ arg.event.start | date: 'HH:mm' }}</p>
+              <p>Duration: {{ arg.event.extendedProps.duration }} min</p>
+              <p>
+                <ng-container *ngIf="arg.event.extendedProps.firstname && arg.event.extendedProps.lastname">
+                  {{ arg.event.extendedProps.firstname }} {{ arg.event.extendedProps.lastname }}
+                </ng-container>
+                <ng-container *ngIf="!arg.event.extendedProps.firstname && !arg.event.extendedProps.lastname">
+                  Free appointment
+                </ng-container>
+              </p>
+            </div>
+          </ng-template>
+        </full-calendar>
+        <button class="w-full text-center h-[60px] mt-4 rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="openCreatePickupSlotForm()">
+          <p>Add new appointment</p>
+        </button>
+      </div>  
+    </ng-form>
+    <ng-form *ngIf="user.roles === 'ROLE_SYSADMIN'" class="flex w-full">
+      <div class="flex flex-col w-full p-[12px] bg-white h-auto max-h-[800px] rounded-md shadow-md">
+        <button class="w-full text-center h-[60px] rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="openCreateCompanyAdminForm()">
+          <p>Add new company administrator</p>
+        </button>
+        <button class="w-full text-center h-[60px] mt-4 rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="openCreateSystemAdminForm()">
+          <p>Add new system administrator</p>
+        </button>
+        <button class="w-full text-center h-[60px] mt-4 rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="openCreateCompanyForm()">
+          <p>Add new company</p>
+        </button>
+      </div>  
+    </ng-form>
   </div>
 
   <div *ngIf="!userProfile" class="text-center mt-8">

@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Company } from 'src/company';
 
 @Component({
   selector: 'app-update-company-form',
   templateUrl: './update-company-form.component.html',
 })
 export class UpdateCompanyFormComponent {
+  @Input() company: Company | null = null;
   updateCompany: any = {};
   successMessage: string = '';
   errorMessage: string = '';

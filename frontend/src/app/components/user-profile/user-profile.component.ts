@@ -18,6 +18,9 @@ import { start } from '@popperjs/core';
 import { isSameDay } from 'date-fns';
 import { EquipmentPickupSlotDisplayModalComponent } from '../equipment-pickup-slot-display-modal/equipment-pickup-slot-display-modal.component';
 import { CreatePickupSlotFormComponent } from '../create-pickup-slot-form/create-pickup-slot-form.component';
+import { CreateCompanyAdministratorFormComponent } from '../create-company-administrator-form/create-company-administrator-form.component';
+import { CreateNewSysAdmninistratorFormComponent } from '../create-new-sys-admninistrator-form/create-new-sys-admninistrator-form.component';
+import { CreateCompanyFormComponent } from '../create-company-form/create-company-form.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -154,5 +157,26 @@ export class UserProfileComponent implements OnInit{
     } else {
       return { 'background-color' : '#003554' }
     }
+  }
+
+  public openCreateCompanyAdminForm() : void {
+    const modalRef = this.modalService.open(
+      CreateCompanyAdministratorFormComponent,
+      { backdrop: 'static', keyboard: true }
+    );
+  }
+
+  public openCreateSystemAdminForm() : void {
+    const modalRef = this.modalService.open(
+      CreateNewSysAdmninistratorFormComponent,
+      { backdrop: 'static', keyboard: true }
+    );
+  }
+  
+  public openCreateCompanyForm() : void {
+    const modalRef = this.modalService.open(
+      CreateCompanyFormComponent,
+      { backdrop: 'static', keyboard: true }
+    );
   }
 }

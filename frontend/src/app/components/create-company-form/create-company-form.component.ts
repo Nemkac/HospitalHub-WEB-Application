@@ -3,6 +3,8 @@ import { Company } from './../../../company';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CompanyService } from 'src/app/services/company.service';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-create-company-form',
@@ -10,7 +12,10 @@ import { CompanyService } from 'src/app/services/company.service';
 })
 export class CreateCompanyFormComponent implements OnInit{
 
-  constructor(private companyService: CompanyService){}
+	faClose = faClose;
+
+  constructor(private companyService: CompanyService,
+              private modalService: NgbActiveModal){}
 
   ngOnInit(): void {}
 
@@ -25,4 +30,8 @@ export class CreateCompanyFormComponent implements OnInit{
       }
     );
   }
+
+  public closeModal(): void {
+		this.modalService.close();
+	}
 }

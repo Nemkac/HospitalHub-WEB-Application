@@ -36,6 +36,9 @@ public class Company {
     @Column(name = "avgRate")
     private Double avgRate;
 
+    @Column(name = "description")
+    private String description;
+
     @OneToOne(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "company_admin_id") // Use the name of the foreign key column in the database
     private CompanyAdministrator companyAdministrator;
@@ -55,15 +58,16 @@ public class Company {
 
     }
 
-    public Company(String name, String city, String country) {
+    public Company(String name, String city, String country, String description) {
         this.name = name;
         this.city = city;
         this.country = country;
+        this.description = description;
         this.avgRate = 0.0;
         this.companyAdministrator = null;
     }
 
-    public Company(Integer id, String name, String city, String country, String address, double latitude, double longitude) {
+    public Company(Integer id, String name, String city, String country, String address, double latitude, double longitude, String description) {
         this.id = id;
         this.name = name;
         this.city = city;
@@ -72,6 +76,7 @@ public class Company {
         this.latitude = latitude;
         this.longitude = longitude;
         this.avgRate = 0.0;
+        this.description = description;
         this.companyAdministrator = null;
     }
 
@@ -160,5 +165,13 @@ public class Company {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -49,7 +49,8 @@ public class CompanyController {
         Company company = new Company(
                 companyDTO.getName(),
                 companyDTO.getCity(),
-                companyDTO.getCountry()
+                companyDTO.getCountry(),
+                companyDTO.getDescription()
         );
 
         this.companyService.save(company);
@@ -80,6 +81,7 @@ public class CompanyController {
         company.setName(companyDTO.getName());
         company.setCity(companyDTO.getCity());
         company.setCountry(companyDTO.getCountry());
+        company.setDescription(companyDTO.getDescription());
         company.setAvgRate(companyDTO.getAvgRate());
 
         company = companyService.save(company);
