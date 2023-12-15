@@ -1,5 +1,5 @@
 <div class="flex flex-row h-auto px-64 py-32 bg-lightBlue/5 justify-between pb-32">
-    <div class="flex flex-col p-4 h-[1100px] w-[30%] bg-white rounded-md shadow-xl">
+    <div class="flex flex-col p-4 h-[1150px] w-[30%] bg-white rounded-md shadow-xl">
         <div class="flex rounded-full bg-third mx-auto my-2 h-[180px] w-[135px] items-center transition-[0.5s]">
             <fa-icon [icon]="faCamera" class="mx-auto text-white text-[48px] cursor-pointer"/>
         </div>
@@ -13,9 +13,9 @@
             <p class="font-inter font-light text-[#7f8fa6]">08 - 16h</p>
         </div>
         <hr class="w-full bg-gray mt-4 mb-2">
-        <div class="flex flex-col w-full h-[400px]">
+        <div class="flex flex-col w-full h-[300px]">
             <p class="text-gray font-inter font-light text-[18px]">Description:</p>
-            <p class="text-third font-inter font-regular text-[18px]">Deskripcija kompanije</p>
+            <p class="text-third font-inter font-regular text-[18px]">{{selectedCompany.description}}</p>
         </div>
         <hr class="w-full bg-gray mt-2 mb-4">
         <div class="flex flex-row justify-between mb-2">
@@ -45,6 +45,11 @@
             </div>
         </div>
         <div #mapContainer class="flex h-[40vh] mt-2 w-auto z-[0] rounded-md shadow-md"></div>
+        <hr class="w-full bg-gray my-4">
+        <button class="w-full text-center text-[24px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
+                        text-white rounded-md h-[55px]" (click)="goToUpdateCompany()">
+                Update company profile
+        </button>
     </div>
     <div class="flex flex-col w-[67%] items-center space-y-8">
         <div class="text-center">
@@ -66,7 +71,7 @@
         
         <div class="flex flex-row flex-start flex-wrap w-full justify-center justify-between">
             <div class="flex flex-col items-center justify-center border-[2px] border-gray hover:bg-third hover:text-white text-gray w-[455px] h-[220px] cursor-pointer transition-[0.5s] rounded-md"
-            (click)="openAddForm()">
+                (click)="openAddForm()">
            <fa-icon [icon]="faPlus" class="text-[44px] font-bold"/>
            <p class="font-inter font-semibold text-[28px]">Add new equipment</p>
        </div>

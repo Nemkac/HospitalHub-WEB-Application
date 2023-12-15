@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -11,10 +12,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class AddEquipmentMyCompanyFormComponent {
   @Input() companyId!: number;
-  modalService: any;
-  faClose! : typeof faClose;
+  faClose = faClose;
 
-  constructor(private equipmentService: EquipmentService) {}
+  constructor(private equipmentService: EquipmentService,
+              private modalService: NgbActiveModal) {}
 
   onAddEquipment(form: NgForm): void {
     if (form.valid) {

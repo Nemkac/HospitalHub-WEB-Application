@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
@@ -36,9 +37,11 @@ public class Company {
     @Column(name = "avgRate")
     private Double avgRate;
 
-    @OneToOne(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "company_admin_id") // Use the name of the foreign key column in the database
-    private CompanyAdministrator companyAdministrator;
+    @Column(name = "description")
+    private String description;
+
+    @OneToMany(mappedBy = "company")
+    private List<CompanyAdministrator> companyAdministrators;
 
     @JsonIgnoreProperties("company")
     @OneToMany(mappedBy = "company")
@@ -47,23 +50,21 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private List<EquipmentAvailability> equipmentAvailabilityList;
 
-    /*Treba dodati polje sa relacijom koje ce predstavljati id administratora
-    koji je zaduzen za odredjenu kompaniju.*/
-    //CompanyAdministrator companyAdministrator
 
     public Company() {
 
     }
 
-    public Company(String name, String city, String country) {
+    public Company(String name, String city, String country, String description) {
         this.name = name;
         this.city = city;
         this.country = country;
+        this.description = description;
         this.avgRate = 0.0;
-        this.companyAdministrator = null;
+        this.companyAdministrators = new ArrayList<>();
     }
 
-    public Company(Integer id, String name, String city, String country, String address, double latitude, double longitude) {
+    public Company(Integer id, String name, String city, String country, String address, double latitude, double longitude, String description) {
         this.id = id;
         this.name = name;
         this.city = city;
@@ -72,7 +73,8 @@ public class Company {
         this.latitude = latitude;
         this.longitude = longitude;
         this.avgRate = 0.0;
-        this.companyAdministrator = null;
+        this.description = description;
+        this.companyAdministrators = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -130,12 +132,12 @@ public class Company {
         this.equipmentAvailabilityList = equipmentAvailabilityList;
     }
 
-    public CompanyAdministrator getCompanyAdministrator() {
-        return companyAdministrator;
+    public List<CompanyAdministrator> getCompanyAdministrator() {
+        return companyAdministrators;
     }
 
-    public void setCompanyAdministrator(CompanyAdministrator companyAdministrator) {
-        this.companyAdministrator = companyAdministrator;
+    public void setCompanyAdministrator(List<CompanyAdministrator> companyAdministrator) {
+        this.companyAdministrators = companyAdministrator;
     }
 
     public String getAddress() {
@@ -160,5 +162,13 @@ public class Company {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

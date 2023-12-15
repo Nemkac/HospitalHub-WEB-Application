@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class InitialDataInsertionService {
@@ -40,10 +41,10 @@ public class InitialDataInsertionService {
 
     @Transactional
     public void insertInitialData() {
-        Company company1 = new Company(1, "Kompanija 1", "Sremska Mitrovica", "Serbia","Bulevar cara Lazara 75", 45.241173, 19.830888);
-        Company company2 = new Company(2, "Kompanija 2", "Novi Sad", "Serbia","Bulevar cara Lazara 75",45.241173, 19.830888);
-        Company company3 = new Company(3, "Kompanija 3", "Kragujevac", "Serbia", "Bulevar cara Lazara 75",45.241173, 19.830888);
-        Company company4 = new Company(4, "Kompanija 4", "Jagodina", "Serbia","Bulevar cara Lazara 75",45.241173, 19.830888);
+        Company company1 = new Company(1, "Kompanija 1", "Sremska Mitrovica", "Serbia","Bulevar cara Lazara 75", 45.241173, 19.830888, "Najbolja kompanija u gradu");
+        Company company2 = new Company(2, "Kompanija 2", "Novi Sad", "Serbia","Bulevar cara Lazara 75",45.241173, 19.830888, "Ovo je najbolja kompanija");
+        Company company3 = new Company(3, "Kompanija 3", "Kragujevac", "Serbia", "Bulevar cara Lazara 75",45.241173, 19.830888, "Najjaca firmetina");
+        Company company4 = new Company(4, "Kompanija 4", "Jagodina", "Serbia","Bulevar cara Lazara 75",45.241173, 19.830888, "Mi imamo najbolju opremu");
 
         companyRepository.save(company1);
         companyRepository.save(company2);
@@ -118,16 +119,37 @@ public class InitialDataInsertionService {
                 true
         );
 
+        LocalDate user5BirthDate = LocalDate.ofEpochDay(2001-25-8);
+        User user5 = new User(
+                "Sime",
+                "Aleksa",
+                "Simeunovic",
+                "as123",
+                user5BirthDate,
+                "asimeunovic@gmail.com",
+                "0673123412",
+                "Serbia",
+                "Cacak",
+                "Designer",
+                "None",
+                "ROLE_COMPANYADMIN",
+                true
+        );
+
         userService.addUser(user1);
         userService.addUser(user2);
         userService.addUser(user3);
         userService.addUser(user4);
+        userService.addUser(user5);
 
         SystemAdministrator systemAdministrator = new SystemAdministrator(user4);
         systemAdministratorService.save(systemAdministrator);
 
-        CompanyAdministrator companyAdministrator = new CompanyAdministrator(user3, company2);
-        companyAdministratorService.save(companyAdministrator);
+        CompanyAdministrator companyAdministrator1 = new CompanyAdministrator(user3, company1);
+        CompanyAdministrator companyAdministrator2 = new CompanyAdministrator(user5, company1);
+
+        companyAdministratorService.save(companyAdministrator1);
+        companyAdministratorService.save(companyAdministrator2);
 
         MedicalEquipment equipment1 = new MedicalEquipment("Respirator", "Machine", "Good respirator", company1, 320.00, "respirator.png");
         MedicalEquipment equipment2 = new MedicalEquipment("EKG", "Diagnostics", "Good ekg", company1, 860.00, "ekg.png");
@@ -173,29 +195,29 @@ public class InitialDataInsertionService {
         complaintService.save(complaint4);
 
         LocalDateTime slot1DateTime = LocalDateTime.of(2023, 2, 2, 8, 30);
-        EquipmentPickupSlot slot1 = new EquipmentPickupSlot(slot1DateTime, 45, companyAdministrator);
+        EquipmentPickupSlot slot1 = new EquipmentPickupSlot(slot1DateTime, 45, companyAdministrator2);
         slot1.setReservedBy(user1);
-        LocalDateTime slot2DateTime = LocalDateTime.of(2023, 2, 12, 12, 30);
-        EquipmentPickupSlot slot2 = new EquipmentPickupSlot(slot2DateTime, 30, companyAdministrator);
+        LocalDateTime slot2DateTime = LocalDateTime.of(2023, 2, 13, 12, 30);
+        EquipmentPickupSlot slot2 = new EquipmentPickupSlot(slot2DateTime, 30, companyAdministrator2);
         slot2.setReservedBy(user2);
-        LocalDateTime slot3DateTime = LocalDateTime.of(2023, 4, 2, 15, 30);
-        EquipmentPickupSlot slot3 = new EquipmentPickupSlot(slot3DateTime, 15, companyAdministrator);
-        LocalDateTime slot4DateTime = LocalDateTime.of(2023, 4, 2, 14, 30);
-        EquipmentPickupSlot slot4 = new EquipmentPickupSlot(slot4DateTime, 30, companyAdministrator);
+        LocalDateTime slot3DateTime = LocalDateTime.of(2023, 4, 3, 15, 30);
+        EquipmentPickupSlot slot3 = new EquipmentPickupSlot(slot3DateTime, 15, companyAdministrator1);
+        LocalDateTime slot4DateTime = LocalDateTime.of(2023, 4, 4, 14, 30);
+        EquipmentPickupSlot slot4 = new EquipmentPickupSlot(slot4DateTime, 30, companyAdministrator1);
         slot4.setReservedBy(user1);
         LocalDateTime slot5DateTime = LocalDateTime.of(2023, 5, 2, 13, 30);
-        EquipmentPickupSlot slot5 = new EquipmentPickupSlot(slot5DateTime, 30, companyAdministrator);
+        EquipmentPickupSlot slot5 = new EquipmentPickupSlot(slot5DateTime, 30, companyAdministrator1);
         slot5.setReservedBy(user2);
         LocalDateTime slot6DateTime = LocalDateTime.of(2022, 5, 2, 12, 30);
-        EquipmentPickupSlot slot6 = new EquipmentPickupSlot(slot6DateTime, 45, companyAdministrator);
-        LocalDateTime slot7DateTime = LocalDateTime.of(2023, 7, 2, 11, 30);
-        EquipmentPickupSlot slot7 = new EquipmentPickupSlot(slot7DateTime, 60, companyAdministrator);
+        EquipmentPickupSlot slot6 = new EquipmentPickupSlot(slot6DateTime, 45, companyAdministrator2);
+        LocalDateTime slot7DateTime = LocalDateTime.of(2023, 7, 3, 11, 30);
+        EquipmentPickupSlot slot7 = new EquipmentPickupSlot(slot7DateTime, 60, companyAdministrator1);
         slot7.setReservedBy(user1);
         LocalDateTime slot8DateTime = LocalDateTime.of(2022, 9, 2, 10, 30);
-        EquipmentPickupSlot slot8 = new EquipmentPickupSlot(slot8DateTime, 30, companyAdministrator);
+        EquipmentPickupSlot slot8 = new EquipmentPickupSlot(slot8DateTime, 30, companyAdministrator2);
         slot8.setReservedBy(user2);
         LocalDateTime slot9DateTime = LocalDateTime.of(2023, 5, 2, 10, 30);
-        EquipmentPickupSlot slot9 = new EquipmentPickupSlot(slot9DateTime, 30, companyAdministrator);
+        EquipmentPickupSlot slot9 = new EquipmentPickupSlot(slot9DateTime, 30, companyAdministrator1);
 
         equipmentPickupSlotService.save(slot1);
         equipmentPickupSlotService.save(slot2);

@@ -16,8 +16,8 @@ public class CompanyAdministrator{
     @OneToOne
     private User user;
 
-    @OneToOne
-    @JoinColumn(name = "company_id") // Use the name of the foreign key column in the database
+    @ManyToOne
+    @JoinColumn(name = "company_id")
     private Company company;
 
     @OneToMany(mappedBy = "companyAdministrator")
