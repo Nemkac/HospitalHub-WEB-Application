@@ -58,7 +58,6 @@ public class MedicalEquipmentController {
         MedicalEquipment existingEquipment = medicalEqupimentService.findById(equipmentId);
 
         if (existingEquipment != null) {
-            // if a field is not empty, update the corresponding field
             if (equipmentDTO.getName() != null && !equipmentDTO.getName().isEmpty()) {
                 existingEquipment.setName(equipmentDTO.getName());
             }

@@ -1,10 +1,6 @@
 <form #updateCompanyForm="ngForm" (ngSubmit)="onUpdateCompany()">
   <div class="flex flex-col bg-white w-[300px] h-[350px] py-4 items-center rounded-md justify-between border-[1px] border-secondary/10">
     <div>
-      <p class="font-inter text-third font-medium text-[18px]">Id</p>
-      <input #idInput="ngModel" [(ngModel)]="updateCompany.id" name="id" class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none" placeholder="Id" required>
-    </div>
-    <div>
       <p class="font-inter text-third font-medium text-[18px]">Company name</p>
       <input [(ngModel)]="updateCompany.name" name="name" class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none" placeholder="Company name" required>
     </div>
@@ -15,6 +11,18 @@
     <div>
       <p class="font-inter text-third font-medium text-[18px]">City</p>
       <input [(ngModel)]="updateCompany.city" name="city" class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none" placeholder="City" required>
+    </div>
+    <div>
+      <p class="font-inter text-third font-medium text-[18px]">Address</p>
+      <input [(ngModel)]="updateCompany.address" name="address" class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none" placeholder="Address" required>
+    </div>
+    <div>
+      <p class="font-inter text-third font-medium text-[18px]">Latitude</p>
+      <input [(ngModel)]="updateCompany.latitude" name="latitude" type="number" class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none" placeholder="Latitude" required>
+    </div>
+    <div>
+      <p class="font-inter text-third font-medium text-[18px]">Longitude</p>
+      <input [(ngModel)]="updateCompany.longitude" name="longitude" type="number" class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none" placeholder="Longitude" required>
     </div>
     <div class="modal-footer">
       <button type="submit" class="w-[200px] text-[20px] bg-[#0582ca] hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 

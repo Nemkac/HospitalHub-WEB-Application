@@ -71,7 +71,9 @@ public class CompanyController {
 
     @PutMapping(consumes = "application/json", value = "/update/{id}")
     public ResponseEntity<CompanyDTO> updateCompany(@RequestBody CompanyDTO companyDTO, @PathVariable Integer id) {
-        Company company = companyService.getById(id);
+        User loggedInUser = userService.getById(id);
+        CompanyAdministrator companyAdministrator = companyAdministratorService.getByUser(loggedInUser);
+        Company company = companyService.getById(companyAdministrator.getCompany().getId());
 
         if (company == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -80,7 +82,9 @@ public class CompanyController {
         company.setName(companyDTO.getName());
         company.setCity(companyDTO.getCity());
         company.setCountry(companyDTO.getCountry());
-        company.setAvgRate(companyDTO.getAvgRate());
+        company.setAddress(companyDTO.getAddress());
+        company.setLatitude(companyDTO.getLatitude());
+        company.setLongitude(companyDTO.getLongitude());
 
         company = companyService.save(company);
 
