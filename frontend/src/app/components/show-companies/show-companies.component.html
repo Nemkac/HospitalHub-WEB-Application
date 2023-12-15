@@ -19,16 +19,16 @@
   </div>
   <div class="flex w-full items-center mt-4">
     <div class="flex flex-row flex-wrap items-center justify-between">
-      <div *ngFor="let company of companies" class="h-[220px] w-[680px] rounded overflow-hidden border-gray/50 border-[1px] mt-[60px] flex">
+      <div *ngFor="let company of companies" class="h-[220px] w-[680px] rounded overflow-hidden shadow-md mt-[60px] flex">
         <div class="flex-shrink-0">
           <img class="w-[300px] h-auto object-cover " src="./assets/hospital.jpg" alt="Company Logo">
         </div>
-        <div class="flex flex-col font-inter text-third py-2 px-4 w-full h-full justify-between">
+        <div class="flex flex-col bg-white font-inter text-third py-2 px-4 w-full h-full justify-between">
           <div class="font-bold text-xl">{{ company.name }}</div>
-          <p class="text-gray-700 text-base">Country: {{ company.country }}</p>
-          <p class="text-gray-700 text-base">City: {{ company.city }}</p>
-          <p class="text-gray-700 text-base">Average Rate: {{ company.avgRate }} out of 5</p>
-          <p class="text-gray-700 text-base">Address: {{ company.address }}</p>
+          <p class="text-base">Country: {{ company.country }}</p>
+          <p class="text-base">City: {{ company.city }}</p>
+          <p class="text-base">Average Rate: {{ company.avgRate }} out of 5</p>
+          <p class="text-base">Address: {{ company.address }}</p>
           <button class="w-full text-[20px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold text-white rounded-md h-[45px]" (click)="goToCompany(company.id)">
             Visit company
           </button>
