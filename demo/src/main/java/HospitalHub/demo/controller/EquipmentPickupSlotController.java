@@ -5,6 +5,7 @@ import HospitalHub.demo.model.CompanyAdministrator;
 import HospitalHub.demo.model.EquipmentPickupSlot;
 import HospitalHub.demo.service.CompanyAdministratorService;
 import HospitalHub.demo.service.EquipmentPickupSlotService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -36,6 +37,39 @@ public class EquipmentPickupSlotController {
         EquipmentPickupSlot savedEquipmentPickupSlot =  equipmentPickupSlotService.save(newSlot);
 
         return new ResponseEntity<>(savedEquipmentPickupSlot, HttpStatus.CREATED);
+    }
+
+    /*@GetMapping("/getUsersSlots/{id}")
+    public ResponseEntity<List<EquipmentPickupSlot>> getUsersSlots(@PathVariable Integer id){
+        List<EquipmentPickupSlot> usersSlots = equipmentPickupSlotService.getAllUsersSlots(id);
+        if( usersSlots.isEmpty() || usersSlots==null ) {
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(usersSlots,HttpStatus.OK);
+    }*/
+
+    @GetMapping("/getUsersSlots/{id}")
+    public ResponseEntity<List<EquipmentPickupSlot>> getUsersSlots(@PathVariable Integer id){
+        List<EquipmentPickupSlot> usersSlots = equipmentPickupSlotService.getAllUsersSlots(id);
+        if( usersSlots.isEmpty() || usersSlots==null ) {
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(equipmentPickupSlotService.getAll(),HttpStatus.OK);
+    }
+
+    @GetMapping("/getNumberOfUsersSlots/{id}")
+    public ResponseEntity<Integer> getNumberOfUsersSlots(@PathVariable Integer id){
+        return new ResponseEntity<>(equipmentPickupSlotService.getNumberOfUserSlots(id),HttpStatus.OK);
+    }
+
+    @PostMapping("/saveSlotByUser")
+    public ResponseEntity<EquipmentPickupSlot> saveSlotByUser(@RequestBody EquipmentPickupSlot slot){
+        return new ResponseEntity<>(equipmentPickupSlotService.saveSlotByUser(slot),HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllSlots")
+    public ResponseEntity<List<EquipmentPickupSlot>> getAllSlots(){
+        return new ResponseEntity<>(equipmentPickupSlotService.getAll(),HttpStatus.OK);
     }
 
 }

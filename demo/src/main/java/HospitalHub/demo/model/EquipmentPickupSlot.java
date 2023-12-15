@@ -1,8 +1,11 @@
 package HospitalHub.demo.model;
 
 import HospitalHub.demo.dto.EquipmentPickupSlotDTO;
+import HospitalHub.demo.service.EquipmentPickupSlotService;
+import HospitalHub.demo.service.UserService;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
@@ -35,6 +38,13 @@ public class EquipmentPickupSlot {
         this.dateTime = dateTime;
         this.duration = duration;
         this.companyAdministrator = companyAdministrator;
+    }
+
+    public EquipmentPickupSlot(LocalDateTime dateTime, Integer duration, CompanyAdministrator companyAdministrator, User user) {
+        this.dateTime = dateTime;
+        this.duration = duration;
+        this.companyAdministrator = companyAdministrator;
+        this.reservedBy = user;
     }
 
     public Integer getId() {
