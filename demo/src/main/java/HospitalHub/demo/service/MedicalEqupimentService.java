@@ -2,6 +2,7 @@ package HospitalHub.demo.service;
 
 import HospitalHub.demo.model.MedicalEquipment;
 import HospitalHub.demo.repository.MedicalEquipmentRepository;
+import com.google.common.primitives.Ints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,11 @@ public class MedicalEqupimentService {
 
     public List<MedicalEquipment> combinedSearching(String name, Double minPrice, Double maxPrice, String type){
         return medicalEquipmentRepository.getAllByNameContainingIgnoreCaseAndPriceGreaterThanEqualAndPriceLessThanEqualAndTypeContainingIgnoreCase(name, minPrice, maxPrice, type);
+    }
+
+    public List<MedicalEquipment> findAllById(int[] ids){
+        List<Integer> integers = Ints.asList(ids);
+        return medicalEquipmentRepository.findAllById(integers);
     }
 
 }

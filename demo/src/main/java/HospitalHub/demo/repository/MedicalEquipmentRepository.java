@@ -15,4 +15,6 @@ public interface MedicalEquipmentRepository extends JpaRepository<MedicalEquipme
     List<MedicalEquipment> findByType(String filterTerm);
     List<MedicalEquipment> findByPriceBetween(Double minPrice, Double maxPrice);
     List<MedicalEquipment> getAllByNameContainingIgnoreCaseAndPriceGreaterThanEqualAndPriceLessThanEqualAndTypeContainingIgnoreCase(String name, Double minPrice, Double maxPrice, String type);
+
+
 }

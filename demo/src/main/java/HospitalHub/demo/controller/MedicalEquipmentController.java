@@ -9,14 +9,30 @@ import HospitalHub.demo.model.EquipmentPickupSlot;
 import HospitalHub.demo.model.MedicalEquipment;
 import HospitalHub.demo.model.User;
 import HospitalHub.demo.repository.EquipmentPickupSlotRepository;
+import HospitalHub.demo.repository.MedicalEquipmentRepository;
 import HospitalHub.demo.repository.UserRepository;
 import HospitalHub.demo.service.CompanyService;
+import HospitalHub.demo.service.EmailService;
 import HospitalHub.demo.service.MedicalEqupimentService;
+import HospitalHub.demo.service.QRCodeGenerator;
+import com.google.common.io.ByteSource;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import jakarta.activation.DataSource;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 @RestController
@@ -31,8 +47,15 @@ public class MedicalEquipmentController {
 
     @Autowired
     private EquipmentPickupSlotRepository slotRepository;
+
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     @GetMapping(value = "/getAll")
     public ResponseEntity<List<MedicalEquipmentDTO>> getAllEquipment(){
@@ -88,6 +111,8 @@ public class MedicalEquipmentController {
     @PostMapping(value = "/orderEquipment")
     public ResponseEntity<String> orderEquipment(@RequestBody OrderEquipmentDTO orderEquipmentDTO){
 
+
+        //Menjanje predefinisanog slota
         Optional<EquipmentPickupSlot> slot = slotRepository.findById(orderEquipmentDTO.getPickupSlotId());
         EquipmentPickupSlot foundSlot = new EquipmentPickupSlot();
 
@@ -95,16 +120,52 @@ public class MedicalEquipmentController {
             foundSlot = slot.get();
         }
         Optional<User> user = userRepository.findById(orderEquipmentDTO.getUserId());
+        User mailUser = new User();
         if(user.isPresent()){
             foundSlot.setReservedBy(user.get());
+            mailUser = user.get();
         }
 
         foundSlot.setEquipment(orderEquipmentDTO.getEquipmentIds());
         EquipmentPickupSlot check = slotRepository.save(foundSlot);
-        if(check != null){
-            return new ResponseEntity<>("Slot izmenjen", HttpStatus.OK);
+
+        //Slanje qr koda na mejl korisnika
+        List<MedicalEquipment> equipment = medicalEqupimentService.findAllById(orderEquipmentDTO.getEquipmentIds());
+
+        String namesOfEquipment = new String();
+        for(MedicalEquipment x : equipment){
+            namesOfEquipment += x.getName() +", "+ " ";
         }
-        return new ResponseEntity<>("Slot nije izmenjen", HttpStatus.NOT_ACCEPTABLE);
+        String qrMessage = mailUser.getName() + " " + mailUser.getLastName() +"\n" + " " + namesOfEquipment + " " +  foundSlot.getDateTime().toString();
+        File image = new File("QRIMG.png");
+
+        try {
+            image = QRCodeGenerator.generateQRCodeImage(qrMessage, 250, 250);
+
+        }catch(WriterException | IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,true);
+            helper.setFrom("isaisanovicNNBA@gmail.com");
+            helper.setTo(mailUser.getEmail());
+            helper.setSubject("Order information!");
+            helper.addAttachment("QRDetails",image);
+            helper.setText("Details regarding your order!");
+            mailSender.send(mimeMessage);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        // Treba mejl da se posalje. (mogao bi dodati u mejl servis funkciju send)
+        // U mejlu treba da bude, user (ime prz) datum termina, porucena oprema.
+
+        return new ResponseEntity<>("Slot izmenjen", HttpStatus.OK);
+
+
     }
 
 
