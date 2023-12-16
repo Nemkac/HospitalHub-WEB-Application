@@ -32,7 +32,7 @@ public class EquipmentPickupSlotController {
             slotDTO.getDuration(),
             companyAdministrator
         );
-        if (equipmentPickupSlotService.isSlotOverlapping(newSlot) || equipmentPickupSlotService.isSlotBeforeNow(newSlot)) {
+        if (equipmentPickupSlotService.isSlotOverlapping(newSlot) || equipmentPickupSlotService.isSlotBeforeNow(newSlot) || !equipmentPickupSlotService.isSlotWithinCompanyWorkingHours(newSlot)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

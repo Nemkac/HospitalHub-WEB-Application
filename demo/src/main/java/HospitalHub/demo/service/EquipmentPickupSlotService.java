@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +18,21 @@ public class EquipmentPickupSlotService {
     private EquipmentPickupSlotRepository equipmentPickupSlotRepository;
 
     public EquipmentPickupSlot save(EquipmentPickupSlot slot) {
-        if (isSlotBeforeNow(slot)) {
+        if (isSlotBeforeNow(slot) || !isSlotWithinCompanyWorkingHours(slot)) {
             return null;
         }
         if (isSlotOverlapping(slot)) {
             return null;
         }
         return equipmentPickupSlotRepository.save(slot);
+    }
+
+    public boolean isSlotWithinCompanyWorkingHours(EquipmentPickupSlot slot) {
+        LocalTime openingTime = slot.getCompanyAdministrator().getCompany().getOpeningTime();
+        LocalTime closingTime = slot.getCompanyAdministrator().getCompany().getClosingTime();
+        LocalTime slotStartTime = slot.getDateTime().toLocalTime();
+
+        return !slotStartTime.isBefore(openingTime) && !slotStartTime.isAfter(closingTime);
     }
     public boolean isSlotBeforeNow(EquipmentPickupSlot slot) {
         LocalDateTime now = LocalDateTime.now();

@@ -36,13 +36,20 @@ Marker.prototype.options.icon = iconDefault;
 export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
   @Input() companyLatitude: number = 0; 
   @Input() companyLongitude: number = 0; 
-
   selectedCompany: Company = {} as Company;
   equipments: Equipment[] = [];
   token = localStorage.getItem('token');
   searchInput: string = '';
   filteredEquipments: Equipment[] = [];
   selectedEquipmentForUpdate: Equipment | null = null;
+  get formattedOpeningTime(): string {
+    return this.selectedCompany.openingTime ? this.selectedCompany.openingTime.slice(0, 5) : '';
+  }
+  
+  get formattedClosingTime(): string {
+    return this.selectedCompany.closingTime ? this.selectedCompany.closingTime.slice(0, 5) : '';
+  }
+  
 
   faStar = faStar;
   faTrash = faTrash;
@@ -58,6 +65,7 @@ export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
     private userService: UserService,
     private equipmentService: EquipmentService,
     private modalService: NgbModal
+    
   ) {}
 
   ngOnInit(): void {
@@ -67,8 +75,6 @@ export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.loadMap();
   }
-
-  
   getAdminsCompanyData() {
     if (this.token) {
       this.userService.getUserByToken(this.token).subscribe(

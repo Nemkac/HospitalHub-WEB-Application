@@ -10,5 +10,7 @@ export interface Company {
     description: string;
     avgRate: number;
     medicalEquipmentList: Equipment[];
+    openingTime: string; 
+    closingTime: string;
 }
 

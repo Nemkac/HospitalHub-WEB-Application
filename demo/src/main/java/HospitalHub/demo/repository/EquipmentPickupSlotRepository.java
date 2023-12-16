@@ -13,6 +13,5 @@ import java.util.List;
 public interface EquipmentPickupSlotRepository extends JpaRepository<EquipmentPickupSlot, Integer> {
 
     EquipmentPickupSlot save(EquipmentPickupSlot slot);
-
     List<EquipmentPickupSlot> getAllByCompanyAdministrator(CompanyAdministrator companyAdministrator);
 }

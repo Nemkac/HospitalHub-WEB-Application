@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -40,6 +41,12 @@ public class Company {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "openingTime")
+    private LocalTime openingTime;
+
+    @Column(name = "closingTime")
+    private LocalTime closingTime;
+
     @OneToMany(mappedBy = "company")
     private List<CompanyAdministrator> companyAdministrators;
 
@@ -49,7 +56,6 @@ public class Company {
 
     @OneToMany(mappedBy = "company")
     private List<EquipmentAvailability> equipmentAvailabilityList;
-
 
     public Company() {
 
@@ -64,7 +70,7 @@ public class Company {
         this.companyAdministrators = new ArrayList<>();
     }
 
-    public Company(Integer id, String name, String city, String country, String address, double latitude, double longitude, String description) {
+    public Company(Integer id, String name, String city, String country, String address, double latitude, double longitude, String description, LocalTime openingTime, LocalTime closingTime) {
         this.id = id;
         this.name = name;
         this.city = city;
@@ -75,6 +81,8 @@ public class Company {
         this.avgRate = 0.0;
         this.description = description;
         this.companyAdministrators = new ArrayList<>();
+        this.openingTime = openingTime;
+        this.closingTime = closingTime;
     }
 
     public Integer getId() {
@@ -140,6 +148,14 @@ public class Company {
         this.companyAdministrators = companyAdministrator;
     }
 
+    public List<CompanyAdministrator> getCompanyAdministrators() {
+        return companyAdministrators;
+    }
+
+    public void setCompanyAdministrators(List<CompanyAdministrator> companyAdministrators) {
+        this.companyAdministrators = companyAdministrators;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -170,5 +186,21 @@ public class Company {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalTime getOpeningTime() {
+        return openingTime;
+    }
+
+    public void setOpeningTime(LocalTime openingTime) {
+        this.openingTime = openingTime;
+    }
+
+    public LocalTime getClosingTime() {
+        return closingTime;
+    }
+
+    public void setClosingTime(LocalTime closingTime) {
+        this.closingTime = closingTime;
     }
 }
