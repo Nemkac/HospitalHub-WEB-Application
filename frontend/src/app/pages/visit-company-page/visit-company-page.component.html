@@ -1,4 +1,4 @@
-<div class="flex flex-row h-auto px-64 py-32 bg-lightBlue/5 justify-between pb-32">
+<div class="flex flex-row h-auto px-64 py-32 bg-lightBlue/5 justify-between pb-32 relative">
     <div class="flex flex-col p-4 h-[900px] w-[30%] bg-white rounded-md shadow-xl">
         <p class="font-inter text-third font-bold mx-auto text-[24px]">{{selectedCompany.name}}</p>
         <div class="flex flex-row items-center mx-auto w-[150px] justify-evenly">
@@ -69,7 +69,8 @@
                         <p class="text-[16px] font-regular">{{ equipment?.description }}</p>
                     </div>
                     <hr class="w-full mb-[10px] mt-[5px]">
-                    <button class="flex items-center justify-center bg-third hover:bg-lightBlue text-white font-inter font-semibold text-[18px] rounded-md w-full h-[40px] transition-[0.5s]">
+                    <button class="flex items-center justify-center bg-third hover:bg-lightBlue text-white font-inter font-semibold text-[18px] rounded-md w-full h-[40px] transition-[0.5s]"
+                            (click)="addEquipmentToOrder(equipment.id)">
                         Add to cart
                     </button>
                 </div>
@@ -79,7 +80,7 @@
             <div class="flex flex-col w-full p-[12px] bg-white h-auto max-h-[1000px] rounded-md shadow-md">
                 <full-calendar class="w-full" [options]="calendarOptions">
                   <ng-template #eventContent let-arg class="overflow-scroll">
-                    <div *ngIf="arg.event.extendedProps" (click)="selectEquipmentPickupSlot()"
+                    <div *ngIf="arg.event.extendedProps" (click)="selectAppointment(arg.event.extendedProps.slot.id)"
                           [ngStyle]="getEventStyles(arg.event.extendedProps)"
                           class="flex flex-col font-inter text-white p-[5px] w-full rounded-md cursor-pointer">
                       <p>Start: {{ arg.event.start | date: 'HH:mm' }}</p>
@@ -91,9 +92,13 @@
                   </ng-template>
                 </full-calendar>
                 <button class="w-full text-center h-[60px] mt-4 rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="openCreatePickupSlotForm()">
-                  <p>Add new appointment</p>
+                  <p>Request new appointment</p>
                 </button>
               </div>
         </ng-form>
+    </div>
+    <div class="flex items-center justify-center absolute top-[120px] right-[120px] h-[80px] w-[80px] rounded-full bg-third hover:bg-lightBlue transition-[0.5s] cursor-pointer"
+            (click)="openChartModal()">
+        <fa-icon [icon]="faCartShopping" class="text-white text-[28px]"/>
     </div>
 </div>

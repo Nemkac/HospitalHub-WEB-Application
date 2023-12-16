@@ -16,6 +16,9 @@ import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid' ;
 import { EquipmentPickupSlot } from 'src/app/models/EquipmentPickupSlot';
 import { HttpErrorResponse } from '@angular/common/http';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { CartModalComponent } from 'src/app/components/cart-modal/cart-modal.component';
+import { User } from 'src/user';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -50,6 +53,11 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
 
   showEquipment : boolean = true;
   showCalendar : boolean = false;
+
+  selectedEquipmentsForOrder : number[] = []
+  selectedAppointment : number = 0;
+
+  faCartShopping = faCartShopping
 
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
@@ -158,10 +166,6 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
     this.showCalendar = true
   }
 
-  public selectEquipmentPickupSlot() : void{
-
-  }
-
   getEventStyles(extendedProps: any): any {
     if (!extendedProps.reservedBy) {
       return { 'background-color': '#037971' };
@@ -171,6 +175,34 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   }
 
   openCreatePickupSlotForm(): void {
+  }
+
+  public addEquipmentToOrder(id : number) :void{
+    this.selectedEquipmentsForOrder.push(id);
+  }
+
+  public selectAppointment(id : number) : void{
+    this.selectedAppointment = id;
+  }
+
+  public openChartModal() : void{
+    const modalRef = this.modalService.open(
+			CartModalComponent,
+			{ backdrop: 'static', keyboard: true, centered:true}
+		);
+  	modalRef.componentInstance.companyId = this.companyId;
+    modalRef.componentInstance.selectedAppointmentId = this.selectedAppointment;
+    if(this.token){
+      this.userService.getUserByToken(this.token).subscribe(
+        (response : User) => {
+          modalRef.componentInstance.userId = response.id;  
+        },
+        (error : HttpErrorResponse) => {
+          alert(error.message)
+        }
+      );
+    }
+    modalRef.componentInstance.selectedEquipmentIds = this.selectedEquipmentsForOrder;
   }
 }
 

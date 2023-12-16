@@ -1,0 +1,17 @@
+<div class=" w-[600px] mx-auto bg-white p-4 rounded shadow-lg relative">
+    <fa-icon [icon]="faClose" (click)="closeModal()"
+            class="flex absolute top-[16px] right-[16px] cursor-pointer text-[28px] text-third hover:text-lightBlue transition-[0.5s]"/>
+    <div class="grid grid-cols-1 gap-4 items-center" >
+      <h2 class="text-2xl font-inter text-third font-bold mb-4 text-center">Cart</h2>
+      <div class="flex flex-col">
+        <p class="text-thirt font-inter font-bold text-[24px]">{{selectedAppointmentId}}</p>
+        <p class="text-thirt font-inter font-bold text-[24px]">{{companyId}}</p>
+        <p class="text-thirt font-inter font-bold text-[24px]">{{userId}}</p>
+      </div>  
+      <button class="text-[20px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
+                    text-white rounded-md h-[45px]">
+        Complete order
+      </button>
+      
+    </div>
+</div>
