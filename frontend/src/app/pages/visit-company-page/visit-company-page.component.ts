@@ -16,9 +16,10 @@ import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid' ;
 import { EquipmentPickupSlot } from 'src/app/models/EquipmentPickupSlot';
 import { HttpErrorResponse } from '@angular/common/http';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faBasketShopping, faCalendarCheck } from '@fortawesome/free-solid-svg-icons';
 import { CartModalComponent } from 'src/app/components/cart-modal/cart-modal.component';
 import { User } from 'src/user';
+import { startOfMonth, addMonths } from 'date-fns';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -46,6 +47,7 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   // selectedCompany !: Company;
   @Input() companyLatitude: number = 0; 
   @Input() companyLongitude: number = 0; 
+  public currentDate = new Date();
 
   selectedCompany: Company = {} as Company;
   equipments: Equipment[] = [];
@@ -54,10 +56,17 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   showEquipment : boolean = true;
   showCalendar : boolean = false;
 
+  addedToChart : boolean = false;
+  appointmentSelected : boolean = false; 
+
   selectedEquipmentsForOrder : number[] = []
   selectedAppointment : number = 0;
 
-  faCartShopping = faCartShopping
+  faCartShopping = faCartShopping;
+  faBasketShopping = faBasketShopping;
+  faCalendarCheck = faCalendarCheck;
+
+  numOfItemsInCart : number = 0;
 
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
@@ -69,6 +78,10 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
       left: 'prev,next today',
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay,dayGridYear'
+    },
+    validRange: {
+      start: startOfMonth(this.currentDate), // Početak opsega - trenutni mesec
+      end: addMonths(this.currentDate, 12) // Kraj opsega (u ovom primeru, dozvoljava sledećih 12 meseci)
     },
   };
 
@@ -179,10 +192,13 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
 
   public addEquipmentToOrder(id : number) :void{
     this.selectedEquipmentsForOrder.push(id);
+    this.addedToChart = true;
+    this.numOfItemsInCart += 1;
   }
 
   public selectAppointment(id : number) : void{
     this.selectedAppointment = id;
+    this.appointmentSelected = true;
   }
 
   public openChartModal() : void{
@@ -202,7 +218,16 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
         }
       );
     }
+    modalRef.componentInstance.handleOrderComplete = this.handleOrderComplete;
     modalRef.componentInstance.selectedEquipmentIds = this.selectedEquipmentsForOrder;
   }
+
+  public handleOrderComplete = (): void => {
+    this.selectedEquipmentsForOrder = [];
+    this.selectedAppointment = 0;
+    this.addedToChart = false;
+    this.appointmentSelected = false; 
+    this.getEquipmentPickupSlots(this.companyId);
+  };
 }
 

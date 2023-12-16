@@ -2,6 +2,7 @@ package HospitalHub.demo.service;
 
 import HospitalHub.demo.model.*;
 import HospitalHub.demo.repository.CompanyRepository;
+import HospitalHub.demo.repository.EquipmentPickupSlotRepository;
 import HospitalHub.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,9 @@ public class InitialDataInsertionService {
 
     @Autowired
     private EquipmentPickupSlotService equipmentPickupSlotService;
+
+    @Autowired
+    private EquipmentPickupSlotRepository equipmentPickupSlotRepository;
 
     @Transactional
     public void insertInitialData() {
@@ -209,26 +213,60 @@ public class InitialDataInsertionService {
         LocalDateTime slot5DateTime = LocalDateTime.of(2023, 5, 2, 13, 30);
         EquipmentPickupSlot slot5 = new EquipmentPickupSlot(slot5DateTime, 30, companyAdministrator1);
         slot5.setReservedBy(user2);
-        LocalDateTime slot6DateTime = LocalDateTime.of(2022, 5, 2, 12, 30);
+        LocalDateTime slot6DateTime = LocalDateTime.of(2023, 5, 2, 12, 30);
         EquipmentPickupSlot slot6 = new EquipmentPickupSlot(slot6DateTime, 45, companyAdministrator2);
         LocalDateTime slot7DateTime = LocalDateTime.of(2023, 7, 3, 11, 30);
         EquipmentPickupSlot slot7 = new EquipmentPickupSlot(slot7DateTime, 60, companyAdministrator1);
         slot7.setReservedBy(user1);
-        LocalDateTime slot8DateTime = LocalDateTime.of(2022, 9, 2, 10, 30);
+        LocalDateTime slot8DateTime = LocalDateTime.of(2023, 9, 2, 10, 30);
         EquipmentPickupSlot slot8 = new EquipmentPickupSlot(slot8DateTime, 30, companyAdministrator2);
         slot8.setReservedBy(user2);
         LocalDateTime slot9DateTime = LocalDateTime.of(2023, 5, 2, 10, 30);
         EquipmentPickupSlot slot9 = new EquipmentPickupSlot(slot9DateTime, 30, companyAdministrator1);
+        LocalDateTime slot10DateTime = LocalDateTime.of(2024, 2, 2, 8, 30);
+        EquipmentPickupSlot slot10 = new EquipmentPickupSlot(slot10DateTime, 45, companyAdministrator2);
+        slot1.setReservedBy(user1);
+        LocalDateTime slot11DateTime = LocalDateTime.of(2024, 2, 13, 12, 30);
+        EquipmentPickupSlot slot11 = new EquipmentPickupSlot(slot11DateTime, 30, companyAdministrator2);
+        slot2.setReservedBy(user2);
+        LocalDateTime slot12DateTime = LocalDateTime.of(2024, 4, 3, 15, 30);
+        EquipmentPickupSlot slot12 = new EquipmentPickupSlot(slot12DateTime, 15, companyAdministrator1);
+        LocalDateTime slot13DateTime = LocalDateTime.of(2024, 4, 4, 14, 30);
+        EquipmentPickupSlot slot13 = new EquipmentPickupSlot(slot13DateTime, 30, companyAdministrator1);
+        slot4.setReservedBy(user1);
+        LocalDateTime slot14DateTime = LocalDateTime.of(2024, 5, 2, 13, 30);
+        EquipmentPickupSlot slot14 = new EquipmentPickupSlot(slot14DateTime, 30, companyAdministrator1);
+        slot5.setReservedBy(user2);
+        LocalDateTime slot15DateTime = LocalDateTime.of(2024, 5, 2, 12, 30);
+        EquipmentPickupSlot slot15 = new EquipmentPickupSlot(slot15DateTime, 45, companyAdministrator2);
+        LocalDateTime slot16DateTime = LocalDateTime.of(2024, 7, 3, 11, 30);
+        EquipmentPickupSlot slot16 = new EquipmentPickupSlot(slot16DateTime, 60, companyAdministrator1);
+        slot7.setReservedBy(user1);
+        LocalDateTime slot17DateTime = LocalDateTime.of(2024, 9, 2, 10, 30);
+        EquipmentPickupSlot slot17 = new EquipmentPickupSlot(slot17DateTime, 30, companyAdministrator2);
+        slot8.setReservedBy(user2);
+        LocalDateTime slot18DateTime = LocalDateTime.of(2024, 5, 2, 10, 30);
+        EquipmentPickupSlot slot18 = new EquipmentPickupSlot(slot18DateTime, 30, companyAdministrator1);
 
-        equipmentPickupSlotService.save(slot1);
-        equipmentPickupSlotService.save(slot2);
-        equipmentPickupSlotService.save(slot3);
-        equipmentPickupSlotService.save(slot4);
-        equipmentPickupSlotService.save(slot5);
-        equipmentPickupSlotService.save(slot6);
-        equipmentPickupSlotService.save(slot7);
-        equipmentPickupSlotService.save(slot8);
-        equipmentPickupSlotService.save(slot9);
+
+        equipmentPickupSlotRepository.save(slot1);
+        equipmentPickupSlotRepository.save(slot2);
+        equipmentPickupSlotRepository.save(slot3);
+        equipmentPickupSlotRepository.save(slot4);
+        equipmentPickupSlotRepository.save(slot5);
+        equipmentPickupSlotRepository.save(slot6);
+        equipmentPickupSlotRepository.save(slot7);
+        equipmentPickupSlotRepository.save(slot8);
+        equipmentPickupSlotRepository.save(slot9);
+        equipmentPickupSlotRepository.save(slot10);
+        equipmentPickupSlotRepository.save(slot11);
+        equipmentPickupSlotRepository.save(slot12);
+        equipmentPickupSlotRepository.save(slot13);
+        equipmentPickupSlotRepository.save(slot14);
+        equipmentPickupSlotRepository.save(slot15);
+        equipmentPickupSlotRepository.save(slot16);
+        equipmentPickupSlotRepository.save(slot17);
+        equipmentPickupSlotRepository.save(slot18);
 
     }
 

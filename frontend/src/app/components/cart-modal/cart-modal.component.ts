@@ -9,6 +9,8 @@ import { CompanyService } from 'src/app/services/company.service';
 import { Company } from 'src/company';
 import { EquipmentPickupSlot } from 'src/app/models/EquipmentPickupSlot';
 import { EquipmentPickupSlotService } from 'src/app/services/equipment-pickup-slot.service';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-cart-modal',
@@ -20,6 +22,7 @@ export class CartModalComponent implements OnInit{
   selectedEquipmentIds : number[] = [];
   selectedAppointmentId : number = 0;
   userId : number = 0;
+  handleOrderComplete: (() => void) | undefined;
 
   company : Company | undefined;
   equipmentList : Equipment[] = [];
@@ -28,7 +31,9 @@ export class CartModalComponent implements OnInit{
   constructor(private modalService: NgbActiveModal,
               private companyService : CompanyService,
               private equipmentService : EquipmentService,
-              private equipmentPickupSlotService : EquipmentPickupSlotService){}
+              private equipmentPickupSlotService : EquipmentPickupSlotService,
+              private router: Router,
+              private location: Location){}
 
   faClose = faClose;
 
@@ -74,6 +79,9 @@ export class CartModalComponent implements OnInit{
     this.equipmentService.orderEquipment(createdOrder).subscribe(
       (response : EquipmentPickupSlot) => {
         console.log(response);
+        if (this.handleOrderComplete) {
+          this.handleOrderComplete();
+        }
       },
       (error : HttpErrorResponse) => {
         alert(error.message);
