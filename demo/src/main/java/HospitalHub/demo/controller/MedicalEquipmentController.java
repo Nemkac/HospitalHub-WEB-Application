@@ -109,10 +109,8 @@ public class MedicalEquipmentController {
     }
 
     @PostMapping(value = "/orderEquipment")
-    public ResponseEntity<String> orderEquipment(@RequestBody OrderEquipmentDTO orderEquipmentDTO){
+    public ResponseEntity<EquipmentPickupSlot> orderEquipment(@RequestBody OrderEquipmentDTO orderEquipmentDTO){
 
-
-        //Menjanje predefinisanog slota
         Optional<EquipmentPickupSlot> slot = slotRepository.findById(orderEquipmentDTO.getPickupSlotId());
         EquipmentPickupSlot foundSlot = new EquipmentPickupSlot();
 
@@ -138,14 +136,12 @@ public class MedicalEquipmentController {
         }
         String qrMessage = mailUser.getName() + " " + mailUser.getLastName() +"\n" + " " + namesOfEquipment + " " +  foundSlot.getDateTime().toString();
         File image = new File("QRIMG.png");
-
         try {
             image = QRCodeGenerator.generateQRCodeImage(qrMessage, 250, 250);
 
         }catch(WriterException | IOException e){
             e.printStackTrace();
         }
-
         try{
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,true);
@@ -155,18 +151,10 @@ public class MedicalEquipmentController {
             helper.addAttachment("QRDetails",image);
             helper.setText("Details regarding your order!");
             mailSender.send(mimeMessage);
+
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
-        // Treba mejl da se posalje. (mogao bi dodati u mejl servis funkciju send)
-        // U mejlu treba da bude, user (ime prz) datum termina, porucena oprema.
-
-        return new ResponseEntity<>("Slot izmenjen", HttpStatus.OK);
-
-
+        return new ResponseEntity<>(foundSlot, HttpStatus.OK);
     }
-
-
 }
