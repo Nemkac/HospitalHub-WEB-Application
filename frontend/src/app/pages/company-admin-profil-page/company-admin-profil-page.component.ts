@@ -12,6 +12,16 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateEquipmentMyCompanyComponent } from 'src/app/components/update-equipment-my-company/update-equipment-my-company.component';
 import { AddEquipmentMyCompanyFormComponent } from 'src/app/components/add-equipment-my-company-form/add-equipment-my-company-form.component';
 import { UpdateCompanyFormComponent } from 'src/app/components/update-company-form/update-company-form.component';
+import { CalendarOptions } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import timeGridPlugin from '@fullcalendar/timegrid' ;
+import { EquipmentPickupSlot } from 'src/app/models/EquipmentPickupSlot';
+import { CreatePickupSlotFormComponent } from 'src/app/components/create-pickup-slot-form/create-pickup-slot-form.component';
+import { EquipmentPickupSlotDisplayModalComponent } from 'src/app/components/equipment-pickup-slot-display-modal/equipment-pickup-slot-display-modal.component';
+import { User } from 'src/user';
+import { CompanyAdministrator } from 'src/app/models/CompanyAdministrator';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -33,7 +43,7 @@ Marker.prototype.options.icon = iconDefault;
   selector: 'app-company-admin-profil-page',
   templateUrl: './company-admin-profil-page.component.html',
 })
-export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
+export class CompanyAdminProfilPageComponent implements OnInit{
   @Input() companyLatitude: number = 0; 
   @Input() companyLongitude: number = 0; 
 
@@ -43,6 +53,29 @@ export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
   searchInput: string = '';
   filteredEquipments: Equipment[] = [];
   selectedEquipmentForUpdate: Equipment | null = null;
+  equipmentPickupSlots : EquipmentPickupSlot[] = [];
+  companyAdministrators : User[] = [];
+  userId! : number;
+
+
+  faUser = faUser;
+
+  showEquipment : boolean = true;
+  showCalendar : boolean = false;
+  showAdministrators : boolean = false;
+
+  calendarOptions: CalendarOptions = {
+    plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
+    initialView: 'dayGridMonth',
+    weekends: false,
+    displayEventEnd: true,
+    events: [],
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay,dayGridYear'
+    },
+  };
 
   faStar = faStar;
   faTrash = faTrash;
@@ -53,30 +86,28 @@ export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
 
   @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
 
-  constructor(
-    private companyService: CompanyService,
-    private userService: UserService,
-    private equipmentService: EquipmentService,
-    private modalService: NgbModal
-  ) {}
+  constructor(private companyService: CompanyService,
+              private userService: UserService,
+              private equipmentService: EquipmentService,
+              private modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.getAdminsCompanyData();
   }
-
-  ngAfterViewInit(): void {
-    this.loadMap();
-  }
-
   
-  getAdminsCompanyData() {
+  public getAdminsCompanyData() {
     if (this.token) {
       this.userService.getUserByToken(this.token).subscribe(
         (user) => {
+          this.userId = user.id;
           this.companyService.getAdminsCompany(user.id).subscribe(
             (data) => {
               this.selectedCompany = data;
-              this.equipments = data.medicalEquipmentList;
+              this.getEquipmentPickupSlots(this.selectedCompany.id);
+              this.getAdministrators(this.selectedCompany.id);
+              if(this.showEquipment){
+                this.equipments = data.medicalEquipmentList;
+              }
               this.companyLatitude = data.latitude; 
               this.companyLongitude = data.longitude;
               this.filteredEquipments = this.equipments; 
@@ -94,7 +125,41 @@ export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
         }
       );
     }
-  
+  }
+
+  public getEquipmentPickupSlots(id: number) : void{
+    this.companyService.getCompanysAllAppointments(id).subscribe(
+      (response: EquipmentPickupSlot[]) => {
+        this.equipmentPickupSlots = response;
+        this.calendarOptions.events = this.equipmentPickupSlots.map((slot) => ({
+          start: new Date(slot.dateTime),
+          end: new Date(slot.dateTime).getMinutes() + slot.duration,
+          duration: slot.duration,
+          reservedBy : slot.reservedBy,
+          extendedProps: {
+            slot: slot,
+            start: new Date(slot.dateTime),
+            duration: slot.duration,
+            firstname: slot.reservedBy ? slot.reservedBy.name : null,
+            lastname: slot.reservedBy ? slot.reservedBy.lastName : null,
+          },
+        }));
+      },
+      (error : HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
+  }
+
+  public getAdministrators(id : number) : void {
+    this.companyService.getCompanyAdministrators(id).subscribe(
+      (response : User[]) => {
+        this.companyAdministrators = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
   }
 
   searchEquipment() {
@@ -165,6 +230,52 @@ export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
   
       L.marker([this.companyLatitude, this.companyLongitude]).addTo(map);
     }
+  }
+
+  public viewEquipment() : void{
+    this.showEquipment = true;
+    this.showCalendar = false
+    this.showAdministrators = false;
+  }
+  
+  public viewCalendar() : void{
+    this.showEquipment = false;
+    this.showCalendar = true
+    this.showAdministrators = false;
+  }
+
+  public viewAdministrators() : void{
+    this.showEquipment = false;
+    this.showCalendar = false
+    this.showAdministrators = true;
+  }
+
+  public displayEquipmentPickupSlot(slot: EquipmentPickupSlot) : void{
+    const modalRef = this.modalService.open(
+      EquipmentPickupSlotDisplayModalComponent,
+      {
+        backdrop: 'static', keyboard: true
+      }
+    );
+    
+    modalRef.componentInstance.slot = slot;
+  }
+
+  getEventStyles(extendedProps: any): any {
+    if (!extendedProps.reservedBy) {
+      return { 'background-color': '#037971' };
+    } else {
+      return { 'background-color' : '#003554' }
+    }
+  }
+
+  openCreatePickupSlotForm(): void {
+    const modalRef = this.modalService.open(
+      CreatePickupSlotFormComponent,
+      { backdrop: 'static', keyboard: true }
+    );
+
+    modalRef.componentInstance.userId = this.userId;
   }
   
 }

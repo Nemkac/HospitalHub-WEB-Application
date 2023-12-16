@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 import { id } from 'date-fns/locale';
 import { Observable } from 'rxjs'
 import { Router } from '@angular/router';
+import { EquipmentPickupSlot } from '../models/EquipmentPickupSlot';
+import { User } from 'src/user';
 
 @Injectable({
     providedIn: 'root'
@@ -47,5 +49,17 @@ export class CompanyService {
         if (avgRate) params = params.set('avgRate',avgRate.toString());
 
         return this.http.get<Company[]>(`${this.apiServerUrl}/api/user/companies`,{params})
+    }
+
+    public getCompanysFreeAppointments(companyId : number) : Observable<EquipmentPickupSlot[]>{
+        return this.http.get<EquipmentPickupSlot[]>(`${this.apiServerUrl}/api/company/getAllFreeAppointments/${companyId}`);
+    }
+
+    public getCompanysAllAppointments(companyId : number) : Observable<EquipmentPickupSlot[]>{
+        return this.http.get<EquipmentPickupSlot[]>(`${this.apiServerUrl}/api/company/getAllAppointments/${companyId}`);
+    }
+
+    public getCompanyAdministrators(companyId : number) : Observable<User[]>{
+        return this.http.get<User[]>(`${this.apiServerUrl}/api/company/getAdministrators/${companyId}`);
     }
 }

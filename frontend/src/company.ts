@@ -1,4 +1,5 @@
 import { Equipment } from 'src/Equipment';
+import { CompanyAdministrator } from './app/models/CompanyAdministrator';
 export interface Company {
     id: number;
     name: string;
@@ -10,5 +11,6 @@ export interface Company {
     description: string;
     avgRate: number;
     medicalEquipmentList: Equipment[];
+    companyAdministrators : CompanyAdministrator[];
 }
 

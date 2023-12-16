@@ -64,7 +64,7 @@
     </button>
   </div>
   <div class="flex flex-col w-[60%] items-center space-y-8">
-    <ng-form *ngIf="user.roles === 'ROLE_COMPANYADMIN'" class="flex w-full">
+    <ng-form *ngIf="user?.roles === 'ROLE_COMPANYADMIN'" class="flex w-full">
       <div class="flex flex-col w-full p-[12px] bg-white h-auto max-h-[800px] rounded-md shadow-md">
         <full-calendar class="w-full" [options]="calendarOptions">
           <ng-template #eventContent let-arg class="overflow-scroll">
@@ -89,7 +89,7 @@
         </button>
       </div>  
     </ng-form>
-    <ng-form *ngIf="user.roles === 'ROLE_SYSADMIN'" class="flex w-full">
+    <ng-form *ngIf="user?.roles === 'ROLE_SYSADMIN'" class="flex w-full">
       <div class="flex flex-col w-full p-[12px] bg-white h-auto max-h-[800px] rounded-md shadow-md">
         <button class="w-full text-center h-[60px] rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="openCreateCompanyAdminForm()">
           <p>Add new company administrator</p>

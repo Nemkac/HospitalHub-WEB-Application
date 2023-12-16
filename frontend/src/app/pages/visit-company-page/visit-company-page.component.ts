@@ -10,7 +10,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateUserProfileComponent } from 'src/app/components/update-user-profile/update-user-profile.component';
 import { UpcomingAppointmentsComponent } from 'src/app/components/upcoming-appointments/upcoming-appointments.component';
 import { BookEquipmentComponent } from 'src/app/components/book-equipment/book-equipment.component';
-
+import { CalendarOptions } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import timeGridPlugin from '@fullcalendar/timegrid' ;
+import { EquipmentPickupSlot } from 'src/app/models/EquipmentPickupSlot';
+import { HttpErrorResponse } from '@angular/common/http';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -34,6 +39,7 @@ Marker.prototype.options.icon = iconDefault;
 })
 export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   companyId! : number;
+  equipmentPickupSlots : EquipmentPickupSlot[] = [];
   // selectedCompany !: Company;
   @Input() companyLatitude: number = 0; 
   @Input() companyLongitude: number = 0; 
@@ -41,6 +47,22 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   selectedCompany: Company = {} as Company;
   equipments: Equipment[] = [];
   token = localStorage.getItem('token');
+
+  showEquipment : boolean = true;
+  showCalendar : boolean = false;
+
+  calendarOptions: CalendarOptions = {
+    plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
+    initialView: 'dayGridMonth',
+    weekends: false,
+    displayEventEnd: true,
+    events: [],
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay,dayGridYear'
+    },
+  };
 
   @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
 
@@ -56,6 +78,7 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
     if(idFromRoute != null) {
     this.companyId =+ idFromRoute
     this.getCompanyData();
+    this.getEquipmentPickupSlots(this.companyId);
     console.log('Company ID:', this.companyId);
     }
   }
@@ -68,7 +91,9 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
     this.companyService.getCompany(this.companyId).subscribe(
       (response:Company) => {
         this.selectedCompany = response;
-        this.equipments = response.medicalEquipmentList;
+        if(this.showEquipment){
+          this.equipments = response.medicalEquipmentList;
+        }
         this.companyLatitude = response.latitude; 
         this.companyLongitude = response.longitude;
         console.log(this.selectedCompany);
@@ -81,6 +106,26 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
     );
   }
 
+  public getEquipmentPickupSlots(id: number) : void{
+    this.companyService.getCompanysFreeAppointments(this.companyId).subscribe(
+      (response: EquipmentPickupSlot[]) => {
+        this.equipmentPickupSlots = response;
+        this.calendarOptions.events = this.equipmentPickupSlots.map((slot) => ({
+          start: new Date(slot.dateTime),
+          end: new Date(slot.dateTime).getMinutes() + slot.duration,
+          duration: slot.duration,
+          extendedProps: {
+            slot: slot,
+            start: new Date(slot.dateTime),
+            duration: slot.duration,
+          },
+        }));
+      },
+      (error : HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
+  }
   
   loadMap() {
     if (this.mapContainer && this.companyLatitude !== 0 && this.companyLongitude !== 0) {
@@ -102,7 +147,30 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
 		  );
   		modalRef.componentInstance.companyId = this.companyId;
   }
+
+  public viewEquipment() : void{
+    this.showEquipment = true;
+    this.showCalendar = false
+  }
   
-  
+  public viewCalendar() : void{
+    this.showEquipment = false;
+    this.showCalendar = true
+  }
+
+  public selectEquipmentPickupSlot() : void{
+
+  }
+
+  getEventStyles(extendedProps: any): any {
+    if (!extendedProps.reservedBy) {
+      return { 'background-color': '#037971' };
+    } else {
+      return { 'background-color' : '#003554' }
+    }
+  }
+
+  openCreatePickupSlotForm(): void {
+  }
 }
 

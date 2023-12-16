@@ -36,31 +36,64 @@
         </div>
         <div #mapContainer class="flex h-[40vh] mt-2 w-auto z-[0] rounded-md shadow-md"></div>
     </div>
-    <div class="flex flex-col w-[65%] justify-center items-center space-y-8">
-        <div class="mx-4 my-4 text-center">
-            <p class="font-inter text-[24px] text-third/50 font-light">Medical Equipment</p>
+
+    <div class="flex flex-col w-[65%] h-full items-center">
+        <div class="flex w-full justify-start">
+            <button [ngClass]="{'text-lightBlue border-b-[1px] border-lightBlue': showEquipment,
+                                'text-gray': !showEquipment}"
+                    class="w-[250px] h-[40px] font-inter font-semibold text-[24px] hover:text-lightBlue transition-[0.5s]"
+                    (click)="viewEquipment()">
+                Medical Equipment
+            </button>
+            <button [ngClass]="{'text-lightBlue border-b-[1px] border-lightBlue': showCalendar,
+                                'text-gray': !showCalendar}"
+                    class="w-[250px] h-[40px] font-inter font-semibold text-[24px] hover:text-lightBlue transition-[0.5s]"
+                    (click)="viewCalendar()">
+                Company calendar
+            </button>
         </div>
-        
-        <div class="flex flex-row flex-start flex-wrap w-full justify-center justify-between">
-            <div *ngFor="let equipment of equipments" class="flex flex-row bg-white w-[440px] h-[220px] rounded-md shadow-md 
-                                                            cursor-pointer hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out"
-                                                            (click)="goToBookEquipment()">
-                <div class="flex p-2 w-[40%]">
+                
+        <ng-form *ngIf="showEquipment && !showCalendar" class="flex flex-row flex-wrap w-full mt-4 justify-between">
+            <div *ngFor="let equipment of equipments" class="flex flex-row bg-white w-[440px] h-[260px] rounded-md shadow-md 
+                                            cursor-pointer hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out"
+                                            (click)="goToBookEquipment()">
+                <div class="flex p-2 w-[45%]">
                     <img src="../../../assets/{{equipment.image}}" />
                 </div>
                 <div class="flex w-[60%] flex-col p-4 font-inter text-third">
-                <p class="font-semibold text-[20px]">{{ equipment?.name }}</p>
-                <p class="font-light text-[16px]">{{ equipment?.type }}</p>
-                <hr class="w-full mt-[10px] mb-[5px]">
-                <div class="flex flex-col h-[120px]">
-                    <p class="text-[12px] font-light">Description:</p>
-                    <p class="text-[16px] font-regular">{{ equipment?.description }}</p>
+                    <p class="font-semibold text-[20px]">{{ equipment?.name }}</p>
+                    <p class="font-light text-[16px]">{{ equipment?.type }}</p>
+                    <hr class="w-full mt-[10px] mb-[5px]">
+                    <div class="flex flex-col h-[120px]">
+                        <p class="text-[12px] font-light">Description:</p>
+                        <p class="text-[16px] font-regular">{{ equipment?.description }}</p>
+                    </div>
+                    <hr class="w-full mb-[10px] mt-[5px]">
+                    <button class="flex items-center justify-center bg-third hover:bg-lightBlue text-white font-inter font-semibold text-[18px] rounded-md w-full h-[40px] transition-[0.5s]">
+                        Add to cart
+                    </button>
                 </div>
-                <hr class="w-full mb-[10px] mt-[5px]">
             </div>
-        </div>
-
-    </div>
-    <div class="flex h-[100vh] w-[60%] justify-evenly">
+        </ng-form>
+        <ng-form *ngIf="!showEquipment && showCalendar" class="flex flex-row h-auto flex-wrap w-full mt-4 justify-between">
+            <div class="flex flex-col w-full p-[12px] bg-white h-auto max-h-[1000px] rounded-md shadow-md">
+                <full-calendar class="w-full" [options]="calendarOptions">
+                  <ng-template #eventContent let-arg class="overflow-scroll">
+                    <div *ngIf="arg.event.extendedProps" (click)="selectEquipmentPickupSlot()"
+                          [ngStyle]="getEventStyles(arg.event.extendedProps)"
+                          class="flex flex-col font-inter text-white p-[5px] w-full rounded-md cursor-pointer">
+                      <p>Start: {{ arg.event.start | date: 'HH:mm' }}</p>
+                      <p>Duration: {{ arg.event.extendedProps.duration }} min</p>
+                      <p>
+                          Free appointment
+                      </p>
+                    </div>
+                  </ng-template>
+                </full-calendar>
+                <button class="w-full text-center h-[60px] mt-4 rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="openCreatePickupSlotForm()">
+                  <p>Add new appointment</p>
+                </button>
+              </div>
+        </ng-form>
     </div>
 </div>

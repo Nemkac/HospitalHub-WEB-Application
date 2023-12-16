@@ -4,6 +4,7 @@ import HospitalHub.demo.dto.CompanyDTO;
 import HospitalHub.demo.dto.UserDTO;
 import HospitalHub.demo.model.Company;
 import HospitalHub.demo.model.CompanyAdministrator;
+import HospitalHub.demo.model.EquipmentPickupSlot;
 import HospitalHub.demo.model.User;
 import HospitalHub.demo.service.CompanyAdministratorService;
 import HospitalHub.demo.service.CompanyService;
@@ -143,5 +144,51 @@ public class CompanyController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping(value = "/getAllFreeAppointments/{companyId}")
+    public ResponseEntity<List<EquipmentPickupSlot>> getAllFreeAppointments(@PathVariable Integer companyId){
+        Company company = this.companyService.getById(companyId);
+        List<CompanyAdministrator> companyAdministrators = company.getCompanyAdministrator();
+        List<EquipmentPickupSlot> freeAppointments = new ArrayList<>();
 
+        for(CompanyAdministrator companyAdministrator : companyAdministrators){
+            List<EquipmentPickupSlot> adminsSlots = companyAdministrator.getEquipmentPickupSlots();
+
+            for(EquipmentPickupSlot slot : adminsSlots){
+                if(slot.getReservedBy() == null){
+                    freeAppointments.add(slot);
+                }
+            }
+        }
+
+        return new ResponseEntity<>(freeAppointments, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getAllAppointments/{companyId}")
+    public ResponseEntity<List<EquipmentPickupSlot>> getAllAppointments(@PathVariable Integer companyId){
+        Company company = this.companyService.getById(companyId);
+        List<CompanyAdministrator> companyAdministrators = company.getCompanyAdministrator();
+        List<EquipmentPickupSlot> appointments = new ArrayList<>();
+
+        for(CompanyAdministrator companyAdministrator : companyAdministrators){
+            List<EquipmentPickupSlot> adminsSlots = companyAdministrator.getEquipmentPickupSlots();
+
+            appointments.addAll(adminsSlots);
+        }
+
+        return new ResponseEntity<>(appointments, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getAdministrators/{companyId}")
+    public ResponseEntity<List<UserDTO>> getAdministrators(@PathVariable Integer companyId){
+        Company company = this.companyService.getById(companyId);
+        List<CompanyAdministrator> companyAdministrators = company.getCompanyAdministrator();
+        List<UserDTO> dtos = new ArrayList<>();
+
+        for(CompanyAdministrator admin : companyAdministrators){
+            UserDTO dto = new UserDTO(admin.getUser());
+            dtos.add(dto);
+        }
+
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
 }
