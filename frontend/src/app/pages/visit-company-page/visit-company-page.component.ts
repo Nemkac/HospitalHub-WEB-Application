@@ -20,6 +20,7 @@ import { faCartShopping, faBasketShopping, faCalendarCheck } from '@fortawesome/
 import { CartModalComponent } from 'src/app/components/cart-modal/cart-modal.component';
 import { User } from 'src/user';
 import { startOfMonth, addMonths } from 'date-fns';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -39,7 +40,16 @@ const iconDefault = icon({
 Marker.prototype.options.icon = iconDefault;
 @Component({
   selector: 'app-visit-company-page',
-  templateUrl: './visit-company-page.component.html'
+  templateUrl: './visit-company-page.component.html',
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({
+        opacity: 0,
+        transform: 'translateY(-30%)'
+      })),
+      transition('void <=> *', animate('0.4s ease-in-out')),
+    ])
+  ]
 })
 export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   companyId! : number;
@@ -80,8 +90,8 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
       right: 'dayGridMonth,timeGridWeek,timeGridDay,dayGridYear'
     },
     validRange: {
-      start: startOfMonth(this.currentDate), // Početak opsega - trenutni mesec
-      end: addMonths(this.currentDate, 12) // Kraj opsega (u ovom primeru, dozvoljava sledećih 12 meseci)
+      start: startOfMonth(this.currentDate),
+      end: addMonths(this.currentDate, 12)
     },
   };
 
@@ -179,11 +189,15 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
     this.showCalendar = true
   }
 
-  getEventStyles(extendedProps: any): any {
+  public getEventStyles(extendedProps: any): any {
     if (!extendedProps.reservedBy) {
-      return { 'background-color': '#037971' };
+      if (this.appointmentSelected && this.selectedAppointment === extendedProps.slot.id) {
+        return { 'background-color': '#00A6FB' };
+      } else {
+        return { 'background-color': '#037971' };
+      }
     } else {
-      return { 'background-color' : '#003554' }
+      return { 'background-color' : '#003554' };
     }
   }
 
