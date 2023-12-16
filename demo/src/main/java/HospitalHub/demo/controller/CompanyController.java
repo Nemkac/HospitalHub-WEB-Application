@@ -81,13 +81,27 @@ public class CompanyController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        company.setName(companyDTO.getName());
-        company.setCity(companyDTO.getCity());
-        company.setCountry(companyDTO.getCountry());
-        company.setAddress(companyDTO.getAddress());
-        company.setLatitude(companyDTO.getLatitude());
-        company.setLongitude(companyDTO.getLongitude());
-        company.setDescription(companyDTO.getDescription());
+        if (companyDTO.getName() != null) {
+            company.setName(companyDTO.getName());
+        }
+        if (companyDTO.getCity() != null) {
+            company.setCity(companyDTO.getCity());
+        }
+        if (companyDTO.getCountry() != null) {
+            company.setCountry(companyDTO.getCountry());
+        }
+        if (companyDTO.getAddress() != null) {
+            company.setAddress(companyDTO.getAddress());
+        }
+        if (companyDTO.getLatitude() != null) {
+            company.setLatitude(companyDTO.getLatitude());
+        }
+        if (companyDTO.getLongitude() != null) {
+            company.setLongitude(companyDTO.getLongitude());
+        }
+        if (companyDTO.getDescription() != null) {
+            company.setDescription(companyDTO.getDescription());
+        }
 
         company = companyService.save(company);
 

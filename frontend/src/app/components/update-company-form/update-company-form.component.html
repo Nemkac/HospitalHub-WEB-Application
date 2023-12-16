@@ -1,4 +1,4 @@
-<form #updateCompanyForm="ngForm" (ngSubmit)="onUpdateCompany()" class="w-[600px] mx-auto bg-white p-4 rounded shadow-lg relative">
+<form #updateCompanyForm="ngForm" (ngSubmit)="onUpdateCompany(updateCompanyForm)" class="w-[600px] mx-auto bg-white p-4 rounded shadow-lg relative">
   <fa-icon [icon]="faClose" (click)="closeModal()"
           class="flex absolute top-[16px] right-[16px] cursor-pointer text-[28px] text-third hover:text-lightBlue transition-[0.5s]"></fa-icon>
   <div class="grid grid-cols-1 gap-4 items-center">

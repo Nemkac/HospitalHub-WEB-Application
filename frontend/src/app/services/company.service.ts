@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { id } from 'date-fns/locale';
 import { Observable } from 'rxjs'
 import { Router } from '@angular/router';
+import { CompanyDTO } from '../copmanyDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -22,10 +23,9 @@ export class CompanyService {
         return this.http.post<Company>(`${this.apiServerUrl}/api/company/save`, company);
     }
 
-    public updateCompany(company: Company, id : number): Observable<Company> {
-        console.log("Update Company: ", company); 
-        return this.http.put<Company>(`${this.apiServerUrl}/api/company/update/${id}`, company);
-    }
+    public updateCompany(companyDTO: CompanyDTO, userId: number): Observable<CompanyDTO> {
+        return this.http.put<CompanyDTO>(`${this.apiServerUrl}/api/company/update/${userId}`, companyDTO);
+      }
 
     public getAdminsCompany(userId: number): Observable<Company> {
         return this.http.get<Company>(`${this.apiServerUrl}/api/company/getAdminsCompany/${userId}`);

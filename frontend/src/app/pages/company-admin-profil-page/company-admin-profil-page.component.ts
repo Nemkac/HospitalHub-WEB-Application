@@ -144,6 +144,17 @@ export class CompanyAdminProfilPageComponent implements OnInit, AfterViewInit {
     );
   
     modalRef.componentInstance.company = this.selectedCompany;
+  
+    if (this.token) {
+      this.userService.getUserByToken(this.token).subscribe(
+        (user) => {
+          modalRef.componentInstance.userId = user.id;
+        },
+        (error) => {
+          console.error('Error fetching user data.', error);
+        }
+      );
+    }
   }
 
   openAddForm() {
