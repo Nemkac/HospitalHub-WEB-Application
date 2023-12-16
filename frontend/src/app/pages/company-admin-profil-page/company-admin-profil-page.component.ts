@@ -44,9 +44,8 @@ Marker.prototype.options.icon = iconDefault;
   templateUrl: './company-admin-profil-page.component.html',
 })
 export class CompanyAdminProfilPageComponent implements OnInit{
-  @Input() companyLatitude: number = 0; 
-  @Input() companyLongitude: number = 0; 
-
+  @Input() companyLatitude: number = 0;
+  @Input() companyLongitude: number = 0;
   selectedCompany: Company = {} as Company;
   equipments: Equipment[] = [];
   token = localStorage.getItem('token');
@@ -59,6 +58,12 @@ export class CompanyAdminProfilPageComponent implements OnInit{
 
 
   faUser = faUser;
+  faStar = faStar;
+  faTrash = faTrash;
+  faGear = faGear;
+  faCamera = faCamera
+  faSearch = faSearch;
+  faPlus = faPlus;
 
   showEquipment : boolean = true;
   showCalendar : boolean = false;
@@ -76,13 +81,14 @@ export class CompanyAdminProfilPageComponent implements OnInit{
       right: 'dayGridMonth,timeGridWeek,timeGridDay,dayGridYear'
     },
   };
+  get formattedOpeningTime(): string {
+    return this.selectedCompany.openingTime ? this.selectedCompany.openingTime.slice(0, 5) : '';
+  }
 
-  faStar = faStar;
-  faTrash = faTrash;
-  faGear = faGear;
-  faCamera = faCamera
-  faSearch = faSearch;
-  faPlus = faPlus;
+  get formattedClosingTime(): string {
+    return this.selectedCompany.closingTime ? this.selectedCompany.closingTime.slice(0, 5) : '';
+  }
+
 
   @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
 
@@ -94,7 +100,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
   ngOnInit(): void {
     this.getAdminsCompanyData();
   }
-  
+
   public getAdminsCompanyData() {
     if (this.token) {
       this.userService.getUserByToken(this.token).subscribe(
@@ -108,11 +114,11 @@ export class CompanyAdminProfilPageComponent implements OnInit{
               if(this.showEquipment){
                 this.equipments = data.medicalEquipmentList;
               }
-              this.companyLatitude = data.latitude; 
+              this.companyLatitude = data.latitude;
               this.companyLongitude = data.longitude;
-              this.filteredEquipments = this.equipments; 
+              this.filteredEquipments = this.equipments;
 
-          
+
               this.loadMap();
             },
             (error) => {
@@ -185,20 +191,20 @@ export class CompanyAdminProfilPageComponent implements OnInit{
           console.error('Failed to delete equipment:', error);
         }
       }
-    );  
+    );
   }
 
   openUpdateForm(equipment: Equipment) {
     this.selectedEquipmentForUpdate = equipment;
     this.goToUpdate();
   }
-  
+
   public goToUpdate(): void {
     const modalRef = this.modalService.open(
       UpdateEquipmentMyCompanyComponent,
       { backdrop: 'static', keyboard: true }
     );
-  
+
     modalRef.componentInstance.selectedEquipmentForUpdate = this.selectedEquipmentForUpdate;
   }
 
@@ -207,8 +213,19 @@ export class CompanyAdminProfilPageComponent implements OnInit{
       UpdateCompanyFormComponent,
       { backdrop: 'static', keyboard: true }
     );
-  
+
     modalRef.componentInstance.company = this.selectedCompany;
+
+    if (this.token) {
+      this.userService.getUserByToken(this.token).subscribe(
+        (user) => {
+          modalRef.componentInstance.userId = user.id;
+        },
+        (error) => {
+          console.error('Error fetching user data.', error);
+        }
+      );
+    }
   }
 
   openAddForm() {
@@ -219,7 +236,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
 
     modalRef.componentInstance.companyId = this.selectedCompany.id;
   }
-  
+
   loadMap() {
     if (this.mapContainer && this.companyLatitude !== 0 && this.companyLongitude !== 0) {
       const map = L.map(this.mapContainer.nativeElement).setView(
@@ -227,7 +244,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
         12
       );
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-  
+
       L.marker([this.companyLatitude, this.companyLongitude]).addTo(map);
     }
   }
@@ -237,7 +254,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
     this.showCalendar = false
     this.showAdministrators = false;
   }
-  
+
   public viewCalendar() : void{
     this.showEquipment = false;
     this.showCalendar = true
@@ -257,7 +274,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
         backdrop: 'static', keyboard: true
       }
     );
-    
+
     modalRef.componentInstance.slot = slot;
   }
 
@@ -277,5 +294,5 @@ export class CompanyAdminProfilPageComponent implements OnInit{
 
     modalRef.componentInstance.userId = this.userId;
   }
-  
+
 }

@@ -1,6 +1,7 @@
 package HospitalHub.demo.repository;
 
 import HospitalHub.demo.model.Company;
+import HospitalHub.demo.model.CompanyAdministrator;
 import HospitalHub.demo.model.EquipmentAvailability;
 import HospitalHub.demo.model.EquipmentPickupSlot;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,8 +12,9 @@ import java.util.List;
 @Repository
 public interface EquipmentPickupSlotRepository extends JpaRepository<EquipmentPickupSlot, Integer> {
 
+
     //EquipmentPickupSlot save(EquipmentPickupSlot slot);
     //List<EquipmentPickupSlot> getAllByCompanyAdministrator(Integer id);
     EquipmentPickupSlot getById(Integer id);
-
+    List<EquipmentPickupSlot> getAllByCompanyAdministrator(CompanyAdministrator companyAdministrator);
 }
