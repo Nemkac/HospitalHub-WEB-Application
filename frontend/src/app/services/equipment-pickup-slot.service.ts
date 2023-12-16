@@ -20,5 +20,9 @@ export class EquipmentPickupSlotService {
     return this.http.post<EquipmentPickupSlot>(url, newSlot);
   } 
 
+  public getSlotById(id : number) : Observable<EquipmentPickupSlot>{
+    return this.http.get<EquipmentPickupSlot>(`${this.apiServerUrl}/api/slots/getById/${id}`)
+  }
+
 }
 

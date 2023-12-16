@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EquipmentPickupSlotService {
@@ -19,16 +19,13 @@ public class EquipmentPickupSlotService {
         return equipmentPickupSlotRepository.save(slot);
     }
 
-    /*public List<EquipmentPickupSlot> getAdminsSlots(Integer id){
-        return equipmentPickupSlotRepository.getAllByCompanyAdministrator(id);
-    }*/
-
     public ArrayList<LocalDate> GetAvailablePickUpDatesInFollowing10(Integer companyId){
         ArrayList<LocalDate> availableDates = new ArrayList<>();
 
-
-
-
         return availableDates;
+    }
+
+    public EquipmentPickupSlot getById(Integer id){
+        return equipmentPickupSlotRepository.getById(id);
     }
 }

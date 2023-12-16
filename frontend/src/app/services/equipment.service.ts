@@ -1,3 +1,4 @@
+import { OrderEquipmentDTO } from './../models/OrderEquipmentDTO';
 import { SearchEquipmentDTO } from 'src/SearchEquipmentDTO';
 import { Equipment } from './../../Equipment';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
@@ -6,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { EquipmentToUpdate } from '../EquipmentToUpdate';
 import { O } from '@fullcalendar/core/internal-common';
+import { EquipmentPickupSlot } from '../models/EquipmentPickupSlot';
 
 @Injectable({
     providedIn: 'root',
@@ -46,5 +48,9 @@ export class EquipmentService {
 
     public getAvailableDaysInFollowinTen(companyId : number) : Observable<Date[]>{
         return this.http.get<Date[]>(`http://localhost:8081/api/company/getAvailableDays/${companyId}`);
+    }
+
+    public orderEquipment(order : OrderEquipmentDTO) : Observable<EquipmentPickupSlot>{
+        return this.http.post<EquipmentPickupSlot>(`${this.apiServerUrl}/api/equipment/orderEquipment`, order);
     }
 }

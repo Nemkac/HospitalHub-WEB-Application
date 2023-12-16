@@ -35,13 +35,13 @@ export class UpdateUserProfileComponent implements OnInit{
     if(this.token){
       this.userService.getUserByToken(this.token).subscribe(
         (user1) => {
-    this.userInfo = this.userProfileService.showUserProfile(user1.id);
-    this.userInfo.subscribe(
-      (user:UserProfile) =>{
-        this.user = user;
-        this.usersBirthDate = user.dateOfBirth.toString();
-      }
-    )}
+      this.userInfo = this.userProfileService.showUserProfile(user1.id);
+      this.userInfo.subscribe(
+        (user:UserProfile) =>{
+          this.user = user;
+          this.usersBirthDate = user.dateOfBirth.toString();
+        }
+      )}
     )}
   }
   

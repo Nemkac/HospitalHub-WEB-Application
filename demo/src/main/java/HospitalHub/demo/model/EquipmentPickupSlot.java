@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class EquipmentPickupSlot {
 
     @Id

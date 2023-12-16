@@ -55,8 +55,7 @@
                 
         <ng-form *ngIf="showEquipment && !showCalendar" class="flex flex-row flex-wrap w-full mt-4 justify-between">
             <div *ngFor="let equipment of equipments" class="flex flex-row bg-white w-[440px] h-[260px] rounded-md shadow-md 
-                                            cursor-pointer hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out"
-                                            (click)="goToBookEquipment()">
+                                            cursor-pointer hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
                 <div class="flex p-2 w-[45%]">
                     <img src="../../../assets/{{equipment.image}}" />
                 </div>

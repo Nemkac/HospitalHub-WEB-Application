@@ -3,13 +3,49 @@
             class="flex absolute top-[16px] right-[16px] cursor-pointer text-[28px] text-third hover:text-lightBlue transition-[0.5s]"/>
     <div class="grid grid-cols-1 gap-4 items-center" >
       <h2 class="text-2xl font-inter text-third font-bold mb-4 text-center">Cart</h2>
-      <div class="flex flex-col">
-        <p class="text-thirt font-inter font-bold text-[24px]">{{selectedAppointmentId}}</p>
-        <p class="text-thirt font-inter font-bold text-[24px]">{{companyId}}</p>
-        <p class="text-thirt font-inter font-bold text-[24px]">{{userId}}</p>
-      </div>  
+      <div class="flex flex-col h-[300px]">
+        <p class="font-inter font-semibold text-third text-[24px]">Ordered equipment:</p>
+        <hr class="w-full text-third my-2">
+        <div class="flex flex-col overflow-y-scroll w-full">
+            <div class="flex flex-col flex-wrap h-auto">
+                <div *ngFor="let equipment of equipmentList" class="flex flex-row bg-white my-[10px] w-full h-[140px] rounded-md border-[1px] border-gray
+                                                    cursor-pointer hover:shadow-xl transition-[0.5s] items-center overflow-hidden p-4">
+                    <div class="flex w-[30%]">
+                        <img src="../../../assets/{{equipment.image}}" class="w-[80px]"/>
+                    </div>
+                    <div class="flex flex-col w-[60%] p-4 font-inter text-third">
+                        <p class="font-semibold text-[30px]">{{ equipment?.name }}</p>
+                        <p class="font-light text-[24px]">{{ equipment?.type }}</p>
+                    </div>
+                </div>            
+            </div>
+        </div>
+      </div>
+      <hr class="w-full text-third my-2">
+      <div class="w-full flex flex-col">
+        <p class="font-inter font-semibold text-third text-[24px]">From:</p>
+        <p class="font-inter font-medium text-third text-[20px]">{{company?.name}}</p>
+        <p class="font-inter font-light text-third text-[20px]">{{company?.address}} {{company?.city}}, {{company?.country}}</p>
+      </div>
+      <hr class="w-full text-third my-2">
+      <div class="w-full flex flex-col">
+        <p class="font-inter font-semibold text-third text-[24px]">Pick-up info:</p>
+        <div class="flex flex-row w-full justify-between">
+            <p class="font-inter font-light text-third text-[20px]">Date:</p>
+            <p class="font-inter font-medium text-third text-[20px]">{{slot?.dateTime | date : "dd/MM/YYY"}}</p>
+        </div>
+        <div class="flex flex-row w-full justify-between">
+            <p class="font-inter font-light text-third text-[20px]">Time:</p>
+            <p class="font-inter font-medium text-third text-[20px]">{{slot?.dateTime | date : "HH:mm"}}</p>
+        </div>
+        <div class="flex flex-row w-full justify-between">
+            <p class="font-inter font-light text-third text-[20px]">Executor of delivery</p>
+            <p class="font-inter font-medium text-third text-[20px]">{{slot?.companyAdministrator?.user?.name}} {{slot?.companyAdministrator?.user?.lastName}}</p>
+        </div>
+      </div>
+      <hr class="w-full text-third my-2">
       <button class="text-[20px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
-                    text-white rounded-md h-[45px]">
+                    text-white rounded-md h-[45px]" (click)="completeOrder()">
         Complete order
       </button>
       
