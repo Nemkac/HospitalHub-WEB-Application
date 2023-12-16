@@ -21,4 +21,6 @@ public interface MedicalEquipmentRepository extends JpaRepository<MedicalEquipme
     void deleteById(Integer equipmentId);
 
     public MedicalEquipment getEquipmentById(Integer id);
+
+
 }

@@ -67,6 +67,9 @@ public class UserService implements UserDetailsService {
         if(userRepository.findByEmailIgnoreCase(userRegisterDto.getEmail()) != null){
             return false;
         }
+        if(userRepository.findByUsername(userRegisterDto.getUsername()).isPresent()){
+            return false;
+        }
         // dodati da li se sifre poklapaju.
         if(!userRegisterDto.getPassword().equals(userRegisterDto.getRetypePassword()))
         {

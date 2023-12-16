@@ -2,6 +2,7 @@ package HospitalHub.demo.service;
 
 import HospitalHub.demo.model.MedicalEquipment;
 import HospitalHub.demo.repository.MedicalEquipmentRepository;
+import com.google.common.primitives.Ints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,10 @@ public class MedicalEqupimentService {
 
     public void deleteById(Integer equipmentId) {
         medicalEquipmentRepository.deleteById(equipmentId);
+    }
+    public List<MedicalEquipment> findAllById(int[] ids){
+        List<Integer> integers = Ints.asList(ids);
+        return medicalEquipmentRepository.findAllById(integers);
     }
 
 }

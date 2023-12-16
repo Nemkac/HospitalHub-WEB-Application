@@ -2,20 +2,38 @@ package HospitalHub.demo.controller;
 
 import HospitalHub.demo.dto.CompanyDTO;
 import HospitalHub.demo.dto.MedicalEquipmentDTO;
+import HospitalHub.demo.dto.OrderEquipmentDTO;
 import HospitalHub.demo.dto.SearchEquipmentDTO;
 import HospitalHub.demo.model.Company;
+import HospitalHub.demo.model.EquipmentPickupSlot;
 import HospitalHub.demo.model.MedicalEquipment;
+import HospitalHub.demo.model.User;
+import HospitalHub.demo.repository.EquipmentPickupSlotRepository;
+import HospitalHub.demo.repository.MedicalEquipmentRepository;
+import HospitalHub.demo.repository.UserRepository;
 import HospitalHub.demo.service.CompanyService;
+import HospitalHub.demo.service.EmailService;
 import HospitalHub.demo.service.MedicalEqupimentService;
+import HospitalHub.demo.service.QRCodeGenerator;
+import com.google.common.io.ByteSource;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import jakarta.activation.DataSource;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "api/equipment")
@@ -26,6 +44,18 @@ public class MedicalEquipmentController {
 
     @Autowired
     private CompanyService companyService;
+
+    @Autowired
+    private EquipmentPickupSlotRepository slotRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     @GetMapping(value = "/getAll")
     public ResponseEntity<List<MedicalEquipmentDTO>> getAllEquipment(){
@@ -145,5 +175,55 @@ public class MedicalEquipmentController {
         SearchEquipmentDTO response = new SearchEquipmentDTO(DTOs, companyDTOs);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/orderEquipment")
+    public ResponseEntity<EquipmentPickupSlot> orderEquipment(@RequestBody OrderEquipmentDTO orderEquipmentDTO){
+
+        Optional<EquipmentPickupSlot> slot = slotRepository.findById(orderEquipmentDTO.getPickupSlotId());
+        EquipmentPickupSlot foundSlot = new EquipmentPickupSlot();
+
+        if(slot.isPresent()){
+            foundSlot = slot.get();
+        }
+        Optional<User> user = userRepository.findById(orderEquipmentDTO.getUserId());
+        User mailUser = new User();
+        if(user.isPresent()){
+            foundSlot.setReservedBy(user.get());
+            mailUser = user.get();
+        }
+
+        foundSlot.setEquipment(orderEquipmentDTO.getEquipmentIds());
+        EquipmentPickupSlot check = slotRepository.save(foundSlot);
+
+        //Slanje qr koda na mejl korisnika
+        List<MedicalEquipment> equipment = medicalEqupimentService.findAllById(orderEquipmentDTO.getEquipmentIds());
+
+        String namesOfEquipment = new String();
+        for(MedicalEquipment x : equipment){
+            namesOfEquipment += x.getName() +", "+ " ";
+        }
+        String qrMessage = mailUser.getName() + " " + mailUser.getLastName() +"\n" + " " + namesOfEquipment + " " +  foundSlot.getDateTime().toString();
+        File image = new File("QRIMG.png");
+        try {
+            image = QRCodeGenerator.generateQRCodeImage(qrMessage, 250, 250);
+
+        }catch(WriterException | IOException e){
+            e.printStackTrace();
+        }
+        try{
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,true);
+            helper.setFrom("isaisanovicNNBA@gmail.com");
+            helper.setTo(mailUser.getEmail());
+            helper.setSubject("Order information!");
+            helper.addAttachment("QRDetails",image);
+            helper.setText("Details regarding your order!");
+            mailSender.send(mimeMessage);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(foundSlot, HttpStatus.OK);
     }
 }
