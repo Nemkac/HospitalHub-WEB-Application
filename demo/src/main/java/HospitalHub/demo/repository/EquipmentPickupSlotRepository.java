@@ -3,6 +3,7 @@ package HospitalHub.demo.repository;
 import HospitalHub.demo.model.Company;
 import HospitalHub.demo.model.EquipmentAvailability;
 import HospitalHub.demo.model.EquipmentPickupSlot;
+import HospitalHub.demo.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,5 @@ public interface EquipmentPickupSlotRepository extends JpaRepository<EquipmentPi
 
     List<EquipmentPickupSlot> findAll();
 
-    //EquipmentPickupSlot update(EquipmentPickupSlot slot);
 
 }

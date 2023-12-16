@@ -78,9 +78,4 @@ public class EquipmentPickupSlotService {
         return(equipmentPickupSlotRepository.save(slot));
     }
 
-    /*
-    public EquipmentPickupSlot update(EquipmentPickupSlot slot){
-        return(equipmentPickupSlotRepository.update(slot));
-    }
-    */
 }
