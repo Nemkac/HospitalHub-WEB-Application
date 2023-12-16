@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { id } from 'date-fns/locale';
 import { Observable } from 'rxjs'
 import { Router } from '@angular/router';
+import { EquipmentPickupSlot } from '../models/EquipmentPickupSlot';
 
 @Injectable({
     providedIn: 'root'
@@ -47,5 +48,13 @@ export class CompanyService {
         if (avgRate) params = params.set('avgRate',avgRate.toString());
 
         return this.http.get<Company[]>(`${this.apiServerUrl}/api/user/companies`,{params})
+    }
+
+    public getCompanysSlots(id : number): Observable<EquipmentPickupSlot[]>{
+        return this.http.get<EquipmentPickupSlot[]>(`${this.apiServerUrl}/api/company/getPredefinedSlots/${id}`);
+    }
+
+    public occupySlot(slot:EquipmentPickupSlot, userId:number) : Observable<EquipmentPickupSlot>{
+        return this.http.put<EquipmentPickupSlot>(`${this.apiServerUrl}/api/slots/occupyPredifinedSlot/${userId}`,slot);
     }
 }

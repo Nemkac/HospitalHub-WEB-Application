@@ -4,6 +4,7 @@ import HospitalHub.demo.dto.CompanyDTO;
 import HospitalHub.demo.dto.UserDTO;
 import HospitalHub.demo.model.Company;
 import HospitalHub.demo.model.CompanyAdministrator;
+import HospitalHub.demo.model.EquipmentPickupSlot;
 import HospitalHub.demo.model.User;
 import HospitalHub.demo.service.CompanyAdministratorService;
 import HospitalHub.demo.service.CompanyService;
@@ -141,6 +142,14 @@ public class CompanyController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping(value="/getPredefinedSlots/{id}")
+    public ResponseEntity<List<EquipmentPickupSlot>> getCompaniesPredefinedSlots(@PathVariable Integer id){
+        if(companyService.getCompaniesPredefinedAvailableSlots(id) != null) {
+            return new ResponseEntity<>(companyService.getCompaniesPredefinedAvailableSlots(id),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
     }
 
 

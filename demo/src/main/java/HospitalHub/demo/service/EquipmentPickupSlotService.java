@@ -4,6 +4,7 @@ import HospitalHub.demo.model.CompanyAdministrator;
 import HospitalHub.demo.model.EquipmentPickupSlot;
 import HospitalHub.demo.model.User;
 import HospitalHub.demo.repository.EquipmentPickupSlotRepository;
+import HospitalHub.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -17,6 +18,8 @@ public class EquipmentPickupSlotService {
 
     @Autowired
     private EquipmentPickupSlotRepository equipmentPickupSlotRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public EquipmentPickupSlot save(EquipmentPickupSlot slot){
         return equipmentPickupSlotRepository.save(slot);
@@ -65,4 +68,19 @@ public class EquipmentPickupSlotService {
         return equipmentPickupSlotRepository.findAll();
     }
 
+    public EquipmentPickupSlot OccupyPredefinedSlot(EquipmentPickupSlot slot, Integer userId){
+        User user = userRepository.getById(userId);
+        slot.setReservedBy(user);
+        return(equipmentPickupSlotRepository.save(slot));
+    }
+
+    public EquipmentPickupSlot occupyPredefinedSlot(EquipmentPickupSlot slot){
+        return(equipmentPickupSlotRepository.save(slot));
+    }
+
+    /*
+    public EquipmentPickupSlot update(EquipmentPickupSlot slot){
+        return(equipmentPickupSlotRepository.update(slot));
+    }
+    */
 }

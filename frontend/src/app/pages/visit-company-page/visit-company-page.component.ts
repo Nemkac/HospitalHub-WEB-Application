@@ -56,7 +56,6 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
     if(idFromRoute != null) {
     this.companyId =+ idFromRoute
     this.getCompanyData();
-    console.log('Company ID:', this.companyId);
     }
   }
 

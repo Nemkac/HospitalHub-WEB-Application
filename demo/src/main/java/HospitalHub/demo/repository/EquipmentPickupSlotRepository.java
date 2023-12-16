@@ -17,4 +17,6 @@ public interface EquipmentPickupSlotRepository extends JpaRepository<EquipmentPi
 
     List<EquipmentPickupSlot> findAll();
 
+    //EquipmentPickupSlot update(EquipmentPickupSlot slot);
+
 }
