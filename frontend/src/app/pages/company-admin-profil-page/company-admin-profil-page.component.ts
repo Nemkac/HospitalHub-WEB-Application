@@ -178,21 +178,21 @@ export class CompanyAdminProfilPageComponent implements OnInit{
 
   deleteEquipment(equipmentId: number) {
     this.equipmentService.deleteEquipment(equipmentId).subscribe(
-      () => {
-        console.log('Equipment deleted successfully.');
-        this.getAdminsCompanyData();
-        this.equipments = this.equipments.filter(e => e.id !== equipmentId);
-      },
-      (error) => {
-        if (error instanceof HttpErrorResponse && error.status === 200) {
-          console.log('Equipment deleted successfully.');
-          this.getAdminsCompanyData();
-        } else {
-          console.error('Failed to delete equipment:', error);
+        (deletedEquipment: Equipment) => {
+            console.log('Equipment deleted successfully.', deletedEquipment);
+            this.getAdminsCompanyData();
+            this.filteredEquipments = this.equipments.filter(e => e.id !== equipmentId);
+        },
+        (error) => {
+            if (error instanceof HttpErrorResponse && error.status === 200) {
+                console.log('Equipment deleted successfully.');
+                this.getAdminsCompanyData();
+            } else {
+                console.error('Failed to delete equipment:', error);
+            }
         }
-      }
     );
-  }
+}
 
   openUpdateForm(equipment: Equipment) {
     this.selectedEquipmentForUpdate = equipment;

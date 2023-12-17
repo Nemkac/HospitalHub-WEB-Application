@@ -27,9 +27,9 @@ export class EquipmentService {
         return this.http.get<SearchEquipmentDTO>(`${this.apiServerUrl}/api/equipment/combinedSearch?name=${name}&minPrice=${minPrice}&maxPrice=${maxPrice}&type=${type}`);
     }
     
-    public deleteEquipment(equipmentId: number): Observable<any> {
-        return this.http.delete(`${this.apiServerUrl}/api/equipment/deleteEquipment/${equipmentId}`);
-      }
+    deleteEquipment(equipmentId: number): Observable<Equipment> {
+        return this.http.delete<Equipment>(`${this.apiServerUrl}/api/equipment/deleteEquipment/${equipmentId}`);
+    }
   
     updateEquipment(id: number, equipmentToUpdate: EquipmentToUpdate): Observable<any> {
         const url = `${this.baseUrl}/updateEquipment/${id}`;

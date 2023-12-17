@@ -28,6 +28,10 @@ public class EquipmentPickupSlotService {
         return equipmentPickupSlotRepository.save(slot);
     }
 
+    public List<EquipmentPickupSlot> getAll(){
+        return equipmentPickupSlotRepository.findAll();
+    }
+
     public boolean isSlotWithinCompanyWorkingHours(EquipmentPickupSlot slot) {
         LocalTime openingTime = slot.getCompanyAdministrator().getCompany().getOpeningTime();
         LocalTime closingTime = slot.getCompanyAdministrator().getCompany().getClosingTime();

@@ -11,10 +11,8 @@ import HospitalHub.demo.model.User;
 import HospitalHub.demo.repository.EquipmentPickupSlotRepository;
 import HospitalHub.demo.repository.MedicalEquipmentRepository;
 import HospitalHub.demo.repository.UserRepository;
-import HospitalHub.demo.service.CompanyService;
-import HospitalHub.demo.service.EmailService;
-import HospitalHub.demo.service.MedicalEqupimentService;
-import HospitalHub.demo.service.QRCodeGenerator;
+import HospitalHub.demo.service.*;
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.google.common.io.ByteSource;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -33,6 +31,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
@@ -44,6 +43,9 @@ public class MedicalEquipmentController {
 
     @Autowired
     private CompanyService companyService;
+
+    @Autowired
+    private EquipmentPickupSlotService equipmentPickupSlotService;
 
     @Autowired
     private EquipmentPickupSlotRepository slotRepository;
@@ -74,13 +76,27 @@ public class MedicalEquipmentController {
     }
 
     @DeleteMapping("/deleteEquipment/{equipmentId}")
-    public ResponseEntity<String> deleteEquipment(@PathVariable Integer equipmentId) {
-        try {
-            medicalEqupimentService.deleteById(equipmentId);
-            return new ResponseEntity<>("Equipment deleted successfully", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Failed to delete equipment: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<MedicalEquipment> deleteEquipment(@PathVariable Integer equipmentId) {
+        List<EquipmentPickupSlot> slots = equipmentPickupSlotService.getAll();
+
+        for (EquipmentPickupSlot slot : slots) {
+            int[] equipmentIds = slot.getEquipment();
+
+            if (equipmentIds != null) {
+                for (int id : equipmentIds) {
+                    if (id == equipmentId) {
+                        if (slot.getDateTime().isBefore(LocalDateTime.now())) {
+                            medicalEqupimentService.deleteById(equipmentId);
+                            return new ResponseEntity<>(HttpStatus.OK);
+                        } else {
+                            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                        }
+                    }
+                }
+            }
         }
+        medicalEqupimentService.deleteById(equipmentId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping(consumes = "application/json", value = "/updateEquipment/{equipmentId}")
