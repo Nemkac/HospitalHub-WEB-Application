@@ -45,6 +45,7 @@ import { CreatePickupSlotFormComponent } from './components/create-pickup-slot-f
 import { UpcomingAppointmentsComponent } from './components/upcoming-appointments/upcoming-appointments.component';
 import { BookEquipmentComponent } from './components/book-equipment/book-equipment.component';
 import { CartModalComponent } from './components/cart-modal/cart-modal.component';
+import { CreateExtraSlotComponent } from './components/create-extra-slot/create-extra-slot.component';
 
 @NgModule({
       declarations: [
@@ -81,6 +82,7 @@ import { CartModalComponent } from './components/cart-modal/cart-modal.component
           UpcomingAppointmentsComponent,
           BookEquipmentComponent,
           CartModalComponent,
+          CreateExtraSlotComponent,
       ],
       imports: [
           BrowserAnimationsModule,

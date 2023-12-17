@@ -52,6 +52,12 @@ public class EquipmentPickupSlot {
         this.companyAdministrator = companyAdministrator;
     }
 
+    public EquipmentPickupSlot(LocalDateTime dateTime, Integer duration, User user) {
+        this.dateTime = dateTime;
+        this.duration = duration;
+        this.reservedBy = user;
+    }
+
     public Integer getId() {
         return id;
     }

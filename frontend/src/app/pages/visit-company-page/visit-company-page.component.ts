@@ -21,6 +21,7 @@ import { CartModalComponent } from 'src/app/components/cart-modal/cart-modal.com
 import { User } from 'src/user';
 import { startOfMonth, addMonths } from 'date-fns';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { CreateExtraSlotComponent } from 'src/app/components/create-extra-slot/create-extra-slot.component';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -202,6 +203,11 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   }
 
   openCreatePickupSlotForm(): void {
+    const modalRef = this.modalService.open(
+			CreateExtraSlotComponent,
+			{ backdrop: 'static', keyboard: true, centered:true}
+		  );
+  		modalRef.componentInstance.companyId = this.companyId;
   }
 
   public addEquipmentToOrder(id : number) :void{

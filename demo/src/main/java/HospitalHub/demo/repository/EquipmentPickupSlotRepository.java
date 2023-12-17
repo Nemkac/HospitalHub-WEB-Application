@@ -17,4 +17,6 @@ public interface EquipmentPickupSlotRepository extends JpaRepository<EquipmentPi
     //List<EquipmentPickupSlot> getAllByCompanyAdministrator(Integer id);
     EquipmentPickupSlot getById(Integer id);
     List<EquipmentPickupSlot> getAllByCompanyAdministrator(CompanyAdministrator companyAdministrator);
+
+    List<EquipmentPickupSlot> findAll();
 }
