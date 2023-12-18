@@ -102,7 +102,7 @@ public class EquipmentPickupSlotService {
         List<EquipmentPickupSlot> allSlots = equipmentPickupSlotRepository.findAll();
         List<EquipmentPickupSlot> foundSlots = new ArrayList<>();
         for(EquipmentPickupSlot slot: allSlots) {
-            if(slot.getReservedBy()!=null && slot.getReservedBy().equals(user)){
+            if(slot.getReservedBy()!=null && Objects.equals(slot.getReservedBy().getId(), userId)){
                 foundSlots.add(slot);
             }
         }
