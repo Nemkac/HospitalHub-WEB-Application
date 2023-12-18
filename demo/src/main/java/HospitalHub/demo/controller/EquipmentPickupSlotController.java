@@ -4,6 +4,7 @@ import HospitalHub.demo.dto.EquipmentPickupSlotDTO;
 import HospitalHub.demo.model.CompanyAdministrator;
 import HospitalHub.demo.model.EquipmentAvailability;
 import HospitalHub.demo.model.EquipmentPickupSlot;
+import HospitalHub.demo.model.MedicalEquipment;
 import HospitalHub.demo.repository.EquipmentPickupSlotRepository;
 import HospitalHub.demo.service.CompanyAdministratorService;
 import HospitalHub.demo.service.EquipmentPickupSlotService;
@@ -98,5 +99,11 @@ public class EquipmentPickupSlotController {
         EquipmentPickupSlot slot = new EquipmentPickupSlot();
         return new ResponseEntity<>(equipmentPickupSlotRepository.save(slot),HttpStatus.OK);
     }
+
+    @GetMapping("/getEquipment/{slotId}")
+    public ResponseEntity<List<MedicalEquipment>> getEquipments(@PathVariable Integer slotId){
+        return new ResponseEntity<>(equipmentPickupSlotService.getEquipmentsFromIds(equipmentPickupSlotRepository.getById(slotId).getEquipment()),HttpStatus.OK);
+    }
+
 
 }

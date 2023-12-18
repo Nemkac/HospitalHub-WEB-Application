@@ -2,6 +2,7 @@ package HospitalHub.demo.service;
 
 import HospitalHub.demo.model.CompanyAdministrator;
 import HospitalHub.demo.model.EquipmentPickupSlot;
+import HospitalHub.demo.model.MedicalEquipment;
 import HospitalHub.demo.model.User;
 import HospitalHub.demo.repository.CompanyAdministratorRepository;
 import HospitalHub.demo.repository.CompanyRepository;
@@ -29,6 +30,8 @@ public class EquipmentPickupSlotService {
     private CompanyAdministratorRepository companyAdministratorRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private MedicalEqupimentService medicalEqupimentService;
 
     public EquipmentPickupSlot save(EquipmentPickupSlot slot) {
         if (isSlotBeforeNow(slot) || !isSlotWithinCompanyWorkingHours(slot)) {
@@ -134,6 +137,14 @@ public class EquipmentPickupSlotService {
             return equipmentPickupSlotRepository.save(slot);
         }
         return  null;
+    }
+
+    public List<MedicalEquipment> getEquipmentsFromIds(int[] ids){
+        List<MedicalEquipment> equipments = new ArrayList<>();
+        for(int id : ids){
+            equipments.add(medicalEqupimentService.getEquipmentById(id));
+        }
+        return equipments;
     }
 
 

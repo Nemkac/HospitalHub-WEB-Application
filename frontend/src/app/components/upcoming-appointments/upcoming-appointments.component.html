@@ -11,6 +11,12 @@
             <p class="text-sm text-gray-500">
               Duration: {{ slot.duration }} minutes
             </p>
+            <ul class="text-sm text-gray-500">
+              {{this.getSlotsEquipment(slot.id)}}
+              <li *ngFor="let equipment of equipments">
+                  {{ equipment.name }}
+              </li>
+          </ul>
           </div>
         </div>
       </li>

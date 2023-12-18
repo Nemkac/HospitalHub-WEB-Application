@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EquipmentPickupSlot } from '../models/EquipmentPickupSlot';
 import { Observable } from 'rxjs';
+import { Equipment } from 'src/Equipment';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,10 @@ export class EquipmentPickupSlotService {
   
   public addExtraSlot1(companyId : Number, date:Date, userId : Number) : Observable<EquipmentPickupSlot>{
     return this.http.post<EquipmentPickupSlot>(`${this.apiServerUrl}/api/slots/saveExtraSlot/${companyId}/${userId}`,date);
+  }
+
+  public getSlotsEquipment(slotId:Number) : Observable<Equipment[]>{
+    return this.http.get<Equipment[]>(`${this.apiServerUrl}/api/slots/getEquipment}/${slotId}`);
   }
   
 
