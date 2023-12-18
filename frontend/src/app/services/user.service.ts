@@ -66,7 +66,7 @@ export class UserService {
     }
 
     public getUsersUpcomingAppoitments(userId:Number):Observable<EquipmentPickupSlot[]>{
-        return this.http.get<EquipmentPickupSlot[]>(`${this.apiServerUrl}/api/user/getUsersSlots/${userId}`);
+        return this.http.get<EquipmentPickupSlot[]>(`${this.apiServerUrl}/api/slots/getUsersSlots/${userId}`);
     }
 
     

@@ -9,6 +9,9 @@ import HospitalHub.demo.repository.CompanyRepository;
 import HospitalHub.demo.repository.EquipmentPickupSlotRepository;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 
@@ -95,10 +98,11 @@ public class EquipmentPickupSlotService {
     }
 
     public List<EquipmentPickupSlot> getAllUsersSlots(Integer userId){
+        User user = userService.getById(userId);
         List<EquipmentPickupSlot> allSlots = equipmentPickupSlotRepository.findAll();
         List<EquipmentPickupSlot> foundSlots = new ArrayList<>();
         for(EquipmentPickupSlot slot: allSlots) {
-            if(slot.getReservedBy()!=null && slot.getReservedBy().getId() == userId){
+            if(slot.getReservedBy()!=null && slot.getReservedBy().equals(user)){
                 foundSlots.add(slot);
             }
         }

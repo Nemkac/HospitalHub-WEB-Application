@@ -38,7 +38,7 @@ export class EquipmentPickupSlotService {
   }
 
   public getSlotsEquipment(slotId:Number) : Observable<Equipment[]>{
-    return this.http.get<Equipment[]>(`${this.apiServerUrl}/api/slots/getEquipment}/${slotId}`);
+    return this.http.get<Equipment[]>(`${this.apiServerUrl}/api/slots/getEquipment/${slotId}`);
   }
   
 

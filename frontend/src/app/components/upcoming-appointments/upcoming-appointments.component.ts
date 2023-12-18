@@ -36,6 +36,9 @@ export class UpcomingAppointmentsComponent implements OnInit {
       (slots) => {
         this.slots = slots;
         console.log("slotovi su ",this.slots);
+        slots.forEach(slot => {
+          this.getSlotsEquipment(slot.id);
+        });
       }
     )
   }
@@ -43,6 +46,7 @@ export class UpcomingAppointmentsComponent implements OnInit {
   getSlotsEquipment(slotId:Number){
       this.slotService.getSlotsEquipment(slotId).subscribe(
         (equipments) => {
+          console.log("Ovo su equipmenti", equipments);
           this.equipments = equipments;
         }
       )

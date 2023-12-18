@@ -240,6 +240,7 @@ public class MedicalEquipmentController {
         }catch (Exception e){
             e.printStackTrace();
         }
+        image.delete();
         return new ResponseEntity<>(foundSlot, HttpStatus.OK);
     }
 }

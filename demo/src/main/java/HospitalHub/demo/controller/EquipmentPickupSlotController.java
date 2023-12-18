@@ -61,8 +61,9 @@ public class EquipmentPickupSlotController {
         List<EquipmentPickupSlot> usersSlots = equipmentPickupSlotService.getAllUsersSlots(id);
         if( usersSlots.isEmpty() || usersSlots==null ) {
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        } else{
+            return new ResponseEntity<>(usersSlots,HttpStatus.OK);
         }
-        return new ResponseEntity<>(equipmentPickupSlotService.getAll(),HttpStatus.OK);
     }
 
     /*@PostMapping("/saveExtraSlot/{companyId}/{userId}")
