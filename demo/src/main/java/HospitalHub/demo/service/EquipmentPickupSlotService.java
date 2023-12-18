@@ -101,11 +101,6 @@ public class EquipmentPickupSlotService {
         }
         return foundSlots;
     }
-
-    public List<EquipmentPickupSlot> getAll(){
-        return equipmentPickupSlotRepository.findAll();
-    }
-
     public boolean isSlotOverlappingWithAny(EquipmentPickupSlot newSlot, Integer companyId) {
         List<EquipmentPickupSlot> companySlots = companyService.getCompaniesSlots(companyId);
 
