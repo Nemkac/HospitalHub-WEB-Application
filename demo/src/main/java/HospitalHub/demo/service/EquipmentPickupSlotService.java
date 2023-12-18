@@ -120,7 +120,7 @@ public class EquipmentPickupSlotService {
     }
 
     public EquipmentPickupSlot saveExtraSlot(EquipmentPickupSlot slot, Integer companyId, Integer userId) {
-        if (isSlotBeforeNow(slot) /*|| !isSlotWithinCompanyWorkingHours(slot)*/) {
+        if (isSlotBeforeNow(slot) || slot.getDateTime().getHour()<8 || slot.getDateTime().getHour()>20/*|| !isSlotWithinCompanyWorkingHours(slot)*/) {
             return null;
         }
         if (isSlotOverlappingWithAny(slot, companyId)) {
