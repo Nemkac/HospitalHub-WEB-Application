@@ -2,6 +2,7 @@ package HospitalHub.demo.service;
 
 import HospitalHub.demo.dto.UserProfileDTO;
 import HospitalHub.demo.dto.UserRegisterDTO;
+import HospitalHub.demo.model.EquipmentPickupSlot;
 import HospitalHub.demo.model.User;
 import HospitalHub.demo.model.UserInfoDetails;
 import HospitalHub.demo.repository.UserRepository;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -25,7 +27,8 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private EquipmentPickupSlotService equipmentPickupSlotService;
     @Autowired
     private PasswordEncoder encoder;
     public List<User> findAll(){
@@ -84,6 +87,17 @@ public class UserService implements UserDetailsService {
 
     public User getByUsername(String username){
         return userRepository.getByUsername(username);
+    }
+
+    public List<EquipmentPickupSlot> getAllUsersSlots(Integer userId){
+        List<EquipmentPickupSlot> allSlots = equipmentPickupSlotService.getAll();
+        List<EquipmentPickupSlot> foundSlots = new ArrayList<>();
+        for(EquipmentPickupSlot slot: allSlots) {
+            if(slot.getReservedBy()!=null && slot.getReservedBy().getId() == userId && slot.getDateTime().isAfter(LocalDateTime.now())){
+                foundSlots.add(slot);
+            }
+        }
+        return foundSlots;
     }
 
 
