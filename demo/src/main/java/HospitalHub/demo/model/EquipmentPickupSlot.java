@@ -60,6 +60,13 @@ public class EquipmentPickupSlot {
         this.equipment = equipment;
     }
 
+    
+    public EquipmentPickupSlot(LocalDateTime dateTime, Integer duration, User user) {
+        this.dateTime = dateTime;
+        this.duration = duration;
+        this.reservedBy = user;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -1,0 +1,11 @@
+<div class="flex flex-col items-center my-8">
+  <p class="text-xl font-semibold mb-4">Choose the date and time:</p>
+  <form #createExtraSlotForm="ngForm" (ngSubmit)="saveSlot(createExtraSlotForm)" class="flex items-center space-x-4">
+    <input ngModel name="dateTime" type="datetime-local"
+           class="border-2 border-lightBlue p-4 rounded-lg focus:outline-none focus:border-blue-500 transition duration-300 w-72 text-gray-800"
+           required>
+    <button class="px-6 py-4 text-lg bg-lightBlue hover:bg-blue-500 text-white font-semibold rounded-lg transition duration-300">
+      Confirm
+    </button>
+  </form>
+</div>

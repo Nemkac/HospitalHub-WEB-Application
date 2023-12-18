@@ -2,15 +2,9 @@ package HospitalHub.demo.controller;
 
 import HospitalHub.demo.dto.CompanyDTO;
 import HospitalHub.demo.dto.UserProfileDTO;
-import HospitalHub.demo.model.Company;
+import HospitalHub.demo.model.*;
 import HospitalHub.demo.dto.UserDTO;
-import HospitalHub.demo.model.CompanyAdministrator;
-import HospitalHub.demo.model.SystemAdministrator;
-import HospitalHub.demo.model.User;
-import HospitalHub.demo.service.CompanyAdministratorService;
-import HospitalHub.demo.service.CompanyService;
-import HospitalHub.demo.service.JwtService;
-import HospitalHub.demo.service.UserService;
+import HospitalHub.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +26,8 @@ public class UserController {
     private CompanyService companyService;
     @Autowired
     JwtService jwtService;
+    @Autowired
+    private EquipmentPickupSlotService equipmentPickupSlotService;
 
     @PutMapping(consumes = "application/json", value = "/update/{id}")
     public ResponseEntity<UserDTO> updateCompanyAdministrator(@RequestBody UserDTO userDTO, @PathVariable Integer id)
@@ -151,5 +147,14 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/getUsersSlots/{id}")
+    public ResponseEntity<List<EquipmentPickupSlot>> getUsersSlots(@PathVariable Integer id){
+        List<EquipmentPickupSlot> usersSlots = equipmentPickupSlotService.getAllUsersSlots(id);
+        if( usersSlots.isEmpty() || usersSlots==null ) {
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(equipmentPickupSlotService.getAll(),HttpStatus.OK);
     }
 }

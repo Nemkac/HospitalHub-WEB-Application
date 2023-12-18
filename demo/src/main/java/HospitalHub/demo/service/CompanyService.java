@@ -1,9 +1,11 @@
 package HospitalHub.demo.service;
 
 import HospitalHub.demo.model.*;
+import HospitalHub.demo.repository.CompanyAdministratorRepository;
 import HospitalHub.demo.repository.CompanyRepository;
 import HospitalHub.demo.repository.EquipmentAvailabilityRepository;
 import HospitalHub.demo.repository.EquipmentPickupSlotRepository;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ public class CompanyService {
     private CompanyRepository companyRepository;
     @Autowired
     private EquipmentAvailabilityRepository equipmentAvailabilityRepository;
+    @Autowired
+    private CompanyAdministratorRepository companyAdministratorRepository;
 
     public List<Company> findAll(){
         return companyRepository.findAll();
@@ -108,6 +112,27 @@ public class CompanyService {
         List<Termin> takenPeriods = getCompaniesTakenPeriods(CompanyId);
         // ista ona logika odozgo koja treba da proveri da li ima slobodnih termina u danu
         return true;
+    }
+
+    public List<EquipmentPickupSlot> getCompaniesSlots(Integer companyId){
+        List<CompanyAdministrator> admins = companyAdministratorRepository.findAll();
+        List<EquipmentPickupSlot> foundSlots = new ArrayList<>();
+        List<CompanyAdministrator> foundAdmins = new ArrayList<>();
+        if(!admins.isEmpty()) {
+            for (CompanyAdministrator admin : admins) {
+                if (Objects.equals(admin.getCompany().getId(), companyId)) {
+                    foundAdmins.add(admin);
+                }
+            }
+        }
+        if(!foundAdmins.isEmpty()) {
+            for (CompanyAdministrator admin : foundAdmins) {
+                for (EquipmentPickupSlot slot : admin.getEquipmentPickupSlots()) {
+                    foundSlots.add(slot);
+                }
+            }
+        }
+        return foundSlots;
     }
 
 }

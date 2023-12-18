@@ -6,6 +6,7 @@ import { LogInDTO } from "src/LogInDTO";
 import { catchError, map ,tap} from 'rxjs/operators';
 import { User } from "src/user";
 import { UserProfile } from '../models/user-profile';
+import { EquipmentPickupSlot } from '../models/EquipmentPickupSlot';
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +63,10 @@ export class UserService {
 
     public getUserProfileByToken(token: string): Observable<UserProfile> {
         return this.http.get<UserProfile>(`${this.apiServerUrl}/api/user/getUserProfileByToken/${token}`);
+    }
+
+    public getUsersUpcomingAppoitments(userId:Number):Observable<EquipmentPickupSlot[]>{
+        return this.http.get<EquipmentPickupSlot[]>(`${this.apiServerUrl}/api/user/getUsersSlots/${userId}`);
     }
 
     

@@ -24,5 +24,17 @@ export class EquipmentPickupSlotService {
     return this.http.get<EquipmentPickupSlot>(`${this.apiServerUrl}/api/slots/getById/${id}`)
   }
 
-}
+  public addExtraSlot(companyId : Number, slot : EquipmentPickupSlot, userId : Number) : Observable<EquipmentPickupSlot>{
+    return this.http.post<EquipmentPickupSlot>(`${this.apiServerUrl}/api/slots/saveExtraSlot/${companyId}/${userId}`,slot);
+  }
 
+  public addTestSlot(slot:EquipmentPickupSlot) : Observable<EquipmentPickupSlot>{
+    return this.http.post<EquipmentPickupSlot>(`${this.apiServerUrl}/api/slots/saveTestSlot`,slot);
+  }
+  
+  public addExtraSlot1(companyId : Number, date:Date, userId : Number) : Observable<EquipmentPickupSlot>{
+    return this.http.post<EquipmentPickupSlot>(`${this.apiServerUrl}/api/slots/saveExtraSlot/${companyId}/${userId}`,date);
+  }
+  
+
+}

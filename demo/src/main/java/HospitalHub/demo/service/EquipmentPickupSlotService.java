@@ -1,7 +1,12 @@
 package HospitalHub.demo.service;
 
+import HospitalHub.demo.model.CompanyAdministrator;
 import HospitalHub.demo.model.EquipmentPickupSlot;
+import HospitalHub.demo.model.User;
+import HospitalHub.demo.repository.CompanyAdministratorRepository;
+import HospitalHub.demo.repository.CompanyRepository;
 import HospitalHub.demo.repository.EquipmentPickupSlotRepository;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -10,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -17,6 +23,12 @@ public class EquipmentPickupSlotService {
 
     @Autowired
     private EquipmentPickupSlotRepository equipmentPickupSlotRepository;
+    @Autowired
+    private CompanyService companyService;
+    @Autowired
+    private CompanyAdministratorRepository companyAdministratorRepository;
+    @Autowired
+    private UserService userService;
 
     public EquipmentPickupSlot save(EquipmentPickupSlot slot) {
         if (isSlotBeforeNow(slot) || !isSlotWithinCompanyWorkingHours(slot)) {
@@ -72,11 +84,62 @@ public class EquipmentPickupSlotService {
 
     public ArrayList<LocalDate> GetAvailablePickUpDatesInFollowing10(Integer companyId){
         ArrayList<LocalDate> availableDates = new ArrayList<>();
-
         return availableDates;
     }
 
     public EquipmentPickupSlot getById(Integer id){
         return equipmentPickupSlotRepository.getById(id);
     }
+
+    public List<EquipmentPickupSlot> getAllUsersSlots(Integer userId){
+        List<EquipmentPickupSlot> allSlots = equipmentPickupSlotRepository.findAll();
+        List<EquipmentPickupSlot> foundSlots = new ArrayList<>();
+        for(EquipmentPickupSlot slot: allSlots) {
+            if(slot.getReservedBy()!=null && slot.getReservedBy().getId() == userId){
+                foundSlots.add(slot);
+            }
+        }
+        return foundSlots;
+    }
+
+    public List<EquipmentPickupSlot> getAll(){
+        return equipmentPickupSlotRepository.findAll();
+    }
+
+    public boolean isSlotOverlappingWithAny(EquipmentPickupSlot newSlot, Integer companyId) {
+        List<EquipmentPickupSlot> companySlots = companyService.getCompaniesSlots(companyId);
+
+        for (EquipmentPickupSlot slot : companySlots) {
+            if (areSlotsOverlapping(newSlot, slot)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public EquipmentPickupSlot saveExtraSlot(EquipmentPickupSlot slot, Integer companyId, Integer userId) {
+        if (isSlotBeforeNow(slot) /*|| !isSlotWithinCompanyWorkingHours(slot)*/) {
+            return null;
+        }
+        if (isSlotOverlappingWithAny(slot, companyId)) {
+            return null;
+        }
+        List<CompanyAdministrator> admins = companyAdministratorRepository.findAll();
+        List<CompanyAdministrator> foundAdmins = new ArrayList<>();
+        if(!admins.isEmpty()) {
+            for (CompanyAdministrator admin : admins) {
+                if (Objects.equals(admin.getCompany().getId(), companyId)) {
+                    foundAdmins.add(admin);
+                }
+            }
+        }
+        if(!foundAdmins.isEmpty()) {
+            slot.setReservedBy(userService.getById(userId));
+            slot.setCompanyAdministrator(foundAdmins.get(0));
+            return equipmentPickupSlotRepository.save(slot);
+        }
+        return  null;
+    }
+
+
 }

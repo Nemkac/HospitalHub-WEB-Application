@@ -8,6 +8,7 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -18,5 +19,7 @@ public interface CompanyAdministratorRepository extends JpaRepository<CompanyAdm
 
     CompanyAdministrator getByUser(User user);
     CompanyAdministrator findByUserId(Integer userId);
+
+    List<CompanyAdministrator> findAll();
 
 }
