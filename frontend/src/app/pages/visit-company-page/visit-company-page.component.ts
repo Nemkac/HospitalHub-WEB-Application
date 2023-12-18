@@ -208,6 +208,11 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
 			{ backdrop: 'static', keyboard: true, centered:true}
 		  );
   		modalRef.componentInstance.companyId = this.companyId;
+
+      modalRef.componentInstance.closeModal.subscribe((slotId: number) => {
+        // Use slotId in the parent component
+        this.selectedAppointment = slotId;
+      });
   }
 
   public addEquipmentToOrder(id : number) :void{
@@ -249,5 +254,9 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
     this.appointmentSelected = false; 
     this.getEquipmentPickupSlots(this.companyId);
   };
+}
+
+function onModalClose() {
+  throw new Error('Function not implemented.');
 }
 

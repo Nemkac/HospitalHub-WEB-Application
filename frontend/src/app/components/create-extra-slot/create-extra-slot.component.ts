@@ -1,6 +1,7 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EquipmentPickupSlot } from 'src/app/models/EquipmentPickupSlot';
 import { EquipmentPickupSlotService } from 'src/app/services/equipment-pickup-slot.service';
 import { UserService } from 'src/app/services/user.service';
@@ -12,13 +13,14 @@ import { User } from 'src/user';
 })
 export class CreateExtraSlotComponent implements OnInit{
 
-  companyId!:number;
+  @Output() closeModal: EventEmitter<number> = new EventEmitter<number>();
+  companyId!:Number;
   chosenDate!:Date;
   user!:User;
   createdSlot!:EquipmentPickupSlot;
   token = localStorage.getItem('token');
 
-  constructor(private slotService:EquipmentPickupSlotService, private userService:UserService){}
+  constructor(private slotService:EquipmentPickupSlotService, private userService:UserService,private modalService: NgbActiveModal,){}
   ngOnInit(): void {
     if(this.token){
       this.userService.getUserByToken(this.token).subscribe(
@@ -34,7 +36,8 @@ export class CreateExtraSlotComponent implements OnInit{
       const slot = form.value;
       this.slotService.addExtraSlot(this.companyId,slot,this.user.id).subscribe(
         (savedSlot) =>{
-          window.location.reload();
+          this.closeModal.emit(savedSlot.id)
+          this.modalService.close();
           console.log(savedSlot);
         },
         (error:HttpErrorResponse) => {
