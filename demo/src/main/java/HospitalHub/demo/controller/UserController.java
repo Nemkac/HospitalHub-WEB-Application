@@ -148,13 +148,4 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @GetMapping("/getUsersSlots/{id}")
-    public ResponseEntity<List<EquipmentPickupSlot>> getUsersSlots(@PathVariable Integer id){
-        List<EquipmentPickupSlot> usersSlots = equipmentPickupSlotService.getAllUsersSlots(id);
-        if( usersSlots.isEmpty() || usersSlots==null ) {
-            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(equipmentPickupSlotService.getAll(),HttpStatus.OK);
-    }
 }

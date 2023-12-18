@@ -59,10 +59,10 @@ public class EquipmentPickupSlotController {
     @GetMapping("/getUsersSlots/{id}")
     public ResponseEntity<List<EquipmentPickupSlot>> getUsersSlots(@PathVariable Integer id){
         List<EquipmentPickupSlot> usersSlots = equipmentPickupSlotService.getAllUsersSlots(id);
-        if( usersSlots.isEmpty() || usersSlots==null ) {
+        if(usersSlots.isEmpty()) {
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(equipmentPickupSlotService.getAll(),HttpStatus.OK);
+        return new ResponseEntity<>(usersSlots,HttpStatus.OK);
     }
 
     /*@PostMapping("/saveExtraSlot/{companyId}/{userId}")
