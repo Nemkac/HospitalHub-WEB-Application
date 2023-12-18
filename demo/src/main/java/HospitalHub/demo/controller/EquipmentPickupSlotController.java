@@ -64,7 +64,6 @@ public class EquipmentPickupSlotController {
         } else{
             return new ResponseEntity<>(usersSlots,HttpStatus.OK);
         }
-        return new ResponseEntity<>(usersSlots,HttpStatus.OK);
     }
 
     /*@PostMapping("/saveExtraSlot/{companyId}/{userId}")

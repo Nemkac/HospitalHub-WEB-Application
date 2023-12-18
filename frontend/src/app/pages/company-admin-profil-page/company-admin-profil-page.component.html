@@ -125,10 +125,10 @@
                         <p>Duration: {{ arg.event.extendedProps.duration }} min</p>
                         <p>
                             <ng-container *ngIf="arg.event.extendedProps.firstname && arg.event.extendedProps.lastname">
-                            {{ arg.event.extendedProps.firstname }} {{ arg.event.extendedProps.lastname }}
+                                {{ arg.event.extendedProps.firstname }} {{ arg.event.extendedProps.lastname }}
                             </ng-container>
                             <ng-container *ngIf="!arg.event.extendedProps.firstname && !arg.event.extendedProps.lastname">
-                            Free appointment
+                                Free appointment
                             </ng-container>
                         </p>
                         </div>
