@@ -1,85 +1,109 @@
 <form #RegisterForm="ngForm" (ngSubmit)="register(RegisterForm)">
-    <div class="flex w-full h-[1200px] px-64 bg-lightBlue/5 justify-center items-center">
-        <div class="flex flex-col bg-white w-[500px] h-[350px] py-4 items-center rounded-md justify-between border-[1px] border-secondary/10">
-            <div>
-                <p class="font-inter text-third font-medium text-[18px]">Username</p>
-                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                        placeholder="Username"
-                        ngModel name="username" required>
+    <div class="flex  w-full h-auto items-center justify-center bg-lightBlue/5 py-32 px-64">
+        <div class="flex flex-row shadow-lg h-auto w-auto">
+            <div class="flex w-[400px] h-[750px] bg-third rounded-l-lg items-center justify-center p-2 relative">
+                <img src="../../../assets/registeImage.jpg" class="absolute top-0 opacity-[5%] object-cover h-full z-[1]">
+                <div class="h-[300px] flex flex-col items-center justify-center justify-evenly mb-4">
+                    <p class="font-inter font-bold text-white text-[38px]">Register to</p>
+                    <img src="../../../assets/NavLogo-White.png" class="w-[350px] h-auto"/>
+                    <p class="font-inter font-light text-white text-[24px] text-center">Unlock a seamless experience with our medical equipment delivery platform by creating an account today.</p>
+                </div>
             </div>
-            <div>
-                <p class="font-inter text-third font-medium text-[18px]">Name</p>
-                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                        placeholder="Name"
-                        ngModel name="name" required>
+            <div class="flex flex-col w-[850px] h-[750px] bg-white rounded-r-lg items-center justify-center p-4">
+                <div class="flex flex-col w-full justify-start">
+                    <p class="font-inter font-bold text-third text-[30px]">Registration</p> 
+                    <p class="font-inter font-light text-gray text-[22px]">Already have an account? 
+                        <span class="hover:text-third transition-[0.5s] font-medium cursor-pointer">
+                            <a routerLink="/logIn">Login now</a>
+                        </span>
+                    </p>
+                </div>
+                <div class="flex flex-row w-full h-full justify-between">
+                    <div class="flex flex-col w-[45%] h-full justify-evenly">
+                        <div class="flex flex-col justify-start w-full">
+                            <p class="font-inter font-medium text-third text-[18px]">First name</p>
+                            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
+                                    placeholder="First name"
+                                    ngModel name="name" required>
+                        </div>
+                        <div class="flex flex-col justify-start w-full">
+                            <p class="font-inter font-medium text-third text-[18px]">Last name</p>
+                            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
+                                    placeholder="Last name"
+                                    ngModel name="lastName" required>
+                        </div>
+                        <div class="flex flex-col justify-start w-full">
+                            <p class="font-inter font-medium text-third text-[18px]">Date of birth</p>
+                            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
+                                    placeholder="YYYY-MM-dd"
+                                    ngModel name="dateOfBirth" required>
+                        </div>
+                        <div class="flex flex-col justify-start w-full">
+                            <p class="font-inter font-medium text-third text-[18px]">Phone number</p>
+                            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
+                                    placeholder="Phone number"
+                                    ngModel name="phoneNumber" required>
+                        </div>
+                        <div class="flex flex-col justify-start w-full">
+                            <p class="font-inter font-medium text-third text-[18px]">Profession</p>
+                            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
+                                    placeholder="Profession"
+                                    ngModel name="profession" required>
+                        </div>
+                        <div class="flex flex-col justify-start w-full">
+                            <p class="font-inter font-medium text-third text-[18px]">Company info</p>
+                            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
+                                    placeholder="Company info"
+                                    ngModel name="companyInfo" required>
+                        </div>
+                    </div>
+                    <div class="flex flex-col w-[45%] h-full justify-evenly">
+                        <div class="flex flex-col justify-start w-full">
+                            <p class="font-inter font-medium text-third text-[18px]">Username</p>
+                            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
+                                    placeholder="Username"
+                                    ngModel name="username" required>
+                        </div>
+                        <div class="flex flex-col justify-start w-full">
+                            <p class="font-inter font-medium text-third text-[18px]">Password</p>
+                            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
+                                    placeholder="Password"
+                                    type="password"
+                                    ngModel name="password" required>
+                        </div>
+                        <div class="flex flex-col justify-start w-full">
+                            <p class="font-inter font-medium text-third text-[18px]">Re-type the password</p>
+                            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
+                                    placeholder="Re-type the password"
+                                    type="password"
+                                    ngModel name="retypePassword" required>
+                        </div>
+                        <div class="flex flex-col justify-start w-full">
+                            <p class="font-inter font-medium text-third text-[18px]">Email</p>
+                            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
+                                    placeholder="you@gmail.com"
+                                    ngModel name="email" required>
+                        </div>
+                        <div class="flex flex-col justify-start w-full">
+                            <p class="font-inter font-medium text-third text-[18px]">Country</p>
+                            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
+                                    placeholder="Country"
+                                    ngModel name="country" required>
+                        </div>
+                        <div class="flex flex-col justify-start w-full">
+                            <p class="font-inter font-medium text-third text-[18px]">City</p>
+                            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
+                                    placeholder="City"
+                                    ngModel name="city" required>
+                        </div>
+                    </div>
+                </div>   
+                <button class="w-full text-[20px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
+                                text-white rounded-md h-[60px] cursor-pointer mt-4" type="submit"
+                        [disabled]="RegisterForm.invalid || !RegisterForm.dirty">
+                    Register
+                </button>              
             </div>
-            <div>
-                <p class="font-inter text-third font-medium text-[18px]">Last name</p>
-                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                        placeholder="Last name"
-                        ngModel name="lastName" required>
-            </div>
-            <div>
-                <p class="font-inter text-third font-medium text-[18px]">Password</p>
-                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                        placeholder="Password"
-                        type="password"
-                        ngModel name="password" required>
-            </div>
-            <div>
-                <p class="font-inter text-third font-medium text-[18px]">Re-type the password</p>
-                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                        placeholder="Re-type the password"
-                        type="password"
-                        ngModel name="retypePassword" required>
-            </div>
-            <div>
-                <p class="font-inter text-third font-medium text-[18px]">Date of birth</p>
-                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                        placeholder="Date of birth"
-                        ngModel name="dateOfBirth" required>
-            </div>
-            <div>
-                <p class="font-inter text-third font-medium text-[18px]">Email</p>
-                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                        placeholder="Email"
-                        ngModel name="email" required>
-            </div>
-            <div>
-                <p class="font-inter text-third font-medium text-[18px]">Phone number</p>
-                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                        placeholder="Phone number"
-                        ngModel name="phoneNumber" required>
-            </div>
-            <div>
-                <p class="font-inter text-third font-medium text-[18px]">Country</p>
-                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                        placeholder="Country"
-                        ngModel name="country" required>
-            </div>
-            <div>
-                <p class="font-inter text-third font-medium text-[18px]">City</p>
-                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                        placeholder="City"
-                        ngModel name="city" required>
-            </div>
-            <div>
-                <p class="font-inter text-third font-medium text-[18px]">Profession</p>
-                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                        placeholder="Profession"
-                        ngModel name="profession" required>
-            </div>
-            <div>
-                <p class="font-inter text-third font-medium text-[18px]">Company info</p>
-                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                        placeholder="Company info"
-                        ngModel name="companyInfo" required>
-            </div>
-            <button class="w-[200px] text-[20px] bg-secondary hover:bg-third transition-[0.5s] font-inter font-semibold 
-                            text-white rounded-md h-[45px]" type="submit"
-                    [disabled]="RegisterForm.invalid || !RegisterForm.dirty">
-                Register
-            </button>
         </div>
     </div>
 </form>
