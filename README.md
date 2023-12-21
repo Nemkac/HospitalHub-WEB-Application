@@ -63,9 +63,8 @@ A new user who has just registered, after activating the profile, is assigned th
 
 Each user logs in using their email address, which must be unique, and a password that is hashed to maintain the security of the account.
 
-<a href="https://ibb.co/xszCLPM"><img src="https://i.ibb.co/hM279hK/Login.png" alt="Login" border="0"></a><br /><a target='_blank' href='https://imgbb.com/'>
-<a href="https://ibb.co/G5rYPLB"><img src="https://i.ibb.co/yQxvs1G/Register.png" alt="Register" border="0"></a><br /><a target='_blank' href='https://imgbb.com/'>
-
+<a href='https://postimg.cc/069H3qT4' target='_blank'><img src='https://i.postimg.cc/zfhZyz0q/Login.png' border='0' alt='Login'/></a>
+<a href='https://postimg.cc/fVd3VVRG' target='_blank'><img src='https://i.postimg.cc/T37nHmM3/Register.png' border='0' alt='Register'/></a>
 # Authors
 * <a href="https://github.com/NemanjaRanitovic">Nemanja Ranitović
 * <a href="https://github.com/blanusa">Vladimir Blanuša
