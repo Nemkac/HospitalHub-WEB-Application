@@ -43,14 +43,28 @@ The frontend part of the application was developed using the Angular framework. 
 The style of the application is predefined and maintained throughout the development. A predefined color palette was also used, as well as the size and positioning of text and components on the pages.
 
 
-The Leaflet library was used to display the company on the map, as well as to display and monitor delivery. 
-In this way, we provided both the user and the delivery person with a clear view as well as all the necessary information related to the location.
+The Leaflet library was used to display the company on the map and to display and monitor delivery. 
+In this way, we provided both the user and the delivery person with a clear view and all the necessary information related to the location.
 
 
 Overall, the goal for the design of this application is to be minimalistic and adapted to each type of user, while at the same time being modern.
-It is necessary to provide each type of user with all possible information and all possible functionalities without cluttering the pages with content that will only divert his attention from why he is actually there.
+It is necessary to provide each type of user with all possible information and all possible functionalities without cluttering the pages with content that will only divert his attention from why he is there.
 
 # Functionality
+
+### Login and Register
+
+As with any platform that deals with selling, reselling, renting, etc., in order to use the services that HospitalHub offers, you must have an account. 
+
+Logging in to the platform is done through the login form, which also offers options for logging in via Google or Facebook profiles, while a simple user-friendly registration form is provided for those who do not have an account on HospitalHub.
+During registration, it is necessary to confirm and activate the profile via the activation link sent to the email entered by the user in the registration form.
+
+A new user who has just registered, after activating the profile, is assigned the role of *AUTHENTICATED USER*, and in accordance with that role, he is shown the appropriate links and is enabled to perform the appropriate activities on the application.
+
+Each user logs in using their email address, which must be unique, and a password that is hashed to maintain the security of the account.
+
+<a href="https://ibb.co/xszCLPM"><img src="https://i.ibb.co/hM279hK/Login.png" alt="Login" border="0"></a><br /><a target='_blank' href='https://imgbb.com/'>
+<a href="https://ibb.co/G5rYPLB"><img src="https://i.ibb.co/yQxvs1G/Register.png" alt="Register" border="0"></a><br /><a target='_blank' href='https://imgbb.com/'>
 
 # Authors
 * <a href="https://github.com/NemanjaRanitovic">Nemanja Ranitović
