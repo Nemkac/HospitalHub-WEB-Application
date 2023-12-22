@@ -1,6 +1,6 @@
 <a href="https://ibb.co/5n09yrp"><img src="https://i.ibb.co/wwkLXSG/NavLogo.png" alt="NavLogo" border="0"></a>
 # HospitalHub
-HospitalHub is a web application designed to enable the rental and delivery of medical equipment to private and public clinics, hospitals and surgeries.
+HospitalHub is a web application designed to enable the rental and delivery of medical equipment to private and public clinics, hospitals, and surgeries.
 The application was developed as our college project. HospitalHub enables the user to easily and quickly search for equipment and companies that offer the equipment he needs and order it easily.
 
 
@@ -95,6 +95,22 @@ For each appointment, the start date and time, the duration, and the list of the
 
 <a href='https://postimg.cc/dkGFLfpP' target='_blank'><img src='https://i.postimg.cc/mD5g6fSD/user-Profile.png' border='0' alt='user-Profile'/></a>
 <a href='https://postimg.cc/BXrd1p5J' target='_blank'><img src='https://i.postimg.cc/qvq0SZz6/update-Profil.png' border='0' alt='update-Profil'/></a>
+
+### My Company
+The company administrator has the option to review the company he works for and make certain changes. He can add, change, and remove equipment that the company has to offer, as well as change data about the company itself.
+
+It also has the option to view the company's work calendar. The company's work calendar shows all available and reserved appointments of all administrators working in that company.
+He can also add a new appointment to the company's calendar and that appointment will be displayed on the company's calendar and will be visible to all administrators and users who visit the company's profile (until it becomes reserved). The appointment he adds to this calendar is also added to his personal calendar which is displayed on his profile.
+
+In addition, it also has a display of all company administrators.
+
+<a href='https://postimg.cc/LJ0HJw4h' target='_blank'><img src='https://i.postimg.cc/43XnSRrv/my-Company.png' border='0' alt='my-Company'/></a>
+<a href='https://postimg.cc/MvpHXy0P' target='_blank'><img src='https://i.postimg.cc/zXngt7yr/add-Equipment.png' border='0' alt='add-Equipment'/></a>
+<a href='https://postimg.cc/SJPSsHxR' target='_blank'><img src='https://i.postimg.cc/Njs5Nch6/edit-Equipment.png' border='0' alt='edit-Equipment'/></a>
+<a href='https://postimg.cc/sBytDJ71' target='_blank'><img src='https://i.postimg.cc/CKfY7PKC/company-Calendar.png' border='0' alt='company-Calendar'/></a>
+<a href='https://postimg.cc/s1tHgcRy' target='_blank'><img src='https://i.postimg.cc/qM7PQbbt/company-Administrators.png' border='0' alt='company-Administrators'/></a>
+<a href='https://postimg.cc/0KgGPVKB' target='_blank'><img src='https://i.postimg.cc/7hhK1cHw/update-Company.png' border='0' alt='update-Company'/></a>
+
 
 # Authors
 * <a href="https://github.com/NemanjaRanitovic">Nemanja Ranitović
