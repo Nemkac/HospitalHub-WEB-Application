@@ -24,7 +24,7 @@ In addition, the application also offers a modern interface that is, above all, 
 4. <b>Convenient Delivery</b>: The chosen company then ensures the timely and hassle-free delivery of the ordered equipment.
   
 # Application structure
-<a href="https://ibb.co/MZZLvgd"><img src="https://i.ibb.co/DzznJ1d/Hospital-Hub-Class-Diagram-drawio.png" alt="Hospital-Hub-Class-Diagram-drawio" border="0"></a>
+<a href='https://postimg.cc/7CkTppvC' target='_blank'><img src='https://i.postimg.cc/5tHqFVnm/Hospital-Hub-Class-Diagram-drawio.png' border='0' alt='Hospital-Hub-Class-Diagram-drawio'/></a>
 
 # Backend
 The backend part of the application was created using Java Spring Boot technology. PostgreSQL database is used for data storage.
@@ -78,6 +78,23 @@ In addition, the admin can review the details for each appointment as well as cr
 <a href='https://postimg.cc/HcZ32rmd' target='_blank'><img src='https://i.postimg.cc/prx7Pj1h/new-Appointment.png' border='0' alt='new-Appointment'/></a>
 
 #### System Administrator
+A newly registered user cannot become a system or company admin on his own. The system administrator is responsible for creating such users, who has options for creating a new system or company administrator on his profile. 
+
+In addition, it has the option to register new companies on the system at the request of the company owner.
+
+<a href='https://postimg.cc/qNQ3HNjn' target='_blank'><img src='https://i.postimg.cc/nLfY77md/sys-Admin-Profile.png' border='0' alt='sys-Admin-Profile'/></a>
+<a href='https://postimg.cc/KRp106zr' target='_blank'><img src='https://i.postimg.cc/qv42v0HY/new-Company-Admin.png' border='0' alt='new-Company-Admin'/></a>
+<a href='https://postimg.cc/c641PFPD' target='_blank'><img src='https://i.postimg.cc/c1fKgjhN/new-Sys-Admin.png' border='0' alt='new-Sys-Admin'/></a>
+<a href='https://postimg.cc/KKZC4HPw' target='_blank'><img src='https://i.postimg.cc/cJYWkqrx/new-Company.png' border='0' alt='new-Company'/></a>
+
+#### User
+
+A standard user has basic options - profile modification (the previous two types of users also have this option) and an overview of all scheduled appointments. 
+
+For each appointment, the start date and time, the duration, and the list of the equipment ordered are shown.
+
+<a href='https://postimg.cc/dkGFLfpP' target='_blank'><img src='https://i.postimg.cc/mD5g6fSD/user-Profile.png' border='0' alt='user-Profile'/></a>
+<a href='https://postimg.cc/BXrd1p5J' target='_blank'><img src='https://i.postimg.cc/qvq0SZz6/update-Profil.png' border='0' alt='update-Profil'/></a>
 
 # Authors
 * <a href="https://github.com/NemanjaRanitovic">Nemanja Ranitović
