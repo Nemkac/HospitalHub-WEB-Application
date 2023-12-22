@@ -90,16 +90,25 @@
       </div>  
     </ng-form>
     <ng-form *ngIf="user?.roles === 'ROLE_SYSADMIN'" class="flex w-full">
-      <div class="flex flex-col w-full p-[12px] bg-white h-auto max-h-[800px] rounded-md shadow-md">
-        <button class="w-full text-center h-[60px] rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="openCreateCompanyAdminForm()">
-          <p>Add new company administrator</p>
-        </button>
-        <button class="w-full text-center h-[60px] mt-4 rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="openCreateSystemAdminForm()">
-          <p>Add new system administrator</p>
-        </button>
-        <button class="w-full text-center h-[60px] mt-4 rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="openCreateCompanyForm()">
-          <p>Add new company</p>
-        </button>
+      <div class="flex flex-row w-full h-auto max-h-[800px] justify-between">
+        <div class="flex flex-col items-center w-[250px] h-[250px] shadow-md justify-center rounded-md border-[2px] border-gray text-center
+                    hover:bg-third hover:text-white text-third hover:border-third transition-[0.5s] cursor-pointer"
+            (click)="openCreateCompanyAdminForm()">
+          <fa-icon [icon]="faPlus" class="text-[50px]"></fa-icon>
+          <p class="font-inter font-semibold text-[28px]">New Company Administrator</p>
+        </div>
+        <div class="flex flex-col items-center w-[250px] h-[250px] justify-center rounded-md border-[2px] border-gray text-center
+                    hover:bg-third hover:text-white text-third hover:border-third transition-[0.5s] cursor-pointer"
+            (click)="openCreateSystemAdminForm()">
+          <fa-icon [icon]="faPlus" class="text-[50px]"></fa-icon>
+          <p class="font-inter font-semibold text-[28px]">New System Administrator</p>
+        </div>
+        <div class="flex flex-col items-center w-[250px] h-[250px] justify-center rounded-md border-[2px] border-gray text-center
+                    hover:bg-third hover:text-white text-third hover:border-third transition-[0.5s] cursor-pointer"
+            (click)="openCreateCompanyForm()">
+          <fa-icon [icon]="faPlus" class="text-[50px]"></fa-icon>
+          <p class="font-inter font-semibold text-[28px]">New Company</p>
+        </div>
       </div>  
     </ng-form>
   </div>
