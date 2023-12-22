@@ -65,6 +65,18 @@ Each user logs in using their email address, which must be unique, and a passwor
 
 <a href='https://postimg.cc/069H3qT4' target='_blank'><img src='https://i.postimg.cc/zfhZyz0q/Login.png' border='0' alt='Login'/></a>
 <a href='https://postimg.cc/fVd3VVRG' target='_blank'><img src='https://i.postimg.cc/T37nHmM3/Register.png' border='0' alt='Register'/></a>
+
+### Profiles
+Each user has the option to view their profile and make certain changes to it. What will be displayed on the profile page in addition to personal information about the user depends on the role the logged-in user has.
+#### Company Administrator
+In addition to personal information, the company administrator has his personal work calendar on the profile page, which he can view on a daily, monthly, and yearly basis. The work calendar is related to the company where the administrator is employed. The calendar shows all available and reserved appointments for equipment pickup that belong to the logged-in admin.
+
+In addition, the admin can review the details for each appointment as well as create a new appointment that will automatically be displayed as a new free appointment on the page of the company where the administrator works.
+
+<a href='https://postimg.cc/tsKK3m52' target='_blank'><img src='https://i.postimg.cc/nLrntyQb/company-Admin-Profile.png' border='0' alt='company-Admin-Profile'/></a>
+<a href='https://postimg.cc/yDcQH6my' target='_blank'><img src='https://i.postimg.cc/kghkWBDz/appointment-Info.png' border='0' alt='appointment-Info'/></a>
+<a href='https://postimg.cc/HcZ32rmd' target='_blank'><img src='https://i.postimg.cc/prx7Pj1h/new-Appointment.png' border='0' alt='new-Appointment'/></a>
+
 # Authors
 * <a href="https://github.com/NemanjaRanitovic">Nemanja Ranitović
 * <a href="https://github.com/blanusa">Vladimir Blanuša
