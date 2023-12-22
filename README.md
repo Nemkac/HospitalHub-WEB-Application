@@ -77,6 +77,8 @@ In addition, the admin can review the details for each appointment as well as cr
 <a href='https://postimg.cc/yDcQH6my' target='_blank'><img src='https://i.postimg.cc/kghkWBDz/appointment-Info.png' border='0' alt='appointment-Info'/></a>
 <a href='https://postimg.cc/HcZ32rmd' target='_blank'><img src='https://i.postimg.cc/prx7Pj1h/new-Appointment.png' border='0' alt='new-Appointment'/></a>
 
+#### System Administrator
+
 # Authors
 * <a href="https://github.com/NemanjaRanitovic">Nemanja Ranitović
 * <a href="https://github.com/blanusa">Vladimir Blanuša
