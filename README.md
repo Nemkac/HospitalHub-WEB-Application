@@ -1,4 +1,4 @@
-<a href="https://ibb.co/5n09yrp"><img src="https://i.ibb.co/wwkLXSG/NavLogo.png" alt="NavLogo" border="0"></a>
+  <a href="https://ibb.co/5n09yrp"><img src="https://i.ibb.co/wwkLXSG/NavLogo.png" alt="NavLogo" border="0"></a>
 # HospitalHub
 HospitalHub is a web application designed to enable the rental and delivery of medical equipment to private and public clinics, hospitals, and surgeries.
 The application was developed as our college project. HospitalHub enables the user to easily and quickly search for equipment and companies that offer the equipment he needs and order it easily.
@@ -110,6 +110,8 @@ In addition, it also has a display of all company administrators.
 <a href='https://postimg.cc/sBytDJ71' target='_blank'><img src='https://i.postimg.cc/CKfY7PKC/company-Calendar.png' border='0' alt='company-Calendar'/></a>
 <a href='https://postimg.cc/s1tHgcRy' target='_blank'><img src='https://i.postimg.cc/qM7PQbbt/company-Administrators.png' border='0' alt='company-Administrators'/></a>
 <a href='https://postimg.cc/0KgGPVKB' target='_blank'><img src='https://i.postimg.cc/7hhK1cHw/update-Company.png' border='0' alt='update-Company'/></a>
+
+### Search equipment
 
 
 # Authors
