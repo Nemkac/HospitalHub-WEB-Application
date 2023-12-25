@@ -68,7 +68,7 @@ Each user logs in using their email address, which must be unique, and a passwor
 
 ### Profiles
 Each user has the option to view their profile and make certain changes to it. What will be displayed on the profile page in addition to personal information about the user depends on the role the logged-in user has.
-#### Company Administrator
+#### 1. Company Administrator
 In addition to personal information, the company administrator has his personal work calendar on the profile page, which he can view on a daily, monthly, and yearly basis. The work calendar is related to the company where the administrator is employed. The calendar shows all available and reserved appointments for equipment pickup that belong to the logged-in admin.
 
 In addition, the admin can review the details for each appointment as well as create a new appointment that will automatically be displayed as a new free appointment on the page of the company where the administrator works.
@@ -77,7 +77,7 @@ In addition, the admin can review the details for each appointment as well as cr
 <a href='https://postimg.cc/yDcQH6my' target='_blank'><img src='https://i.postimg.cc/kghkWBDz/appointment-Info.png' border='0' alt='appointment-Info'/></a>
 <a href='https://postimg.cc/HcZ32rmd' target='_blank'><img src='https://i.postimg.cc/prx7Pj1h/new-Appointment.png' border='0' alt='new-Appointment'/></a>
 
-#### System Administrator
+#### 2. System Administrator
 A newly registered user cannot become a system or company admin on his own. The system administrator is responsible for creating such users, who has options for creating a new system or company administrator on his profile. 
 
 In addition, it has the option to register new companies on the system at the request of the company owner.
@@ -87,7 +87,7 @@ In addition, it has the option to register new companies on the system at the re
 <a href='https://postimg.cc/c641PFPD' target='_blank'><img src='https://i.postimg.cc/c1fKgjhN/new-Sys-Admin.png' border='0' alt='new-Sys-Admin'/></a>
 <a href='https://postimg.cc/KKZC4HPw' target='_blank'><img src='https://i.postimg.cc/cJYWkqrx/new-Company.png' border='0' alt='new-Company'/></a>
 
-#### User
+#### 3. User
 
 A standard user has basic options - profile modification (the previous two types of users also have this option) and an overview of all scheduled appointments. 
 
@@ -121,6 +121,15 @@ Only users who have an account on the site will be able to make a reservation, a
 The user can search for equipment by name and can perform filtering based on price and type of equipment.
 
 <a href='https://postimg.cc/8fR36Zk8' target='_blank'><img src='https://i.postimg.cc/KjwyCWdY/search-Equipment.png' border='0' alt='search-Equipment'/></a>
+
+### Search companies
+
+In addition to the search for equipment, users are also enabled to search for companies in two places: on the landing page, where the most popular companies will be listed first, followed by the others, and on the company search page, where the company search takes place at the level of the entire site.
+
+The user can search for companies based on name, city, state, and minimum rating.
+
+<a href='https://postimg.cc/JDD3v0SP' target='_blank'><img src='https://i.postimg.cc/mDVdcFjf/search-Companies-Landing.png' border='0' alt='search-Companies-Landing'/></a>
+<a href='https://postimg.cc/0rKZHXsP' target='_blank'><img src='https://i.postimg.cc/J7Pg0SYD/search-Companies-Page.png' border='0' alt='search-Companies-Page'/></a>
 
 # Authors
 * <a href="https://github.com/NemanjaRanitovic">Nemanja Ranitović
