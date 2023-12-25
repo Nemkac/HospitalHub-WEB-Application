@@ -113,6 +113,14 @@ In addition, it also has a display of all company administrators.
 
 ### Search equipment
 
+The HospitalHub visitor, whether logged in, registered, or not, has the option to search for equipment at the level of the entire site.
+
+Basic information is displayed for each equipment, as well as the option to add the desired equipment to the basket, from where the reservation and purchase will be made.
+Only users who have an account on the site will be able to make a reservation, and only after logging in.
+
+The user can search for equipment by name and can perform filtering based on price and type of equipment.
+
+<a href='https://postimg.cc/8fR36Zk8' target='_blank'><img src='https://i.postimg.cc/KjwyCWdY/search-Equipment.png' border='0' alt='search-Equipment'/></a>
 
 # Authors
 * <a href="https://github.com/NemanjaRanitovic">Nemanja Ranitović
