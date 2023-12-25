@@ -131,6 +131,26 @@ The user can search for companies based on name, city, state, and minimum rating
 <a href='https://postimg.cc/JDD3v0SP' target='_blank'><img src='https://i.postimg.cc/mDVdcFjf/search-Companies-Landing.png' border='0' alt='search-Companies-Landing'/></a>
 <a href='https://postimg.cc/0rKZHXsP' target='_blank'><img src='https://i.postimg.cc/J7Pg0SYD/search-Companies-Page.png' border='0' alt='search-Companies-Page'/></a>
 
+### Visit company
+
+After searching for companies, the user has the opportunity to view the profile of the company he likes the most and from which he wants to order equipment. 
+
+The company page shows basic information related to the company itself, a map with the exact location where the company is located, a list of equipment offered by the company, and the company's work calendar.
+
+<a href='https://postimg.cc/VrknMRqS' target='_blank'><img src='https://i.postimg.cc/tTh5Kv7z/visit-Company.png' border='0' alt='visit-Company'/></a>
+
+The company's work calendar shows all available appointments of all administrators working in that company. 
+
+If none of the available dates suit the user, he has the option to request a new date of his choice. If the requested appointment is within the company's working hours, it is assigned to the first administrator who does not have any predefined appointment in the requested time. 
+
+The new appointment will be automatically added to the work calendar of the administrator to whom it is assigned, and he will be able to see all the information about the new appointment.
+
+<a href='https://postimg.cc/ctMWSQzm' target='_blank'><img src='https://i.postimg.cc/Y0TCQRfJ/visit-Company-Calendar.png' border='0' alt='visit-Company-Calendar'/></a>
+<a href='https://postimg.cc/dkRQsPkr' target='_blank'><img src='https://i.postimg.cc/9MKDBcc8/request-New-Appointment.png' border='0' alt='request-New-Appointment'/></a>
+
+
+### Cart
+
 # Authors
 * <a href="https://github.com/NemanjaRanitovic">Nemanja Ranitović
 * <a href="https://github.com/blanusa">Vladimir Blanuša
