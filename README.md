@@ -27,6 +27,7 @@ In addition, the application also offers a modern interface that is, above all, 
 <a href='https://postimg.cc/7CkTppvC' target='_blank'><img src='https://i.postimg.cc/5tHqFVnm/Hospital-Hub-Class-Diagram-drawio.png' border='0' alt='Hospital-Hub-Class-Diagram-drawio'/></a>
 
 # Backend
+
 The backend part of the application was created using Java Spring Boot technology. PostgreSQL database is used for data storage.
 
 
@@ -69,6 +70,7 @@ Each user logs in using their email address, which must be unique, and a passwor
 ### Profiles
 Each user has the option to view their profile and make certain changes to it. What will be displayed on the profile page in addition to personal information about the user depends on the role the logged-in user has.
 #### 1. Company Administrator
+
 In addition to personal information, the company administrator has his personal work calendar on the profile page, which he can view on a daily, monthly, and yearly basis. The work calendar is related to the company where the administrator is employed. The calendar shows all available and reserved appointments for equipment pickup that belong to the logged-in admin.
 
 In addition, the admin can review the details for each appointment as well as create a new appointment that will automatically be displayed as a new free appointment on the page of the company where the administrator works.
@@ -78,6 +80,7 @@ In addition, the admin can review the details for each appointment as well as cr
 <a href='https://postimg.cc/HcZ32rmd' target='_blank'><img src='https://i.postimg.cc/prx7Pj1h/new-Appointment.png' border='0' alt='new-Appointment'/></a>
 
 #### 2. System Administrator
+
 A newly registered user cannot become a system or company admin on his own. The system administrator is responsible for creating such users, who has options for creating a new system or company administrator on his profile. 
 
 In addition, it has the option to register new companies on the system at the request of the company owner.
@@ -148,8 +151,19 @@ The new appointment will be automatically added to the work calendar of the admi
 <a href='https://postimg.cc/ctMWSQzm' target='_blank'><img src='https://i.postimg.cc/Y0TCQRfJ/visit-Company-Calendar.png' border='0' alt='visit-Company-Calendar'/></a>
 <a href='https://postimg.cc/dkRQsPkr' target='_blank'><img src='https://i.postimg.cc/9MKDBcc8/request-New-Appointment.png' border='0' alt='request-New-Appointment'/></a>
 
-
 ### Cart
+
+The logged-in user has the possibility to order the desired equipment from a certain company. 
+
+To create a reservation, the user must select the equipment he wants to order. Marked equipment is added to the cart, from where the order itself is later created. 
+
+Before moving on to finalizing the order, the user must also select the date on which he will pick up the equipment, or request a new date if none suits him. 
+
+When he has completed all the necessary steps, he can complete the order and after that, he receives an email with order confirmation and a QR code with which he can see all the details of the order.
+
+<a href='https://postimg.cc/5Y9CRXBF' target='_blank'><img src='https://i.postimg.cc/KzBD4L4Q/select-Equipment.png' border='0' alt='select-Equipment'/></a>
+<a href='https://postimg.cc/QVt7gWN2' target='_blank'><img src='https://i.postimg.cc/FFbx4jMH/select-Appointment.png' border='0' alt='select-Appointment'/></a>
+<a href='https://postimg.cc/yWFMPWfT' target='_blank'><img src='https://i.postimg.cc/jq9RR7PB/cart.png' border='0' alt='cart'/></a>
 
 # Authors
 * <a href="https://github.com/NemanjaRanitovic">Nemanja Ranitović
