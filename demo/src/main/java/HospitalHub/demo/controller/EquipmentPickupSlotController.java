@@ -1,10 +1,7 @@
 package HospitalHub.demo.controller;
 
 import HospitalHub.demo.dto.EquipmentPickupSlotDTO;
-import HospitalHub.demo.model.CompanyAdministrator;
-import HospitalHub.demo.model.EquipmentAvailability;
-import HospitalHub.demo.model.EquipmentPickupSlot;
-import HospitalHub.demo.model.MedicalEquipment;
+import HospitalHub.demo.model.*;
 import HospitalHub.demo.repository.EquipmentPickupSlotRepository;
 import HospitalHub.demo.service.CompanyAdministratorService;
 import HospitalHub.demo.service.EquipmentPickupSlotService;
@@ -106,5 +103,10 @@ public class EquipmentPickupSlotController {
         return new ResponseEntity<>(equipmentPickupSlotService.getEquipmentsFromIds(equipmentPickupSlotRepository.getById(slotId).getEquipment()),HttpStatus.OK);
     }
 
+    /*@GetMapping("/getReservedUsers/{companyId}")
+    public ResponseEntity<List<User>> getReservedUsers(@PathVariable Integer userId) {
+        CompanyAdministrator companyAdministrator = companyAdministratorService.getByUserId1(userId);
+
+    }*/
 
 }

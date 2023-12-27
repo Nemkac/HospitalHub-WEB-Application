@@ -71,9 +71,14 @@
                     (click)="viewAdministrators()">
                 Administrators
             </button>
+            <button [ngClass]="{'text-lightBlue border-b-[1px] border-lightBlue': showUsers, 'text-gray': !showUsers}"
+                class="w-[100x] h-[40px] font-inter font-semibold text-[24px] hover:text-lightBlue transition-[0.5s]"
+                (click)="viewUsers()">
+             Clients
+            </button>
         </div>
 
-        <ng-form *ngIf="showEquipment && !showCalendar && !showAdministrators" class="w-full flex flex-col">
+        <ng-form *ngIf="showEquipment && !showCalendar && !showAdministrators && !showUsers" class="w-full flex flex-col">
             <div class="flex flex-row w-full">
                 <input placeholder="Enter equipment name here"
                         class="h-[60px] w-[90%] rounded-l-full shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)] bg-white text-third px-16 text-[24px] font-semibold focus:outline-none"
@@ -114,7 +119,7 @@
             </div>
         </ng-form>
 
-        <ng-form *ngIf="!showEquipment && showCalendar && !showAdministrators" class="w-full flex flex-col">
+        <ng-form *ngIf="!showEquipment && showCalendar && !showAdministrators && !showUsers" class="w-full flex flex-col">
             <div class="flex flex-col w-full p-[12px] bg-white h-auto max-h-[1000px] rounded-md shadow-md">
                 <full-calendar class="w-full" [options]="calendarOptions">
                     <ng-template #eventContent let-arg class="overflow-scroll">
@@ -139,8 +144,11 @@
                 </button>
             </div>  
         </ng-form>
-
-        <ng-form *ngIf="!showEquipment && !showCalendar && showAdministrators" class="w-full flex flex-row flex-wrap">
+        <ng-form *ngIf="showUsers && !showEquipment && !showCalendar && !showAdministrators" class="w-full flex flex-col">
+            <!-- Dodajte kod za prikaz korisnika ovde -->
+            <!-- Primer: <div *ngFor="let user of users"> {{ user.name }} </div> -->
+        </ng-form>
+        <ng-form *ngIf="!showEquipment && !showCalendar && showAdministrators && !showUsers" class="w-full flex flex-row flex-wrap">
             <div class="flex flex-row w-full h-auto justify-evenly">
                 <div *ngFor="let admin of companyAdministrators" 
                         class="flex flex-col w-[300px] h-[300px] bg-white rounded-md shadow-md mt-2 flex flex-col items-center p-4 justify-evenly">

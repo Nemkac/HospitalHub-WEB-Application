@@ -44,6 +44,7 @@ Marker.prototype.options.icon = iconDefault;
   templateUrl: './company-admin-profil-page.component.html',
 })
 export class CompanyAdminProfilPageComponent implements OnInit{
+  showUsers: boolean = false; 
   @Input() companyLatitude: number = 0;
   @Input() companyLongitude: number = 0;
   selectedCompany: Company = {} as Company;
@@ -68,7 +69,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
   showEquipment : boolean = true;
   showCalendar : boolean = false;
   showAdministrators : boolean = false;
-
+  
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
     initialView: 'dayGridMonth',
@@ -253,18 +254,30 @@ export class CompanyAdminProfilPageComponent implements OnInit{
     this.showEquipment = true;
     this.showCalendar = false
     this.showAdministrators = false;
+    this.showUsers = false;
+
   }
 
   public viewCalendar() : void{
     this.showEquipment = false;
     this.showCalendar = true
     this.showAdministrators = false;
+    this.showUsers = false;
+
   }
 
   public viewAdministrators() : void{
     this.showEquipment = false;
     this.showCalendar = false
     this.showAdministrators = true;
+    this.showUsers = false;
+  }
+
+  public viewUsers() :void{
+    this.showUsers = true;
+    this.showEquipment = false;
+    this.showCalendar = false;
+    this.showAdministrators = false;
   }
 
   public displayEquipmentPickupSlot(slot: EquipmentPickupSlot) : void{
