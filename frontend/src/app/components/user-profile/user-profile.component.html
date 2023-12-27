@@ -111,6 +111,28 @@
         </div>
       </div>  
     </ng-form>
+    <ng-form *ngIf="user?.roles === 'ROLE_USER'" class="flex flex-col w-full p-4 bg-white rounded-md shadow-md">
+      <div class="flex flex-row w-full items-center justify-start justify-center">
+        <fa-icon [icon]="faCalendar" class="text-third text-[22px]"/>
+        <p class="font-inter font-semibold text-third text-[28px] ml-2">My Upcoming Appointments</p>
+      </div>
+      <div class="flex flex-col w-full h-auto max-h-[800px] mt-2">
+        <ul class="divide-y divide-gray-300">
+          <div *ngFor="let slot of slots" class="py-3">
+            <div class="flex flex-row w-full justify-between items-center">
+              <div class="flex flex-col w-[40%]">
+                <p class="text-lg font-semibold text-gray-800">
+                  {{ slot.dateTime | date:'medium' }}
+                </p>
+                <p class="text-sm text-gray-500">
+                  Duration: {{ slot.duration }} minutes
+                </p>
+              </div>
+            </div>
+          </div>
+        </ul>
+        </div>
+    </ng-form>
   </div>
 
   <div *ngIf="!userProfile" class="text-center mt-8">

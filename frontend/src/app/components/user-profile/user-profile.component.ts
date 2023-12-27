@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserProfileService } from 'src/app/services/user-profile.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { ActivatedRoute } from '@angular/router';
-import { faGear, faUser, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faGear, faUser, faPlus, faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateUserProfileComponent } from '../update-user-profile/update-user-profile.component';
 import { UserService } from 'src/app/services/user.service';
@@ -21,6 +21,7 @@ import { CreatePickupSlotFormComponent } from '../create-pickup-slot-form/create
 import { CreateCompanyAdministratorFormComponent } from '../create-company-administrator-form/create-company-administrator-form.component';
 import { CreateNewSysAdmninistratorFormComponent } from '../create-new-sys-admninistrator-form/create-new-sys-admninistrator-form.component';
 import { CreateCompanyFormComponent } from '../create-company-form/create-company-form.component';
+import { Equipment } from 'src/Equipment';
 
 @Component({
   selector: 'app-user-profile',
@@ -35,6 +36,8 @@ export class UserProfileComponent implements OnInit{
   equipmentPickupSlots : EquipmentPickupSlot[] = [];
   token = localStorage.getItem('token');
   user !: User ;
+  equipments!:Equipment[];
+  slots!:EquipmentPickupSlot[];
 
   @ViewChild('calendar') calendarRef!: ElementRef;
 
@@ -55,11 +58,13 @@ export class UserProfileComponent implements OnInit{
               private userService : UserService,
               private userProfileService:UserProfileService,
               private route: ActivatedRoute,
-              private modalService: NgbModal){}
+              private modalService: NgbModal,
+              private slotService : EquipmentPickupSlotService){}
 
   faGear = faGear;
   faUser = faUser;
   faPlus = faPlus;
+  faCalendar = faCalendar
 
   ngOnInit(): void {
     if(this.token){
@@ -72,6 +77,9 @@ export class UserProfileComponent implements OnInit{
           if(response.roles === "ROLE_COMPANYADMIN"){
             this.isCompanyAdmin = true;
             this.getEquipmentPickupSlots(response.id);
+          }
+          if(response.roles === "ROLE_USER"){
+            this.getUsersUpcomingAppointments();
           }
         },
         (error: HttpErrorResponse) => {
@@ -179,5 +187,26 @@ export class UserProfileComponent implements OnInit{
       CreateCompanyFormComponent,
       { backdrop: 'static', keyboard: true }
     );
+  }
+
+  getUsersUpcomingAppointments(){
+    this.userService.getUsersUpcomingAppoitments(this.userId).subscribe(
+      (slots) => {
+        this.slots = slots;
+        console.log("slotovi su ",this.slots);
+        slots.forEach(slot => {
+          this.getSlotsEquipment(slot.id);
+        });
+      }
+    )
+  }
+
+  getSlotsEquipment(slotId:Number){
+      this.slotService.getSlotsEquipment(slotId).subscribe(
+        (equipments) => {
+          console.log("Ovo su equipmenti", equipments);
+          this.equipments = equipments;
+        }
+      )
   }
 }
