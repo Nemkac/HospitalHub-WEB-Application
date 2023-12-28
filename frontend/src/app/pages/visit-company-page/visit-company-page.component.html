@@ -1,4 +1,5 @@
 <div class="flex flex-row h-auto px-64 py-32 bg-lightBlue/5 justify-between pb-32 relative">
+    <p-toast class="prime_override"></p-toast>
     <div class="flex flex-col p-4 h-[900px] w-[30%] bg-white rounded-md shadow-xl">
         <p class="font-inter text-third font-bold mx-auto text-[24px]">{{selectedCompany.name}}</p>
         <div class="flex flex-row items-center mx-auto w-[150px] justify-evenly">
@@ -51,26 +52,40 @@
                     (click)="viewCalendar()">
                 Company calendar
             </button>
-        </div>
-                
+        </div>      
         <ng-form *ngIf="showEquipment && !showCalendar" class="flex flex-row flex-wrap w-full mt-4 justify-between">
-            <div *ngFor="let equipment of equipments" class="flex flex-row bg-white w-[440px] h-[260px] rounded-md shadow-md mt-4
+            <div *ngFor="let equipment of equipments" class="flex flex-row bg-white w-[440px] h-[310px] max-h-[350px] rounded-md shadow-md mt-4 font-inter
                                             cursor-pointer hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
                 <div class="flex p-2 w-[45%]">
                     <img src="../../../assets/{{equipment.image}}" />
                 </div>
                 <div class="flex w-[60%] flex-col p-4 font-inter text-third">
-                    <p class="font-semibold text-[20px]">{{ equipment?.name }}</p>
-                    <p class="font-light text-[16px]">{{ equipment?.type }}</p>
+                    <p class="font-semibold text-[18px]">{{ equipment?.name }}</p>
+                    <p class="font-light text-[14px]">{{ equipment?.type }}</p>
                     <hr class="w-full mt-[10px] mb-[5px]">
-                    <div class="flex flex-col h-[120px]">
+                    <div class="flex flex-col h-[120px] max-h-[120px]">
                         <p class="text-[12px] font-light">Description:</p>
-                        <p class="text-[16px] font-regular">{{ equipment?.description }}</p>
+                        <p class="text-[14px] font-regular">{{ equipment?.description }}</p>
                     </div>
-                    <hr class="w-full mb-[10px] mt-[5px]">
-                    <button class="flex items-center justify-center bg-third hover:bg-lightBlue text-white font-inter font-semibold text-[18px] rounded-md w-full h-[40px] transition-[0.5s]"
+                    <hr class="w-full mb-[10px] mt-[5px] items-center">
+                    <div class="flex felx-row justify-between mb-[5px]">
+                        <p class="font-light text-[14px]">Available in stock</p>
+                        <p class="font-light text-[14px]">322</p>
+                    </div>
+                    <div class="flex felx-row justify-between mb-[5px] items-center">
+                        <p class="font-semibold text-[16px]">Price</p>
+                        <p class="font-semibold text-[16px]">${{equipment.price}}</p>
+                    </div>
+                    <hr class="w-full mb-[10px] mt-[5px] items-center">
+                    <button class="flex items-center h-[60px] justify-center items-center rounded-md w-full transition-[0.5s]
+                                    font-semibold text-white font-inter text-[18px]"
+                            [ngClass]="{
+                                'bg-third': !equipment.isAddedToCart,
+                                'bg-darkGreen': equipment.isAddedToCart,
+                                'hover:bg-lightBlue': !equipment.isAddedToCart,
+                            }"
                             (click)="addEquipmentToOrder(equipment.id)">
-                        Add to cart
+                        {{ equipment.isAddedToCart ? 'Item added!' : 'Add to cart' }}
                     </button>
                 </div>
             </div>

@@ -17,6 +17,7 @@ public class EquipmentAvailability {
     @ManyToOne
     @JoinColumn(name = "company_administrator_id")
     private CompanyAdministrator companyAdministrator;
+
     @ManyToOne
     @JoinColumn(name = "medical_equipment_id")
     private MedicalEquipment medicalEquipment;

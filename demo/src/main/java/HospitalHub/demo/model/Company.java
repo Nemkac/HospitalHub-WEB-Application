@@ -1,7 +1,6 @@
 package HospitalHub.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
@@ -56,6 +55,9 @@ public class Company {
 
     @OneToMany(mappedBy = "company")
     private List<EquipmentAvailability> equipmentAvailabilityList;
+
+    @OneToMany(mappedBy = "company")
+    private List<MedicalEquipmentAvailability> equipmentQuantity;
 
     public Company() {
 
@@ -202,5 +204,13 @@ public class Company {
 
     public void setClosingTime(LocalTime closingTime) {
         this.closingTime = closingTime;
+    }
+
+    public List<MedicalEquipmentAvailability> getEquipmentQuantity() {
+        return equipmentQuantity;
+    }
+
+    public void setEquipmentQuantity(List<MedicalEquipmentAvailability> equipmentQuantity) {
+        this.equipmentQuantity = equipmentQuantity;
     }
 }

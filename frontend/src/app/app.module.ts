@@ -46,6 +46,8 @@ import { UpcomingAppointmentsComponent } from './components/upcoming-appointment
 import { BookEquipmentComponent } from './components/book-equipment/book-equipment.component';
 import { CartModalComponent } from './components/cart-modal/cart-modal.component';
 import { CreateExtraSlotComponent } from './components/create-extra-slot/create-extra-slot.component';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
       declarations: [
@@ -98,9 +100,10 @@ import { CreateExtraSlotComponent } from './components/create-extra-slot/create-
           MatFormFieldModule,
           MatInputModule,
           MatDatepickerModule,
-          FullCalendarModule
+          FullCalendarModule,
+          ToastModule 
       ],
-      providers: [],
+      providers: [MessageService],
       bootstrap: [AppComponent],
     })
     export class AppModule { }

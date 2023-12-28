@@ -22,6 +22,7 @@ import { User } from 'src/user';
 import { startOfMonth, addMonths } from 'date-fns';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CreateExtraSlotComponent } from 'src/app/components/create-extra-slot/create-extra-slot.component';
+import { MessageService } from 'primeng/api'
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -50,7 +51,8 @@ Marker.prototype.options.icon = iconDefault;
       })),
       transition('void <=> *', animate('0.4s ease-in-out')),
     ])
-  ]
+  ],
+  providers: [MessageService]
 })
 export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   companyId! : number;
@@ -63,6 +65,7 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   selectedCompany: Company = {} as Company;
   equipments: Equipment[] = [];
   token = localStorage.getItem('token');
+  loggedUser : User | null = null;
 
   showEquipment : boolean = true;
   showCalendar : boolean = false;
@@ -78,6 +81,9 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   faCalendarCheck = faCalendarCheck;
 
   numOfItemsInCart : number = 0;
+
+  isAddedToCart = false;
+  selectedEquipmentId: number | null = null;
 
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
@@ -98,12 +104,11 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
 
   @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
 
-  constructor(
-    private companyService: CompanyService,
-    private route: ActivatedRoute,
-    private userService: UserService,
-    private modalService: NgbModal
-  ) {}
+  constructor(private companyService: CompanyService,
+              private route: ActivatedRoute,
+              private userService: UserService,
+              private modalService: NgbModal,
+              private messageService: MessageService) {}
 
   ngOnInit(): void {
     const idFromRoute = this.route.snapshot.paramMap.get('id');
@@ -219,6 +224,13 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
     this.selectedEquipmentsForOrder.push(id);
     this.addedToChart = true;
     this.numOfItemsInCart += 1;
+    const selectedEquipment = this.equipments.find(equipment => equipment.id === id);
+    if (selectedEquipment) {
+      selectedEquipment.isAddedToCart = true;
+      setTimeout(() => {
+        selectedEquipment.isAddedToCart = false;
+     }, 1500);
+    }
   }
 
   public selectAppointment(id : number) : void{
@@ -227,24 +239,31 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   }
 
   public openChartModal() : void{
-    const modalRef = this.modalService.open(
-			CartModalComponent,
-			{ backdrop: 'static', keyboard: true, centered:true}
-		);
-  	modalRef.componentInstance.companyId = this.companyId;
-    modalRef.componentInstance.selectedAppointmentId = this.selectedAppointment;
     if(this.token){
       this.userService.getUserByToken(this.token).subscribe(
         (response : User) => {
-          modalRef.componentInstance.userId = response.id;  
+          this.loggedUser = response;  
         },
         (error : HttpErrorResponse) => {
           alert(error.message)
         }
       );
     }
-    modalRef.componentInstance.handleOrderComplete = this.handleOrderComplete;
-    modalRef.componentInstance.selectedEquipmentIds = this.selectedEquipmentsForOrder;
+
+    if(this.loggedUser !== null && this.companyId !== 0 && this.selectedAppointment !== 0 && this.selectedEquipmentsForOrder.length > 0){
+      const modalRef = this.modalService.open(
+        CartModalComponent,
+        { backdrop: 'static', keyboard: true, centered:true}
+      );
+      modalRef.componentInstance.companyId = this.companyId;
+      modalRef.componentInstance.selectedAppointmentId = this.selectedAppointment;
+      modalRef.componentInstance.handleOrderComplete = this.handleOrderComplete;
+      modalRef.componentInstance.selectedEquipmentIds = this.selectedEquipmentsForOrder;
+      modalRef.componentInstance.userId = this.loggedUser.id;  
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'You must select date!' });
+    }
+
   }
 
   public handleOrderComplete = (): void => {

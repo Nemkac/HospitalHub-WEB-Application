@@ -5,4 +5,5 @@ export interface Equipment{
     description : string;
     price: number;
     image: string;
+    isAddedToCart: boolean;
 }
