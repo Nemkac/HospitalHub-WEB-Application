@@ -22,6 +22,8 @@ import { EquipmentPickupSlotDisplayModalComponent } from 'src/app/components/equ
 import { User } from 'src/user';
 import { CompanyAdministrator } from 'src/app/models/CompanyAdministrator';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { EquipmentPickupSlotService } from 'src/app/services/equipment-pickup-slot.service';
+import { UserDTO } from 'src/app/userDTO';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -44,7 +46,6 @@ Marker.prototype.options.icon = iconDefault;
   templateUrl: './company-admin-profil-page.component.html',
 })
 export class CompanyAdminProfilPageComponent implements OnInit{
-  showUsers: boolean = false; 
   @Input() companyLatitude: number = 0;
   @Input() companyLongitude: number = 0;
   selectedCompany: Company = {} as Company;
@@ -56,6 +57,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
   equipmentPickupSlots : EquipmentPickupSlot[] = [];
   companyAdministrators : User[] = [];
   userId! : number;
+  reservedUsers: UserDTO[] = [];
 
 
   faUser = faUser;
@@ -69,6 +71,8 @@ export class CompanyAdminProfilPageComponent implements OnInit{
   showEquipment : boolean = true;
   showCalendar : boolean = false;
   showAdministrators : boolean = false;
+  showUsers: boolean = false; 
+
   
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
@@ -96,6 +100,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
   constructor(private companyService: CompanyService,
               private userService: UserService,
               private equipmentService: EquipmentService,
+              private equipmentPickupSlotService : EquipmentPickupSlotService,
               private modalService: NgbModal) {}
 
   ngOnInit(): void {
@@ -112,15 +117,15 @@ export class CompanyAdminProfilPageComponent implements OnInit{
               this.selectedCompany = data;
               this.getEquipmentPickupSlots(this.selectedCompany.id);
               this.getAdministrators(this.selectedCompany.id);
-              if(this.showEquipment){
+              if (this.showEquipment) {
                 this.equipments = data.medicalEquipmentList;
               }
               this.companyLatitude = data.latitude;
               this.companyLongitude = data.longitude;
               this.filteredEquipments = this.equipments;
-
-
+  
               this.loadMap();
+              this.getReservedUsersList(); // Call getReservedUsersList after userId is set
             },
             (error) => {
               console.error('Error fetching company data.', error);
@@ -279,6 +284,27 @@ export class CompanyAdminProfilPageComponent implements OnInit{
     this.showCalendar = false;
     this.showAdministrators = false;
   }
+
+  public getReservedUsersList(): void {
+      this.equipmentPickupSlotService.getReservedUsers(this.userId).subscribe(
+        (response : UserDTO[]) => {
+          this.reservedUsers = response;
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+  }
+ /* public getAdministrators(id : number) : void {
+    this.companyService.getCompanyAdministrators(id).subscribe(
+      (response : User[]) => {
+        this.companyAdministrators = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
+  }*/
 
   public displayEquipmentPickupSlot(slot: EquipmentPickupSlot) : void{
     const modalRef = this.modalService.open(

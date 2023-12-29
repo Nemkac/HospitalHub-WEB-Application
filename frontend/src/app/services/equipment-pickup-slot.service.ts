@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { EquipmentPickupSlot } from '../models/EquipmentPickupSlot';
 import { Observable } from 'rxjs';
 import { Equipment } from 'src/Equipment';
+import { UserDTO } from '../userDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,11 @@ export class EquipmentPickupSlotService {
 
   public getSlotsEquipment(slotId:Number) : Observable<Equipment[]>{
     return this.http.get<Equipment[]>(`${this.apiServerUrl}/api/slots/getEquipment/${slotId}`);
+  }
+
+  public getReservedUsers(userId: number): Observable<UserDTO[]> {
+    const url = `${this.apiServerUrl}/api/slots/getReservedUsers/${userId}`;
+    return this.http.get<UserDTO[]>(url);
   }
   
 

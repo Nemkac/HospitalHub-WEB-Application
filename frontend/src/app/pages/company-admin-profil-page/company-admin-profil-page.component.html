@@ -144,9 +144,16 @@
                 </button>
             </div>  
         </ng-form>
-        <ng-form *ngIf="showUsers && !showEquipment && !showCalendar && !showAdministrators" class="w-full flex flex-col">
-            <!-- Dodajte kod za prikaz korisnika ovde -->
-            <!-- Primer: <div *ngFor="let user of users"> {{ user.name }} </div> -->
+        <ng-form *ngIf="showUsers && !showEquipment && !showCalendar && !showAdministrators" class="w-full flex flex-col overflow-y-scroll">
+            <div *ngFor="let reservedUser of reservedUsers" class="flex flex-row bg-white rounded-md shadow-md p-4 mb-4">
+                <div class="flex bg-third rounded-full h-16 w-16 items-center justify-center">
+                    <fa-icon [icon]="faUser" class="text-white text-[24px]"></fa-icon>
+                </div>
+                <div class="flex flex-col ml-4 justify-center">
+                    <p class="font-inter font-semibold text-third text-[18px]">{{ reservedUser.username }}</p>
+                    <p class="font-inter text-[16px]">{{ reservedUser.name }} {{ reservedUser.lastname }}</p>
+                </div>
+            </div>
         </ng-form>
         <ng-form *ngIf="!showEquipment && !showCalendar && showAdministrators && !showUsers" class="w-full flex flex-row flex-wrap">
             <div class="flex flex-row w-full h-auto justify-evenly">
