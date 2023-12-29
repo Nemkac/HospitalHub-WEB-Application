@@ -5,6 +5,7 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
 import { CompanyService } from 'src/app/services/company.service';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-update-company-form',
@@ -20,7 +21,8 @@ export class UpdateCompanyFormComponent implements OnInit{
   faClose = faClose;
 
   constructor(private http: HttpClient, private userService: UserService,
-              private modalService : NgbActiveModal,private companyService : CompanyService) { }
+              private modalService : NgbActiveModal,private companyService : CompanyService,
+              private toast: NgToastService) { }
   
   ngOnInit(): void {
   }
@@ -30,15 +32,18 @@ export class UpdateCompanyFormComponent implements OnInit{
         (response: any) => {
           if (response instanceof Object) {
             this.updateCompany = response;
+            this.toast.success({detail: "Success" ,summary: "Company has been updated successfully!"});
             window.location.reload();
             console.log(response);
           } else {
-            console.log('Update successful');
+            //console.log('Update successful');
+            this.toast.success({detail: "Success" ,summary: "Company has been updated successfully!"});
             window.location.reload();
           }
         },
         (error: HttpErrorResponse) => {
-          alert(error.message);
+          //alert(error.message);
+          this.toast.error({detail: "Error message" ,summary: "Error updating company information!" + error.message});
         }
       );
   }

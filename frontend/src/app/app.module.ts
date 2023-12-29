@@ -47,7 +47,7 @@ import { BookEquipmentComponent } from './components/book-equipment/book-equipme
 import { CartModalComponent } from './components/cart-modal/cart-modal.component';
 import { CreateExtraSlotComponent } from './components/create-extra-slot/create-extra-slot.component';
 import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
+import { NgToastModule } from 'ng-angular-popup';
 
 @NgModule({
       declarations: [
@@ -101,7 +101,7 @@ import { ToastModule } from 'primeng/toast';
           MatInputModule,
           MatDatepickerModule,
           FullCalendarModule,
-          ToastModule 
+          NgToastModule 
       ],
       providers: [MessageService],
       bootstrap: [AppComponent],

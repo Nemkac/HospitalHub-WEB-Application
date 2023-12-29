@@ -23,6 +23,7 @@ import { startOfMonth, addMonths } from 'date-fns';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CreateExtraSlotComponent } from 'src/app/components/create-extra-slot/create-extra-slot.component';
 import { MessageService } from 'primeng/api'
+import { NgToastService } from 'ng-angular-popup'
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -108,7 +109,8 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
               private route: ActivatedRoute,
               private userService: UserService,
               private modalService: NgbModal,
-              private messageService: MessageService) {}
+              private messageService: MessageService,
+              private toast: NgToastService) {}
 
   ngOnInit(): void {
     const idFromRoute = this.route.snapshot.paramMap.get('id');
@@ -245,7 +247,8 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
           this.loggedUser = response;  
         },
         (error : HttpErrorResponse) => {
-          alert(error.message)
+          //alert(error.message)
+          this.toast.error({detail:"Error message", summary:"You must log in before purchase!"});
         }
       );
     }
@@ -261,7 +264,11 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
       modalRef.componentInstance.selectedEquipmentIds = this.selectedEquipmentsForOrder;
       modalRef.componentInstance.userId = this.loggedUser.id;  
     } else {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'You must select date!' });
+      if(this.loggedUser === null){
+        this.toast.error({detail:"Error message", summary:"You must log in before purchase!"});
+      } else {
+        this.toast.error({detail: "Error message", summary:"You must select date!"});
+      }
     }
 
   }
@@ -270,7 +277,8 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
     this.selectedEquipmentsForOrder = [];
     this.selectedAppointment = 0;
     this.addedToChart = false;
-    this.appointmentSelected = false; 
+    this.appointmentSelected = false;
+    this.toast.success({detail:"Order created successfully", summary:"Order details have been sent to your email."});
     this.getEquipmentPickupSlots(this.companyId);
   };
 }

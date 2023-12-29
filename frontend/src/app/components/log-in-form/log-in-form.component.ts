@@ -5,13 +5,15 @@ import { UserService } from 'src/app/services/user.service';
 import { LogInDTO } from 'src/LogInDTO';
 import { Router } from '@angular/router';
 import { User } from 'src/user';
+import { NgToastService } from 'ng-angular-popup';
+
 @Component({
   selector: 'app-log-in-form',
   templateUrl: './log-in-form.component.html'
 })
 export class LogInFormComponent implements OnInit {
   
-  constructor(private userService: UserService, private router: Router){}
+  constructor(private userService: UserService, private router: Router, private toast: NgToastService){}
 
   ngOnInit(): void {}
 
@@ -20,17 +22,17 @@ export class LogInFormComponent implements OnInit {
     let userResponse: User | undefined;
     if(response){
       userResponse= await this.userService.getUserByToken(response.email).toPromise();
+    } else {
+      this.toast.error({detail:"Login failed", summary:"Email or password is incorrect"});
     }
     let service = this.userService;
     if(userResponse){
-    
-    service.loggedInUser = userResponse.username;
-    service.loggedInUserId = userResponse.id;
-    service.loggedInUserRole = userResponse.roles;
+      service.loggedInUser = userResponse.username;
+      service.loggedInUserId = userResponse.id;
+      service.loggedInUserRole = userResponse.roles;
     }
-      // Now you can use the updated value outside the function
+
     console.log(service.loggedInUser);
-    // Continue with other operations
     this.router.navigate(['/']);
-    } 
+  } 
 }

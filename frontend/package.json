@@ -35,6 +35,7 @@
     "bootstrap": "^5.2.3",
     "date-fns": "^2.30.0",
     "leaflet": "^1.7.1",
+    "ng-angular-popup": "^0.5.2",
     "ngx-bootstrap": "^11.0.2",
     "ngx-date-fns": "^10.0.1",
     "ngx-owl-carousel-o": "^16.0.0",
