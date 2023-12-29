@@ -47,14 +47,16 @@
                                     <a class="font-inter font-regular text-[17px]" routerLink="/mycompany">My company</a>
                                 </div>
                             </ng-container>
+                            <ng-container *ngIf="userRole === 'ROLE_COMPANYADMIN'">
+                                <div class="flex w-full text-third hover:bg-third hover:text-white p-[8px]">
+                                    <a class="font-inter font-regular text-[17px]" routerLink="/qr-code-scanner">QR Scanner</a>
+                                </div>
+                            </ng-container>
                             <ng-container *ngIf="userRole === 'ROLE_SYSADMIN'">
                                 <div class="flex w-full text-third hover:bg-third hover:text-white p-[8px]">
                                     <a class="font-inter font-regular text-[17px]" routerLink="/complaints">Complaints</a>
                                 </div>
                             </ng-container>
-                            <div class="flex w-full text-third hover:bg-third hover:text-white p-[8px]">
-                                <a class="font-inter font-regular text-[17px]" href="#">Settings</a>
-                            </div>
                             <div class="flex w-full rounded-b-md text-third hover:bg-third hover:text-white p-[8px]">
                                 <a class="font-inter font-regular text-[17px]"  (click)="logOut()" href="#">LogOut</a>
                             </div>

@@ -48,6 +48,10 @@ import { CartModalComponent } from './components/cart-modal/cart-modal.component
 import { CreateExtraSlotComponent } from './components/create-extra-slot/create-extra-slot.component';
 import { MessageService } from 'primeng/api';
 import { NgToastModule } from 'ng-angular-popup';
+import { QrCodeScannerPageComponent } from './pages/qr-code-scanner-page/qr-code-scanner-page.component';
+import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
+
+LOAD_WASM().subscribe();
 
 @NgModule({
       declarations: [
@@ -85,6 +89,7 @@ import { NgToastModule } from 'ng-angular-popup';
           BookEquipmentComponent,
           CartModalComponent,
           CreateExtraSlotComponent,
+          QrCodeScannerPageComponent,
       ],
       imports: [
           BrowserAnimationsModule,
@@ -101,7 +106,9 @@ import { NgToastModule } from 'ng-angular-popup';
           MatInputModule,
           MatDatepickerModule,
           FullCalendarModule,
-          NgToastModule 
+          NgToastModule,
+          NgxScannerQrcodeModule
+          
       ],
       providers: [MessageService],
       bootstrap: [AppComponent],
