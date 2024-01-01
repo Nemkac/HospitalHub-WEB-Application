@@ -115,10 +115,17 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   ngOnInit(): void {
     const idFromRoute = this.route.snapshot.paramMap.get('id');
     if(idFromRoute != null) {
-    this.companyId =+ idFromRoute
-    this.getCompanyData();
-    this.getEquipmentPickupSlots(this.companyId);
-    console.log('Company ID:', this.companyId);
+      this.companyId =+ idFromRoute
+      this.getCompanyData();
+      this.getEquipmentPickupSlots(this.companyId);
+      console.log('Company ID:', this.companyId);
+    }
+    if(this.token){
+      this.userService.getUserByToken(this.token).subscribe(
+        (response : User) => {
+          this.loggedUser = response;  
+        }
+      );
     }
   }
 
@@ -241,36 +248,23 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   }
 
   public openChartModal() : void{
-    if(this.token){
-      this.userService.getUserByToken(this.token).subscribe(
-        (response : User) => {
-          this.loggedUser = response;  
-        },
-        (error : HttpErrorResponse) => {
-          //alert(error.message)
-          this.toast.error({detail:"Error message", summary:"You must log in before purchase!"});
-        }
-      );
-    }
-
-    if(this.loggedUser !== null && this.companyId !== 0 && this.selectedAppointment !== 0 && this.selectedEquipmentsForOrder.length > 0){
-      const modalRef = this.modalService.open(
-        CartModalComponent,
-        { backdrop: 'static', keyboard: true, centered:true}
-      );
-      modalRef.componentInstance.companyId = this.companyId;
-      modalRef.componentInstance.selectedAppointmentId = this.selectedAppointment;
-      modalRef.componentInstance.handleOrderComplete = this.handleOrderComplete;
-      modalRef.componentInstance.selectedEquipmentIds = this.selectedEquipmentsForOrder;
-      modalRef.componentInstance.userId = this.loggedUser.id;  
-    } else {
-      if(this.loggedUser === null){
-        this.toast.error({detail:"Error message", summary:"You must log in before purchase!"});
+    if(this.loggedUser === null){
+      this.toast.error({detail:"Error message", summary:"You must log in before purchase!"});
+    } else{
+      if(this.companyId !== 0 && this.selectedAppointment !== 0 && this.selectedEquipmentsForOrder.length > 0){
+        const modalRef = this.modalService.open(
+          CartModalComponent,
+          { backdrop: 'static', keyboard: true, centered:true}
+        );
+        modalRef.componentInstance.companyId = this.companyId;
+        modalRef.componentInstance.selectedAppointmentId = this.selectedAppointment;
+        modalRef.componentInstance.handleOrderComplete = this.handleOrderComplete;
+        modalRef.componentInstance.selectedEquipmentIds = this.selectedEquipmentsForOrder;
+        modalRef.componentInstance.userId = this.loggedUser.id;  
       } else {
         this.toast.error({detail: "Error message", summary:"You must select date!"});
       }
     }
-
   }
 
   public handleOrderComplete = (): void => {
