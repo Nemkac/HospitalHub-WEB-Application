@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { faQrcode } from '@fortawesome/free-solid-svg-icons';
+import jsQR from 'jsqr';
 
 @Component({
   selector: 'app-qr-code-scanner-page',
   templateUrl: './qr-code-scanner-page.component.html',
 })
 export class QrCodeScannerPageComponent {
+  @ViewChild('fileInput', { static: false })
+  fileInput!: ElementRef;
   scanResult: any = '';
   openScanner: boolean = false;
   expired: boolean = false;
@@ -19,6 +22,66 @@ export class QrCodeScannerPageComponent {
   endTime: string = '';
 
   faQrcode = faQrcode
+
+  handleImageChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const imageUrl = e.target.result;
+        this.scanQRCodeFromImage(imageUrl);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  uploadQRCode(): void {
+    this.scanResult = '';
+    this.expired = false;
+    this.openScanner = false;
+
+    this.appointmentId = 0;
+    this.userName = '';
+    this.orderedEquipment = [];
+    this.orderDate = '';
+    this.orderTime = '';
+    this. appointmentDuration = 0;
+    this.endTime = '';
+    this.fileInput.nativeElement.click();
+  }
+
+  scanQRCodeFromImage(imageUrl: string): void {
+    const img = new Image();
+    img.src = imageUrl;
+  
+    img.onload = () => {
+      if (img.width === 0 || img.height === 0) {
+        console.error('Invalid image dimensions.');
+        return;
+      }
+  
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+  
+      if (!context) {
+        console.error('Canvas context is null.');
+        return;
+      }
+  
+      canvas.width = img.width;
+      canvas.height = img.height;
+      context.drawImage(img, 0, 0, img.width, img.height);
+  
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+      const code = jsQR(imageData.data, canvas.width, canvas.height);
+  
+      if (code) {
+        this.onCodeResult(code.data);
+      } else {
+        console.log('QR code not found in the image.');
+      }
+    };
+  }
 
   public onCodeResult(result:string){
     this.scanResult = result;

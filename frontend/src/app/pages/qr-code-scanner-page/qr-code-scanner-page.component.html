@@ -21,9 +21,11 @@
       </ng-form>
     </div>
     <hr class="w-full border-[4px] border-third text-third my-2">
-    <button class="flex w-full h-[50px] p-2 my-2 items-center justify-center rounded-md shadow-md text-white bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter font-semibold text-[24px]">
+    <button class="flex w-full h-[50px] p-2 my-2 items-center justify-center rounded-md shadow-md text-white bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter font-semibold text-[24px]"
+            (click)="uploadQRCode()">
       Upload QR Code
     </button>
+    <input #fileInput type="file" (change)="handleImageChange($event)" accept="image/*" style="display: none;" />
   </div>
   <div class="flex flex-col w-[65%] rounded-md bg-white shadow-md p-4 font-inter h-auto">
     <p class="flex text-[28px] font-bold text-third">Scan result:</p>
