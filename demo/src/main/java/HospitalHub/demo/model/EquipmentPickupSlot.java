@@ -36,6 +36,13 @@ public class EquipmentPickupSlot {
     //@JsonIgnoreProperties("equipmentPickupSlots")
     private int[] equipment;
 
+    public enum Status {
+        ACTIVE, PICKED_UP, EXPIRED
+    }
+
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.ACTIVE;
+
     public int[] getEquipment() {
         return equipment;
     }
@@ -106,4 +113,13 @@ public class EquipmentPickupSlot {
     public void setReservedBy(User reservedBy) {
         this.reservedBy = reservedBy;
     }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }
+

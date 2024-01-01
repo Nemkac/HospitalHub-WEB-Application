@@ -317,14 +317,6 @@ export class CompanyAdminProfilPageComponent implements OnInit{
     modalRef.componentInstance.slot = slot;
   }
 
-  getEventStyles(extendedProps: any): any {
-    if (!extendedProps.reservedBy) {
-      return { 'background-color': '#037971' };
-    } else {
-      return { 'background-color' : '#003554' }
-    }
-  }
-
   openCreatePickupSlotForm(): void {
     const modalRef = this.modalService.open(
       CreatePickupSlotFormComponent,
@@ -334,4 +326,17 @@ export class CompanyAdminProfilPageComponent implements OnInit{
     modalRef.componentInstance.userId = this.userId;
   }
 
+  public getEventStyles(extendedProps: any): any {
+    if (extendedProps.slot.status === 'EXPIRED') {
+      return { backgroundColor: '#c23616' };
+    } else if (extendedProps.slot.status === 'PICKED_UP') {
+      return { backgroundColor: '#fbc531' };
+    } else if (!extendedProps.reservedBy) {
+      return { backgroundColor: '#037971' };
+    } else {
+      return { backgroundColor: '#003554' };
+    }
+  }
+  
+  
 }

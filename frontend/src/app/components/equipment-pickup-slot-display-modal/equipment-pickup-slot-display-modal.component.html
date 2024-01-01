@@ -26,6 +26,13 @@
             <p class="font-light text-[24px]">Company Admin</p>
             <p class="font-medium text-[24px]">{{slot?.companyAdministrator?.user?.name}} {{slot?.companyAdministrator?.user?.lastName}}</p>
         </div>
+        <div class="flex flex-row w-full justify-between items-center">
+            <p class="font-light text-[24px]">Status</p>
+            <p class="font-medium text-[24px]">{{slot?.status}}</p>
+        </div>
+          <button class="w-full text-center h-[60px] mt-4 rounded-md bg-yellow hover:bg-lightYellow transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="markEquipmentAsPickedUp(slot?.id)">
+                <p>Mark Equipment as Picked Up</p>
+              </button>
         <hr class="w-full bg-third"/>
     </div>
 </div>

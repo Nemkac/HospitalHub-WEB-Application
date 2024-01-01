@@ -46,10 +46,11 @@ public class InitialDataInsertionService {
 
     @Transactional
     public void insertInitialData() {
-        Company company1 = new Company(1, "Kompanija 1", "Sremska Mitrovica", "Serbia","Bulevar cara Lazara 75", 45.241173, 19.830888, "Najbolja kompanija u gradu", LocalTime.of(8, 0), LocalTime.of(20, 0));
-        Company company2 = new Company(2, "Kompanija 2", "Novi Sad", "Serbia","Bulevar cara Lazara 75",45.241173, 19.830888, "Ovo je najbolja kompanija", LocalTime.of(8, 0), LocalTime.of(20, 0));
-        Company company3 = new Company(3, "Kompanija 3", "Kragujevac", "Serbia", "Bulevar cara Lazara 75",45.241173, 19.830888, "Najjaca firmetina", LocalTime.of(8, 0), LocalTime.of(20, 0));
-        Company company4 = new Company(4, "Kompanija 4", "Jagodina", "Serbia","Bulevar cara Lazara 75",45.241173, 19.830888, "Mi imamo najbolju opremu", LocalTime.of(8, 0), LocalTime.of(20, 0));
+        Company company1 = new Company(1, "HealthTech Solutions", "Sremska Mitrovica", "Serbia", "Boulevard Lazar 75", 45.241173, 19.830888, "Leading provider of innovative healthcare solutions, dedicated to improving patient care and outcomes.", LocalTime.of(8, 0), LocalTime.of(20, 0));
+        Company company2 = new Company(2, "MedEquip Innovations", "Novi Sad", "Serbia", "Lazar Boulevard 75", 45.241173, 19.830888, "Your trusted partner for cutting-edge medical equipment, committed to advancing healthcare excellence.", LocalTime.of(8, 0), LocalTime.of(20, 0));
+        Company company3 = new Company(3, "VitalCare Technologies", "Kragujevac", "Serbia", "Cara Lazara Boulevard 75", 45.241173, 19.830888, "Empowering healthcare with robust and reliable solutions, ensuring the highest standards of medical practice.", LocalTime.of(8, 0), LocalTime.of(20, 0));
+        Company company4 = new Company(4, "MedTech Dynamics", "Jagodina", "Serbia", "Lazara Boulevard 75", 45.241173, 19.830888, "Pioneering medical excellence with state-of-the-art equipment and unparalleled expertise in healthcare technology.", LocalTime.of(8, 0), LocalTime.of(20, 0));
+
 
         companyRepository.save(company1);
         companyRepository.save(company2);
@@ -156,14 +157,14 @@ public class InitialDataInsertionService {
         companyAdministratorService.save(companyAdministrator1);
         companyAdministratorService.save(companyAdministrator2);
 
-        MedicalEquipment equipment1 = new MedicalEquipment("Respirator", "Machine", "Good respirator", company1, 320.00, "respirator.png");
-        MedicalEquipment equipment2 = new MedicalEquipment("EKG", "Diagnostics", "Good ekg", company1, 860.00, "ekg.png");
-        MedicalEquipment equipment3 = new MedicalEquipment("CT Scanner", "Imaging", "Good CT", company2, 1230.00, "ctscanner.png");
-        MedicalEquipment equipment4 = new MedicalEquipment("Ultrasound ", "Imaging", "Good ekg", company2, 250.00, "ultrasound.png");
-        MedicalEquipment equipment5 = new MedicalEquipment("Anesthesia machine", "Machine", "Good anesthesia machine", company3, 225.00, "anesthesia.png");
-        MedicalEquipment equipment6 = new MedicalEquipment("Hemodialysis machine", "Machine", "Good hemodialysis machine", company1, 2000.00, "hemodialysis.png");
-        MedicalEquipment equipment7 = new MedicalEquipment("Hip prothesis", "Implantable", "Good prothesis", company1, 500.00, "prosthesis.png");
-        MedicalEquipment equipment8 = new MedicalEquipment("Pacemaker", "Implantable", "Good pacemaker", company1, 1250.00, "pacemaker.png");
+        MedicalEquipment equipment1 = new MedicalEquipment("Respirator", "Machine", "Reliable respiratory machine for optimal patient support.", company1, 320.00, "respirator.png");
+        MedicalEquipment equipment2 = new MedicalEquipment("EKG", "Diagnostics", "State-of-the-art EKG machine for accurate heart diagnostics.", company1, 860.00, "ekg.png");
+        MedicalEquipment equipment3 = new MedicalEquipment("CT Scanner", "Imaging", "Cutting-edge CT scanner for precise diagnostics.", company2, 1230.00, "ctscanner.png");
+        MedicalEquipment equipment4 = new MedicalEquipment("Ultrasound", "Imaging", "Advanced ultrasound equipment for detailed imaging.", company2, 250.00, "ultrasound.png");
+        MedicalEquipment equipment5 = new MedicalEquipment("Anesthesia Machine", "Machine", "High-performance anesthesia machine for safe administration.", company3, 225.00, "anesthesia.png");
+        MedicalEquipment equipment6 = new MedicalEquipment("Hemodialysis Machine", "Machine", "Cutting-edge hemodialysis machine for life-saving treatment.", company1, 2000.00, "hemodialysis.png");
+        MedicalEquipment equipment7 = new MedicalEquipment("Hip Prosthesis", "Implantable", "Top-quality hip prosthesis to enhance mobility.", company1, 500.00, "prosthesis.png");
+        MedicalEquipment equipment8 = new MedicalEquipment("Pacemaker", "Implantable", "Advanced pacemaker for reliable heart rhythm management.", company1, 1250.00, "pacemaker.png");
 
         medicalEqupimentService.save(equipment1);
         medicalEqupimentService.save(equipment2);
@@ -242,9 +243,9 @@ public class InitialDataInsertionService {
         LocalDateTime slot16DateTime = LocalDateTime.of(2024, 7, 3, 11, 30);
         EquipmentPickupSlot slot16 = new EquipmentPickupSlot(slot16DateTime, 60, user1, companyAdministrator1, new int[]{1, 2, 3});
         //slot7.setReservedBy(user1);
-        LocalDateTime slot17DateTime = LocalDateTime.of(2024, 9, 2, 10, 30);
+        LocalDateTime slot17DateTime = LocalDateTime.of(2024, 1, 1, 22, 53);
         EquipmentPickupSlot slot17 = new EquipmentPickupSlot(slot17DateTime, 30, user2, companyAdministrator2, new int[]{4, 5, 6});
-        LocalDateTime slot18DateTime = LocalDateTime.of(2024, 5, 2, 10, 30);
+        LocalDateTime slot18DateTime = LocalDateTime.of(2024, 1, 1, 23, 30);
         EquipmentPickupSlot slot18 = new EquipmentPickupSlot(slot18DateTime, 30, companyAdministrator1);
 
 

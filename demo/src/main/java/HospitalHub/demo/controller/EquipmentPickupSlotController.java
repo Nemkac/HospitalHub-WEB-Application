@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "api/slots")
@@ -121,14 +118,17 @@ public class EquipmentPickupSlotController {
         Company selectedCompany = companyAdministrator.getCompany();
 
         List<UserDTO> reservedUsersDTO = new ArrayList<>();
+        Set<Integer> addedUserIds = new HashSet<>(); // To keep track of added user IDs
 
-
-        for(CompanyAdministrator admin : selectedCompany.getCompanyAdministrators())
-        {
+        for (CompanyAdministrator admin : selectedCompany.getCompanyAdministrators()) {
             for (EquipmentPickupSlot slot : admin.getEquipmentPickupSlots()) {
                 if (slot.getReservedBy() != null) {
                     User reservedUser = slot.getReservedBy();
-                    reservedUsersDTO.add(new UserDTO(reservedUser));
+
+                    // Check if the user ID is already added
+                    if (addedUserIds.add(reservedUser.getId())) {
+                        reservedUsersDTO.add(new UserDTO(reservedUser));
+                    }
                 }
             }
         }
@@ -137,6 +137,48 @@ public class EquipmentPickupSlotController {
 
         return new ResponseEntity<>(reservedUsersDTO, HttpStatus.OK);
     }
+
+    @PatchMapping("/markEquipmentPickedUp/{slotId}")
+    public ResponseEntity<EquipmentPickupSlotDTO> markEquipmentPickedUp(@PathVariable Integer slotId) {
+        EquipmentPickupSlot slot = equipmentPickupSlotService.getById(slotId);
+
+        if (slot != null && slot.getStatus() == EquipmentPickupSlot.Status.ACTIVE && shouldMarkPickedUp(slot)) {
+            slot.setStatus(EquipmentPickupSlot.Status.PICKED_UP);
+            equipmentPickupSlotService.saveNewStatus(slot);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    private boolean shouldMarkPickedUp(EquipmentPickupSlot slot) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime reservationEnd = slot.getDateTime().plusMinutes(slot.getDuration());
+        return now.isAfter(slot.getDateTime()) && reservationEnd.isAfter(now);
+    }
+
+
+    @PatchMapping("/updateStatusForExpiredSlots")
+    public ResponseEntity<String> updateStatusForExpiredSlots() {
+        List<EquipmentPickupSlot> allSlots = equipmentPickupSlotService.getAll();
+        List<EquipmentPickupSlot> updatedSlots = new ArrayList<>();
+
+        for (EquipmentPickupSlot slot : allSlots) {
+            if (equipmentPickupSlotService.isSlotExpired(slot)) {
+                slot.setStatus(EquipmentPickupSlot.Status.EXPIRED);
+                EquipmentPickupSlot updatedSlot = equipmentPickupSlotService.saveNewStatus(slot);
+                updatedSlots.add(updatedSlot);
+            }
+        }
+
+        if (updatedSlots.isEmpty()) {
+            return new ResponseEntity<>("NOT Ok", HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>("OK", HttpStatus.OK);
+        }
+    }
+
 }
 
 

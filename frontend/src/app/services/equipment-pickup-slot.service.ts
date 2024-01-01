@@ -4,6 +4,7 @@ import { EquipmentPickupSlot } from '../models/EquipmentPickupSlot';
 import { Observable } from 'rxjs';
 import { Equipment } from 'src/Equipment';
 import { UserDTO } from '../userDTO';
+import { List } from 'postcss/lib/list';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +47,16 @@ export class EquipmentPickupSlotService {
     const url = `${this.apiServerUrl}/api/slots/getReservedUsers/${userId}`;
     return this.http.get<UserDTO[]>(url);
   }
+
+  public markEquipmentPickedUp(slotId: number): Observable<any> {
+    const url = `${this.apiServerUrl}/api/slots/markEquipmentPickedUp/${slotId}`;
+    return this.http.patch(url, null);
+  }
+
+ /* public updateStatusForExpiredSlots(): Observable<EquipmentPickupSlot[]> {
+    const url = `${this.apiServerUrl}/api/slots/updateStatusForExpiredSlots`;
+    return this.http.patch<EquipmentPickupSlot[]>(url, null);
+  }*/
   
 
 }

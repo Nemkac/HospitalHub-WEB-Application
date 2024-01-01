@@ -7,4 +7,6 @@ export interface EquipmentPickupSlot{
     duration: number;
     reservedBy: User;
     companyAdministrator: CompanyAdministrator;
+    equipment: number[]; 
+    status: string;
 }

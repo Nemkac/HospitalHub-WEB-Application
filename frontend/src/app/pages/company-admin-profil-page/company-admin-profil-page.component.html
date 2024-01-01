@@ -95,6 +95,7 @@
                     <fa-icon [icon]="faPlus" class="text-[44px] font-bold"/>
                     <p class="font-inter font-semibold text-[28px]">Add new equipment</p>
                 </div>
+                
             
                 <div *ngFor="let equipment of filteredEquipments" 
                         class="flex flex-row bg-white my-2 w-[450px] h-[220px] rounded-md shadow-md relative justify-between cursor-pointer hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
@@ -121,29 +122,29 @@
 
         <ng-form *ngIf="!showEquipment && showCalendar && !showAdministrators && !showUsers" class="w-full flex flex-col">
             <div class="flex flex-col w-full p-[12px] bg-white h-auto max-h-[1000px] rounded-md shadow-md">
-                <full-calendar class="w-full" [options]="calendarOptions">
-                    <ng-template #eventContent let-arg class="overflow-scroll">
-                        <div *ngIf="arg.event.extendedProps" (click)="displayEquipmentPickupSlot(arg.event.extendedProps.slot)"
-                            [ngStyle]="getEventStyles(arg.event.extendedProps)"
-                            class="flex flex-col font-inter text-white p-[5px] w-full rounded-md cursor-pointer">
-                        <p>Start: {{ arg.event.start | date: 'HH:mm' }}</p>
-                        <p>Duration: {{ arg.event.extendedProps.duration }} min</p>
-                        <p>
-                            <ng-container *ngIf="arg.event.extendedProps.firstname && arg.event.extendedProps.lastname">
-                                {{ arg.event.extendedProps.firstname }} {{ arg.event.extendedProps.lastname }}
-                            </ng-container>
-                            <ng-container *ngIf="!arg.event.extendedProps.firstname && !arg.event.extendedProps.lastname">
-                                Free appointment
-                            </ng-container>
-                        </p>
-                        </div>
-                    </ng-template>
-                </full-calendar>
-                <button class="w-full text-center h-[60px] mt-4 rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="openCreatePickupSlotForm()">
-                    <p>Add new appointment</p>
-                </button>
-            </div>  
-        </ng-form>
+              <full-calendar class="w-full" [options]="calendarOptions">
+                <ng-template #eventContent let-arg class="overflow-scroll">
+                  <div *ngIf="arg.event.extendedProps" (click)="displayEquipmentPickupSlot(arg.event.extendedProps.slot)"
+                    [ngStyle]="getEventStyles(arg.event.extendedProps)"
+                    class="flex flex-col font-inter text-white p-[5px] w-full rounded-md cursor-pointer">
+                    <p>Start: {{ arg.event.start | date: 'HH:mm' }}</p>
+                    <p>Duration: {{ arg.event.extendedProps.duration }} min</p>
+                    <p>
+                      <ng-container *ngIf="arg.event.extendedProps.firstname && arg.event.extendedProps.lastname">
+                        {{ arg.event.extendedProps.firstname }} {{ arg.event.extendedProps.lastname }}
+                      </ng-container>
+                      <ng-container *ngIf="!arg.event.extendedProps.firstname && !arg.event.extendedProps.lastname">
+                        Free appointment
+                      </ng-container>
+                    </p>
+                  </div>
+                </ng-template>
+              </full-calendar>
+              <button class="w-full text-center h-[60px] mt-4 rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="openCreatePickupSlotForm()">
+                <p>Add new appointment</p>
+              </button>
+            </div>
+          </ng-form>
         <ng-form *ngIf="showUsers && !showEquipment && !showCalendar && !showAdministrators" class="w-full flex flex-col overflow-y-scroll">
             <div *ngFor="let reservedUser of reservedUsers" class="flex flex-row bg-white rounded-md shadow-md p-4 mb-4">
                 <div class="flex bg-third rounded-full h-16 w-16 items-center justify-center">

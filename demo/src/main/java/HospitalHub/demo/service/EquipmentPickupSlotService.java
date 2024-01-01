@@ -45,6 +45,19 @@ public class EquipmentPickupSlotService {
         }
         return equipmentPickupSlotRepository.save(slot);
     }
+    public EquipmentPickupSlot saveNewStatus(EquipmentPickupSlot slot) {
+        if (isSlotExpired(slot)) {
+            slot.setStatus(EquipmentPickupSlot.Status.EXPIRED);
+        }
+        return equipmentPickupSlotRepository.save(slot);
+    }
+
+    public boolean isSlotExpired(EquipmentPickupSlot slot) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime reservationEnd = slot.getDateTime().plusMinutes(slot.getDuration());
+
+        return now.isAfter(reservationEnd);
+    }
 
     public List<EquipmentPickupSlot> getAll(){
         return equipmentPickupSlotRepository.findAll();
