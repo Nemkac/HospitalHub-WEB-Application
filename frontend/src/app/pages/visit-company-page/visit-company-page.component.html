@@ -1,13 +1,21 @@
 <div class="flex flex-row h-auto px-64 py-32 bg-lightBlue/5 justify-between pb-32 relative">
     <div class="flex flex-col p-4 h-[900px] w-[30%] bg-white rounded-md shadow-xl">
         <p class="font-inter text-third font-bold mx-auto text-[24px]">{{selectedCompany.name}}</p>
-        <div class="flex flex-row items-center mx-auto w-[150px] justify-evenly">
-            <div class="flex rounded-full h-[10px] w-[10px] bg-[#44bd32]"></div>
-            <p class="font-inter text-[#44bd32] text-[16px] font-light">Currently open</p>
-        </div>
+        <ng-form *ngIf="isOpen">
+            <div class="flex flex-row items-center mx-auto w-[150px] justify-evenly">
+                <div class="flex rounded-full h-[10px] w-[10px] bg-[#44bd32]"></div>
+                <p class="font-inter text-[#44bd32] text-[16px] font-light">Currently open</p>
+            </div>
+        </ng-form>
+        <ng-form *ngIf="!isOpen">
+            <div class="flex flex-row items-center mx-auto w-[150px] justify-evenly">
+                <div class="flex rounded-full h-[10px] w-[10px] bg-red"></div>
+                <p class="font-inter text-red text-[16px] font-light">Currently closed</p>
+            </div>
+        </ng-form>
         <div class="flex flex-row items-center mx-auto w-[200px] justify-evenly">
-            <p class="font-inter font-light text-[#7f8fa6]">Working hours:</p>
-            <p class="font-inter font-light text-[#7f8fa6]">08 - 16h</p>
+            <p class="font-inter font-light text-[#7f8fa6] ml-2 flex-shrink-0">Working hours:</p>
+            <p class="font-inter font-light text-[#7f8fa6] ml-2 flex-shrink-0">{{formattedOpeningTime}} - {{formattedClosingTime}}</p>
         </div>
         <hr class="w-full bg-gray mt-4 mb-2">
         <div class="flex flex-col w-full h-[400px]">

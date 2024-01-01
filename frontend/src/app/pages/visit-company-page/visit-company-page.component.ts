@@ -24,6 +24,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { CreateExtraSlotComponent } from 'src/app/components/create-extra-slot/create-extra-slot.component';
 import { MessageService } from 'primeng/api'
 import { NgToastService } from 'ng-angular-popup'
+import * as moment from 'moment-timezone';
+
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -70,6 +72,7 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
 
   showEquipment : boolean = true;
   showCalendar : boolean = false;
+  isOpen : boolean = false;
 
   addedToChart : boolean = false;
   appointmentSelected : boolean = false; 
@@ -127,6 +130,23 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
         }
       );
     }
+    this.checkIsOpen();
+  }
+
+  checkIsOpen(): void {
+    const now = moment(); // Trenutno vreme
+    const openingTime = moment(this.formattedOpeningTime, 'HH:mm');
+    const closingTime = moment(this.formattedClosingTime, 'HH:mm');
+    
+    this.isOpen = now.isBetween(openingTime, closingTime);
+  }
+
+  get formattedOpeningTime(): string {
+    return this.selectedCompany.openingTime ? this.selectedCompany.openingTime.slice(0, 5) : '';
+  }
+
+  get formattedClosingTime(): string {
+    return this.selectedCompany.closingTime ? this.selectedCompany.closingTime.slice(0, 5) : '';
   }
 
   ngAfterViewInit(): void {

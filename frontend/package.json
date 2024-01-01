@@ -39,6 +39,7 @@
     "date-fns": "^2.30.0",
     "jsqr": "^1.4.0",
     "leaflet": "^1.7.1",
+    "moment-timezone": "^0.5.44",
     "ng-angular-popup": "^0.5.2",
     "ngx-bootstrap": "^11.0.2",
     "ngx-date-fns": "^10.0.1",

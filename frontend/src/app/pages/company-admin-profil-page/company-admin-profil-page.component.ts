@@ -22,6 +22,7 @@ import { EquipmentPickupSlotDisplayModalComponent } from 'src/app/components/equ
 import { User } from 'src/user';
 import { CompanyAdministrator } from 'src/app/models/CompanyAdministrator';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import * as moment from 'moment-timezone';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -55,6 +56,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
   equipmentPickupSlots : EquipmentPickupSlot[] = [];
   companyAdministrators : User[] = [];
   userId! : number;
+  isOpen : boolean = false;
 
 
   faUser = faUser;
@@ -81,6 +83,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
       right: 'dayGridMonth,timeGridWeek,timeGridDay,dayGridYear'
     },
   };
+
   get formattedOpeningTime(): string {
     return this.selectedCompany.openingTime ? this.selectedCompany.openingTime.slice(0, 5) : '';
   }
@@ -99,6 +102,15 @@ export class CompanyAdminProfilPageComponent implements OnInit{
 
   ngOnInit(): void {
     this.getAdminsCompanyData();
+    this.checkIsOpen();
+  }
+
+  checkIsOpen(): void {
+    const now = moment(); // Trenutno vreme
+    const openingTime = moment(this.formattedOpeningTime, 'HH:mm');
+    const closingTime = moment(this.formattedClosingTime, 'HH:mm');
+    
+    this.isOpen = now.isBetween(openingTime, closingTime);
   }
 
   public getAdminsCompanyData() {
