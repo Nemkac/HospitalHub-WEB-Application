@@ -247,6 +247,8 @@ public class InitialDataInsertionService {
         EquipmentPickupSlot slot17 = new EquipmentPickupSlot(slot17DateTime, 30, user2, companyAdministrator2, new int[]{4, 5, 6});
         LocalDateTime slot18DateTime = LocalDateTime.of(2024, 5, 2, 10, 30);
         EquipmentPickupSlot slot18 = new EquipmentPickupSlot(slot18DateTime, 30, companyAdministrator1);
+        LocalDateTime slot19DateTime = LocalDateTime.of(2024, 1, 1, 20, 00);
+        EquipmentPickupSlot slot19 = new EquipmentPickupSlot(slot19DateTime, 20, companyAdministrator1);
 
 
         equipmentPickupSlotRepository.save(slot1);
@@ -267,6 +269,7 @@ public class InitialDataInsertionService {
         equipmentPickupSlotRepository.save(slot16);
         equipmentPickupSlotRepository.save(slot17);
         equipmentPickupSlotRepository.save(slot18);
+        equipmentPickupSlotRepository.save(slot19);
 
         MedicalEquipmentAvailability medicalEquipmentAvailability1 = new MedicalEquipmentAvailability();
         medicalEquipmentAvailability1.setCompany(company1);

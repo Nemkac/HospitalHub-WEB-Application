@@ -49,9 +49,8 @@ import { CreateExtraSlotComponent } from './components/create-extra-slot/create-
 import { MessageService } from 'primeng/api';
 import { NgToastModule } from 'ng-angular-popup';
 import { QrCodeScannerPageComponent } from './pages/qr-code-scanner-page/qr-code-scanner-page.component';
-import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
-LOAD_WASM().subscribe();
 
 @NgModule({
       declarations: [
@@ -107,8 +106,7 @@ LOAD_WASM().subscribe();
           MatDatepickerModule,
           FullCalendarModule,
           NgToastModule,
-          NgxScannerQrcodeModule
-          
+          ZXingScannerModule
       ],
       providers: [MessageService],
       bootstrap: [AppComponent],
