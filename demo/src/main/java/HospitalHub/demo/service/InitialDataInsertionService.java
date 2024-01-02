@@ -6,13 +6,11 @@ import HospitalHub.demo.repository.EquipmentPickupSlotRepository;
 import HospitalHub.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 
 @Service
 public class InitialDataInsertionService {
@@ -43,6 +41,9 @@ public class InitialDataInsertionService {
 
     @Autowired
     private EquipmentPickupSlotRepository equipmentPickupSlotRepository;
+
+    @Autowired
+    private MedicalEquipmentAvailabilityService medicalEquipmentAvailabilityService;
 
     @Transactional
     public void insertInitialData() {
@@ -247,6 +248,8 @@ public class InitialDataInsertionService {
         EquipmentPickupSlot slot17 = new EquipmentPickupSlot(slot17DateTime, 30, user2, companyAdministrator2, new int[]{4, 5, 6});
         LocalDateTime slot18DateTime = LocalDateTime.of(2024, 1, 1, 23, 30);
         EquipmentPickupSlot slot18 = new EquipmentPickupSlot(slot18DateTime, 30, companyAdministrator1);
+        LocalDateTime slot19DateTime = LocalDateTime.of(2024, 1, 1, 20, 00);
+        EquipmentPickupSlot slot19 = new EquipmentPickupSlot(slot19DateTime, 20, companyAdministrator1);
 
 
         equipmentPickupSlotRepository.save(slot1);
@@ -267,6 +270,20 @@ public class InitialDataInsertionService {
         equipmentPickupSlotRepository.save(slot16);
         equipmentPickupSlotRepository.save(slot17);
         equipmentPickupSlotRepository.save(slot18);
+        equipmentPickupSlotRepository.save(slot19);
+
+        MedicalEquipmentAvailability medicalEquipmentAvailability1 = new MedicalEquipmentAvailability();
+        medicalEquipmentAvailability1.setCompany(company1);
+        medicalEquipmentAvailability1.setEquipment(equipment1);
+        medicalEquipmentAvailability1.setQuantity(10);
+
+        MedicalEquipmentAvailability medicalEquipmentAvailability2 = new MedicalEquipmentAvailability();
+        medicalEquipmentAvailability2.setCompany(company1);
+        medicalEquipmentAvailability2.setEquipment(equipment2);
+        medicalEquipmentAvailability2.setQuantity(5);
+
+        medicalEquipmentAvailabilityService.save(medicalEquipmentAvailability1);
+        medicalEquipmentAvailabilityService.save(medicalEquipmentAvailability2);
 
     }
 

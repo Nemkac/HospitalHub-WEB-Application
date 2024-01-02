@@ -1,0 +1,108 @@
+<div class="flex flex-row w-full h-[100vh] bg-lightBlue/5 px-64 py-32 justify-between">
+  <div class="flex flex-col h-full w-[33%]">
+    <div>
+      <ng-form *ngIf="!openScanner" class="h-[400px]">
+        <div class="flex flex-col items-center text-third justify-center rounded-md border-[2px] border-third transition-[0.5s]
+                    hover:bg-third hover:text-white cursor-pointer h-[400px] mb-2" (click)="openQRCodeScanner()">
+            <fa-icon [icon]="faQrcode" class="text-[54px]"/>
+            <p class="font-inter font-semibold text-[28px]">Open QR Code Scanner</p>
+        </div>
+      </ng-form>
+      <ng-form *ngIf="openScanner">
+        <zxing-scanner (scanSuccess)="onCodeResult($event)"></zxing-scanner>
+        <button class="flex w-full h-[50px] p-2 my-2 items-center justify-center rounded-md shadow-md text-white bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter font-semibold text-[24px]" 
+                (click)="closeQRCodeScanner()">
+          Close QR Code Scanner
+        </button>
+        <button class="flex w-full h-[50px] p-2 my-2 items-center justify-center rounded-md shadow-md text-white bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter font-semibold text-[24px]" 
+                (click)="scanAnotherQrCode()">
+          Scan Another QR Code
+        </button>
+      </ng-form>
+    </div>
+    <hr class="w-full border-[4px] border-third text-third my-2">
+    <button class="flex w-full h-[50px] p-2 my-2 items-center justify-center rounded-md shadow-md text-white bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter font-semibold text-[24px]"
+            (click)="uploadQRCode()">
+      Upload QR Code
+    </button>
+    <input #fileInput type="file" (change)="handleImageChange($event)" accept="image/*" style="display: none;" />
+  </div>
+  <div class="flex flex-col w-[65%] rounded-md bg-white shadow-md p-4 font-inter h-auto">
+    <p class="flex text-[28px] font-bold text-third">Scan result:</p>
+    <ng-form *ngIf="scanResult" class="flex w-full h-full justify-evenly flex-col">
+      <div class="flex flex-row justify-between items-center mt-4">
+        <p class="flex text-third text-[24px] font-light">Appointment number</p>
+        <p class="flex text-third text-[24px] font-semibold">{{appointmentId}}</p>
+      </div>
+      <div class="flex flex-row justify-between items-center my-2">
+        <p class="flex text-third text-[24px] font-light">User</p>
+        <p class="flex text-third text-[24px] font-semibold">{{userName}}</p>
+      </div>
+      <hr class="w-full my-2 text-third">
+      <div class="flex flex-col justify-between items-center my-2">
+        <p class="flex text-third text-[24px] font-light">Ordered equipment</p>
+        <div class="flex flex-row w-full h-auto justify-normal">
+          <div *ngFor="let equipment of orderedEquipment" 
+                  class="flex flex-row w-[250px] h-[100px] border-[1px] border-gray rounded-md 
+                        bg-white rounded-md items-center justify-center justify-evenly my-2 p-4 mr-2">
+            <img src="../../../assets/{{equipment.toLowerCase()}}.png" class="w-[60px] h-auto"/>  
+            <p class="font-inter font-semibold text-third text-[26px]">{{equipment}}</p>
+          </div>
+        </div> 
+      </div>
+      <hr class="w-full my-2 text-third">
+      <div class="flex flex-col w-full my-2">
+        <div class="flex flex-row w-full justify-between">
+          <div class="flex flex-col w-[40%]">
+            <div class="flex flex-row justify-between items-center">
+              <p class="flex text-third text-[24px] font-light">Start date</p>
+              <p class="flex text-third text-[24px] font-semibold">{{orderDate | date : "dd/MM/YYYY"}}</p>
+            </div>
+            <div class="flex flex-row justify-between items-center">
+              <p class="flex text-third text-[24px] font-light">Start time</p>
+              <p class="flex text-third text-[24px] font-semibold">{{orderTime}}</p>
+            </div>
+          </div>
+          <div class="flex flex-col w-[40%]">
+            <div class="flex flex-row justify-between items-center">
+              <p class="flex text-third text-[24px] font-light">End date</p>
+              <p class="flex text-third text-[24px] font-semibold">{{orderDate | date : "dd/MM/YYYY"}}</p>
+            </div>
+            <div class="flex flex-row justify-between items-center">
+              <p class="flex text-third text-[24px] font-light">End time</p>
+              <p class="flex text-third text-[24px] font-semibold">{{endTime}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="w-full my-2 text-third">
+      <div class="flex flex-row justify-between items-center my-2">
+        <p class="flex text-third text-[24px] font-light">Status</p>
+        <ng-form *ngIf="!expired">
+          <p class="flex text-darkGreen text-[24px] font-semibold">Active</p>
+        </ng-form>
+        <ng-form *ngIf="expired">
+          <p class="flex text-red text-[24px] font-semibold">Expired</p>
+        </ng-form>
+      </div>
+      <ng-form *ngIf="!expired">
+        <div class="flex w-full justify-end">
+          <button class="flex w-[300px] h-[50px] p-2 bg-third text-white font-inter font-semibold text-[24px] rounded-md items-center justify-center hover:bg-lightBlue transition-[0.5s] cursor-pointer">
+            Finish
+          </button>
+        </div>
+      </ng-form>
+      <ng-form *ngIf="expired">
+        <div class="flex flex-row w-full h-full">
+          <div class="h-full w-[10px] bg-red rounded-l-md"></div>
+          <div class="w-full bg-red/10 flex flex-col rounded-r-md px-4 py-2">
+            <p class="font-inter font-bold text-red text-[20px]">The equipment pick up period has expired!</p>
+            <p class="font-inter font-medium text-red text-[16px]">
+              The order is marked as expired. In order to prevent the misuse of the application and to avoid causing damage to companies, the user is penalized with 2 penalty points.
+            </p>
+          </div>
+        </div>
+      </ng-form>
+    </ng-form>
+  </div>
+</div>

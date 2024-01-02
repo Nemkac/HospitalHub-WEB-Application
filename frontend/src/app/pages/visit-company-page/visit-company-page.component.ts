@@ -22,6 +22,10 @@ import { User } from 'src/user';
 import { startOfMonth, addMonths } from 'date-fns';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CreateExtraSlotComponent } from 'src/app/components/create-extra-slot/create-extra-slot.component';
+import { MessageService } from 'primeng/api'
+import { NgToastService } from 'ng-angular-popup'
+import * as moment from 'moment-timezone';
+
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -50,7 +54,8 @@ Marker.prototype.options.icon = iconDefault;
       })),
       transition('void <=> *', animate('0.4s ease-in-out')),
     ])
-  ]
+  ],
+  providers: [MessageService]
 })
 export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   companyId! : number;
@@ -63,9 +68,11 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   selectedCompany: Company = {} as Company;
   equipments: Equipment[] = [];
   token = localStorage.getItem('token');
+  loggedUser : User | null = null;
 
   showEquipment : boolean = true;
   showCalendar : boolean = false;
+  isOpen : boolean = false;
 
   addedToChart : boolean = false;
   appointmentSelected : boolean = false; 
@@ -78,6 +85,9 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   faCalendarCheck = faCalendarCheck;
 
   numOfItemsInCart : number = 0;
+
+  isAddedToCart = false;
+  selectedEquipmentId: number | null = null;
 
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
@@ -98,21 +108,45 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
 
   @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
 
-  constructor(
-    private companyService: CompanyService,
-    private route: ActivatedRoute,
-    private userService: UserService,
-    private modalService: NgbModal
-  ) {}
+  constructor(private companyService: CompanyService,
+              private route: ActivatedRoute,
+              private userService: UserService,
+              private modalService: NgbModal,
+              private messageService: MessageService,
+              private toast: NgToastService) {}
 
   ngOnInit(): void {
     const idFromRoute = this.route.snapshot.paramMap.get('id');
     if(idFromRoute != null) {
-    this.companyId =+ idFromRoute
-    this.getCompanyData();
-    this.getEquipmentPickupSlots(this.companyId);
-    console.log('Company ID:', this.companyId);
+      this.companyId =+ idFromRoute
+      this.getCompanyData();
+      this.getEquipmentPickupSlots(this.companyId);
+      console.log('Company ID:', this.companyId);
     }
+    if(this.token){
+      this.userService.getUserByToken(this.token).subscribe(
+        (response : User) => {
+          this.loggedUser = response;  
+        }
+      );
+    }
+    this.checkIsOpen();
+  }
+
+  checkIsOpen(): void {
+    const now = moment(); // Trenutno vreme
+    const openingTime = moment(this.formattedOpeningTime, 'HH:mm');
+    const closingTime = moment(this.formattedClosingTime, 'HH:mm');
+    
+    this.isOpen = now.isBetween(openingTime, closingTime);
+  }
+
+  get formattedOpeningTime(): string {
+    return this.selectedCompany.openingTime ? this.selectedCompany.openingTime.slice(0, 5) : '';
+  }
+
+  get formattedClosingTime(): string {
+    return this.selectedCompany.closingTime ? this.selectedCompany.closingTime.slice(0, 5) : '';
   }
 
   ngAfterViewInit(): void {
@@ -219,6 +253,13 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
     this.selectedEquipmentsForOrder.push(id);
     this.addedToChart = true;
     this.numOfItemsInCart += 1;
+    const selectedEquipment = this.equipments.find(equipment => equipment.id === id);
+    if (selectedEquipment) {
+      selectedEquipment.isAddedToCart = true;
+      setTimeout(() => {
+        selectedEquipment.isAddedToCart = false;
+     }, 1500);
+    }
   }
 
   public selectAppointment(id : number) : void{
@@ -227,31 +268,31 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   }
 
   public openChartModal() : void{
-    const modalRef = this.modalService.open(
-			CartModalComponent,
-			{ backdrop: 'static', keyboard: true, centered:true}
-		);
-  	modalRef.componentInstance.companyId = this.companyId;
-    modalRef.componentInstance.selectedAppointmentId = this.selectedAppointment;
-    if(this.token){
-      this.userService.getUserByToken(this.token).subscribe(
-        (response : User) => {
-          modalRef.componentInstance.userId = response.id;  
-        },
-        (error : HttpErrorResponse) => {
-          alert(error.message)
-        }
-      );
+    if(this.loggedUser === null){
+      this.toast.error({detail:"Error message", summary:"You must log in before purchase!"});
+    } else{
+      if(this.companyId !== 0 && this.selectedAppointment !== 0 && this.selectedEquipmentsForOrder.length > 0){
+        const modalRef = this.modalService.open(
+          CartModalComponent,
+          { backdrop: 'static', keyboard: true, centered:true}
+        );
+        modalRef.componentInstance.companyId = this.companyId;
+        modalRef.componentInstance.selectedAppointmentId = this.selectedAppointment;
+        modalRef.componentInstance.handleOrderComplete = this.handleOrderComplete;
+        modalRef.componentInstance.selectedEquipmentIds = this.selectedEquipmentsForOrder;
+        modalRef.componentInstance.userId = this.loggedUser.id;  
+      } else {
+        this.toast.error({detail: "Error message", summary:"You must select date!"});
+      }
     }
-    modalRef.componentInstance.handleOrderComplete = this.handleOrderComplete;
-    modalRef.componentInstance.selectedEquipmentIds = this.selectedEquipmentsForOrder;
   }
 
   public handleOrderComplete = (): void => {
     this.selectedEquipmentsForOrder = [];
     this.selectedAppointment = 0;
     this.addedToChart = false;
-    this.appointmentSelected = false; 
+    this.appointmentSelected = false;
+    this.toast.success({detail:"Order created successfully", summary:"Order details have been sent to your email."});
     this.getEquipmentPickupSlots(this.companyId);
   };
 }

@@ -46,6 +46,11 @@ import { UpcomingAppointmentsComponent } from './components/upcoming-appointment
 import { BookEquipmentComponent } from './components/book-equipment/book-equipment.component';
 import { CartModalComponent } from './components/cart-modal/cart-modal.component';
 import { CreateExtraSlotComponent } from './components/create-extra-slot/create-extra-slot.component';
+import { MessageService } from 'primeng/api';
+import { NgToastModule } from 'ng-angular-popup';
+import { QrCodeScannerPageComponent } from './pages/qr-code-scanner-page/qr-code-scanner-page.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+
 
 @NgModule({
       declarations: [
@@ -83,6 +88,7 @@ import { CreateExtraSlotComponent } from './components/create-extra-slot/create-
           BookEquipmentComponent,
           CartModalComponent,
           CreateExtraSlotComponent,
+          QrCodeScannerPageComponent,
       ],
       imports: [
           BrowserAnimationsModule,
@@ -98,9 +104,11 @@ import { CreateExtraSlotComponent } from './components/create-extra-slot/create-
           MatFormFieldModule,
           MatInputModule,
           MatDatepickerModule,
-          FullCalendarModule
+          FullCalendarModule,
+          NgToastModule,
+          ZXingScannerModule
       ],
-      providers: [],
+      providers: [MessageService],
       bootstrap: [AppComponent],
     })
     export class AppModule { }

@@ -217,9 +217,13 @@ public class MedicalEquipmentController {
 
         String namesOfEquipment = new String();
         for(MedicalEquipment x : equipment){
-            namesOfEquipment += x.getName() +", "+ " ";
+            namesOfEquipment += x.getName() +","+ " ";
         }
-        String qrMessage = mailUser.getName() + " " + mailUser.getLastName() +"\n" + " " + namesOfEquipment + " " +  foundSlot.getDateTime().toString();
+        String qrMessage = foundSlot.getId() + "\n" +
+                            mailUser.getName() + " " + mailUser.getLastName() +"\n" +
+                            namesOfEquipment + "\n" +
+                            foundSlot.getDateTime() + "\n" +
+                            foundSlot.getDuration();
         File image = new File("QRIMG.png");
         try {
             image = QRCodeGenerator.generateQRCodeImage(qrMessage, 250, 250);

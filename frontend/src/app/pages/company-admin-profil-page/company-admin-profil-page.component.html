@@ -4,10 +4,18 @@
             <fa-icon [icon]="faCamera" class="mx-auto text-white text-[48px] cursor-pointer"/>
         </div>
         <p class="font-inter text-third font-bold mx-auto text-[30px]">{{selectedCompany.name}}</p>
-        <div class="flex flex-row items-center mx-auto w-[150px] justify-evenly">
-            <div class="flex rounded-full h-[10px] w-[10px] bg-[#44bd32]"></div>
-            <p class="font-inter text-[#44bd32] text-[16px] font-light">Currently open</p>
-        </div>
+        <ng-form *ngIf="isOpen">
+            <div class="flex flex-row items-center mx-auto w-[150px] justify-evenly">
+                <div class="flex rounded-full h-[10px] w-[10px] bg-[#44bd32]"></div>
+                <p class="font-inter text-[#44bd32] text-[16px] font-light">Currently open</p>
+            </div>
+        </ng-form>
+        <ng-form *ngIf="!isOpen">
+            <div class="flex flex-row items-center mx-auto w-[150px] justify-evenly">
+                <div class="flex rounded-full h-[10px] w-[10px] bg-red"></div>
+                <p class="font-inter text-red text-[16px] font-light">Currently closed</p>
+            </div>
+        </ng-form>
         <div class="flex flex-row items-center mx-auto w-[200px] justify-evenly">
             <p class="font-inter font-light text-[#7f8fa6] ml-2 flex-shrink-0">Working hours:</p>
             <p class="font-inter font-light text-[#7f8fa6] ml-2 flex-shrink-0">{{formattedOpeningTime}} - {{formattedClosingTime}}</p>
@@ -121,6 +129,24 @@
         </ng-form>
 
         <ng-form *ngIf="!showEquipment && showCalendar && !showAdministrators && !showUsers" class="w-full flex flex-col">
+            <div class="flex flex-row items-center justify-center h-[60px] w-full bg-white rounded-md shadow-md justify-between p-4 mb-4">
+                <div class="flex flex-row w-auto h-auto items-center justify-center">
+                    <div class="flex rounded-full w-[15px] h-[15px] bg-third"></div>
+                    <p class="text-third font-inter font-regular text-[16px] ml-[5px]">Acitve appointment</p>
+                </div>
+                <div class="flex flex-row w-auto h-auto items-center justify-center">
+                    <div class="flex rounded-full w-[15px] h-[15px] bg-darkGreen"></div>
+                    <p class="text-darkGreen font-inter font-regular text-[16px] ml-[5px]">Free appointment</p>
+                </div>
+                <div class="flex flex-row w-auto h-auto items-center justify-center">
+                    <div class="flex rounded-full w-[15px] h-[15px] bg-red"></div>
+                    <p class="text-red font-inter font-regular text-[16px] ml-[5px]">Expired appointment</p>
+                </div>
+                <div class="flex flex-row w-auto h-auto items-center justify-center">
+                    <div class="flex rounded-full w-[15px] h-[15px] bg-yellow"></div>
+                    <p class="text-yellow font-inter font-regular text-[16px] ml-[5px]">Picked up appointment</p>
+                </div>
+            </div>
             <div class="flex flex-col w-full p-[12px] bg-white h-auto max-h-[1000px] rounded-md shadow-md">
               <full-calendar class="w-full" [options]="calendarOptions">
                 <ng-template #eventContent let-arg class="overflow-scroll">
