@@ -47,10 +47,10 @@ public class InitialDataInsertionService {
 
     @Transactional
     public void insertInitialData() {
-        Company company1 = new Company(1, "HealthTech Solutions", "Sremska Mitrovica", "Serbia", "Boulevard Lazar 75", 45.241173, 19.830888, "Leading provider of innovative healthcare solutions, dedicated to improving patient care and outcomes.", LocalTime.of(8, 0), LocalTime.of(20, 0));
-        Company company2 = new Company(2, "MedEquip Innovations", "Novi Sad", "Serbia", "Lazar Boulevard 75", 45.241173, 19.830888, "Your trusted partner for cutting-edge medical equipment, committed to advancing healthcare excellence.", LocalTime.of(8, 0), LocalTime.of(20, 0));
-        Company company3 = new Company(3, "VitalCare Technologies", "Kragujevac", "Serbia", "Cara Lazara Boulevard 75", 45.241173, 19.830888, "Empowering healthcare with robust and reliable solutions, ensuring the highest standards of medical practice.", LocalTime.of(8, 0), LocalTime.of(20, 0));
-        Company company4 = new Company(4, "MedTech Dynamics", "Jagodina", "Serbia", "Lazara Boulevard 75", 45.241173, 19.830888, "Pioneering medical excellence with state-of-the-art equipment and unparalleled expertise in healthcare technology.", LocalTime.of(8, 0), LocalTime.of(20, 0));
+        Company company1 = new Company(1, "HealthTech Solutions", "Sremska Mitrovica", "Serbia", "Bulevar Lazar 75", 45.241173, 19.830888, "Leading provider of innovative healthcare solutions, dedicated to improving patient care and outcomes.", LocalTime.of(8, 0), LocalTime.of(20, 0));
+        Company company2 = new Company(2, "MedEquip Innovations", "Novi Sad", "Serbia", "Lazar Bulevar 75", 45.241173, 19.830888, "Your trusted partner for cutting-edge medical equipment, committed to advancing healthcare excellence.", LocalTime.of(8, 0), LocalTime.of(20, 0));
+        Company company3 = new Company(3, "VitalCare Technologies", "Kragujevac", "Serbia", "Cara Lazara Bulevar 75", 45.241173, 19.830888, "Empowering healthcare with robust and reliable solutions, ensuring the highest standards of medical practice.", LocalTime.of(8, 0), LocalTime.of(20, 0));
+        Company company4 = new Company(4, "MedTech Dynamics", "Jagodina", "Serbia", "Lazara Bulevar 75", 45.241173, 19.830888, "Pioneering medical excellence with state-of-the-art equipment and unparalleled expertise in healthcare technology.", LocalTime.of(8, 0), LocalTime.of(20, 0));
 
 
         companyRepository.save(company1);
