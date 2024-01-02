@@ -57,6 +57,9 @@ public class User {
     @Column(name = "enabled")
     private boolean Enabled = false;
 
+    @Column(name = "penaltyPoints")
+    private Integer penaltyPoints;
+
     private String roles;
 
     @OneToMany(mappedBy = "reservedBy")
@@ -80,6 +83,7 @@ public class User {
         this.profession = profession;
         this.companyInfo = companyInfo;
         this.roles = role;
+        this.penaltyPoints = 0;
     }
     //Initial data insertion constructor
     public User(String username,String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo,String role, boolean enabled) {
@@ -96,6 +100,7 @@ public class User {
         this.companyInfo = companyInfo;
         this.roles = role;
         this.Enabled = enabled;
+        this.penaltyPoints = 0;
     }
 
     public User(String username,String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
@@ -110,6 +115,7 @@ public class User {
         this.city = city;
         this.profession = profession;
         this.companyInfo = companyInfo;
+        this.penaltyPoints = 0;
     }
 
     public User(Integer id, String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
@@ -124,6 +130,7 @@ public class User {
         this.city = city;
         this.profession = profession;
         this.companyInfo = companyInfo;
+        this.penaltyPoints = 0;
     }
 
 
