@@ -146,7 +146,7 @@ export class UserProfileComponent implements OnInit{
         backdrop: 'static', keyboard: true
       }
     );
-    
+
     modalRef.componentInstance.slot = slot;
   }
 
@@ -160,11 +160,15 @@ export class UserProfileComponent implements OnInit{
   }
   
 
-  getEventStyles(extendedProps: any): any {
-    if (!extendedProps.reservedBy) {
-      return { 'background-color': '#037971' };
+  public getEventStyles(extendedProps: any): any {
+    if (extendedProps.slot.status === 'EXPIRED') {
+      return { backgroundColor: '#c23616' };
+    } else if (extendedProps.slot.status === 'PICKED_UP') {
+      return { backgroundColor: '#fbc531' };
+    } else if (!extendedProps.reservedBy) {
+      return { backgroundColor: '#037971' };
     } else {
-      return { 'background-color' : '#003554' }
+      return { backgroundColor: '#003554' };
     }
   }
 

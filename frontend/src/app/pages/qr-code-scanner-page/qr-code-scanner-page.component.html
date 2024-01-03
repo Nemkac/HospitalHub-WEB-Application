@@ -78,16 +78,20 @@
       <hr class="w-full my-2 text-third">
       <div class="flex flex-row justify-between items-center my-2">
         <p class="flex text-third text-[24px] font-light">Status</p>
-        <ng-form *ngIf="!expired">
+        <ng-form *ngIf="!expired && !pickedUp">
           <p class="flex text-darkGreen text-[24px] font-semibold">Active</p>
         </ng-form>
         <ng-form *ngIf="expired">
           <p class="flex text-red text-[24px] font-semibold">Expired</p>
         </ng-form>
+        <ng-form *ngIf="pickedUp">
+          <p class="flex text-darkGreen text-[24px] font-semibold">Picked Up</p>
+        </ng-form>
       </div>
-      <ng-form *ngIf="!expired">
+      <ng-form *ngIf="!expired && !pickedUp">
         <div class="flex w-full justify-end">
-          <button class="flex w-[300px] h-[50px] p-2 bg-third text-white font-inter font-semibold text-[24px] rounded-md items-center justify-center hover:bg-lightBlue transition-[0.5s] cursor-pointer">
+          <button class="flex w-[300px] h-[50px] p-2 bg-third text-white font-inter font-semibold text-[24px] rounded-md items-center justify-center hover:bg-lightBlue transition-[0.5s] cursor-pointer"
+                  (click)="deliverEquipment(appointmentId)">
             Finish
           </button>
         </div>
@@ -99,6 +103,17 @@
             <p class="font-inter font-bold text-red text-[20px]">The equipment pick up period has expired!</p>
             <p class="font-inter font-medium text-red text-[16px]">
               The order is marked as expired. In order to prevent the misuse of the application and to avoid causing damage to companies, the user is penalized with 2 penalty points.
+            </p>
+          </div>
+        </div>
+      </ng-form>
+      <ng-form *ngIf="pickedUp">
+        <div class="flex flex-row w-full h-full">
+          <div class="h-full w-[10px] bg-darkGreen rounded-l-md"></div>
+          <div class="w-full bg-darkGreen/10 flex flex-col rounded-r-md px-4 py-2">
+            <p class="font-inter font-bold text-darkGreen text-[20px]">This order has been delivered!</p>
+            <p class="font-inter font-medium text-darkGreen text-[16px]">
+              The order is marked as picked up. Loyalty points were awarded to the user who made the order.
             </p>
           </div>
         </div>

@@ -250,6 +250,7 @@ public class InitialDataInsertionService {
         EquipmentPickupSlot slot18 = new EquipmentPickupSlot(slot18DateTime, 30, companyAdministrator1);
         LocalDateTime slot19DateTime = LocalDateTime.of(2024, 1, 1, 20, 00);
         EquipmentPickupSlot slot19 = new EquipmentPickupSlot(slot19DateTime, 20, companyAdministrator1);
+        slot19.setReservedBy(user4);
 
 
         equipmentPickupSlotRepository.save(slot1);

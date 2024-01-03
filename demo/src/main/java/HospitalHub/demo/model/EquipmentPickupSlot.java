@@ -43,14 +43,6 @@ public class EquipmentPickupSlot {
     @Enumerated(EnumType.STRING)
     private Status status = Status.ACTIVE;
 
-    public int[] getEquipment() {
-        return equipment;
-    }
-
-    public void setEquipment(int[] equipment) {
-        this.equipment = equipment;
-    }
-
     public EquipmentPickupSlot(){}
 
     public EquipmentPickupSlot(LocalDateTime dateTime, Integer duration, CompanyAdministrator companyAdministrator) {
@@ -120,6 +112,14 @@ public class EquipmentPickupSlot {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public int[] getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(int[] equipment) {
+        this.equipment = equipment;
     }
 }
 

@@ -152,7 +152,7 @@
                 <ng-template #eventContent let-arg class="overflow-scroll">
                   <div *ngIf="arg.event.extendedProps" (click)="displayEquipmentPickupSlot(arg.event.extendedProps.slot)"
                     [ngStyle]="getEventStyles(arg.event.extendedProps)"
-                    class="flex flex-col font-inter text-white p-[5px] w-full rounded-md cursor-pointer">
+                    class="flex flex-col font-inter p-[5px] w-full rounded-md cursor-pointer">
                     <p>Start: {{ arg.event.start | date: 'HH:mm' }}</p>
                     <p>Duration: {{ arg.event.extendedProps.duration }} min</p>
                     <p>

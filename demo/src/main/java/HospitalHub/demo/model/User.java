@@ -251,4 +251,12 @@ public class User {
     public void setEquipmentPickupSlots(List<EquipmentPickupSlot> equipmentPickupSlots) {
         this.equipmentPickupSlots = equipmentPickupSlots;
     }
+
+    public Integer getPenaltyPoints() {
+        return penaltyPoints;
+    }
+
+    public void setPenaltyPoints(Integer penaltyPoints) {
+        this.penaltyPoints = penaltyPoints;
+    }
 }

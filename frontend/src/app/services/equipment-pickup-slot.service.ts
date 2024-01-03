@@ -53,6 +53,13 @@ export class EquipmentPickupSlotService {
     return this.http.patch(url, null);
   }
 
+  public makeSlotExpired(slotId: number) : Observable<EquipmentPickupSlot>{
+    return this.http.put<EquipmentPickupSlot>(`${this.apiServerUrl}/api/slots/makeSlotExpired`, slotId);
+  }
+
+  public deliverEquipment(slotId: number) : Observable<EquipmentPickupSlot>{
+    return this.http.put<EquipmentPickupSlot>(`${this.apiServerUrl}/api/slots/deliverEquipment`, slotId);
+  }
  /* public updateStatusForExpiredSlots(): Observable<EquipmentPickupSlot[]> {
     const url = `${this.apiServerUrl}/api/slots/updateStatusForExpiredSlots`;
     return this.http.patch<EquipmentPickupSlot[]>(url, null);

@@ -1,6 +1,7 @@
 package HospitalHub.demo.controller;
 
 import HospitalHub.demo.dto.EquipmentPickupSlotDTO;
+import HospitalHub.demo.dto.MedicalEquipmentDTO;
 import HospitalHub.demo.dto.UserDTO;
 import HospitalHub.demo.model.*;
 import HospitalHub.demo.repository.EquipmentPickupSlotRepository;
@@ -176,6 +177,39 @@ public class EquipmentPickupSlotController {
             return new ResponseEntity<>("NOT Ok", HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>("OK", HttpStatus.OK);
+        }
+    }
+
+    @PutMapping("/makeSlotExpired")
+    public ResponseEntity<EquipmentPickupSlot> makeSlotExpired(@RequestBody Integer slotId){
+        EquipmentPickupSlot slot = equipmentPickupSlotService.getById(slotId);
+        if(slot.getStatus() != EquipmentPickupSlot.Status.EXPIRED){
+            User user = slot.getReservedBy();
+
+            Integer penalties = user.getPenaltyPoints() + 2;
+            user.setPenaltyPoints(penalties);
+            userService.save(user);
+
+            slot.setStatus(EquipmentPickupSlot.Status.EXPIRED);
+            EquipmentPickupSlot updatedSlot = equipmentPickupSlotService.saveNewStatus(slot);
+
+            return new ResponseEntity<>(updatedSlot, HttpStatus.OK);
+        } else {
+            return new ResponseEntity("Appointment status: EXPIRED", HttpStatus.OK);
+        }
+    }
+
+    @PutMapping("/deliverEquipment")
+    public ResponseEntity<EquipmentPickupSlot> deliverEquipment(@RequestBody Integer slotId){
+        EquipmentPickupSlot slot = equipmentPickupSlotService.getById(slotId);
+        if(slot.getStatus() != EquipmentPickupSlot.Status.PICKED_UP){
+
+            slot.setStatus(EquipmentPickupSlot.Status.PICKED_UP);
+            EquipmentPickupSlot updatedSlot = equipmentPickupSlotService.saveNewStatus(slot);
+
+            return new ResponseEntity<>(updatedSlot, HttpStatus.OK);
+        } else {
+            return new ResponseEntity("Appointment status: PICKED UP", HttpStatus.OK);
         }
     }
 

@@ -1,6 +1,10 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { faQrcode } from '@fortawesome/free-solid-svg-icons';
 import jsQR from 'jsqr';
+import { EquipmentPickupSlotService } from 'src/app/services/equipment-pickup-slot.service';
+import { NgToastService } from 'ng-angular-popup'
+import { EquipmentPickupSlot } from 'src/app/models/EquipmentPickupSlot';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-qr-code-scanner-page',
@@ -12,6 +16,7 @@ export class QrCodeScannerPageComponent {
   scanResult: any = '';
   openScanner: boolean = false;
   expired: boolean = false;
+  pickedUp: boolean = false;
 
   appointmentId: number = 0;
   userName: string = '';
@@ -22,6 +27,9 @@ export class QrCodeScannerPageComponent {
   endTime: string = '';
 
   faQrcode = faQrcode
+
+  constructor(private equipmentPickupSlotService : EquipmentPickupSlotService,
+              private toast: NgToastService){}
 
   handleImageChange(event: any): void {
     const file = event.target.files[0];
@@ -115,6 +123,40 @@ export class QrCodeScannerPageComponent {
       this.expired = orderEndTime < currentDate;
     }
 
+    this.equipmentPickupSlotService.getSlotById(this.appointmentId).subscribe(
+      (response: EquipmentPickupSlot) => {
+        if(response.status === "PICKED_UP"){
+          this.pickedUp = true;
+        } else {
+          this.pickedUp = false;
+        }
+      }
+    )
+
+    if(this.expired){
+      this.equipmentPickupSlotService.makeSlotExpired(this.appointmentId).subscribe(
+        (response:EquipmentPickupSlot) => {
+          if(response !== null){
+            this.toast.info({detail:"System information", summary:"Status updated: EXPIRED"});
+          } else {
+            this.toast.info({detail:"System information", summary:"Appointment status: EXPIRED"});
+          }
+        }
+      );
+    }
+  }
+
+  public deliverEquipment(slotId : number) : void{
+    this.equipmentPickupSlotService.deliverEquipment(slotId).subscribe(
+      (response:EquipmentPickupSlot) => {
+        this.toast.success({detail:"Delivery successful!", summary:"Oprema je uspesno isporucena. Appointment status: PICKED_UP"});
+        this.pickedUp = true;
+      },
+      (error: HttpErrorResponse) => {
+        this.toast.error({detail:"Error message", summary:"Error during delivery of equipment!"});
+        this.pickedUp = false;
+      }
+    )
   }
 
   public openQRCodeScanner(): void{
