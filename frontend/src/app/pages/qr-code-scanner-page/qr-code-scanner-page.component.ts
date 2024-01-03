@@ -136,7 +136,7 @@ export class QrCodeScannerPageComponent {
     if(this.expired){
       this.equipmentPickupSlotService.makeSlotExpired(this.appointmentId).subscribe(
         (response:EquipmentPickupSlot) => {
-          if(response !== null){
+          if(response !== null && response.status !== "EXPIRED"){
             this.toast.info({detail:"System information", summary:"Status updated: EXPIRED"});
           } else {
             this.toast.info({detail:"System information", summary:"Appointment status: EXPIRED"});
@@ -149,7 +149,7 @@ export class QrCodeScannerPageComponent {
   public deliverEquipment(slotId : number) : void{
     this.equipmentPickupSlotService.deliverEquipment(slotId).subscribe(
       (response:EquipmentPickupSlot) => {
-        this.toast.success({detail:"Delivery successful!", summary:"Oprema je uspesno isporucena. Appointment status: PICKED_UP"});
+        this.toast.success({detail:"Delivery successful!", summary:"Equipment successfully delivered. Appointment status: PICKED_UP"});
         this.pickedUp = true;
       },
       (error: HttpErrorResponse) => {

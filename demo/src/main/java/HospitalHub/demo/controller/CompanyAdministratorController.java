@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +58,10 @@ public class CompanyAdministratorController {
 
         for(EquipmentPickupSlot slot : slots){
             EquipmentPickupSlotDTO dto = new EquipmentPickupSlotDTO(slot);
+
+            if(dto.getDateTime().isBefore(LocalDateTime.now())){
+                dto.setStatus(EquipmentPickupSlot.Status.EXPIRED);
+            }
 
             if(slot.getReservedBy() != null){
                 dto.setReservedBy(slot.getReservedBy());

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
@@ -169,7 +170,7 @@ public class CompanyController {
             List<EquipmentPickupSlot> adminsSlots = companyAdministrator.getEquipmentPickupSlots();
 
             for(EquipmentPickupSlot slot : adminsSlots){
-                if(slot.getReservedBy() == null){
+                if(slot.getReservedBy() == null && slot.getDateTime().isAfter(LocalDateTime.now())){
                     freeAppointments.add(slot);
                 }
             }
@@ -188,6 +189,12 @@ public class CompanyController {
             List<EquipmentPickupSlot> adminsSlots = companyAdministrator.getEquipmentPickupSlots();
 
             appointments.addAll(adminsSlots);
+        }
+
+        for(EquipmentPickupSlot appointment : appointments){
+            if(appointment.getDateTime().isBefore(LocalDateTime.now())){
+                appointment.setStatus(EquipmentPickupSlot.Status.EXPIRED);
+            }
         }
 
         return new ResponseEntity<>(appointments, HttpStatus.OK);

@@ -14,21 +14,24 @@ public class EquipmentPickupSlotDTO {
     private Integer duration;
     private User reservedBy;
     private CompanyAdministrator companyAdministrator;
+    private EquipmentPickupSlot.Status status;
 
     public EquipmentPickupSlotDTO(EquipmentPickupSlot slot){
         this(
             slot.getId(),
             slot.getDateTime(),
             slot.getDuration(),
-            slot.getCompanyAdministrator()
+            slot.getCompanyAdministrator(),
+            slot.getStatus()
         );
     }
 
-    public EquipmentPickupSlotDTO(Integer id, LocalDateTime dateTime, Integer duration, CompanyAdministrator companyAdministrator) {
+    public EquipmentPickupSlotDTO(Integer id, LocalDateTime dateTime, Integer duration, CompanyAdministrator companyAdministrator, EquipmentPickupSlot.Status status) {
         this.id = id;
         this.dateTime = dateTime;
         this.duration = duration;
         this.companyAdministrator = companyAdministrator;
+        this.status = status;
     }
 
     public Integer getId() {
@@ -69,5 +72,13 @@ public class EquipmentPickupSlotDTO {
 
     public void setCompanyAdministrator(CompanyAdministrator companyAdministrator) {
         this.companyAdministrator = companyAdministrator;
+    }
+
+    public EquipmentPickupSlot.Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(EquipmentPickupSlot.Status status) {
+        this.status = status;
     }
 }

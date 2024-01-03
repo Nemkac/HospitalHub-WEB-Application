@@ -1,38 +1,63 @@
-<div class="flex flex-col w-auto h-auto p-4">
+<div class="flex flex-col w-[500px] h-[600px] p-4">
     <div class="flex w-full justify-end">
         <fa-icon [icon]="faClose" (click)="closeModal()"
         class="flex cursor-pointer text-[28px] text-third hover:text-lightBlue transition-[0.5s]"/>
     </div>
-    <div class="grid grid-cols-1 gap-4 items-center font-inter text-third">
-        <h2 class="text-2xl font-bold mb-2 text-center">Appointment info</h2>
-        <hr class="w-full bg-third"/>
-        <div class="flex flex-row w-full justify-between items-center">
-            <p class="font-light text-[24px]">Date</p>
-            <p class="font-medium text-[24px]">{{slot?.dateTime | date: 'dd/MM/YYY' }}</p>
+    <div class="flex flex-col w-full h-full justify-center items-center font-inter text-third font-inter">
+        <h2 class="text-[28px] font-bold text-center">Appointment info</h2>
+        <hr class="w-full bg-third my-4"/>
+        <div class="flex flex-col w-full h-full justify-between items-center justify-center">
+            <div class="flex flex-row w-full justify-between items-center">
+                <p class="font-light text-[24px]">Date</p>
+                <p class="font-medium text-[24px]">{{slot?.dateTime | date: 'dd/MM/YYY' }}</p>
+            </div>
+            <div class="flex flex-row w-full justify-between items-center">
+                <p class="font-light text-[24px]">Start time</p>
+                <p class="font-medium text-[24px]">{{slot?.dateTime | date: 'HH:mm' }}</p>
+            </div>
+            <div class="flex flex-row w-full justify-between items-center">
+                <p class="font-light text-[24px]">Duration</p>
+                <p class="font-medium text-[24px]">{{slot?.duration}} min</p>
+            </div>
+            <div class="flex flex-row w-full justify-between items-center">
+                <p class="font-light text-[24px]">Reserved by</p>
+                <p class="font-medium text-[24px]">{{slot?.reservedBy?.name}} {{slot?.reservedBy?.lastName}}</p>
+            </div>
+            <div class="flex flex-row w-full justify-between items-center">
+                <p class="font-light text-[24px]">Company Admin</p>
+                <p class="font-medium text-[24px]">{{slot?.companyAdministrator?.user?.name}} {{slot?.companyAdministrator?.user?.lastName}}</p>
+            </div>
+            <ng-form *ngIf="!expired && !pickedUp && !free && active" class="w-full">
+                <div class="flex flex-row w-full justify-between items-center">
+                    <p class="font-light text-[24px]">Status</p>
+                    <p class="font-medium text-third text-[24px]">ACTIVE</p>
+                </div>
+                <hr class="w-full bg-third my-4"/>
+                <button class="w-full text-center mt-2 h-[60px] rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-semibold" (click)="deliverEquipment(slot?.id)">
+                    Mark Equipment as Picked Up
+                </button>
+            </ng-form>
+            <ng-form *ngIf="expired && !pickedUp && !free && !active" class="w-full">
+                <div class="flex flex-row w-full justify-between items-center">
+                    <p class="font-light text-[24px]">Status</p>
+                    <p class="font-medium text-red text-[24px]">EXPIRED</p>
+                </div>
+                <hr class="w-full bg-third my-2"/>
+            </ng-form>
+            <ng-form *ngIf="!expired && pickedUp && !free && !active" class="w-full">
+                <div class="flex flex-row w-full justify-between items-center">
+                    <p class="font-light text-[24px]">Status</p>
+                    <p class="font-medium text-yellow text-[24px]">PICKED UP</p>
+                </div>
+                <hr class="w-full bg-third my-2"/>
+            </ng-form>
+            <ng-form *ngIf="!expired && !pickedUp && free && !active" class="w-full">
+                <div class="flex flex-row w-full justify-between items-center">
+                    <p class="font-light text-[24px]">Status</p>
+                    <p class="font-medium text-darkGreen text-[24px]">FREE</p>
+                </div>
+                <hr class="w-full bg-third my-2"/>
+            </ng-form>
         </div>
-        <div class="flex flex-row w-full justify-between items-center">
-            <p class="font-light text-[24px]">Start time</p>
-            <p class="font-medium text-[24px]">{{slot?.dateTime | date: 'HH:mm' }}</p>
-        </div>
-        <div class="flex flex-row w-full justify-between items-center">
-            <p class="font-light text-[24px]">Duration</p>
-            <p class="font-medium text-[24px]">{{slot?.duration}} min</p>
-        </div>
-        <div class="flex flex-row w-full justify-between items-center">
-            <p class="font-light text-[24px]">Reserved by</p>
-            <p class="font-medium text-[24px]">{{slot?.reservedBy?.name}} {{slot?.reservedBy?.lastName}}</p>
-        </div>
-        <div class="flex flex-row w-full justify-between items-center">
-            <p class="font-light text-[24px]">Company Admin</p>
-            <p class="font-medium text-[24px]">{{slot?.companyAdministrator?.user?.name}} {{slot?.companyAdministrator?.user?.lastName}}</p>
-        </div>
-        <div class="flex flex-row w-full justify-between items-center">
-            <p class="font-light text-[24px]">Status</p>
-            <p class="font-medium text-[24px]">{{slot?.status}}</p>
-        </div>
-          <button class="w-full text-center h-[60px] mt-4 rounded-md bg-yellow hover:bg-lightYellow transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="markEquipmentAsPickedUp(slot?.id)">
-                <p>Mark Equipment as Picked Up</p>
-              </button>
-        <hr class="w-full bg-third"/>
     </div>
 </div>

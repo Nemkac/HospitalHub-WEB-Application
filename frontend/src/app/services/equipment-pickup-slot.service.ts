@@ -57,7 +57,7 @@ export class EquipmentPickupSlotService {
     return this.http.put<EquipmentPickupSlot>(`${this.apiServerUrl}/api/slots/makeSlotExpired`, slotId);
   }
 
-  public deliverEquipment(slotId: number) : Observable<EquipmentPickupSlot>{
+  public deliverEquipment(slotId: number | undefined) : Observable<EquipmentPickupSlot>{
     return this.http.put<EquipmentPickupSlot>(`${this.apiServerUrl}/api/slots/deliverEquipment`, slotId);
   }
  /* public updateStatusForExpiredSlots(): Observable<EquipmentPickupSlot[]> {

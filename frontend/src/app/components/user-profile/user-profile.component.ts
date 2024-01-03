@@ -162,13 +162,13 @@ export class UserProfileComponent implements OnInit{
 
   public getEventStyles(extendedProps: any): any {
     if (extendedProps.slot.status === 'EXPIRED') {
-      return { backgroundColor: '#c23616' };
+      return { backgroundColor: '#c23616', color: '#F5F6FA' };
     } else if (extendedProps.slot.status === 'PICKED_UP') {
-      return { backgroundColor: '#fbc531' };
+      return { backgroundColor: '#fbc531', color: '#003554'};
     } else if (!extendedProps.reservedBy) {
-      return { backgroundColor: '#037971' };
+      return { backgroundColor: '#037971', color: '#F5F6FA' };
     } else {
-      return { backgroundColor: '#003554' };
+      return { backgroundColor: '#003554', color: '#F5F6FA' };
     }
   }
 
