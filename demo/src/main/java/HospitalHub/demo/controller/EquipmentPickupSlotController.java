@@ -5,12 +5,14 @@ import HospitalHub.demo.dto.MedicalEquipmentDTO;
 import HospitalHub.demo.dto.UserDTO;
 import HospitalHub.demo.model.*;
 import HospitalHub.demo.repository.EquipmentPickupSlotRepository;
-import HospitalHub.demo.service.CompanyAdministratorService;
-import HospitalHub.demo.service.EquipmentPickupSlotService;
-import HospitalHub.demo.service.UserService;
+import HospitalHub.demo.service.*;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -30,6 +32,10 @@ public class EquipmentPickupSlotController {
     private EquipmentPickupSlotRepository equipmentPickupSlotRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private EmailService emailService;
+    @Autowired
+    private MedicalEqupimentService medicalEqupimentService;
 
 
     @PostMapping("/createPredefinedSlot/{userId}")
@@ -119,14 +125,13 @@ public class EquipmentPickupSlotController {
         Company selectedCompany = companyAdministrator.getCompany();
 
         List<UserDTO> reservedUsersDTO = new ArrayList<>();
-        Set<Integer> addedUserIds = new HashSet<>(); // To keep track of added user IDs
+        Set<Integer> addedUserIds = new HashSet<>();
 
         for (CompanyAdministrator admin : selectedCompany.getCompanyAdministrators()) {
             for (EquipmentPickupSlot slot : admin.getEquipmentPickupSlots()) {
                 if (slot.getReservedBy() != null) {
                     User reservedUser = slot.getReservedBy();
 
-                    // Check if the user ID is already added
                     if (addedUserIds.add(reservedUser.getId())) {
                         reservedUsersDTO.add(new UserDTO(reservedUser));
                     }
@@ -202,10 +207,24 @@ public class EquipmentPickupSlotController {
     @PutMapping("/deliverEquipment")
     public ResponseEntity<EquipmentPickupSlot> deliverEquipment(@RequestBody Integer slotId){
         EquipmentPickupSlot slot = equipmentPickupSlotService.getById(slotId);
+        User mailUser = slot.getReservedBy();
+
         if(slot.getStatus() != EquipmentPickupSlot.Status.PICKED_UP){
 
             slot.setStatus(EquipmentPickupSlot.Status.PICKED_UP);
             EquipmentPickupSlot updatedSlot = equipmentPickupSlotService.saveNewStatus(slot);
+
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setFrom("isaisanovicNNBA@gmail.com");
+            mailMessage.setTo(mailUser.getEmail());
+            mailMessage.setSubject("Confirmation of taking over reserved equipment");
+            mailMessage.setText("Appointment number: " + slot.getId() +
+                    "\nAppointment date: " + slot.getDateTime() +
+                    "\nDelivered by: " + slot.getCompanyAdministrator().getUser().getName() + " " + slot.getCompanyAdministrator().getUser().getLastName() +
+                    "\n\nEquipment successfully delivered!" +
+                    "\nThank you for using our services." +
+                    "\n\nSincerely, HospitalHub");
+            emailService.sendEmail(mailMessage);
 
             return new ResponseEntity<>(updatedSlot, HttpStatus.OK);
         } else {
