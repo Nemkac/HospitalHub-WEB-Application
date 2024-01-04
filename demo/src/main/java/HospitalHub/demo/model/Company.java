@@ -56,9 +56,6 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private List<EquipmentAvailability> equipmentAvailabilityList;
 
-    @OneToMany(mappedBy = "company")
-    private List<MedicalEquipmentAvailability> equipmentQuantity;
-
     public Company() {
 
     }
@@ -206,11 +203,4 @@ public class Company {
         this.closingTime = closingTime;
     }
 
-    public List<MedicalEquipmentAvailability> getEquipmentQuantity() {
-        return equipmentQuantity;
-    }
-
-    public void setEquipmentQuantity(List<MedicalEquipmentAvailability> equipmentQuantity) {
-        this.equipmentQuantity = equipmentQuantity;
-    }
 }

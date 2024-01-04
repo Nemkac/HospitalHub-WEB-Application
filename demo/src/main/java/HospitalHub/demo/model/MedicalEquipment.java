@@ -24,7 +24,6 @@ public class MedicalEquipment {
     private String name;
 
     @Column(name = "type")
-    
     private String type;
 
     @Column(name = "description")
@@ -44,16 +43,20 @@ public class MedicalEquipment {
     @OneToMany(mappedBy = "medicalEquipment")
     private List<EquipmentAvailability> equipmentAvailabilityList;
 
+    @Column(name = "quantity")
+    private Integer quantity;
+
 
     public MedicalEquipment() {}
 
-    public MedicalEquipment(String name, String type, String description, Company company, Double price, String image) {
+    public MedicalEquipment(String name, String type, String description, Company company, Double price, String image, Integer quantity) {
         this.name = name;
         this.type = type;
         this.description = description;
         this.company = company;
         this.price = price;
         this.image = image;
+        this.quantity = quantity;
     }
 
     public Integer getId() {
@@ -114,6 +117,14 @@ public class MedicalEquipment {
 
     public void setEquipmentAvailabilityList(List<EquipmentAvailability> equipmentAvailabilityList) {
         this.equipmentAvailabilityList = equipmentAvailabilityList;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     @Override

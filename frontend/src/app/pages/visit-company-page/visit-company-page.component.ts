@@ -1,6 +1,6 @@
+import { Equipment } from './../../../Equipment';
 import { Component, AfterViewInit, ElementRef, OnInit, Input, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
-import { Equipment } from 'src/Equipment';
 import { CompanyService } from 'src/app/services/company.service';
 import { Company } from 'src/company';
 import { icon, Marker } from 'leaflet';
@@ -65,7 +65,7 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   @Input() companyLongitude: number = 0; 
   public currentDate = new Date();
 
-  selectedCompany: Company = {} as Company;
+  selectedCompany: Company | undefined;
   equipments: Equipment[] = [];
   token = localStorage.getItem('token');
   loggedUser : User | null = null;
@@ -122,6 +122,7 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
       this.getCompanyData();
       this.getEquipmentPickupSlots(this.companyId);
       console.log('Company ID:', this.companyId);
+      this.checkIsOpen();
     }
     if(this.token){
       this.userService.getUserByToken(this.token).subscribe(
@@ -130,23 +131,87 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
         }
       );
     }
-    this.checkIsOpen();
   }
 
   checkIsOpen(): void {
-    const now = moment(); // Trenutno vreme
-    const openingTime = moment(this.formattedOpeningTime, 'HH:mm');
-    const closingTime = moment(this.formattedClosingTime, 'HH:mm');
+    const now = new Date(); // Trenutno vreme
+    const openingTime = this.getOpeningTime();
+    const closingTime = this.getClosingTime();
+    console.log("Opening time: ", openingTime)
     
-    this.isOpen = now.isBetween(openingTime, closingTime);
+    if (openingTime.getTime() > closingTime.getTime()) {
+      // Dodajte sledeći uslov da biste rukovali slučajem kada je closingTime pre openingTime (preko ponoći)
+      this.isOpen = now.getTime() > openingTime.getTime() || now.getTime() < closingTime.getTime();
+    } else {
+      this.isOpen = now.getTime() >= openingTime.getTime() && now.getTime() <= closingTime.getTime();
+    }
   }
+  
+  getOpeningTime(): Date {
+    if(this.selectedCompany){
+        const openingTimeString = this.selectedCompany.openingTime;
+    
+      if (!openingTimeString) {
+        console.error('Opening time is not defined for the company.');
+        return new Date(); // Vratite nešto, možda trenutno vreme, kao podrazumevanu vrednost.
+      }
+    
+      const [hours, minutes] = openingTimeString.split(':').map(Number);
+    
+      if (isNaN(hours) || isNaN(minutes)) {
+        console.error('Invalid opening time format:', openingTimeString);
+        return new Date(); // Vratite nešto, možda trenutno vreme, kao podrazumevanu vrednost.
+      }
+    
+      const date = new Date();
+      date.setHours(hours);
+      date.setMinutes(minutes);
+      return date;
+    } else {
+      return new Date(); 
+    }
+  }
+  
+  getClosingTime(): Date {
+    if(this.selectedCompany){
+      const closingTimeString = this.selectedCompany.closingTime;
+  
+    if (!closingTimeString) {
+      console.error('Closing time is not defined for the company.');
+      return new Date(); // Vratite nešto, možda trenutno vreme, kao podrazumevanu vrednost.
+    }
+  
+    const [hours, minutes] = closingTimeString.split(':').map(Number);
+  
+    if (isNaN(hours) || isNaN(minutes)) {
+      console.error('Invalid closing time format:', closingTimeString);
+      return new Date(); // Vratite nešto, možda trenutno vreme, kao podrazumevanu vrednost.
+    }
+  
+    const date = new Date();
+    date.setHours(hours);
+    date.setMinutes(minutes);
+    return date;
+    }else {
+      return new Date(); 
+    }
+  }
+  
 
   get formattedOpeningTime(): string {
-    return this.selectedCompany.openingTime ? this.selectedCompany.openingTime.slice(0, 5) : '';
+    if(this.selectedCompany){
+      return this.selectedCompany.openingTime ? this.selectedCompany.openingTime.slice(0, 5) : '';
+    } else {
+      return '';
+    }
   }
 
   get formattedClosingTime(): string {
-    return this.selectedCompany.closingTime ? this.selectedCompany.closingTime.slice(0, 5) : '';
+    if(this.selectedCompany){
+      return this.selectedCompany.closingTime ? this.selectedCompany.closingTime.slice(0, 5) : '';
+    } else {
+      return '';
+    }
   }
 
   ngAfterViewInit(): void {

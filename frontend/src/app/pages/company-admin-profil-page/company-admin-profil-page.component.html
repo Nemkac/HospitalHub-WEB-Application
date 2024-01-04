@@ -3,7 +3,7 @@
         <div class="flex rounded-full bg-third mx-auto my-2 h-[180px] w-[135px] items-center transition-[0.5s]">
             <fa-icon [icon]="faCamera" class="mx-auto text-white text-[48px] cursor-pointer"/>
         </div>
-        <p class="font-inter text-third font-bold mx-auto text-[30px]">{{selectedCompany.name}}</p>
+        <p class="font-inter text-third font-bold mx-auto text-[30px]">{{selectedCompany?.name}}</p>
         <ng-form *ngIf="isOpen">
             <div class="flex flex-row items-center mx-auto w-[150px] justify-evenly">
                 <div class="flex rounded-full h-[10px] w-[10px] bg-[#44bd32]"></div>
@@ -23,32 +23,32 @@
         <hr class="w-full bg-gray mt-4 mb-2">
         <div class="flex flex-col w-full h-[300px]">
             <p class="text-gray font-inter font-light text-[18px]">Description:</p>
-            <p class="text-third font-inter font-regular text-[18px]">{{selectedCompany.description}}</p>
+            <p class="text-third font-inter font-regular text-[18px]">{{selectedCompany?.description}}</p>
         </div>
         <hr class="w-full bg-gray mt-2 mb-4">
         <div class="flex flex-row justify-between mb-2">
             <p class="font-inter text-[18px] text-gray font-light">Avg. rate</p>
             <div class="flex flex-row items-center">
-                <p class="font-inter text-[18px] text-third font-medium">{{ selectedCompany.avgRate }}</p>
+                <p class="font-inter text-[18px] text-third font-medium">{{ selectedCompany?.avgRate }}</p>
                 <fa-icon [icon]="faStar" class="text-yellow ml-[10px] text-[14px]"/>
             </div>
         </div>
         <div class="flex flex-row w-full justify-between">
             <p class="text-gray font-inter font-light text-[18px]">Location:</p>
-            <p class="text-third font-inter font-medium text-[18px]">{{selectedCompany.city}},{{selectedCompany.country}}</p>
+            <p class="text-third font-inter font-medium text-[18px]">{{selectedCompany?.city}},{{selectedCompany?.country}}</p>
         </div>
         <hr class="w-full bg-gray mt-4 mb-2">
         <div class="flex flex-col w-full">
             <p class="text-gray font-inter font-light text-[18px]">Address:</p>
-            <p class="text-third font-inter font-regular text-[18px]">{{selectedCompany.address}}</p>
+            <p class="text-third font-inter font-regular text-[18px]">{{selectedCompany?.address}}</p>
             <div class="flex flex-row">
                 <div class="flex flex-row">
                     <p class="font-inter text-third font-regular text-[14px]">Lat:</p>
-                    <p class="font-inter text-third font-regular text-[14px] ml-2">{{selectedCompany.latitude}}</p>
+                    <p class="font-inter text-third font-regular text-[14px] ml-2">{{selectedCompany?.latitude}}</p>
                 </div>
                 <div class="flex flex-row ml-4">
                     <p class="font-inter text-third font-regular text-[14px]">Long:</p>
-                    <p class="font-inter text-third font-regular text-[14px] ml-2">{{selectedCompany.longitude}}</p>
+                    <p class="font-inter text-third font-regular text-[14px] ml-2">{{selectedCompany?.longitude}}</p>
                 </div>
             </div>
         </div>

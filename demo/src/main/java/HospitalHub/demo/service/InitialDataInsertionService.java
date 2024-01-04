@@ -42,9 +42,6 @@ public class InitialDataInsertionService {
     @Autowired
     private EquipmentPickupSlotRepository equipmentPickupSlotRepository;
 
-    @Autowired
-    private MedicalEquipmentAvailabilityService medicalEquipmentAvailabilityService;
-
     @Transactional
     public void insertInitialData() {
         Company company1 = new Company(1, "HealthTech Solutions", "Sremska Mitrovica", "Serbia", "Bulevar Lazar 75", 45.241173, 19.830888, "Leading provider of innovative healthcare solutions, dedicated to improving patient care and outcomes.", LocalTime.of(8, 0), LocalTime.of(20, 0));
@@ -158,14 +155,14 @@ public class InitialDataInsertionService {
         companyAdministratorService.save(companyAdministrator1);
         companyAdministratorService.save(companyAdministrator2);
 
-        MedicalEquipment equipment1 = new MedicalEquipment("Respirator", "Machine", "Reliable respiratory machine for optimal patient support.", company1, 320.00, "respirator.png");
-        MedicalEquipment equipment2 = new MedicalEquipment("EKG", "Diagnostics", "State-of-the-art EKG machine for accurate heart diagnostics.", company1, 860.00, "ekg.png");
-        MedicalEquipment equipment3 = new MedicalEquipment("CT Scanner", "Imaging", "Cutting-edge CT scanner for precise diagnostics.", company2, 1230.00, "ctscanner.png");
-        MedicalEquipment equipment4 = new MedicalEquipment("Ultrasound", "Imaging", "Advanced ultrasound equipment for detailed imaging.", company2, 250.00, "ultrasound.png");
-        MedicalEquipment equipment5 = new MedicalEquipment("Anesthesia Machine", "Machine", "High-performance anesthesia machine for safe administration.", company3, 225.00, "anesthesia.png");
-        MedicalEquipment equipment6 = new MedicalEquipment("Hemodialysis Machine", "Machine", "Cutting-edge hemodialysis machine for life-saving treatment.", company1, 2000.00, "hemodialysis.png");
-        MedicalEquipment equipment7 = new MedicalEquipment("Hip Prosthesis", "Implantable", "Top-quality hip prosthesis to enhance mobility.", company1, 500.00, "prosthesis.png");
-        MedicalEquipment equipment8 = new MedicalEquipment("Pacemaker", "Implantable", "Advanced pacemaker for reliable heart rhythm management.", company1, 1250.00, "pacemaker.png");
+        MedicalEquipment equipment1 = new MedicalEquipment("Respirator", "Machine", "Reliable respiratory machine for optimal patient support.", company1, 320.00, "respirator.png", 20);
+        MedicalEquipment equipment2 = new MedicalEquipment("EKG", "Diagnostics", "State-of-the-art EKG machine for accurate heart diagnostics.", company1, 860.00, "ekg.png", 30);
+        MedicalEquipment equipment3 = new MedicalEquipment("CT Scanner", "Imaging", "Cutting-edge CT scanner for precise diagnostics.", company2, 1230.00, "ctscanner.png", 15);
+        MedicalEquipment equipment4 = new MedicalEquipment("Ultrasound", "Imaging", "Advanced ultrasound equipment for detailed imaging.", company2, 250.00, "ultrasound.png", 40);
+        MedicalEquipment equipment5 = new MedicalEquipment("Anesthesia Machine", "Machine", "High-performance anesthesia machine for safe administration.", company3, 225.00, "anesthesia.png", 32);
+        MedicalEquipment equipment6 = new MedicalEquipment("Hemodialysis Machine", "Machine", "Cutting-edge hemodialysis machine for life-saving treatment.", company1, 2000.00, "hemodialysis.png", 77);
+        MedicalEquipment equipment7 = new MedicalEquipment("Hip Prosthesis", "Implantable", "Top-quality hip prosthesis to enhance mobility.", company1, 500.00, "prosthesis.png", 9);
+        MedicalEquipment equipment8 = new MedicalEquipment("Pacemaker", "Implantable", "Advanced pacemaker for reliable heart rhythm management.", company1, 1250.00, "pacemaker.png", 1);
 
         medicalEqupimentService.save(equipment1);
         medicalEqupimentService.save(equipment2);
@@ -272,20 +269,6 @@ public class InitialDataInsertionService {
         equipmentPickupSlotRepository.save(slot17);
         equipmentPickupSlotRepository.save(slot18);
         equipmentPickupSlotRepository.save(slot19);
-
-        MedicalEquipmentAvailability medicalEquipmentAvailability1 = new MedicalEquipmentAvailability();
-        medicalEquipmentAvailability1.setCompany(company1);
-        medicalEquipmentAvailability1.setEquipment(equipment1);
-        medicalEquipmentAvailability1.setQuantity(10);
-
-        MedicalEquipmentAvailability medicalEquipmentAvailability2 = new MedicalEquipmentAvailability();
-        medicalEquipmentAvailability2.setCompany(company1);
-        medicalEquipmentAvailability2.setEquipment(equipment2);
-        medicalEquipmentAvailability2.setQuantity(5);
-
-        medicalEquipmentAvailabilityService.save(medicalEquipmentAvailability1);
-        medicalEquipmentAvailabilityService.save(medicalEquipmentAvailability2);
-
     }
 
 }

@@ -6,4 +6,5 @@ export interface Equipment{
     price: number;
     image: string;
     isAddedToCart: boolean;
+    quantity: number;
 }

@@ -138,7 +138,8 @@ public class MedicalEquipmentController {
                     equipmentDTO.getDescription(),
                     company,
                     equipmentDTO.getPrice(),
-                    equipmentDTO.getImage()
+                    equipmentDTO.getImage(),
+                    0
             );
 
             MedicalEquipment savedEquipment = medicalEqupimentService.save(newEquipment);

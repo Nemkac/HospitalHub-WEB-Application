@@ -49,7 +49,7 @@ Marker.prototype.options.icon = iconDefault;
 export class CompanyAdminProfilPageComponent implements OnInit{
   @Input() companyLatitude: number = 0;
   @Input() companyLongitude: number = 0;
-  selectedCompany: Company = {} as Company;
+  selectedCompany: Company | undefined;
   equipments: Equipment[] = [];
   token = localStorage.getItem('token');
   searchInput: string = '';
@@ -89,15 +89,6 @@ export class CompanyAdminProfilPageComponent implements OnInit{
     },
   };
 
-  get formattedOpeningTime(): string {
-    return this.selectedCompany.openingTime ? this.selectedCompany.openingTime.slice(0, 5) : '';
-  }
-
-  get formattedClosingTime(): string {
-    return this.selectedCompany.closingTime ? this.selectedCompany.closingTime.slice(0, 5) : '';
-  }
-
-
   @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
 
   constructor(private companyService: CompanyService,
@@ -112,11 +103,84 @@ export class CompanyAdminProfilPageComponent implements OnInit{
   }
 
   checkIsOpen(): void {
-    const now = moment(); // Trenutno vreme
-    const openingTime = moment(this.formattedOpeningTime, 'HH:mm');
-    const closingTime = moment(this.formattedClosingTime, 'HH:mm');
+    const now = new Date(); // Trenutno vreme
+    const openingTime = this.getOpeningTime();
+    const closingTime = this.getClosingTime();
+    console.log("Opening time: ", openingTime)
     
-    this.isOpen = now.isBetween(openingTime, closingTime);
+    if (openingTime.getTime() > closingTime.getTime()) {
+      // Dodajte sledeći uslov da biste rukovali slučajem kada je closingTime pre openingTime (preko ponoći)
+      this.isOpen = now.getTime() > openingTime.getTime() || now.getTime() < closingTime.getTime();
+    } else {
+      this.isOpen = now.getTime() >= openingTime.getTime() && now.getTime() <= closingTime.getTime();
+    }
+  }
+  
+  getOpeningTime(): Date {
+    if(this.selectedCompany){
+        const openingTimeString = this.selectedCompany.openingTime;
+    
+      if (!openingTimeString) {
+        console.error('Opening time is not defined for the company.');
+        return new Date(); // Vratite nešto, možda trenutno vreme, kao podrazumevanu vrednost.
+      }
+    
+      const [hours, minutes] = openingTimeString.split(':').map(Number);
+    
+      if (isNaN(hours) || isNaN(minutes)) {
+        console.error('Invalid opening time format:', openingTimeString);
+        return new Date(); // Vratite nešto, možda trenutno vreme, kao podrazumevanu vrednost.
+      }
+    
+      const date = new Date();
+      date.setHours(hours);
+      date.setMinutes(minutes);
+      return date;
+    } else {
+      return new Date(); 
+    }
+  }
+  
+  getClosingTime(): Date {
+    if(this.selectedCompany){
+      const closingTimeString = this.selectedCompany.closingTime;
+  
+    if (!closingTimeString) {
+      console.error('Closing time is not defined for the company.');
+      return new Date(); // Vratite nešto, možda trenutno vreme, kao podrazumevanu vrednost.
+    }
+  
+    const [hours, minutes] = closingTimeString.split(':').map(Number);
+  
+    if (isNaN(hours) || isNaN(minutes)) {
+      console.error('Invalid closing time format:', closingTimeString);
+      return new Date(); // Vratite nešto, možda trenutno vreme, kao podrazumevanu vrednost.
+    }
+  
+    const date = new Date();
+    date.setHours(hours);
+    date.setMinutes(minutes);
+    return date;
+    }else {
+      return new Date(); 
+    }
+  }
+  
+
+  get formattedOpeningTime(): string {
+    if(this.selectedCompany){
+      return this.selectedCompany.openingTime ? this.selectedCompany.openingTime.slice(0, 5) : '';
+    } else {
+      return '';
+    }
+  }
+
+  get formattedClosingTime(): string {
+    if(this.selectedCompany){
+      return this.selectedCompany.closingTime ? this.selectedCompany.closingTime.slice(0, 5) : '';
+    } else {
+      return '';
+    }
   }
 
   public getAdminsCompanyData() {
@@ -252,7 +316,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
         { backdrop: 'static', keyboard: true }
     );
 
-    modalRef.componentInstance.companyId = this.selectedCompany.id;
+    modalRef.componentInstance.companyId = this.selectedCompany?.id;
   }
 
   loadMap() {
