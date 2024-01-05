@@ -6,8 +6,7 @@ import com.google.common.primitives.Ints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class MedicalEqupimentService {
@@ -49,9 +48,15 @@ public class MedicalEqupimentService {
     public void deleteById(Integer equipmentId) {
         medicalEquipmentRepository.deleteById(equipmentId);
     }
+
     public List<MedicalEquipment> findAllById(int[] ids){
         List<Integer> integers = Ints.asList(ids);
         return medicalEquipmentRepository.findAllById(integers);
     }
+
+    public MedicalEquipment getById(Integer id){
+        return medicalEquipmentRepository.getById(id);
+    }
+
 
 }

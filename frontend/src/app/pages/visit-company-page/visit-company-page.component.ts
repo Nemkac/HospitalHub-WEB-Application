@@ -316,6 +316,7 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
 
   public addEquipmentToOrder(id : number) :void{
     this.selectedEquipmentsForOrder.push(id);
+    console.log(this.selectedEquipmentsForOrder);
     this.addedToChart = true;
     this.numOfItemsInCart += 1;
     const selectedEquipment = this.equipments.find(equipment => equipment.id === id);

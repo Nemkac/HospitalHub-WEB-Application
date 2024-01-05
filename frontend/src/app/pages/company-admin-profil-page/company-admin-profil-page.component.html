@@ -98,7 +98,7 @@
             </div>
             
             <div class="flex flex-row flex-start flex-wrap w-full mt-4 justify-center justify-between">
-                <div class="flex flex-col items-center justify-center border-[2px] border-gray hover:bg-third hover:text-white text-gray w-[455px] h-[220px] cursor-pointer transition-[0.5s] rounded-md"
+                <div class="flex flex-col my-2 items-center justify-center border-[2px] border-gray hover:bg-third hover:text-white text-gray w-[455px] h-[275px] cursor-pointer transition-[0.5s] rounded-md"
                     (click)="openAddForm()">
                     <fa-icon [icon]="faPlus" class="text-[44px] font-bold"/>
                     <p class="font-inter font-semibold text-[28px]">Add new equipment</p>
@@ -106,7 +106,7 @@
                 
             
                 <div *ngFor="let equipment of filteredEquipments" 
-                        class="flex flex-row bg-white my-2 w-[450px] h-[220px] rounded-md shadow-md relative justify-between cursor-pointer hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
+                        class="flex flex-row bg-white my-2 w-[450px] h-[275px] rounded-md shadow-md relative justify-between cursor-pointer hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
                     <div class="flex flex-row absolute top-0 right-0 p-[10px]">
                         <fa-icon [icon]="faTrash" class="text-third text-[16px] hover:text-lightBlue cursor-pointer transition-[0.5s]" (click)="deleteEquipment(equipment.id)"></fa-icon>
                         <fa-icon [icon]="faGear" class="text-third text-[16px] hover:text-lightBlue cursor-pointer transition-[0.5s] ml-2" (click)="openUpdateForm(equipment)"></fa-icon>            
@@ -123,6 +123,14 @@
                             <p class="text-[16px] font-regular">{{ equipment?.description }}</p>
                         </div>
                         <hr class="w-full mb-[10px] mt-[5px]">
+                        <div class="flex felx-row justify-between mb-[5px]">
+                            <p class="font-light text-[14px]">Available in stock</p>
+                            <p class="font-light text-[14px]">{{equipment.quantity}}</p>
+                        </div>
+                        <div class="flex felx-row justify-between mb-[5px] items-center">
+                            <p class="font-semibold text-[16px]">Price</p>
+                            <p class="font-semibold text-[16px]">${{equipment.price}}</p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -16,6 +16,7 @@ export class EquipmentPickupSlotDisplayModalComponent implements OnInit{
   public pickedUp: boolean = false;
   public active: boolean = false;
   public free: boolean = false;
+  handleDeliveryComplete: (() => void) | undefined;
 
   faClose = faClose;
   
@@ -58,7 +59,7 @@ export class EquipmentPickupSlotDisplayModalComponent implements OnInit{
   public deliverEquipment(slotId : number | undefined) : void{
     this.equipmentPickupSlotService.deliverEquipment(slotId).subscribe(
       (response:EquipmentPickupSlot) => {
-        this.toast.success({detail:"Delivery successful!", summary:"Equipment successfully delivered. Appointment status: PICKED_UP"});
+        //this.toast.success({detail:"Delivery successful!", summary:"Equipment successfully delivered. Appointment status: PICKED_UP"});
         this.pickedUp = true;
         this.expired = false;
         this.active = false;
@@ -66,8 +67,10 @@ export class EquipmentPickupSlotDisplayModalComponent implements OnInit{
 
         setTimeout(() => {
           this.closeModal();
-          location.reload();
-        }, 3000);
+          if(this.handleDeliveryComplete){
+            this.handleDeliveryComplete();
+          }
+        }, 1000);
       },
       (error: HttpErrorResponse) => {
         this.toast.error({detail:"Error message", summary:"Error during delivery of equipment!"});

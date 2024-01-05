@@ -25,6 +25,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { EquipmentPickupSlotService } from 'src/app/services/equipment-pickup-slot.service';
 import { UserDTO } from 'src/app/userDTO';
 import * as moment from 'moment-timezone';
+import { NgToastService } from 'ng-angular-popup';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -95,7 +96,8 @@ export class CompanyAdminProfilPageComponent implements OnInit{
               private userService: UserService,
               private equipmentService: EquipmentService,
               private equipmentPickupSlotService : EquipmentPickupSlotService,
-              private modalService: NgbModal) {}
+              private modalService: NgbModal,
+              private toast: NgToastService) {}
 
   ngOnInit(): void {
     this.getAdminsCompanyData();
@@ -382,6 +384,11 @@ export class CompanyAdminProfilPageComponent implements OnInit{
     )
   }*/
 
+  public handleDeliveryComplete = (): void => {
+    this.toast.success({detail:"Delivery successful!", summary:"Equipment successfully delivered. Appointment status: PICKED_UP"});
+    this.getAdminsCompanyData();
+  };
+
   public displayEquipmentPickupSlot(slot: EquipmentPickupSlot) : void{
     const modalRef = this.modalService.open(
       EquipmentPickupSlotDisplayModalComponent,
@@ -391,6 +398,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
     );
 
     modalRef.componentInstance.slot = slot;
+    modalRef.componentInstance.handleDeliveryComplete = this.handleDeliveryComplete;
   }
 
   openCreatePickupSlotForm(): void {
