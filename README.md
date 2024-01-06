@@ -161,6 +161,7 @@ Before moving on to finalizing the order, the user must also select the date on 
 
 When he has completed all the necessary steps, he can complete the order and after that, he receives an email with order confirmation and a QR code with which he can see all the details of the order.
 
+
 <a href='https://postimg.cc/5Y9CRXBF' target='_blank'><img src='https://i.postimg.cc/KzBD4L4Q/select-Equipment.png' border='0' alt='select-Equipment'/></a>
 <a href='https://postimg.cc/QVt7gWN2' target='_blank'><img src='https://i.postimg.cc/FFbx4jMH/select-Appointment.png' border='0' alt='select-Appointment'/></a>
 <a href='https://postimg.cc/yWFMPWfT' target='_blank'><img src='https://i.postimg.cc/jq9RR7PB/cart.png' border='0' alt='cart'/></a>
