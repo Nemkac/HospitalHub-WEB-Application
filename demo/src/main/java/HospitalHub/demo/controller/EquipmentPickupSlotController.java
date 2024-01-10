@@ -209,30 +209,17 @@ public class EquipmentPickupSlotController {
         EquipmentPickupSlot slot = equipmentPickupSlotService.getById(slotId);
         User mailUser = slot.getReservedBy();
         List<MedicalEquipment> orderedEquipment = medicalEqupimentService.findAllById(slot.getEquipment());
-        int[] orderedEquipmentIds = slot.getEquipment();
-
-        Map<Integer, Integer> idCountMap = new HashMap<>();
-        for (int equipmentId : orderedEquipmentIds) {
-            idCountMap.put(equipmentId, idCountMap.getOrDefault(equipmentId, 0) + 1);
-        }
 
         if(slot.getStatus() != EquipmentPickupSlot.Status.PICKED_UP){
 
             slot.setStatus(EquipmentPickupSlot.Status.PICKED_UP);
             EquipmentPickupSlot updatedSlot = equipmentPickupSlotService.saveNewStatus(slot);
 
-            /*for(MedicalEquipment equipment : orderedEquipment){
+            for(MedicalEquipment equipment : orderedEquipment){
                 equipment.setQuantity(equipment.getQuantity() - 1);
                 medicalEqupimentService.save(equipment);
-            }*/
-
-            for (int equipmentId : idCountMap.keySet()) {
-                int count = idCountMap.get(equipmentId);
-                Integer equipmentIdInteger = equipmentId;
-                MedicalEquipment equipment = medicalEqupimentService.getById(equipmentIdInteger);
-                equipment.setQuantity(equipment.getQuantity() - count);
-                medicalEqupimentService.save(equipment);
             }
+
 
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setFrom("isaisanovicNNBA@gmail.com");
