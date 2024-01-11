@@ -5,6 +5,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EquipmentPickupSlotService } from 'src/app/services/equipment-pickup-slot.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgToastService } from 'ng-angular-popup'
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/user';
 
 @Component({
   selector: 'app-equipment-pickup-slot-display-modal',
@@ -16,9 +18,19 @@ export class EquipmentPickupSlotDisplayModalComponent implements OnInit{
   public pickedUp: boolean = false;
   public active: boolean = false;
   public free: boolean = false;
+  public token = localStorage.getItem('token');
+
+  public companyAdmin: User | undefined;
+
   handleDeliveryComplete: (() => void) | undefined;
 
   faClose = faClose;
+
+
+  constructor(private modalService: NgbActiveModal,
+              private equipmentPickupSlotService: EquipmentPickupSlotService,
+              private userService: UserService,
+              private toast: NgToastService){}
   
   public ngOnInit(): void {
     this.getSlotStatus();
@@ -48,15 +60,12 @@ export class EquipmentPickupSlotDisplayModalComponent implements OnInit{
     }
   }
 
-  constructor(private modalService: NgbActiveModal,
-              private equipmentPickupSlotService: EquipmentPickupSlotService,
-              private toast: NgToastService){}
-
   public closeModal(): void {
     this.modalService.close();
   }
 
   public deliverEquipment(slotId : number | undefined) : void{
+
     this.equipmentPickupSlotService.deliverEquipment(slotId).subscribe(
       (response:EquipmentPickupSlot) => {
         //this.toast.success({detail:"Delivery successful!", summary:"Equipment successfully delivered. Appointment status: PICKED_UP"});

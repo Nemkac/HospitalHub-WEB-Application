@@ -1,11 +1,13 @@
 import { Reply } from './../../models/Reply';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Complaint } from 'src/app/models/Complaint';
 import { ComplaintService } from 'src/app/services/complaint.service';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane, faSquareCheck, faClock, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { format } from 'date-fns';
+import { NgToastService } from 'ng-angular-popup';
+import { User } from 'src/user';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-complaints-page',
@@ -13,16 +15,24 @@ import { format } from 'date-fns';
 })
 export class ComplaintsPageComponent implements OnInit {
   faTrash = faTrash;
+  faSquareCheck = faSquareCheck
+  faPaperPlane = faPaperPlane;
+  faClock = faClock
+
   public complaints: Complaint[] = [];
   public complaintsFlag : boolean = true;
   public selectedComplaint : Complaint | null = null;
   public replied : boolean = false;
-  faPaperPlane = faPaperPlane;
   public reply : string = "";
   public replyDateAndTime: string = '';
   public complaintReply: Reply | null = null;
+  public processedComplaintsFlag: boolean = false;
+  public loggedAdmin: User | undefined;
+  public loggedAdminUsername: string = "";
 
-  constructor(private complaintService: ComplaintService) {}
+  constructor(private complaintService: ComplaintService,
+              private toast: NgToastService,
+              private userService: UserService) {}
 
   ngOnInit(): void { 
     //this.getComplaints();
@@ -35,7 +45,9 @@ export class ComplaintsPageComponent implements OnInit {
         if(response.length === 0){
           this.complaintsFlag = false;
           this.complaints = [];
+          this.processedComplaintsFlag = false;
         } else {
+          this.processedComplaintsFlag = false;
           this.complaintsFlag = true;
           this.complaints = response;
         }
@@ -51,6 +63,7 @@ export class ComplaintsPageComponent implements OnInit {
       (response: Complaint[]) => {
         this.complaintsFlag = true;
         this.complaints = response;
+        this.processedComplaintsFlag = true;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -88,12 +101,30 @@ export class ComplaintsPageComponent implements OnInit {
 
   public replyOnComplaint(id:number, reply:string) : void{
     this.reply = reply;
+    const token = localStorage.getItem('token');
+    if(token){
+      this.userService.getUserByToken(token).subscribe(
+        (response: User) => {
+          if(response.roles === "ROLE_SYSADMIN"){
+            this.loggedAdmin = response;
+            this.loggedAdminUsername = response.username;
+          } else {
+            this.toast.error({detail:"Error message", summary:"Logged user is not system admin"})
+          }
+        }
+      )
+    }
     const replyData: Reply = {
       reply: reply,
-      replyDate: format(new Date(), 'yyyy-MM-dd HH:mm:ss')
+      replyDate: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+      repliedBy: this.loggedAdminUsername
+
     };
     this.complaintService.replyOnComplaint(id, replyData).subscribe(
       (response: Complaint) => {
+        if(response === null){
+          this.toast.error({detail:"Error message", summary:response});
+        }
         this.replied = true;
         this.selectedComplaint = response;
         this.complaintService.getAllUnprocessedComplaints().subscribe(
@@ -109,7 +140,7 @@ export class ComplaintsPageComponent implements OnInit {
         )
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toast.error({detail:"Complaint already processed", summary:" Someone else has replied. Please refresh and try again"});
       }
     )
   }

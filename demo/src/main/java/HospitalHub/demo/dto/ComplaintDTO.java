@@ -17,14 +17,15 @@ public class ComplaintDTO {
     private LocalDateTime replyDate;
     private boolean onCompany;
     private boolean onAdministrator;
+    private String repliedBy;
 
     public ComplaintDTO() {}
 
     public ComplaintDTO(Complaint complaint) {
-        this(complaint.getId(), complaint.getFromUser(), complaint.getDate(), complaint.getText(), complaint.getReply(), complaint.getReplyDate(), complaint.isOnCompany(), complaint.isOnAdministrator());
+        this(complaint.getId(), complaint.getFromUser(), complaint.getDate(), complaint.getText(), complaint.getReply(), complaint.getReplyDate(), complaint.isOnCompany(), complaint.isOnAdministrator(), complaint.getRepliedBy());
     }
 
-    public ComplaintDTO(Integer id, String fromUser, LocalDateTime date, String text, String reply, LocalDateTime replyDate, boolean onCompany, boolean onAdministrator) {
+    public ComplaintDTO(Integer id, String fromUser, LocalDateTime date, String text, String reply, LocalDateTime replyDate, boolean onCompany, boolean onAdministrator, String repliedBy) {
         this.id = id;
         this.fromUser = fromUser;
         this.date = date;
@@ -33,6 +34,7 @@ public class ComplaintDTO {
         this.replyDate = replyDate;
         this.onCompany = onCompany;
         this.onAdministrator = onAdministrator;
+        this.repliedBy = repliedBy;
     }
 
     public Integer getId() {
@@ -97,5 +99,13 @@ public class ComplaintDTO {
 
     public void setReplyDate(LocalDateTime replyDate) {
         this.replyDate = replyDate;
+    }
+
+    public String getRepliedBy() {
+        return repliedBy;
+    }
+
+    public void setRepliedBy(String repliedBy) {
+        this.repliedBy = repliedBy;
     }
 }

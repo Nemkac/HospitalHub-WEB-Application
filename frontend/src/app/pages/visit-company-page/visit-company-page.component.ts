@@ -358,6 +358,7 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
     this.selectedAppointment = 0;
     this.addedToChart = false;
     this.appointmentSelected = false;
+    this.numOfItemsInCart = 0;
     this.toast.success({detail:"Order created successfully", summary:"Order details have been sent to your email."});
     this.getEquipmentPickupSlots(this.companyId);
   };

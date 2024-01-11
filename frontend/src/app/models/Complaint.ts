@@ -5,6 +5,7 @@ export interface Complaint{
     text: string;
     reply: string;
     replyDate: Date;
+    repliedBy: string;
     onCompany: boolean;
     onAdministrator: boolean;
 }

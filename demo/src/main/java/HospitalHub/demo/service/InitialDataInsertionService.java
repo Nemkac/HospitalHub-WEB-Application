@@ -140,14 +140,34 @@ public class InitialDataInsertionService {
                 true
         );
 
+        LocalDate user6BirthDate = LocalDate.ofEpochDay(2002-4-1);
+        User user6 = new User(
+                "Doka",
+                "Teodora",
+                "Zunic",
+                "tz123",
+                user6BirthDate,
+                "tzunic@gmail.com",
+                "0644356467",
+                "Serbia",
+                "Ruma",
+                "Programer",
+                "None",
+                "ROLE_SYSADMIN",
+                true
+        );
+
         userService.addUser(user1);
         userService.addUser(user2);
         userService.addUser(user3);
         userService.addUser(user4);
         userService.addUser(user5);
+        userService.addUser(user6);
 
         SystemAdministrator systemAdministrator = new SystemAdministrator(user4);
         systemAdministratorService.save(systemAdministrator);
+        SystemAdministrator systemAdministrator2 = new SystemAdministrator(user6);
+        systemAdministratorService.save(systemAdministrator2);
 
         CompanyAdministrator companyAdministrator1 = new CompanyAdministrator(user3, company1);
         CompanyAdministrator companyAdministrator2 = new CompanyAdministrator(user5, company1);
@@ -180,6 +200,7 @@ public class InitialDataInsertionService {
         complaint1.setReply("Nije los");
         LocalDateTime complaint1ReplyDate = LocalDateTime.of(2023, 1, 12, 15, 32);
         complaint1.setReplyDate(complaint1ReplyDate);
+        complaint1.setRepliedBy(user4.getUsername());
 
         LocalDateTime complaint2Date = LocalDateTime.of(2023, 2, 2, 4, 22);
         Complaint complaint2 = new Complaint(user2.getUsername(), complaint2Date, "Losa kompanija", true, false);
@@ -189,6 +210,7 @@ public class InitialDataInsertionService {
         complaint3.setReply("Tako je, los je");
         LocalDateTime complaint3ReplyDate = LocalDateTime.of(2023, 6, 18, 23, 32);
         complaint3.setReplyDate(complaint3ReplyDate);
+        complaint3.setRepliedBy(user4.getUsername());
 
         LocalDateTime complaint4Date = LocalDateTime.of(2023, 2, 2, 8, 30);
         Complaint complaint4 = new Complaint(user2.getUsername(), complaint4Date, "Najgora kompanija", true, false);

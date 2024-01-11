@@ -29,11 +29,17 @@ public class Complaint {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime replyDate;
 
+    @Column(name = "repliedBy")
+    private String repliedBy;
+
     @Column
     private boolean onCompany;
 
     @Column
     private boolean onAdministrator;
+
+    @Version
+    private Long version;
 
     public Complaint() {}
 
@@ -107,5 +113,21 @@ public class Complaint {
 
     public void setReplyDate(LocalDateTime replyDate) {
         this.replyDate = replyDate;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    public String getRepliedBy() {
+        return repliedBy;
+    }
+
+    public void setRepliedBy(String repliedBy) {
+        this.repliedBy = repliedBy;
     }
 }

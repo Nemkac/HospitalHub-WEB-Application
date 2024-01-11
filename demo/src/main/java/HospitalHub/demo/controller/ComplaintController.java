@@ -4,6 +4,7 @@ import HospitalHub.demo.dto.ComplaintDTO;
 import HospitalHub.demo.dto.ReplyDTO;
 import HospitalHub.demo.model.Complaint;
 import HospitalHub.demo.service.ComplaintService;
+import jakarta.transaction.Transactional;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,16 +64,41 @@ public class ComplaintController {
     }
 
     @PutMapping(value = "/reply/{id}")
+    @Transactional
     public ResponseEntity<ComplaintDTO> reply(@PathVariable Integer id, @RequestBody ReplyDTO replyDTO){
         try{
-            Complaint complaint = complaintService.getById(id);
+            /*Complaint complaint = complaintService.getById(id);
             complaint.setReply(replyDTO.getReply());
             complaint.setReplyDate(replyDTO.getReplyDate());
             complaintService.save(complaint);
 
             ComplaintDTO dto = new ComplaintDTO(complaint);
 
-            return new ResponseEntity<ComplaintDTO>(dto, HttpStatus.OK);
+            return new ResponseEntity<ComplaintDTO>(dto, HttpStatus.OK);*/
+
+            Complaint complaint = complaintService.getById(id);
+
+            if (complaint == null) {
+                return new ResponseEntity("Complaint not found", HttpStatus.NOT_FOUND);
+            }
+
+            if (complaint.getReply() != null) {
+                return new ResponseEntity("Complaint already replied", HttpStatus.CONFLICT);
+            }
+
+            if (complaint.getVersion() != null && complaint.getVersion() >= 1) {
+                return new ResponseEntity("Conflict. Someone else has replied. Please refresh and try again.", HttpStatus.CONFLICT);
+            }
+
+            complaint.setReply(replyDTO.getReply());
+            complaint.setReplyDate(replyDTO.getReplyDate());
+            complaint.setRepliedBy(replyDTO.getRepliedBy());
+            complaintService.save(complaint);
+
+            ComplaintDTO dto = new ComplaintDTO(complaint);
+
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+
         } catch (Exception e){
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

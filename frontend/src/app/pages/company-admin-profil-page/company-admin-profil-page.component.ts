@@ -338,7 +338,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
     this.showCalendar = false
     this.showAdministrators = false;
     this.showUsers = false;
-
+    this.getAdminsCompanyData();
   }
 
   public viewCalendar() : void{

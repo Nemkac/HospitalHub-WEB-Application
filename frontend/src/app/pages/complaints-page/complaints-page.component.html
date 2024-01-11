@@ -3,12 +3,30 @@
         <p class="font-inter font-bold text-[24px] text-third">Complaints</p>
         <div class="bg-white w-full h-full rounded-md shadow-xl px-4 overflow-scroll">
             <ng-container *ngIf="complaintsFlag; else noComplaints">
+                <ng-container *ngIf="processedComplaintsFlag; else unprocessedComplaints">
+                    <div class="flex w-full justify-center items-center mt-6">
+                        <p class="font-inter text-gray cursor-pointer text-[16px] font-medium hover:text-third transition-[0.4s]" (click)="getUnprocessedComplaints()">Click here to see unprocessed complaints</p>
+                    </div>
+                </ng-container>
+                <ng-template #unprocessedComplaints>
+                    <div class="flex flex-col items-center justify-center mt-6">
+                        <p class="font-inter text-gray cursor-pointer text-[16px] font-medium hover:text-third transition-[0.4s]" (click)="getProcessedComplaints()">Click here to see processed complaints</p>
+                    </div>
+                </ng-template>
                 <div *ngFor="let complaint of complaints"  
                     (click)="selectComplaint(complaint.id)"
                     class="flex flex-col shadow-md justify-evenly w-full rounded-xl cursor-pointer
                             my-4 px-[20px] py-2 h-[100px] border-[1px] border-third/10 hover:bg-[#dcdde1] transition-[0.5s]">
                 <div class="flex flex-row justify-between items-center">
-                    <p class="font-inter font-semibold text-third text-[18px]">COMPLAINT NUMBER {{complaint.id}}</p>
+                    <div class="flex flex-row w-full justify-start items-center">
+                        <p class="font-inter font-semibold text-third text-[18px]">COMPLAINT NUMBER {{complaint.id}}</p>
+                        <ng-container *ngIf="processedComplaintsFlag; else unprocessedComplaints">
+                            <fa-icon [icon]="faSquareCheck" class="text-darkGreen ml-2 text-[18px]"/>
+                        </ng-container>
+                        <ng-template #unprocessedComplaints>
+                            <fa-icon [icon]="faClock" class="text-yellow ml-2 text-[18px]"/>
+                        </ng-template>
+                    </div>
                     <fa-icon [icon]="faTrash" class="text-third text-[16px] hover:text-lightBlue cursor-pointer transition-[0.5s]"/>
                 </div>
                 <div class="flex flex-row items-center">
@@ -51,7 +69,7 @@
                     <div class="flex flex-col bg-white w-full">
                         <p class="font-inter font-light text-third text-[18px]">Reply: </p>
                         <p class="font-inter font-medium text-third text-[18px]">{{selectedComplaint.reply}}</p>
-                        <p class="font-inter font-light text-thrid text-[16px] text-end mt-auto">Replied by: Nemkac at {{selectedComplaint.replyDate}}</p>
+                        <p class="font-inter font-light text-thrid text-[16px] text-end mt-auto">Replied by: {{selectedComplaint.repliedBy}} at {{selectedComplaint.replyDate}}</p>
                     </div>
                 </div>
             </ng-container>
