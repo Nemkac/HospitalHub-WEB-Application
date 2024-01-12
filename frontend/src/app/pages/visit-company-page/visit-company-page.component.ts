@@ -25,6 +25,7 @@ import { CreateExtraSlotComponent } from 'src/app/components/create-extra-slot/c
 import { MessageService } from 'primeng/api'
 import { NgToastService } from 'ng-angular-popup'
 import * as moment from 'moment-timezone';
+import { EquipmentService } from 'src/app/services/equipment.service';
 
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
@@ -113,6 +114,7 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
               private userService: UserService,
               private modalService: NgbModal,
               private messageService: MessageService,
+              private equipmentService: EquipmentService,
               private toast: NgToastService) {}
 
   ngOnInit(): void {
@@ -315,17 +317,25 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   }
 
   public addEquipmentToOrder(id : number) :void{
-    this.selectedEquipmentsForOrder.push(id);
-    console.log(this.selectedEquipmentsForOrder);
-    this.addedToChart = true;
-    this.numOfItemsInCart += 1;
-    const selectedEquipment = this.equipments.find(equipment => equipment.id === id);
-    if (selectedEquipment) {
-      selectedEquipment.isAddedToCart = true;
-      setTimeout(() => {
-        selectedEquipment.isAddedToCart = false;
-     }, 1500);
-    }
+    this.equipmentService.getEquipmentById(id).subscribe(
+      (response: Equipment) => {
+        if(response.quantity > 0) {
+          this.selectedEquipmentsForOrder.push(id);
+          console.log(this.selectedEquipmentsForOrder);
+          this.addedToChart = true;
+          this.numOfItemsInCart += 1;
+          const selectedEquipment = this.equipments.find(equipment => equipment.id === id);
+          if (selectedEquipment) {
+            selectedEquipment.isAddedToCart = true;
+            setTimeout(() => {
+              selectedEquipment.isAddedToCart = false;
+           }, 1500);
+          }
+        } else {
+          this.toast.error({detail: "Error message", summary:"Equipment out of stock!"});
+        }
+      }
+    )
   }
 
   public selectAppointment(id : number) : void{
@@ -347,8 +357,12 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
         modalRef.componentInstance.handleOrderComplete = this.handleOrderComplete;
         modalRef.componentInstance.selectedEquipmentIds = this.selectedEquipmentsForOrder;
         modalRef.componentInstance.userId = this.loggedUser.id;  
-      } else {
+      } else if(this.selectedAppointment === 0) {
         this.toast.error({detail: "Error message", summary:"You must select date!"});
+      } else if(this.selectedEquipmentsForOrder.length === 0){
+        this.toast.error({detail: "Error message", summary:"You must select equipment!"});
+      } else {
+        this.toast.error({detail: "Error message", summary:"Error while creating cart!"});
       }
     }
   }

@@ -206,7 +206,7 @@ public class EquipmentPickupSlotController {
 
     @PutMapping("/deliverEquipment")
     public ResponseEntity<EquipmentPickupSlot> deliverEquipment(@RequestBody Integer slotId){
-        EquipmentPickupSlot slot = equipmentPickupSlotService.getById(slotId);
+        /*EquipmentPickupSlot slot = equipmentPickupSlotService.getById(slotId);
         User mailUser = slot.getReservedBy();
         List<MedicalEquipment> orderedEquipment = medicalEqupimentService.findAllById(slot.getEquipment());
 
@@ -218,8 +218,34 @@ public class EquipmentPickupSlotController {
             for(MedicalEquipment equipment : orderedEquipment){
                 equipment.setQuantity(equipment.getQuantity() - 1);
                 medicalEqupimentService.save(equipment);
+            }*/
+
+        EquipmentPickupSlot slot = equipmentPickupSlotService.getById(slotId);
+        User mailUser = slot.getReservedBy();
+
+        if (slot.getStatus() != EquipmentPickupSlot.Status.PICKED_UP) {
+            slot.setStatus(EquipmentPickupSlot.Status.PICKED_UP);
+            EquipmentPickupSlot updatedSlot = equipmentPickupSlotService.saveNewStatus(slot);
+
+            int[] equipmentIds = slot.getEquipment();
+
+            Map<Integer, Integer> equipmentQuantityMap = new HashMap<>();
+
+            for (Integer equipmentId : equipmentIds) {
+                equipmentQuantityMap.put(equipmentId, equipmentQuantityMap.getOrDefault(equipmentId, 0) + 1);
             }
 
+            for (Map.Entry<Integer, Integer> entry : equipmentQuantityMap.entrySet()) {
+                Integer equipmentId = entry.getKey();
+                Integer quantity = entry.getValue();
+
+                MedicalEquipment equipment = medicalEqupimentService.findById(equipmentId);
+
+                if (equipment != null) {
+                    equipment.setQuantity(equipment.getQuantity() - quantity);
+                    medicalEqupimentService.save(equipment);
+                }
+            }
 
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setFrom("isaisanovicNNBA@gmail.com");
