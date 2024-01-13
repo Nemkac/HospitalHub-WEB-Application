@@ -64,7 +64,7 @@ export class QrCodeScannerPageComponent {
   
     img.onload = () => {
       if (img.width === 0 || img.height === 0) {
-        console.error('Invalid image dimensions.');
+        this.toast.error({detail:"QR Image error.", summary:"Invalid image dimensions."});
         return;
       }
   
@@ -86,7 +86,7 @@ export class QrCodeScannerPageComponent {
       if (code) {
         this.onCodeResult(code.data);
       } else {
-        console.log('QR code not found in the image.');
+        this.toast.error({detail:"QR Image error.", summary:"QR code not found in the image."});
       }
     };
   }
