@@ -167,7 +167,7 @@ When he has completed all the necessary steps, he can complete the order and aft
 <a href='https://postimg.cc/yWFMPWfT' target='_blank'><img src='https://i.postimg.cc/jq9RR7PB/cart.png' border='0' alt='cart'/></a>
 
 ```
-docker run --rm --it -p 15672:15672 -p 5672:5672 rabbitmq:3.12.12-management
+docker run --rm -it -p 15672:15672 -p 5672:5672 rabbitmq:3.12.12-management
 ```
 
 # Authors
