@@ -5,16 +5,16 @@
         <div class="flex flex-row items-center justify-center justify-between w-full my-2">
             <fa-icon [icon]="faLocation" class="text-[26px] text-third"/>
             <input  type="text" class="border border-gray p-2 rounded w-[90%] font-inter focus:outline-third text-third"
-                    placeholder="Company adress">
+                    placeholder="{{selectedCompany?.address}}" id="source" readonly>
         </div>
         <div class="flex flex-row items-center justify-center justify-between w-full my-2">
             <div class="flex w-[47%]">
                 <input  type="text" class="border border-gray focus:outline-third text-third p-2 rounded w-full font-inter"
-                        placeholder="Latitude">
+                        placeholder="{{selectedCompany?.latitude}}" readonly>
             </div>
             <div class="flex w-[47%]">
                 <input  type="text" class="border focus:outline-third text-third border-gray p-2 rounded w-full font-inter"
-                placeholder="Longitude">
+                        placeholder="{{selectedCompany?.longitude}}" readonly>
             </div>
         </div>
         <hr class="w-full my-4">
@@ -22,18 +22,19 @@
         <div class="flex flex-row items-center justify-center justify-between w-full my-2">
             <fa-icon [icon]="faLocationDot" class="text-[26px] text-third"/>
             <input  type="text" class="border border-gray p-2 rounded w-[90%] font-inter focus:outline-third text-third"
-                    placeholder="Select a location on the map or enter an address">
+                    placeholder="Select a location on the map or enter an address" [value]="destinationAddress">
         </div>
         <div class="flex flex-row items-center justify-center justify-between w-full my-2">
             <div class="flex w-[47%]">
-                <input  type="text" class="border border-gray focus:outline-third text-third p-2 rounded w-full font-inter"
-                        placeholder="Latitude">
+                <input type="text" class="border border-gray focus:outline-third text-third p-2 rounded w-full font-inter"
+                       [placeholder]="destinationLatitude === 0 ? 'Latitude' : '' " [value]="destinationLatitude" readonly>
             </div>
             <div class="flex w-[47%]">
-                <input  type="text" class="border focus:outline-third text-third border-gray p-2 rounded w-full font-inter"
-                placeholder="Longitude">
+                <input type="text" class="border focus:outline-third text-third border-gray p-2 rounded w-full font-inter"
+                       [placeholder]="destinationLongitude === 0 ? 'Longitude' : ''" [value]="destinationLongitude" readonly>
             </div>
         </div>
+        
         <hr class="w-full my-4">
         <button class="bg-third hover:bg-lightBlue text-white font-inter font-semibold text-[24px] 
                         transition-[0.5s] rounded-md w-full p-2 my-2">

@@ -33,7 +33,7 @@ const routes: Routes = [
     {path: 'complaints', component:ComplaintsPageComponent},
     {path: 'profile/upcoming-appoitments', component:UpcomingAppointmentsComponent},
     {path: 'qr-code-scanner', component: QrCodeScannerPageComponent},
-    {path: 'request-delivery', component: RequestDeliveryPageComponent}
+    {path: 'request-delivery/:id', component: RequestDeliveryPageComponent}
 ];
 
 @NgModule({

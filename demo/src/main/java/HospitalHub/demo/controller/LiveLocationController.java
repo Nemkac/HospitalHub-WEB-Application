@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/liveLocation")
+@RequestMapping(value = "api/liveLocation")
 public class LiveLocationController {
 
     //private RabbitMQProducer rabbitMQProducer;

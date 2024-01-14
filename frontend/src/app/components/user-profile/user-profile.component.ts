@@ -22,6 +22,7 @@ import { CreateCompanyAdministratorFormComponent } from '../create-company-admin
 import { CreateNewSysAdmninistratorFormComponent } from '../create-new-sys-admninistrator-form/create-new-sys-admninistrator-form.component';
 import { CreateCompanyFormComponent } from '../create-company-form/create-company-form.component';
 import { Equipment } from 'src/Equipment';
+import { RequestDeliveryService } from 'src/app/services/request-delivery.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -59,7 +60,8 @@ export class UserProfileComponent implements OnInit{
               private userProfileService:UserProfileService,
               private route: ActivatedRoute,
               private modalService: NgbModal,
-              private slotService : EquipmentPickupSlotService){}
+              private slotService : EquipmentPickupSlotService,
+              private requestDeliveryService: RequestDeliveryService){}
 
   faGear = faGear;
   faUser = faUser;
@@ -89,6 +91,10 @@ export class UserProfileComponent implements OnInit{
       );
     }
     this.showUserProfile();
+  }
+
+  goToRequestDelivery(id: number) : void{
+    this.requestDeliveryService.goToRequestDelivery(id);
   }
 
   public getEquipmentPickupSlots(id: number) : void{
