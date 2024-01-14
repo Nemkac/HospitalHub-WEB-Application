@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserProfileService } from 'src/app/services/user-profile.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { ActivatedRoute } from '@angular/router';
-import { faGear, faUser, faPlus, faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { faGear, faUser, faPlus, faCalendar, faQrcode } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateUserProfileComponent } from '../update-user-profile/update-user-profile.component';
 import { UserService } from 'src/app/services/user.service';
@@ -64,7 +64,8 @@ export class UserProfileComponent implements OnInit{
   faGear = faGear;
   faUser = faUser;
   faPlus = faPlus;
-  faCalendar = faCalendar
+  faCalendar = faCalendar;
+  faQrcode = faQrcode;
 
   ngOnInit(): void {
     if(this.token){

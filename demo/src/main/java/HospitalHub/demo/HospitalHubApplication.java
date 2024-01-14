@@ -2,6 +2,7 @@ package HospitalHub.demo;
 
 
 import HospitalHub.demo.service.InitialDataInsertionService;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +18,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @EnableAsync
 @SpringBootApplication
+@EnableRabbit
 public class HospitalHubApplication implements CommandLineRunner{
 
 	@Autowired

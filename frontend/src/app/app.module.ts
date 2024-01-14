@@ -50,6 +50,7 @@ import { MessageService } from 'primeng/api';
 import { NgToastModule } from 'ng-angular-popup';
 import { QrCodeScannerPageComponent } from './pages/qr-code-scanner-page/qr-code-scanner-page.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { RequestDeliveryPageComponent } from './pages/request-delivery-page/request-delivery-page.component';
 
 
 @NgModule({
@@ -89,6 +90,7 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
           CartModalComponent,
           CreateExtraSlotComponent,
           QrCodeScannerPageComponent,
+          RequestDeliveryPageComponent,
       ],
       imports: [
           BrowserAnimationsModule,
