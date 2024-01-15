@@ -17,12 +17,35 @@ In addition, the application also offers a modern interface that is, above all, 
 * <b>Direct Ordering</b>: The platform facilitates a direct ordering process, simplifying transactions between users and equipment providers.
 * <b>Reliable Network</b>: We've collaborated with reputable companies, creating a trusted network to ensure the quality and reliability of the equipment offered.
 
-## How it works:
+## How It Works:
 1. <b>Company Exploration</b>: Users can explore a list of vetted companies, each offering a unique selection of medical equipment for rent.
 2. <b>Equipment Discovery</b>: The platform hosts a detailed database, allowing users to explore and select specific medical equipment that suits their requirements.
 3. <b>Order Placement</b>: Users can place orders directly through HospitalHub, streamlining the communication and transaction process.
 4. <b>Convenient Delivery</b>: The chosen company then ensures the timely and hassle-free delivery of the ordered equipment.
-  
+
+## How To Run
+1. The backend part is started first. It is run from IntelliJ or any other environment as you would run any other java project.
+2. The next thing that starts is docker. The RabbitMQ image for managing message queues is started with the following command from the terminal:
+   
+   ```
+    docker run --rm -it -p 15672:15672 -p 5672:5672 rabbitmq:3.12.12-management
+   ```
+   
+   **If you do not run the image from the terminal but from the desktop application, it is important to choose the default RabbitMQ port 5672.**
+
+3. After docker is started, the next thing to start is the frontend part.
+Before starting, you need to have node.js and npm installed on your computer and it is necessary to update the versions of the used libraries and extensions by running the following command from the terminal:
+
+   ```node.js
+    npm update
+   ```
+
+   Finally, the frontend part is started with the following command from the terminal:
+
+   ```Angular
+    ng serve
+   ```
+
 # Application structure
 <a href='https://postimg.cc/7CkTppvC' target='_blank'><img src='https://i.postimg.cc/5tHqFVnm/Hospital-Hub-Class-Diagram-drawio.png' border='0' alt='Hospital-Hub-Class-Diagram-drawio'/></a>
 
@@ -166,9 +189,6 @@ When he has completed all the necessary steps, he can complete the order and aft
 <a href='https://postimg.cc/QVt7gWN2' target='_blank'><img src='https://i.postimg.cc/FFbx4jMH/select-Appointment.png' border='0' alt='select-Appointment'/></a>
 <a href='https://postimg.cc/yWFMPWfT' target='_blank'><img src='https://i.postimg.cc/jq9RR7PB/cart.png' border='0' alt='cart'/></a>
 
-```
-docker run --rm -it -p 15672:15672 -p 5672:5672 rabbitmq:3.12.12-management
-```
 
 # Authors
 * <a href="https://github.com/NemanjaRanitovic">Nemanja Ranitović
