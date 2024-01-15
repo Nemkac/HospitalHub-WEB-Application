@@ -24,16 +24,17 @@ In addition, the application also offers a modern interface that is, above all, 
 4. <b>Convenient Delivery</b>: The chosen company then ensures the timely and hassle-free delivery of the ordered equipment.
 
 ## How To Run
-1. The backend part is started first. It is run from IntelliJ or any other environment as you would run any other java project.
-2. The next thing that starts is docker. The RabbitMQ image for managing message queues is started with the following command from the cmd:
+1. The first thing to start is docker. The RabbitMQ image for managing message queues is started with the following command from the cmd:
    
    ```
     docker run --rm -it -p 15672:15672 -p 5672:5672 rabbitmq:3.12.12-management
    ```
    
    **If you do not run the image from the terminal but from the desktop application, it is important to choose the default RabbitMQ port 5672.**
+   
+3. The next thing to run is backend. It is run from IntelliJ or any other environment as you would run any other java project.
 
-3. After docker is started, the next thing to start is the frontend part.
+4. After docker is started, the next thing to start is the frontend part.
 Before starting, you need to have node.js and npm installed on your computer and it is necessary to update the versions of the used libraries and extensions by running the following command from the terminal:
 
    ```node.js
