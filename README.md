@@ -25,7 +25,7 @@ In addition, the application also offers a modern interface that is, above all, 
 
 ## How To Run
 1. The backend part is started first. It is run from IntelliJ or any other environment as you would run any other java project.
-2. The next thing that starts is docker. The RabbitMQ image for managing message queues is started with the following command from the terminal:
+2. The next thing that starts is docker. The RabbitMQ image for managing message queues is started with the following command from the cmd:
    
    ```
     docker run --rm -it -p 15672:15672 -p 5672:5672 rabbitmq:3.12.12-management
