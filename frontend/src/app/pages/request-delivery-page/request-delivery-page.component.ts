@@ -33,7 +33,10 @@ export class RequestDeliveryPageComponent implements OnInit{
 	destinationLatitude: number = 0;
 	destinationLongitude: number = 0;
 	destinationAddress: string = '';
-	
+	routeCoordinates : any;
+	marker: any;
+
+	deliveryStarted : boolean = false;
 
 	constructor(private route: ActivatedRoute,
 				private companyService: CompanyService,
@@ -76,7 +79,7 @@ export class RequestDeliveryPageComponent implements OnInit{
 			iconUrl:'../../../assets/logotip-blue.png',
 			iconSize: [50, 40]
 		})
-		var marker = L.marker([this.companyLatitude, this.companyLongitude], {icon: deliveryTruckIcon}).addTo(this.map);
+		this.marker = L.marker([this.companyLatitude, this.companyLongitude], {icon: deliveryTruckIcon}).addTo(this.map);
 		
 		this.map.on('click', (e) => {
 			if(this.destinationMarker === null){
@@ -93,19 +96,7 @@ export class RequestDeliveryPageComponent implements OnInit{
 					const lastRoute = e.routes[e.routes.length - 1];
 					const lastStep = lastRoute.instructions[lastRoute.instructions.length - 1];
 					this.destinationAddress = lastStep.road;
-					const routeCoordinates = e.routes[0].coordinates;
-					let index = 0;
-					const intervalId = setInterval(() => {
-						if (index < routeCoordinates.length) {
-							const currentCoordinate = routeCoordinates[index];
-							this.sendCoordinateToRabbitMQ(currentCoordinate.lat, currentCoordinate.lng);
-							marker.setLatLng([currentCoordinate.lat, currentCoordinate.lng]);
-							index++;
-						} else {
-							clearInterval(intervalId);
-							this.toast.success({detail:"Equipment delivered", summary:"If the equipment was damaged during transport, please contact us by email."})	
-						}
-					}, 1000);
+					this.routeCoordinates = e.routes[0].coordinates;
 				})
 				.addTo(this.map!);
 			}
@@ -119,5 +110,37 @@ export class RequestDeliveryPageComponent implements OnInit{
 		};
 
 		this.rabbitmeLiveLocationService.sendLiveLocationMessage(liveLocation).subscribe();
+	}
+
+	startDelivery() : void{
+		let index = 0;
+		if(this.destinationLatitude === 0 || this.destinationLongitude == 0){
+			this.toast.error({detail:"Error message", summary:"You must select destination!"});
+		} else {
+			this.toast.info({detail:"Delivery started", summary:"We will notify you when the delivery person is close to the destination."})	
+			const intervalId = setInterval(() => {
+				if (index < this.routeCoordinates.length) {
+					if(index === this.routeCoordinates.length - 20){
+						this.toast.info({detail:"Almost there", summary:"The equipment will be delivered soon. Please be ready to pick up."})
+					}	
+					const currentCoordinate = this.routeCoordinates[index];
+					this.sendCoordinateToRabbitMQ(currentCoordinate.lat, currentCoordinate.lng);
+					this.marker.setLatLng([currentCoordinate.lat, currentCoordinate.lng]);
+					index++;
+					this.deliveryStarted = true;
+				} else {
+					clearInterval(intervalId);
+					setTimeout(() => {
+						this.deliveryStarted = false;
+						this.destinationAddress = '';
+						this.destinationLatitude = 0;
+						this.destinationLongitude = 0;
+						this.routeCoordinates = null;
+						this.destinationMarker = null;
+					 }, 3000);
+					 this.toast.success({detail:"Equipment delivered", summary:"If the equipment was damaged during transport, please contact us by email."})	
+				}
+			}, 1000);
+		}
 	}
 }

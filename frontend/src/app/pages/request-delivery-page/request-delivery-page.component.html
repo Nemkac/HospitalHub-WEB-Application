@@ -36,9 +36,12 @@
         </div>
         
         <hr class="w-full my-4">
-        <button class="bg-third hover:bg-lightBlue text-white font-inter font-semibold text-[24px] 
-                        transition-[0.5s] rounded-md w-full p-2 my-2">
-            Request delivery
-        </button>
+        <button class="text-white font-inter font-semibold text-[24px] transition-[0.5s] rounded-md w-full p-2 my-2"
+                [ngClass]="{ 'bg-darkGreen': deliveryStarted, 'cursor-not-allowed': deliveryStarted, 'bg-third hover:bg-lightBlue': !deliveryStarted }"
+                [disabled]="deliveryStarted"
+                (click)="startDelivery()">
+        {{ deliveryStarted ? 'Delivery in Progress...' : 'Start Delivery' }}
+      </button>
+      
     </div>
 </div>
