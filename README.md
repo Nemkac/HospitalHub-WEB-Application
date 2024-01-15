@@ -34,7 +34,7 @@ In addition, the application also offers a modern interface that is, above all, 
    
 3. The next thing to run is backend. It is run from IntelliJ or any other environment as you would run any other java project.
 
-4. After docker is started, the next thing to start is the frontend part.
+4. After backend is started, the next thing to start is the frontend part.
 Before starting, you need to have node.js and npm installed on your computer and it is necessary to update the versions of the used libraries and extensions by running the following command from the terminal:
 
    ```node.js
