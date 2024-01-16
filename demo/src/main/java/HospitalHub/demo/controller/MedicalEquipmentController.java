@@ -119,7 +119,9 @@ public class MedicalEquipmentController {
             if (equipmentDTO.getImage() != null && !equipmentDTO.getImage().isEmpty()) {
                 existingEquipment.setImage(equipmentDTO.getImage());
             }
-
+            if (equipmentDTO.getQuantity() != null) {
+                existingEquipment.setQuantity(equipmentDTO.getQuantity());
+            }
             medicalEqupimentService.save(existingEquipment);
 
             return new ResponseEntity<>(existingEquipment, HttpStatus.OK);
@@ -139,7 +141,7 @@ public class MedicalEquipmentController {
                     company,
                     equipmentDTO.getPrice(),
                     equipmentDTO.getImage(),
-                    0
+                    equipmentDTO.getQuantity()
             );
 
             MedicalEquipment savedEquipment = medicalEqupimentService.save(newEquipment);
