@@ -4,5 +4,6 @@ export interface EquipmentToUpdate {
   description: string;
   price: number;
   image: string;
+  quantity: number;
 }
   
