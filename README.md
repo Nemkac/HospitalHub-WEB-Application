@@ -24,10 +24,15 @@ In addition, the application also offers a modern interface that is, above all, 
 4. <b>Convenient Delivery</b>: The chosen company then ensures the timely and hassle-free delivery of the ordered equipment.
 
 ## How To Run
-1. The first thing to start is docker. The RabbitMQ image for managing message queues is started with the following command from the cmd:
+1. The first thing to start is docker. First, you need to pull the RabbitMQ image with this command:
+   ```
+   docker pull rabbitmq:3.12.12-management
+   ```
+   
+   After that, the pulled image is started with the following command from cmd:
    
    ```
-    docker run --rm -it -p 15672:15672 -p 5672:5672 rabbitmq:3.12.12-management
+   docker run --rm -it -p 15672:15672 -p 5672:5672 rabbitmq:3.12.12-management
    ```
    
    **If you do not run the image from the terminal but from the desktop application, it is important to choose the default RabbitMQ port 5672.**
@@ -38,13 +43,13 @@ In addition, the application also offers a modern interface that is, above all, 
 Before starting, you need to have node.js and npm installed on your computer and it is necessary to update the versions of the used libraries and extensions by running the following command from the terminal:
 
    ```node.js
-    npm update
+   npm update
    ```
 
    Finally, the frontend part is started with the following command from the terminal:
 
    ```Angular
-    ng serve
+   ng serve
    ```
 
 # Application structure
