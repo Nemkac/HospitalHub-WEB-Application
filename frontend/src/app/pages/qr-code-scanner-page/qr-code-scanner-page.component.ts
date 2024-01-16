@@ -19,6 +19,7 @@ export class QrCodeScannerPageComponent {
   pickedUp: boolean = false;
 
   appointmentId: number = 0;
+  appointmentVersion : number = 0;
   userName: string = '';
   orderedEquipment: string[] = [];
   orderDate: string = '';
@@ -147,7 +148,12 @@ export class QrCodeScannerPageComponent {
   }
 
   public deliverEquipment(slotId : number) : void{
-    this.equipmentPickupSlotService.deliverEquipment(slotId).subscribe(
+    this.equipmentPickupSlotService.getSlotById(slotId).subscribe(
+      (response: EquipmentPickupSlot) => {
+        this.appointmentVersion = response.version;
+      }
+    )
+    this.equipmentPickupSlotService.deliverEquipment(slotId, this.appointmentVersion).subscribe(
       (response:EquipmentPickupSlot) => {
         this.toast.success({detail:"Delivery successful!", summary:"Equipment successfully delivered. Appointment status: PICKED_UP"});
         this.pickedUp = true;

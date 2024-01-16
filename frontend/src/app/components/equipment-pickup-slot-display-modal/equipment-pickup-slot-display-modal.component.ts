@@ -64,9 +64,9 @@ export class EquipmentPickupSlotDisplayModalComponent implements OnInit{
     this.modalService.close();
   }
 
-  public deliverEquipment(slotId : number | undefined) : void{
+  public deliverEquipment(slotId : number | undefined, version: number | undefined) : void{
 
-    this.equipmentPickupSlotService.deliverEquipment(slotId).subscribe(
+    this.equipmentPickupSlotService.deliverEquipment(slotId, version).subscribe(
       (response:EquipmentPickupSlot) => {
         //this.toast.success({detail:"Delivery successful!", summary:"Equipment successfully delivered. Appointment status: PICKED_UP"});
         this.pickedUp = true;
@@ -82,7 +82,7 @@ export class EquipmentPickupSlotDisplayModalComponent implements OnInit{
         }, 1000);
       },
       (error: HttpErrorResponse) => {
-        this.toast.error({detail:"Error message", summary:"Error during delivery of equipment!"});
+        this.toast.error({detail:"Error message", summary:"Error during delivery of equipment! Please refresh the page and try again."});
         this.pickedUp = false;
         this.expired = false;
         this.active = true;

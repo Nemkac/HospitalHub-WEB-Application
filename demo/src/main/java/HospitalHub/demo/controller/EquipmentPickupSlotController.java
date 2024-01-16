@@ -7,6 +7,7 @@ import HospitalHub.demo.model.*;
 import HospitalHub.demo.repository.EquipmentPickupSlotRepository;
 import HospitalHub.demo.service.*;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -204,21 +205,22 @@ public class EquipmentPickupSlotController {
         }
     }
 
-    @PutMapping("/deliverEquipment")
+    /*@PutMapping("/deliverEquipment")
+    @Transactional
     public ResponseEntity<EquipmentPickupSlot> deliverEquipment(@RequestBody Integer slotId){
-        /*EquipmentPickupSlot slot = equipmentPickupSlotService.getById(slotId);
-        User mailUser = slot.getReservedBy();
-        List<MedicalEquipment> orderedEquipment = medicalEqupimentService.findAllById(slot.getEquipment());
+        //EquipmentPickupSlot slot = equipmentPickupSlotService.getById(slotId);
+        //User mailUser = slot.getReservedBy();
+        //List<MedicalEquipment> orderedEquipment = medicalEqupimentService.findAllById(slot.getEquipment());
 
-        if(slot.getStatus() != EquipmentPickupSlot.Status.PICKED_UP){
+        //if(slot.getStatus() != EquipmentPickupSlot.Status.PICKED_UP){
 
-            slot.setStatus(EquipmentPickupSlot.Status.PICKED_UP);
-            EquipmentPickupSlot updatedSlot = equipmentPickupSlotService.saveNewStatus(slot);
+        //    slot.setStatus(EquipmentPickupSlot.Status.PICKED_UP);
+        //    EquipmentPickupSlot updatedSlot = equipmentPickupSlotService.saveNewStatus(slot);
 
-            for(MedicalEquipment equipment : orderedEquipment){
-                equipment.setQuantity(equipment.getQuantity() - 1);
-                medicalEqupimentService.save(equipment);
-            }*/
+        //    for(MedicalEquipment equipment : orderedEquipment){
+        //        equipment.setQuantity(equipment.getQuantity() - 1);
+        //       medicalEqupimentService.save(equipment);
+        //    }
 
         EquipmentPickupSlot slot = equipmentPickupSlotService.getById(slotId);
         User mailUser = slot.getReservedBy();
@@ -254,6 +256,64 @@ public class EquipmentPickupSlotController {
             mailMessage.setText("Appointment number: " + slot.getId() +
                     "\nAppointment date: " + slot.getDateTime() +
                     "\nDelivered by: " + slot.getCompanyAdministrator().getUser().getName() + " " + slot.getCompanyAdministrator().getUser().getLastName() +
+                    "\n\nEquipment successfully delivered!" +
+                    "\nThank you for using our services." +
+                    "\n\nSincerely, HospitalHub");
+            emailService.sendEmail(mailMessage);
+
+            return new ResponseEntity<>(updatedSlot, HttpStatus.OK);
+        } else {
+            return new ResponseEntity("Appointment status: PICKED UP", HttpStatus.OK);
+        }
+    }*/
+
+    @PutMapping("/deliverEquipment")
+    @Transactional
+    public ResponseEntity<EquipmentPickupSlot> deliverEquipment(@RequestBody Integer slotId, @RequestParam Long version) {
+
+        EquipmentPickupSlot slot = equipmentPickupSlotService.getById(slotId);
+
+        if (slot == null) {
+            return new ResponseEntity("Slot not found", HttpStatus.NOT_FOUND);
+        }
+
+        if (!version.equals(slot.getVersion())) {
+            return new ResponseEntity("Conflict: Slot has been updated by another administrator", HttpStatus.CONFLICT);
+        }
+
+        User mailUser = slot.getReservedBy();
+
+        if (slot.getStatus() != EquipmentPickupSlot.Status.PICKED_UP) {
+            slot.setStatus(EquipmentPickupSlot.Status.PICKED_UP);
+            EquipmentPickupSlot updatedSlot = equipmentPickupSlotService.saveNewStatus(slot);
+
+            int[] equipmentIds = slot.getEquipment();
+
+            Map<Integer, Integer> equipmentQuantityMap = new HashMap<>();
+
+            for (Integer equipmentId : equipmentIds) {
+                equipmentQuantityMap.put(equipmentId, equipmentQuantityMap.getOrDefault(equipmentId, 0) + 1);
+            }
+
+            for (Map.Entry<Integer, Integer> entry : equipmentQuantityMap.entrySet()) {
+                Integer equipmentId = entry.getKey();
+                Integer quantity = entry.getValue();
+
+                MedicalEquipment equipment = medicalEqupimentService.findById(equipmentId);
+
+                if (equipment != null) {
+                    equipment.setQuantity(equipment.getQuantity() - quantity);
+                    medicalEqupimentService.save(equipment);
+                }
+            }
+
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setFrom("isaisanovicNNBA@gmail.com");
+            mailMessage.setTo(mailUser.getEmail());
+            mailMessage.setSubject("Confirmation of taking over reserved equipment");
+            mailMessage.setText("Appointment number: " + updatedSlot.getId() +
+                    "\nAppointment date: " + updatedSlot.getDateTime() +
+                    "\nDelivered by: " + updatedSlot.getCompanyAdministrator().getUser().getName() + " " + updatedSlot.getCompanyAdministrator().getUser().getLastName() +
                     "\n\nEquipment successfully delivered!" +
                     "\nThank you for using our services." +
                     "\n\nSincerely, HospitalHub");

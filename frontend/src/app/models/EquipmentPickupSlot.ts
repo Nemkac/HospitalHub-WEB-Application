@@ -9,4 +9,5 @@ export interface EquipmentPickupSlot{
     companyAdministrator: CompanyAdministrator;
     equipment: number[]; 
     status: string;
+    version: number;
 }

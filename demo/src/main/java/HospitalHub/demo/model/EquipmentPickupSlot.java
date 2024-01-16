@@ -22,6 +22,9 @@ public class EquipmentPickupSlot {
     @Column(name = "durationInMinutes")
     private Integer duration;
 
+    @Version
+    private Long version;
+
     @ManyToOne
     @JoinColumn(name = "userId")
     @JsonIgnoreProperties("equipmentPickupSlots")
@@ -120,6 +123,14 @@ public class EquipmentPickupSlot {
 
     public void setEquipment(int[] equipment) {
         this.equipment = equipment;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }
 
