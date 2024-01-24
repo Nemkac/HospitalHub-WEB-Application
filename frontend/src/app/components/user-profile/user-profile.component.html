@@ -118,7 +118,39 @@
       </div>
       <div class="flex flex-col w-full h-auto max-h-[800px] mt-2">
         <ul class="divide-y divide-gray-300">
-          <div *ngFor="let slot of slots" class="py-3">
+          <div *ngFor="let slot of upcomingSlots" class="py-3">
+            <div class="flex flex-row w-full justify-between justify-center items-center">
+              <div class="flex flex-col w-[40%]">
+                <p class="text-lg font-semibold text-gray-800">
+                  {{ slot.dateTime | date:'medium' }}
+                </p>
+                <p class="text-sm text-gray-500">
+                  Duration: {{ slot.duration }} minutes
+                </p>
+              </div>
+              <div class="flex flex-row justify-between w-[220px] items-center">
+                <fa-icon [icon]="faQrcode" class="text-third text-[24px] hover:text-lightBlue transition-[0.5s] cursor-pointer"/>
+                <button class="w-[170px] p-[5px] h-[35px] text-white bg-third hover:bg-lightBlue transition-[0.5s] 
+                              font-inter text-[16px] font-semibold rounded-md" (click)="goToRequestDelivery(slot.companyAdministrator.company.id)">
+                  Request delivery
+                </button>
+                <button class="w-[170px] p-[5px] h-[35px] text-white bg-red hover:bg-lightBlue transition-[0.5s] 
+                font-inter text-[16px] font-semibold rounded-md" (click)="cancelReservation(slot.id)">
+                  Cancel reservation
+                </button>
+              </div>
+            </div>
+          </div>
+        </ul>
+      </div>
+      <br> <br> <br> <br> <br>
+      <div class="flex flex-row w-full items-center justify-start justify-center">
+        <fa-icon [icon]="faCalendar" class="text-third text-[22px]"/>
+        <p class="font-inter font-semibold text-third text-[28px] ml-2">My past Appointments</p>
+      </div>
+      <div class="flex flex-col w-full h-auto max-h-[800px] mt-2">
+        <ul class="divide-y divide-gray-300">
+          <div *ngFor="let slot of pastSlots" class="py-3">
             <div class="flex flex-row w-full justify-between justify-center items-center">
               <div class="flex flex-col w-[40%]">
                 <p class="text-lg font-semibold text-gray-800">
@@ -138,7 +170,7 @@
             </div>
           </div>
         </ul>
-        </div>
+      </div>
     </ng-form>
   </div>
 

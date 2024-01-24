@@ -39,6 +39,8 @@ export class UserProfileComponent implements OnInit{
   user !: User ;
   equipments!:Equipment[];
   slots!:EquipmentPickupSlot[];
+  upcomingSlots!:EquipmentPickupSlot[];
+  pastSlots!:EquipmentPickupSlot[];
 
   @ViewChild('calendar') calendarRef!: ElementRef;
 
@@ -83,6 +85,8 @@ export class UserProfileComponent implements OnInit{
           }
           if(response.roles === "ROLE_USER"){
             this.getUsersUpcomingAppointments();
+            this.getUsersUpcomingAppointments1();
+            this.getUsersPastAppointments();
           }
         },
         (error: HttpErrorResponse) => {
@@ -212,6 +216,30 @@ export class UserProfileComponent implements OnInit{
     )
   }
 
+  getUsersUpcomingAppointments1(){
+    this.userService.getUsersUpcomingAppoitments1(this.userId).subscribe(
+      (slots) => {
+        this.upcomingSlots = slots;
+        console.log("buduci slotovi su ",this.slots);
+        slots.forEach(slot => {
+          this.getSlotsEquipment(slot.id);
+        });
+      }
+    )
+  }
+
+  getUsersPastAppointments(){
+    this.userService.getUsersPastAppoitments(this.userId).subscribe(
+      (slots) => {
+        this.pastSlots = slots;
+        console.log("prosli slotovi su ",this.slots);
+        slots.forEach(slot => {
+          this.getSlotsEquipment(slot.id);
+        });
+      }
+    )
+  }
+
   getSlotsEquipment(slotId:Number){
       this.slotService.getSlotsEquipment(slotId).subscribe(
         (equipments) => {
@@ -220,4 +248,14 @@ export class UserProfileComponent implements OnInit{
         }
       )
   }
+
+cancelReservation(slotId:Number){
+  this.slotService.cancelReservation(slotId).subscribe(
+    (slot) => {
+    console.log("Slot id : ", slot.id);
+    }
+  )
+  window.location.reload();
+}
+
 }

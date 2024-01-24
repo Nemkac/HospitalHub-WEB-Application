@@ -9,6 +9,7 @@ import HospitalHub.demo.service.*;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -67,6 +68,26 @@ public class EquipmentPickupSlotController {
     @GetMapping("/getUsersSlots/{id}")
     public ResponseEntity<List<EquipmentPickupSlot>> getUsersSlots(@PathVariable Integer id) {
         List<EquipmentPickupSlot> usersSlots = equipmentPickupSlotService.getAllUsersSlots(id);
+        if (usersSlots.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(usersSlots, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/getUpcomingUsersSlots/{id}")
+    public ResponseEntity<List<EquipmentPickupSlot>> getUpcomingUsersSlots(@PathVariable Integer id) {
+        List<EquipmentPickupSlot> usersSlots = equipmentPickupSlotService.getUsersUpcomingSlots(id);
+        if (usersSlots.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(usersSlots, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/getPastUsersSlots/{id}")
+    public ResponseEntity<List<EquipmentPickupSlot>> getPastUsersSlots(@PathVariable Integer id) {
+        List<EquipmentPickupSlot> usersSlots = equipmentPickupSlotService.getUsersPastSlots(id);
         if (usersSlots.isEmpty()) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } else {
@@ -203,6 +224,15 @@ public class EquipmentPickupSlotController {
         } else {
             return new ResponseEntity("Appointment status: EXPIRED", HttpStatus.OK);
         }
+    }
+
+    @PutMapping("/cancelReservation/{slotId}")
+    public ResponseEntity<EquipmentPickupSlot> cancelReservation(@PathVariable Integer slotId){
+        EquipmentPickupSlot canceledSlot = equipmentPickupSlotService.cancelReservation(slotId);
+        if(canceledSlot != null){
+            return new ResponseEntity<>(canceledSlot,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /*@PutMapping("/deliverEquipment")

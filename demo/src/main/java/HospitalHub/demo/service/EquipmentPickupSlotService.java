@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import java.time.LocalDate;
 
 import java.time.LocalDateTime;
@@ -162,6 +164,36 @@ public class EquipmentPickupSlotService {
             equipments.add(medicalEqupimentService.getEquipmentById(id));
         }
         return equipments;
+    }
+
+    public List<EquipmentPickupSlot> getUsersUpcomingSlots(Integer userId){
+        List<EquipmentPickupSlot> allSlots = equipmentPickupSlotRepository.findAll();
+        List<EquipmentPickupSlot> upcomingSlots = new ArrayList<>();
+        for(EquipmentPickupSlot slot: allSlots) {
+            if(slot.getReservedBy()!=null && Objects.equals(slot.getReservedBy().getId(), userId) && slot.getDateTime().isAfter(LocalDateTime.now())){
+                upcomingSlots.add(slot);
+            }
+        }
+        return upcomingSlots;
+    }
+
+    public List<EquipmentPickupSlot> getUsersPastSlots(Integer userId){
+        List<EquipmentPickupSlot> allSlots = equipmentPickupSlotRepository.findAll();
+        List<EquipmentPickupSlot> pastSlots = new ArrayList<>();
+        for(EquipmentPickupSlot slot: allSlots) {
+            if(slot.getReservedBy()!=null && Objects.equals(slot.getReservedBy().getId(), userId) && slot.getDateTime().isBefore(LocalDateTime.now())){
+                pastSlots.add(slot);
+            }
+        }
+        return pastSlots;
+    }
+
+    public EquipmentPickupSlot cancelReservation(Integer slotId){
+        EquipmentPickupSlot slot = equipmentPickupSlotRepository.getById(slotId);
+        slot.setReservedBy(null);
+        slot.setEquipment(null);
+        equipmentPickupSlotRepository.save(slot);
+        return slot;
     }
 
 
