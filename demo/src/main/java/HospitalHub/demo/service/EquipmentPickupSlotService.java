@@ -192,7 +192,8 @@ public class EquipmentPickupSlotService {
         EquipmentPickupSlot slot = equipmentPickupSlotRepository.getById(slotId);
         if(!slot.getDateTime().minusHours(24).isBefore(LocalDateTime.now())){
             User user = slot.getReservedBy();
-            user.setPenaltyPoints(1);
+            Integer penaltyPoints = user.getPenaltyPoints();
+            user.setPenaltyPoints(penaltyPoints+1);
             userService.save(user);
             slot.setReservedBy(null);
             slot.setEquipment(null);

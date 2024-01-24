@@ -85,6 +85,24 @@ public class User {
         this.roles = role;
         this.penaltyPoints = 0;
     }
+
+    public User(String username,String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo,String role,Integer penaltyPoints) {
+        this.username = username;
+        this.name = name;
+        this.lastName = lastName;
+        this.password = password;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.country = country;
+        this.city = city;
+        this.profession = profession;
+        this.companyInfo = companyInfo;
+        this.roles = role;
+        this.penaltyPoints = penaltyPoints;
+    }
+
+
     //Initial data insertion constructor
     public User(String username,String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo,String role, boolean enabled) {
         this.username = username;
