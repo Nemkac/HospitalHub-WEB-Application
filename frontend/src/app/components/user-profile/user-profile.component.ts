@@ -249,13 +249,18 @@ export class UserProfileComponent implements OnInit{
       )
   }
 
-cancelReservation(slotId:Number){
-  this.slotService.cancelReservation(slotId).subscribe(
-    (slot) => {
-    console.log("Slot id : ", slot.id);
-    }
-  )
-  window.location.reload();
-}
+  cancelReservation(slotId: number) {
+    this.slotService.cancelReservation(slotId).subscribe(
+      (slot) => {
+        if (slot != null) {
+          window.location.reload();
+        }
+      },
+      (error) => {
+        alert("Reservations within next 24 hours cannot be canceled");
+      }
+    );
+  }
+  
 
 }

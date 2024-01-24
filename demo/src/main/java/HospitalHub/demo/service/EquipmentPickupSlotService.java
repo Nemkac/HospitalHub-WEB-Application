@@ -190,10 +190,17 @@ public class EquipmentPickupSlotService {
 
     public EquipmentPickupSlot cancelReservation(Integer slotId){
         EquipmentPickupSlot slot = equipmentPickupSlotRepository.getById(slotId);
-        slot.setReservedBy(null);
-        slot.setEquipment(null);
-        equipmentPickupSlotRepository.save(slot);
-        return slot;
+        if(!slot.getDateTime().minusHours(24).isBefore(LocalDateTime.now())){
+            User user = slot.getReservedBy();
+            user.setPenaltyPoints(1);
+            userService.save(user);
+            slot.setReservedBy(null);
+            slot.setEquipment(null);
+            equipmentPickupSlotRepository.save(slot);
+            return slot;
+        }
+        return null;
+
     }
 
 
