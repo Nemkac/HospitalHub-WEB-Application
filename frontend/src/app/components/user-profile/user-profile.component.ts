@@ -253,7 +253,6 @@ export class UserProfileComponent implements OnInit{
     this.slotService.cancelReservation(slotId).subscribe(
       (slot) => {
         if (slot != null) {
-          alert(this.userProfile?.penaltyPoints);
           window.location.reload();
         }
       },
