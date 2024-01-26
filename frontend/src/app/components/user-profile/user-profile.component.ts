@@ -41,6 +41,9 @@ export class UserProfileComponent implements OnInit{
   slots!:EquipmentPickupSlot[];
   upcomingSlots!:EquipmentPickupSlot[];
   pastSlots!:EquipmentPickupSlot[];
+  sortUpcomingBy : 'duration' | 'date' = 'date'
+  sortPastBy : 'duration' | 'date' = 'date'
+
 
   @ViewChild('calendar') calendarRef!: ElementRef;
 
@@ -260,6 +263,22 @@ export class UserProfileComponent implements OnInit{
         alert("Reservations within next 24 hours cannot be canceled");
       }
     );
+  }
+
+  sortUpcoming() {
+    if (this.sortUpcomingBy === 'duration') {
+      this.upcomingSlots.sort((a, b) => a.duration - b.duration);
+    } else if (this.sortUpcomingBy === 'date') {
+      this.upcomingSlots.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
+    }
+  }
+
+  sortPast() {
+    if (this.sortPastBy === 'duration') {
+      this.pastSlots.sort((a, b) => a.duration - b.duration);
+    } else if (this.sortPastBy === 'date') {
+      this.pastSlots.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
+    }
   }
   
 
