@@ -52,7 +52,8 @@ import { QrCodeScannerPageComponent } from './pages/qr-code-scanner-page/qr-code
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { RequestDeliveryPageComponent } from './pages/request-delivery-page/request-delivery-page.component';
 import { StompConfig, StompService } from '@stomp/ng2-stompjs';
-
+import { rxStompServiceFactory } from './rx-stomp-service-factory';
+import { RxStompService } from './services/rx-stomp.service';
 
 @NgModule({
       declarations: [
@@ -111,7 +112,13 @@ import { StompConfig, StompService } from '@stomp/ng2-stompjs';
           NgToastModule,
           ZXingScannerModule,
       ],
-      providers: [MessageService],
+      providers: [
+        MessageService,
+        {
+            provide: RxStompService,
+            useFactory: rxStompServiceFactory,
+          },
+        ],
       bootstrap: [AppComponent],
     })
 export class AppModule { }

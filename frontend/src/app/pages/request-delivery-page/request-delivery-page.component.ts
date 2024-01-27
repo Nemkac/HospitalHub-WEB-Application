@@ -6,10 +6,8 @@ import 'leaflet-routing-machine';
 import { ActivatedRoute } from '@angular/router';
 import { CompanyService } from 'src/app/services/company.service';
 import { Company } from 'src/company';
-import { RequestDeliveryService } from 'src/app/services/request-delivery.service';
 import { RabbitmqLiveLocationService } from 'src/app/services/rabbitmq-live-location.service';
-import { NgToastService } from 'ng-angular-popup';
-import { Message } from '@stomp/stompjs';
+import { NgToastService } from 'ng-angular-popup';;
 
 
 @Component({
@@ -40,7 +38,6 @@ export class RequestDeliveryPageComponent implements OnInit{
 
 	constructor(private route: ActivatedRoute,
 				private companyService: CompanyService,
-				private requestDeliveryService: RequestDeliveryService,
 				private rabbitmqLiveLocationService: RabbitmqLiveLocationService,
 				private toast: NgToastService) {} 
 
@@ -50,12 +47,6 @@ export class RequestDeliveryPageComponent implements OnInit{
 			this.companyId =+ idFromRoute
 			this.getCompanyData();
 		}
-
-		/*this.rabbitmqLiveLocationService.getLiveLocation().subscribe((message: Message) => {
-			const liveLocation: LiveLocation = JSON.parse(message.body);
-			this.handleLiveLocationUpdate(liveLocation);
-		});*/
-
 	}
 
 	public getCompanyData() : void{
@@ -116,7 +107,11 @@ export class RequestDeliveryPageComponent implements OnInit{
 			longitude: longitude,
 		};
 
-		this.rabbitmqLiveLocationService.sendLiveLocationMessage(liveLocation).subscribe();
+		this.rabbitmqLiveLocationService.sendLiveLocationMessage(liveLocation).subscribe(
+			(response: LiveLocation) => {
+				this.setMarkerOnCoordinates(response.latitude, response.longitude);
+		  	}
+		);
 	}
 
 	startDelivery() : void{
@@ -132,8 +127,6 @@ export class RequestDeliveryPageComponent implements OnInit{
 					}	
 					const currentCoordinate = this.routeCoordinates[index];
 					this.sendCoordinateToRabbitMQ(currentCoordinate.lat, currentCoordinate.lng);
-					this.marker.setLatLng([currentCoordinate.lat, currentCoordinate.lng]);
-					//this.handleLiveLocationUpdate();
 					index++;
 					this.deliveryStarted = true;
 				} else {
@@ -145,10 +138,10 @@ export class RequestDeliveryPageComponent implements OnInit{
 						this.destinationLongitude = 0;
 						this.routeCoordinates = null;
 						this.destinationMarker = null;
-					 }, 3000);
+					 }, 2000);
 					 this.toast.success({detail:"Equipment delivered", summary:"If the equipment was damaged during transport, please contact us by email."})	
 				}
-			}, 1000);
+			}, 3000);
 		}
 	}
 	
@@ -159,23 +152,13 @@ export class RequestDeliveryPageComponent implements OnInit{
 			leafletTopRight.style.top = '50%';
 			leafletTopRight.style.right = '0';
 			leafletTopRight.style.transform = 'translateY(-50%)';
-			leafletTopRight.style.zIndex = '1000'; // Prilagodite vrednost prema potrebi
+			leafletTopRight.style.zIndex = '1000';
 		}
 	}
 
-	/*private handleLiveLocationUpdate(): void {
-		this.rabbitmqLiveLocationService.getLiveLocation().subscribe((message: Message) => {
-			const liveLocation: LiveLocation = JSON.parse(message.body);
-			this.marker.setLatLng([liveLocation.latitude, liveLocation.longitude]);
-		});
-	}*/
-
-	sendCoordinateToWebSocket(latitude: number, longitude: number): void {
-		const liveLocation: LiveLocation = {
-		  latitude: latitude,
-		  longitude: longitude,
-		};
-	  
-		this.rabbitmqLiveLocationService.sendLiveLocationMessage(liveLocation).subscribe();
+	private setMarkerOnCoordinates(latitude: number, longitude: number) {
+		if (this.marker) {
+		  this.marker.setLatLng([latitude, longitude]);
+		}
 	}
 }
