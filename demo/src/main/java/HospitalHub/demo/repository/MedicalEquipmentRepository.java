@@ -1,5 +1,6 @@
 package HospitalHub.demo.repository;
 
+import HospitalHub.demo.model.Company;
 import HospitalHub.demo.model.MedicalEquipment;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,6 +22,9 @@ public interface MedicalEquipmentRepository extends JpaRepository<MedicalEquipme
     List<MedicalEquipment> getAllByNameContainingIgnoreCaseAndPriceGreaterThanEqualAndPriceLessThanEqualAndTypeContainingIgnoreCase(String name, Double minPrice, Double maxPrice, String type);
     void deleteById(Integer equipmentId);
     MedicalEquipment getById(Integer id);
+
+    List<MedicalEquipment> findByTypeAndCompany(String equipmentType, Company company);
+
 
     public MedicalEquipment getEquipmentById(Integer id);
 

@@ -25,6 +25,9 @@ public class RabbitMQConfig {
     @Value("${spring.rabbitmq.template.routing-key-json}")
     private String routingJSONKey;
 
+    @Value("${spring.rabbitmq.template.routing-key-equipment-contract}")
+    private String routingContractJSONKey;
+
     // spring bean for rabbitmq queue
     @Bean
     public Queue queue(){
@@ -60,12 +63,24 @@ public class RabbitMQConfig {
         return new Queue("liveLocationJSON_queue");
     }
 
+    @Bean
+    public Queue jsonContractQueue(){
+        return new Queue("equipmentContractJSON_queue");
+    }
+
     // binding between json queue and exchange using json routing key
     @Bean
     public Binding bindingJSON(){
         return BindingBuilder.bind(jsonQueue())
                 .to(exchange())
                 .with(routingJSONKey);
+    }
+
+    @Bean
+    public Binding bindingContractJSON(){
+        return BindingBuilder.bind(jsonContractQueue())
+                .to(exchange())
+                .with(routingContractJSONKey);
     }
 
     @Bean

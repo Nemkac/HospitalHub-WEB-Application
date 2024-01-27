@@ -54,6 +54,9 @@ public class Company {
     private List<MedicalEquipment> medicalEquipmentList;
 
     @OneToMany(mappedBy = "company")
+    private List<EquipmentContract> equipmentContracts;
+
+    @OneToMany(mappedBy = "company")
     private List<EquipmentAvailability> equipmentAvailabilityList;
 
     public Company() {
@@ -82,6 +85,24 @@ public class Company {
         this.companyAdministrators = new ArrayList<>();
         this.openingTime = openingTime;
         this.closingTime = closingTime;
+    }
+
+    public Company(Integer id, String name, String city, String country, String address, Double latitude, Double longitude, Double avgRate, String description, LocalTime openingTime, LocalTime closingTime, List<CompanyAdministrator> companyAdministrators, List<MedicalEquipment> medicalEquipmentList, List<EquipmentContract> equipmentContracts, List<EquipmentAvailability> equipmentAvailabilityList) {
+        this.id = id;
+        this.name = name;
+        this.city = city;
+        this.country = country;
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.avgRate = avgRate;
+        this.description = description;
+        this.openingTime = openingTime;
+        this.closingTime = closingTime;
+        this.companyAdministrators = companyAdministrators;
+        this.medicalEquipmentList = medicalEquipmentList;
+        this.equipmentContracts = equipmentContracts;
+        this.equipmentAvailabilityList = equipmentAvailabilityList;
     }
 
     public Integer getId() {
@@ -203,4 +224,11 @@ public class Company {
         this.closingTime = closingTime;
     }
 
+    public List<EquipmentContract> getEquipmentContracts() {
+        return equipmentContracts;
+    }
+
+    public void setEquipmentContracts(List<EquipmentContract> equipmentContracts) {
+        this.equipmentContracts = equipmentContracts;
+    }
 }

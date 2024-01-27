@@ -1,5 +1,6 @@
 package HospitalHub.demo.service;
 
+import HospitalHub.demo.model.Company;
 import HospitalHub.demo.model.MedicalEquipment;
 import HospitalHub.demo.repository.MedicalEquipmentRepository;
 import com.google.common.primitives.Ints;
@@ -37,6 +38,8 @@ public class MedicalEqupimentService {
         return medicalEquipmentRepository.findByType(filterTerm);
     }
 
+
+
     public List<MedicalEquipment> filterByPriceRange(Double minPrice, Double maxPrice){
         return medicalEquipmentRepository.findByPriceBetween(minPrice, maxPrice);
     }
@@ -53,6 +56,12 @@ public class MedicalEqupimentService {
         List<Integer> integers = Ints.asList(ids);
         return medicalEquipmentRepository.findAllById(integers);
     }
+
+    public List<MedicalEquipment> findByTypeAndCompany(String equipmentType, Company company)
+    {
+        return medicalEquipmentRepository.findByTypeAndCompany(equipmentType, company);
+    }
+
 
     public MedicalEquipment getById(Integer id){
         return medicalEquipmentRepository.getById(id);
