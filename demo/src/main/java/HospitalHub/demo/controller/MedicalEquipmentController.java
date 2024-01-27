@@ -18,6 +18,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import jakarta.activation.DataSource;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -197,6 +198,7 @@ public class MedicalEquipmentController {
     }
 
     @PostMapping(value = "/orderEquipment")
+    @Transactional
     public ResponseEntity<EquipmentPickupSlot> orderEquipment(@RequestBody OrderEquipmentDTO orderEquipmentDTO){
 
         Optional<EquipmentPickupSlot> slot = slotRepository.findById(orderEquipmentDTO.getPickupSlotId());
@@ -205,6 +207,11 @@ public class MedicalEquipmentController {
         if(slot.isPresent()){
             foundSlot = slot.get();
         }
+
+        if (foundSlot.getVersion() != null && foundSlot.getVersion() >= 1) {
+            return new ResponseEntity("Conflict. Someone else has occupied the time slot.", HttpStatus.CONFLICT);
+        }
+
         Optional<User> user = userRepository.findById(orderEquipmentDTO.getUserId());
         User mailUser = new User();
         if(user.isPresent()){
