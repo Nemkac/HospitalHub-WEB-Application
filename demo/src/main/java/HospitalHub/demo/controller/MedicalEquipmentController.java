@@ -255,7 +255,7 @@ public class MedicalEquipmentController {
 
 
     @PostMapping("/cancelAppointment")
-    //@PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<CancellAppointmentDTO> cancelAppointment(@RequestBody CancellAppointmentDTO cancellAppointmentDTO){
         //Treba mi user id da mu lupim penal, i treba mi id apointmenta da ga oslobodim od rezervisanog korisnika.
         EquipmentPickupSlot slot = equipmentPickupSlotService.getById(cancellAppointmentDTO.getAppointmentId());

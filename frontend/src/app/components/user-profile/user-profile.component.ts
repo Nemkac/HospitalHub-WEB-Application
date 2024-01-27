@@ -24,6 +24,7 @@ import { CreateCompanyFormComponent } from '../create-company-form/create-compan
 import { Equipment } from 'src/Equipment';
 import { RequestDeliveryService } from 'src/app/services/request-delivery.service';
 import { CancellAppointmentDTO } from 'src/app/models/CancellAppointmentDTO';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-profile',
@@ -100,12 +101,20 @@ export class UserProfileComponent implements OnInit{
   }
 
   public cancelAppointment(userId: number, appointmentId: number): void {
+    const token = localStorage.getItem('token');
+    
+    // Set the Authorization header with the bearer token
+		const headers = new HttpHeaders({
+
+		'Content-Type': 'application/json',
+		'Authorization': `Bearer ${token}`
+		});
     const cancellAppointmentDTO: CancellAppointmentDTO = {
         userId: userId,
         appointmentId: appointmentId
     };
 
-    this.equipmentPickupSlotService.cancelAppointment(cancellAppointmentDTO)
+    this.equipmentPickupSlotService.cancelAppointment(cancellAppointmentDTO,headers)
         .subscribe(
             (response) => {
                 

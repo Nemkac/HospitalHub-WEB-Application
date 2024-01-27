@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EquipmentPickupSlot } from '../models/EquipmentPickupSlot';
 import { Observable } from 'rxjs';
@@ -65,9 +65,9 @@ export class EquipmentPickupSlotService {
     const url = `${this.apiServerUrl}/api/slots/updateStatusForExpiredSlots`;
     return this.http.patch<EquipmentPickupSlot[]>(url, null);
   }*/
-  public cancelAppointment(cancellAppointmentDTO:CancellAppointmentDTO) : Observable<CancellAppointmentDTO>{
+  public cancelAppointment(cancellAppointmentDTO:CancellAppointmentDTO,headers:HttpHeaders) : Observable<CancellAppointmentDTO>{
     console.log(cancellAppointmentDTO);
-    return this.http.post<CancellAppointmentDTO>(`${this.apiServerUrl}/api/equipment/cancelAppointment`,cancellAppointmentDTO);
+    return this.http.post<CancellAppointmentDTO>(`${this.apiServerUrl}/api/equipment/cancelAppointment`,cancellAppointmentDTO,{headers:headers});
   }
 
 }
