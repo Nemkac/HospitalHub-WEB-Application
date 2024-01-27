@@ -11,7 +11,6 @@ import { RabbitmqLiveLocationService } from 'src/app/services/rabbitmq-live-loca
 import { NgToastService } from 'ng-angular-popup';
 
 
-
 @Component({
   selector: 'app-request-delivery-page',
   templateUrl: './request-delivery-page.component.html',
@@ -50,6 +49,7 @@ export class RequestDeliveryPageComponent implements OnInit{
 			this.companyId =+ idFromRoute
 			this.getCompanyData();
 		}
+
 	}
 
 	public getCompanyData() : void{
@@ -97,6 +97,7 @@ export class RequestDeliveryPageComponent implements OnInit{
 					const lastStep = lastRoute.instructions[lastRoute.instructions.length - 1];
 					this.destinationAddress = lastStep.road;
 					this.routeCoordinates = e.routes[0].coordinates;
+					this.adjustLeafletControlPosition();
 				})
 				.addTo(this.map!);
 			}
@@ -141,6 +142,17 @@ export class RequestDeliveryPageComponent implements OnInit{
 					 this.toast.success({detail:"Equipment delivered", summary:"If the equipment was damaged during transport, please contact us by email."})	
 				}
 			}, 1000);
+		}
+	}
+	
+	private adjustLeafletControlPosition() {
+		const leafletTopRight = document.querySelector('.leaflet-top.leaflet-right') as HTMLElement;
+		if (leafletTopRight) {
+			leafletTopRight.style.position = 'absolute';
+			leafletTopRight.style.top = '50%';
+			leafletTopRight.style.right = '0';
+			leafletTopRight.style.transform = 'translateY(-50%)';
+			leafletTopRight.style.zIndex = '1000'; // Prilagodite vrednost prema potrebi
 		}
 	}
 }
