@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Equipment } from 'src/Equipment';
 import { UserDTO } from '../userDTO';
 import { List } from 'postcss/lib/list';
+import { CancellAppointmentDTO } from '../models/CancellAppointmentDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -64,6 +65,9 @@ export class EquipmentPickupSlotService {
     const url = `${this.apiServerUrl}/api/slots/updateStatusForExpiredSlots`;
     return this.http.patch<EquipmentPickupSlot[]>(url, null);
   }*/
-  
+  public cancelAppointment(cancellAppointmentDTO:CancellAppointmentDTO) : Observable<CancellAppointmentDTO>{
+    console.log(cancellAppointmentDTO);
+    return this.http.post<CancellAppointmentDTO>(`${this.apiServerUrl}/api/equipment/cancelAppointment`,cancellAppointmentDTO);
+  }
 
 }

@@ -1,9 +1,6 @@
 package HospitalHub.demo.controller;
 
-import HospitalHub.demo.dto.CompanyDTO;
-import HospitalHub.demo.dto.MedicalEquipmentDTO;
-import HospitalHub.demo.dto.OrderEquipmentDTO;
-import HospitalHub.demo.dto.SearchEquipmentDTO;
+import HospitalHub.demo.dto.*;
 import HospitalHub.demo.model.Company;
 import HospitalHub.demo.model.EquipmentPickupSlot;
 import HospitalHub.demo.model.MedicalEquipment;
@@ -13,6 +10,7 @@ import HospitalHub.demo.repository.MedicalEquipmentRepository;
 import HospitalHub.demo.repository.UserRepository;
 import HospitalHub.demo.service.*;
 import ch.qos.logback.core.net.SyslogOutputStream;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.io.ByteSource;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -24,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.image.BufferedImage;
@@ -32,6 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @RestController
@@ -58,6 +58,8 @@ public class MedicalEquipmentController {
 
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private EquipmentPickupSlotRepository equipmentPickupSlotRepository;
 
     @GetMapping(value = "/getAll")
     public ResponseEntity<List<MedicalEquipmentDTO>> getAllEquipment(){
@@ -249,5 +251,24 @@ public class MedicalEquipmentController {
         }
         image.delete();
         return new ResponseEntity<>(foundSlot, HttpStatus.OK);
+    }
+
+
+    @PostMapping("/cancelAppointment")
+    //@PreAuthorize("hasAuthority('ROLE_USER')")
+    public ResponseEntity<CancellAppointmentDTO> cancelAppointment(@RequestBody CancellAppointmentDTO cancellAppointmentDTO){
+        //Treba mi user id da mu lupim penal, i treba mi id apointmenta da ga oslobodim od rezervisanog korisnika.
+        EquipmentPickupSlot slot = equipmentPickupSlotService.getById(cancellAppointmentDTO.getAppointmentId());
+        User user = userRepository.getById(cancellAppointmentDTO.getUserId());
+        slot.setReservedBy(null);
+        if(slot.getDateTime().isBefore(LocalDateTime.now().minus(24, ChronoUnit.HOURS))){
+            user.setPenaltyPoints(user.getPenaltyPoints()+2);
+        }else{
+            user.setPenaltyPoints(user.getPenaltyPoints()+1);
+        }
+
+        userRepository.save(user);
+        equipmentPickupSlotRepository.save(slot);
+        return new ResponseEntity<>(cancellAppointmentDTO,HttpStatus.OK);
     }
 }

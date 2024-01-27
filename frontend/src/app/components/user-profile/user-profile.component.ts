@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserProfileService } from 'src/app/services/user-profile.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { ActivatedRoute } from '@angular/router';
-import { faGear, faUser, faPlus, faCalendar, faQrcode } from '@fortawesome/free-solid-svg-icons';
+import { faGear, faUser, faPlus, faCalendar, faQrcode, faTrash} from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateUserProfileComponent } from '../update-user-profile/update-user-profile.component';
 import { UserService } from 'src/app/services/user.service';
@@ -23,6 +23,7 @@ import { CreateNewSysAdmninistratorFormComponent } from '../create-new-sys-admni
 import { CreateCompanyFormComponent } from '../create-company-form/create-company-form.component';
 import { Equipment } from 'src/Equipment';
 import { RequestDeliveryService } from 'src/app/services/request-delivery.service';
+import { CancellAppointmentDTO } from 'src/app/models/CancellAppointmentDTO';
 
 @Component({
   selector: 'app-user-profile',
@@ -68,6 +69,7 @@ export class UserProfileComponent implements OnInit{
   faPlus = faPlus;
   faCalendar = faCalendar;
   faQrcode = faQrcode;
+  faTrash = faTrash;
 
   ngOnInit(): void {
     if(this.token){
@@ -97,6 +99,26 @@ export class UserProfileComponent implements OnInit{
     this.requestDeliveryService.goToRequestDelivery(id);
   }
 
+  public cancelAppointment(userId: number, appointmentId: number): void {
+    const cancellAppointmentDTO: CancellAppointmentDTO = {
+        userId: userId,
+        appointmentId: appointmentId
+    };
+
+    this.equipmentPickupSlotService.cancelAppointment(cancellAppointmentDTO)
+        .subscribe(
+            (response) => {
+                
+                console.log(response);
+            },
+            (error) => {
+                
+                console.error(error);
+            }
+        );
+}
+
+
   public getEquipmentPickupSlots(id: number) : void{
     this.equipmentPickupSlotService.getAdminsSlots(id).subscribe(
       (response: EquipmentPickupSlot[]) => {
@@ -120,6 +142,7 @@ export class UserProfileComponent implements OnInit{
       }
     )
   }
+
 
   public showUserProfile():void{
     if(this.token) {

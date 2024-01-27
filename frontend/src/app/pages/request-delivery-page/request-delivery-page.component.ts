@@ -9,6 +9,7 @@ import { Company } from 'src/company';
 import { RequestDeliveryService } from 'src/app/services/request-delivery.service';
 import { RabbitmqLiveLocationService } from 'src/app/services/rabbitmq-live-location.service';
 import { NgToastService } from 'ng-angular-popup';
+import { HttpHeaders } from '@angular/common/http';
 
 
 
@@ -108,8 +109,14 @@ export class RequestDeliveryPageComponent implements OnInit{
 			latitude: latitude,
 			longitude: longitude,
 		};
-
-		this.rabbitmeLiveLocationService.sendLiveLocationMessage(liveLocation).subscribe();
+		const token = localStorage.getItem('token');
+    
+    // Set the Authorization header with the bearer token
+		const headers = new HttpHeaders({
+		'Content-Type': 'application/json',
+		'Authorization': `Bearer ${token}`
+		});
+		this.rabbitmeLiveLocationService.sendLiveLocationMessage(liveLocation,headers).subscribe();
 	}
 
 	startDelivery() : void{

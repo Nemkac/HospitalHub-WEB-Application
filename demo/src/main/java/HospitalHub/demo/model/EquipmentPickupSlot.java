@@ -1,6 +1,7 @@
 package HospitalHub.demo.model;
 
 import HospitalHub.demo.dto.EquipmentPickupSlotDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -92,6 +93,7 @@ public class EquipmentPickupSlot {
     public void setDuration(Integer duration) {
         this.duration = duration;
     }
+
 
     public CompanyAdministrator getCompanyAdministrator() {
         return companyAdministrator;
