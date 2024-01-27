@@ -53,8 +53,13 @@
                                 </div>
                             </ng-container>
                             <ng-container *ngIf="userRole === 'ROLE_SYSADMIN'">
-                                <div class="flex w-full text-third hover:bg-third hover:text-white p-[8px]">
-                                    <a class="font-inter font-regular text-[17px]" routerLink="/complaints">Complaints</a>
+                                <div class="flex flex-row items-center justify-between w-full text-third hover:bg-third hover:text-white p-[8px]" routerLink="/complaints">
+                                    <a class="font-inter font-regular text-[17px]">Complaints</a>
+                                    <ng-container *ngIf="complaintsNotificationFlag">
+                                        <div class="flex rounded-full w-[20px] h-[20px] bg-yellow items-center justify-center">
+                                            <p class="flex font-inter font-semibold text-[12px] text-third">{{complaintsCount}}</p>
+                                        </div>
+                                    </ng-container>
                                 </div>
                             </ng-container>
                             <div class="flex w-full rounded-b-md text-third hover:bg-third hover:text-white p-[8px]">

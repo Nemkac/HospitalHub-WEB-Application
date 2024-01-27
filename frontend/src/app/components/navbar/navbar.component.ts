@@ -6,6 +6,7 @@ import { User } from 'src/user';
 import { faBell as fasBell } from '@fortawesome/free-solid-svg-icons';
 import { faBell as farBell } from '@fortawesome/free-regular-svg-icons';
 import { ComplaintService } from 'src/app/services/complaint.service';
+import { Complaint } from 'src/app/models/Complaint';
 
 
 @Component({
@@ -13,17 +14,18 @@ import { ComplaintService } from 'src/app/services/complaint.service';
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent implements OnInit {
-  //userId : number | undefined;
-  //username?: string = "LOGIN";
-
   constructor(private router: Router,
-    public userService: UserService,
-    private cdr: ChangeDetectorRef,
-    private complaintService: ComplaintService) {}
+              public userService: UserService,
+              private cdr: ChangeDetectorRef,
+              private complaintService: ComplaintService) {}
 
   protected username? =  this.userService.loggedInUser;
   protected userRole? = this.userService.loggedInUserRole;
   protected userId? = this.userService.loggedInUserId;
+
+  complaints: Complaint[] = [];
+  complaintsCount: number = 0;
+  complaintsNotificationFlag = false;
 
   get loggedInUser(): String {
       return this.username as String;
@@ -37,7 +39,6 @@ export class NavbarComponent implements OnInit {
   noNotification = farBell;
   notification = fasBell;
   notificationFlag = false;
-
 
   ngOnInit(): void {
     console.log(this.loggedInUser);
@@ -57,6 +58,9 @@ export class NavbarComponent implements OnInit {
 				this.userId = user.id;
         this.loggedInUser = user.username;
         this.userRole = user.roles;
+        if(this.userRole === "ROLE_SYSADMIN"){
+          this.getComplaintsNotificationFlag();
+        }
         },(error) => {
           console.error('Error fetching user:', error);
       });
@@ -77,4 +81,18 @@ export class NavbarComponent implements OnInit {
     location.reload();
   }
 
+  public getComplaintsNotificationFlag() : void{
+    this.complaintService.getAllUnprocessedComplaints().subscribe(
+      (response : Complaint[]) => {
+        this.complaints = response;
+        if(this.complaints.length === 0){
+          this.complaintsCount = 0;
+          this.complaintsNotificationFlag = false;
+        } else {
+          this.complaintsCount = this.complaints.length;
+          this.complaintsNotificationFlag = true;
+        }
+      }
+    )
+  }
 }
