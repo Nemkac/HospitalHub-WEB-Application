@@ -31,6 +31,7 @@
     "@fullcalendar/timegrid": "^6.1.10",
     "@ng-bootstrap/ng-bootstrap": "^15.1.2",
     "@popperjs/core": "^2.11.6",
+    "@stomp/ng2-stompjs": "^8.0.0",
     "@zxing/browser": "^0.1.4",
     "@zxing/library": "^0.20.0",
     "@zxing/ngx-scanner": "^17.0.0",

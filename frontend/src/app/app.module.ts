@@ -51,6 +51,7 @@ import { NgToastModule } from 'ng-angular-popup';
 import { QrCodeScannerPageComponent } from './pages/qr-code-scanner-page/qr-code-scanner-page.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { RequestDeliveryPageComponent } from './pages/request-delivery-page/request-delivery-page.component';
+import { StompConfig, StompService } from '@stomp/ng2-stompjs';
 
 
 @NgModule({
@@ -108,9 +109,9 @@ import { RequestDeliveryPageComponent } from './pages/request-delivery-page/requ
           MatDatepickerModule,
           FullCalendarModule,
           NgToastModule,
-          ZXingScannerModule
+          ZXingScannerModule,
       ],
       providers: [MessageService],
       bootstrap: [AppComponent],
     })
-    export class AppModule { }
+export class AppModule { }

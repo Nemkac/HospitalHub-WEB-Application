@@ -9,6 +9,7 @@ import { Company } from 'src/company';
 import { RequestDeliveryService } from 'src/app/services/request-delivery.service';
 import { RabbitmqLiveLocationService } from 'src/app/services/rabbitmq-live-location.service';
 import { NgToastService } from 'ng-angular-popup';
+import { Message } from '@stomp/stompjs';
 
 
 @Component({
@@ -40,7 +41,7 @@ export class RequestDeliveryPageComponent implements OnInit{
 	constructor(private route: ActivatedRoute,
 				private companyService: CompanyService,
 				private requestDeliveryService: RequestDeliveryService,
-				private rabbitmeLiveLocationService: RabbitmqLiveLocationService,
+				private rabbitmqLiveLocationService: RabbitmqLiveLocationService,
 				private toast: NgToastService) {} 
 
 	ngOnInit(): void {
@@ -49,6 +50,11 @@ export class RequestDeliveryPageComponent implements OnInit{
 			this.companyId =+ idFromRoute
 			this.getCompanyData();
 		}
+
+		/*this.rabbitmqLiveLocationService.getLiveLocation().subscribe((message: Message) => {
+			const liveLocation: LiveLocation = JSON.parse(message.body);
+			this.handleLiveLocationUpdate(liveLocation);
+		});*/
 
 	}
 
@@ -110,7 +116,7 @@ export class RequestDeliveryPageComponent implements OnInit{
 			longitude: longitude,
 		};
 
-		this.rabbitmeLiveLocationService.sendLiveLocationMessage(liveLocation).subscribe();
+		this.rabbitmqLiveLocationService.sendLiveLocationMessage(liveLocation).subscribe();
 	}
 
 	startDelivery() : void{
@@ -127,6 +133,7 @@ export class RequestDeliveryPageComponent implements OnInit{
 					const currentCoordinate = this.routeCoordinates[index];
 					this.sendCoordinateToRabbitMQ(currentCoordinate.lat, currentCoordinate.lng);
 					this.marker.setLatLng([currentCoordinate.lat, currentCoordinate.lng]);
+					//this.handleLiveLocationUpdate();
 					index++;
 					this.deliveryStarted = true;
 				} else {
@@ -154,5 +161,21 @@ export class RequestDeliveryPageComponent implements OnInit{
 			leafletTopRight.style.transform = 'translateY(-50%)';
 			leafletTopRight.style.zIndex = '1000'; // Prilagodite vrednost prema potrebi
 		}
+	}
+
+	/*private handleLiveLocationUpdate(): void {
+		this.rabbitmqLiveLocationService.getLiveLocation().subscribe((message: Message) => {
+			const liveLocation: LiveLocation = JSON.parse(message.body);
+			this.marker.setLatLng([liveLocation.latitude, liveLocation.longitude]);
+		});
+	}*/
+
+	sendCoordinateToWebSocket(latitude: number, longitude: number): void {
+		const liveLocation: LiveLocation = {
+		  latitude: latitude,
+		  longitude: longitude,
+		};
+	  
+		this.rabbitmqLiveLocationService.sendLiveLocationMessage(liveLocation).subscribe();
 	}
 }
