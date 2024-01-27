@@ -88,7 +88,7 @@ public class EquipmentPickupSlotService {
         return false;
     }
 
-    private boolean areSlotsOverlapping(EquipmentPickupSlot slot1, EquipmentPickupSlot slot2) {
+    public boolean areSlotsOverlapping(EquipmentPickupSlot slot1, EquipmentPickupSlot slot2) {
         LocalDateTime start1 = slot1.getDateTime();
         LocalDateTime end1 = start1.plusMinutes(slot1.getDuration());
 
