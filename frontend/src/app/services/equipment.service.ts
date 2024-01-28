@@ -50,7 +50,7 @@ export class EquipmentService {
         return this.http.get<Date[]>(`http://localhost:8081/api/company/getAvailableDays/${companyId}`);
     }
 
-    public orderEquipment(order : OrderEquipmentDTO) : Observable<EquipmentPickupSlot>{
-        return this.http.post<EquipmentPickupSlot>(`${this.apiServerUrl}/api/equipment/orderEquipment`, order);
+    public orderEquipment(order : OrderEquipmentDTO,version:number | undefined) : Observable<EquipmentPickupSlot>{
+        return this.http.post<EquipmentPickupSlot>(`${this.apiServerUrl}/api/equipment/orderEquipment?version=${version}`, order);
     }
 }

@@ -16,6 +16,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import jakarta.activation.DataSource;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -199,7 +200,8 @@ public class MedicalEquipmentController {
     }
 
     @PostMapping(value = "/orderEquipment")
-    public ResponseEntity<EquipmentPickupSlot> orderEquipment(@RequestBody OrderEquipmentDTO orderEquipmentDTO){
+    @Transactional
+    public ResponseEntity<EquipmentPickupSlot> orderEquipment(@RequestBody OrderEquipmentDTO orderEquipmentDTO,@RequestParam Long version){
 
         Optional<EquipmentPickupSlot> slot = slotRepository.findById(orderEquipmentDTO.getPickupSlotId());
         EquipmentPickupSlot foundSlot = new EquipmentPickupSlot();
@@ -207,6 +209,12 @@ public class MedicalEquipmentController {
         if(slot.isPresent()){
             foundSlot = slot.get();
         }
+
+        if(!version.equals(foundSlot.getVersion())){
+            return new ResponseEntity<>(foundSlot,HttpStatus.CONFLICT);
+        }
+
+
         Optional<User> user = userRepository.findById(orderEquipmentDTO.getUserId());
         User mailUser = new User();
         if(user.isPresent()){
