@@ -1,10 +1,17 @@
 package HospitalHub.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
+
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class EquipmentContract {
@@ -16,14 +23,15 @@ public class EquipmentContract {
     private String equipmentType;
     @Column(name = "quantity")
     private int quantity;
-    @Column(name = "deliveryDateTime")
+
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
+    @Column(name = "deliveryDate")
     private LocalDate deliveryDate;
     @Column(name = "active")
     private boolean active;
     private boolean deliveryPossible;
-
-    private String serializedDeliveryDate;
-
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne
@@ -33,7 +41,7 @@ public class EquipmentContract {
     public EquipmentContract() {
     }
 
-    public EquipmentContract(Integer id, String equipmentType, int quantity, LocalDateTime deliveryDateTime, boolean active, Company company) {
+    public EquipmentContract(Integer id, String equipmentType, int quantity, LocalDate deliveryDate, boolean active, Company company) {
         this.id = id;
         this.equipmentType = equipmentType;
         this.quantity = quantity;
@@ -106,14 +114,6 @@ public class EquipmentContract {
 
     public void setDeliveryPossible(boolean deliveryPossible) {
         this.deliveryPossible = deliveryPossible;
-    }
-
-    public String getSerializedDeliveryDate() {
-        return serializedDeliveryDate;
-    }
-
-    public void setSerializedDeliveryDate(String serializedDeliveryDate) {
-        this.serializedDeliveryDate = serializedDeliveryDate;
     }
 }
 

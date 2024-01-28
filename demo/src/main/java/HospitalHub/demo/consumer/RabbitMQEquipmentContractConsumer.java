@@ -11,6 +11,6 @@ public class RabbitMQEquipmentContractConsumer {
 
     @RabbitListener(queues = "equipmentContractJSON_queue")
     public void consumeEquipmentContract(EquipmentContractDTO contractDTO) {
-        LOGGER.info(String.format("Received equipment contract -> %s", contractDTO.toString()));
+        LOGGER.info(String.format("Notification received! -> %s", contractDTO.toString()));
     }
 }

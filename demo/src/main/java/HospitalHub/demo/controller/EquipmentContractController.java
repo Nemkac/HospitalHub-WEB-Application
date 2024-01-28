@@ -1,20 +1,20 @@
 package HospitalHub.demo.controller;
 
-import HospitalHub.demo.dto.EquipmentContractDTO;
-import HospitalHub.demo.dto.LiveLocationDTO;
 import HospitalHub.demo.model.Company;
 import HospitalHub.demo.model.EquipmentContract;
 import HospitalHub.demo.model.MedicalEquipment;
 import HospitalHub.demo.publisher.RabbitMQEquipmentContractProducer;
-import HospitalHub.demo.publisher.RabbitMQJsonProducer;
 import HospitalHub.demo.service.CompanyService;
 import HospitalHub.demo.service.EquipmentContractService;
 import HospitalHub.demo.service.MedicalEqupimentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -30,6 +30,8 @@ public class EquipmentContractController {
     @Autowired
     private MedicalEqupimentService medicalEqupimentService;
 
+    @Autowired
+    private TaskScheduler taskScheduler;
     private RabbitMQEquipmentContractProducer rabbitMQEquipmentContractProducer;
 
     @GetMapping("/contractsbyCompany/{companyId}")
@@ -54,29 +56,75 @@ public class EquipmentContractController {
 
     @PostMapping("/create/{companyId}")
     public ResponseEntity<EquipmentContract> createContract(@RequestBody EquipmentContract contract, @PathVariable Integer companyId) {
+        scheduleDeliveryNotification(contract);
+
         Company company = companyService.getById(companyId);
         if (company == null) {
             return ResponseEntity.notFound().build();
         }
 
+        if(!checkIfDeliveryIsPossibile(contract, contract.getEquipmentType(), company)) {
+            scheduleContractTerminationNotification(contract);
+        }
+
+
         if (!isEquipmentTypeValid(contract.getEquipmentType(), company)) {
             return ResponseEntity.notFound().build();
         }
 
-        // Check and set delivery
         if (checkDeliveryPossibility(contract, contract.getEquipmentType(), company)) {
             contract.setDeliveryPossible(true);
         } else {
-            // If delivery is not possible, send an asynchronous message
             rabbitMQEquipmentContractProducer.sendDeliveryNotification(contract);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         contract.setCompany(company);
         EquipmentContract createdContract = equipmentContractService.createContract(contract);
-
+        rabbitMQEquipmentContractProducer.sendEquipmentContract(createdContract);
         return new ResponseEntity<>(createdContract, HttpStatus.CREATED);
     }
+    private void scheduleDeliveryNotification(EquipmentContract contract) {
+        LocalDate deliveryDate = contract.getDeliveryDate();
+        int dayOfMonth = deliveryDate.getDayOfMonth();
 
+        taskScheduler.schedule(() -> sendDeliveryNotification(contract), new CronTrigger("0 16 1 " + dayOfMonth + " * *"));
+    }
+
+    private void scheduleContractTerminationNotification(EquipmentContract contract) {
+        LocalDate deliveryDate = contract.getDeliveryDate();
+        int dayOfMonth = deliveryDate.getDayOfMonth() - 3;
+            taskScheduler.schedule(() -> sendContractTerminationNotification(contract), new CronTrigger("0 25 1 " + dayOfMonth + " * *"));
+    }
+    private void sendDeliveryNotification(EquipmentContract contract) {
+        rabbitMQEquipmentContractProducer.sendDeliveryStartNotification(contract);
+    }
+    private void sendContractTerminationNotification(EquipmentContract contract) {
+        rabbitMQEquipmentContractProducer.sendContractTerminationNotification(contract);
+    }
+
+    private boolean checkIfDeliveryIsPossibile(EquipmentContract contract, String equipmentType, Company company) {
+        List<MedicalEquipment> companyEquipmentList = company.getMedicalEquipmentList();
+        int totalAvailableQuantity = 0;
+
+        for (MedicalEquipment equipment : companyEquipmentList) {
+            if (equipment.getType().equalsIgnoreCase(equipmentType)) {
+                totalAvailableQuantity = equipment.getQuantity();
+                break;
+            }
+        }
+
+        if (totalAvailableQuantity >= contract.getQuantity()) {
+            contract.setDeliveryPossible(true);
+            return true;
+        } else {
+            rabbitMQEquipmentContractProducer.sendDeliveryNotification(contract);
+            equipmentContractService.deactivateContract(contract.getId());
+            rabbitMQEquipmentContractProducer.sendContractTerminationNotification(contract);
+
+            return false;
+        }
+    }
     private boolean checkDeliveryPossibility(EquipmentContract contract, String equipmentType, Company company) {
         List<MedicalEquipment> companyEquipmentList = company.getMedicalEquipmentList();
         int totalAvailableQuantity = 0;
@@ -87,57 +135,30 @@ public class EquipmentContractController {
             }
         }
 
-        System.out.println("Total Available Quantity: " + totalAvailableQuantity);
-        System.out.println("Contract Quantity: " + contract.getQuantity());
-
         if (totalAvailableQuantity >= contract.getQuantity()) {
             contract.setDeliveryPossible(true);
             return true;
         } else {
-            // Ako isporuka nije moguća, obavestite korisnika ili proizvedite poruku za dalje korake.
-            rabbitMQEquipmentContractProducer.sendDeliveryNotification(contract);
             return false;
         }
     }
 
-
-
-    private int getAvailableQuantityForDelivery(EquipmentContract contract) {
-        // Retrieve the medical equipment associated with the contract
-        List<MedicalEquipment> medicalEquipmentList = getMedicalEquipmentByTypeAndCompany(contract.getEquipmentType(), contract.getCompany());
-
-        if (!medicalEquipmentList.isEmpty()) {
-            // Assuming available quantity is the minimum of the contract quantity and actual equipment quantity
-            return Math.min(medicalEquipmentList.get(0).getQuantity(), contract.getQuantity());
-        }
-
-        return 0; // Return 0 if medical equipment is not found (adjust as needed)
-    }
-
-    private List<MedicalEquipment> getMedicalEquipmentByTypeAndCompany(String equipmentType, Company company) {
-        // Implement logic to retrieve medical equipment by type and company
-        // You can use your data/service to fetch this information
-        // For now, let's assume a placeholder value, replace this with your actual logic
-        return medicalEqupimentService.findByTypeAndCompany(equipmentType, company);
-    }
-
     @PutMapping("/deactivate/{id}")
-    public ResponseEntity<Void> deactivateContract(@PathVariable Integer id) {
+    public ResponseEntity<EquipmentContract> deactivateContract(@PathVariable Integer id) {
+        EquipmentContract contract = equipmentContractService.getById(id);
+
+        if (contract == null) {
+            return ResponseEntity.notFound().build();
+        }
         equipmentContractService.deactivateContract(id);
+        rabbitMQEquipmentContractProducer.sendContractTerminationNotification(contract);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     public EquipmentContractController(/*RabbitMQProducer rabbitMQProducer,*/ RabbitMQEquipmentContractProducer rabbitMQEquipmentContractProducer) {
         this.rabbitMQEquipmentContractProducer = rabbitMQEquipmentContractProducer;
     }
-
-
-    @PostMapping(value = "/publish/json")
-    public ResponseEntity<String> sendJsonMessage(@RequestBody EquipmentContractDTO equipmentContractDTO) {
-        rabbitMQEquipmentContractProducer.sendEquipmentContract(equipmentContractDTO);
-        return ResponseEntity.ok("Json message sent to RabbitMQ ...");
-    }
-
     private boolean isEquipmentTypeValid(String equipmentType, Company company) {
         List<MedicalEquipment> companyEquipmentList = company.getMedicalEquipmentList();
 
@@ -146,7 +167,6 @@ public class EquipmentContractController {
                 return true;
             }
         }
-
         return false;
     }
 }

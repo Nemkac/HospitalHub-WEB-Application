@@ -1,23 +1,23 @@
 package HospitalHub.demo.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class EquipmentContractDTO{
         private Integer id;
         private String equipmentType;
         private int quantity;
-        private LocalDateTime deliveryDateTime;
+        private LocalDate deliveryDate;
         private boolean active;
         private CompanyDTO company;
 
     public EquipmentContractDTO() {
     }
 
-    public EquipmentContractDTO(Integer id, String equipmentType, int quantity, LocalDateTime deliveryDateTime, boolean active, CompanyDTO company) {
+    public EquipmentContractDTO(Integer id, String equipmentType, int quantity, LocalDate deliveryDate, boolean active, CompanyDTO company) {
         this.id = id;
         this.equipmentType = equipmentType;
         this.quantity = quantity;
-        this.deliveryDateTime = deliveryDateTime;
+        this.deliveryDate = deliveryDate;
         this.active = active;
         this.company = company;
     }
@@ -46,12 +46,12 @@ public class EquipmentContractDTO{
         this.quantity = quantity;
     }
 
-    public LocalDateTime getDeliveryDateTime() {
-        return deliveryDateTime;
+    public LocalDate getDeliveryDate() {
+        return deliveryDate;
     }
 
-    public void setDeliveryDateTime(LocalDateTime deliveryDateTime) {
-        this.deliveryDateTime = deliveryDateTime;
+    public void setDeliveryDate(LocalDate deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 
     public boolean isActive() {

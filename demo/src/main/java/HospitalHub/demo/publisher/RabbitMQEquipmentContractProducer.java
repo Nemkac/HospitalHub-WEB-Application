@@ -24,13 +24,20 @@ public class RabbitMQEquipmentContractProducer {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendEquipmentContract(EquipmentContractDTO contractDTO) {
-        LOGGER.info(String.format("Equipment contract sent -> %s", contractDTO.toString()));
-        rabbitTemplate.convertAndSend(exchange, routingEquipmentContractKey, contractDTO);
+    public void sendEquipmentContract(EquipmentContract contract) {
+        LOGGER.info(String.format("Equipment contract sent -> %s", contract.toString()));
+        rabbitTemplate.convertAndSend(exchange, routingEquipmentContractKey, contract);
     }
-
     public void sendDeliveryNotification(EquipmentContract contract) {
-        LOGGER.info(String.format("Delivery notification sent -> %s", contract.toString()));
+        LOGGER.info(String.format("Delivery not possible notification sent -> %s", contract.toString()));
+        rabbitTemplate.convertAndSend(exchange, routingEquipmentContractKey, contract);
+    }
+    public void sendDeliveryStartNotification(EquipmentContract contract) {
+        LOGGER.info(String.format("Your scheduled equipment delivery just started -> %s", contract.toString()));
+        rabbitTemplate.convertAndSend(exchange, routingEquipmentContractKey, contract);
+    }
+    public void sendContractTerminationNotification(EquipmentContract contract) {
+        LOGGER.info(String.format("Contract is terminated -> %s", contract.toString()));
         rabbitTemplate.convertAndSend(exchange, routingEquipmentContractKey, contract);
     }
 }

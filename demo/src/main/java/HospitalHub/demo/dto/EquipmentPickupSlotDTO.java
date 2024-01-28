@@ -16,6 +16,9 @@ public class EquipmentPickupSlotDTO {
     private CompanyAdministrator companyAdministrator;
     private EquipmentPickupSlot.Status status;
 
+    public EquipmentPickupSlotDTO() {
+    }
+
     public EquipmentPickupSlotDTO(EquipmentPickupSlot slot){
         this(
             slot.getId(),
