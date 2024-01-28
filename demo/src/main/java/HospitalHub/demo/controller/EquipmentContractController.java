@@ -88,7 +88,7 @@ public class EquipmentContractController {
         LocalDate deliveryDate = contract.getDeliveryDate();
         int dayOfMonth = deliveryDate.getDayOfMonth();
 
-        taskScheduler.schedule(() -> sendDeliveryNotification(contract), new CronTrigger("0 16 1 " + dayOfMonth + " * *"));
+        taskScheduler.schedule(() -> sendDeliveryNotification(contract), new CronTrigger("0 21 17 " + dayOfMonth + " * *"));
     }
 
     private void scheduleContractTerminationNotification(EquipmentContract contract) {

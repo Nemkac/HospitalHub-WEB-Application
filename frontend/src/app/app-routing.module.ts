@@ -16,6 +16,7 @@ import { VisitCompanyPageComponent } from './pages/visit-company-page/visit-comp
 import { UpcomingAppointmentsComponent } from './components/upcoming-appointments/upcoming-appointments.component';
 import { QrCodeScannerPageComponent } from './pages/qr-code-scanner-page/qr-code-scanner-page.component';
 import { RequestDeliveryPageComponent } from './pages/request-delivery-page/request-delivery-page.component';
+import { CreateContractComponent } from './components/create-contract/create-contract.component';
 
 const routes: Routes = [
     //Promeniti kada se doda login da se umesto logina ispise ime usera i onda da se ide na profil usera
@@ -33,7 +34,8 @@ const routes: Routes = [
     {path: 'complaints', component:ComplaintsPageComponent},
     {path: 'profile/upcoming-appoitments', component:UpcomingAppointmentsComponent},
     {path: 'qr-code-scanner', component: QrCodeScannerPageComponent},
-    {path: 'request-delivery/:id', component: RequestDeliveryPageComponent}
+    {path: 'request-delivery/:id', component: RequestDeliveryPageComponent},
+    {path: 'create-contract', component : CreateContractComponent}
 ];
 
 @NgModule({

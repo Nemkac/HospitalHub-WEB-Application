@@ -51,6 +51,7 @@ import { NgToastModule } from 'ng-angular-popup';
 import { QrCodeScannerPageComponent } from './pages/qr-code-scanner-page/qr-code-scanner-page.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { RequestDeliveryPageComponent } from './pages/request-delivery-page/request-delivery-page.component';
+import { CreateContractComponent } from './components/create-contract/create-contract.component';
 
 
 @NgModule({
@@ -91,6 +92,7 @@ import { RequestDeliveryPageComponent } from './pages/request-delivery-page/requ
           CreateExtraSlotComponent,
           QrCodeScannerPageComponent,
           RequestDeliveryPageComponent,
+          CreateContractComponent,
       ],
       imports: [
           BrowserAnimationsModule,
