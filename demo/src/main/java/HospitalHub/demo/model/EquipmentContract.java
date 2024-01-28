@@ -38,6 +38,13 @@ public class EquipmentContract {
     @JoinColumn(name = "company_id")
     private Company company;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
+
     public EquipmentContract() {
     }
 
@@ -114,6 +121,14 @@ public class EquipmentContract {
 
     public void setDeliveryPossible(boolean deliveryPossible) {
         this.deliveryPossible = deliveryPossible;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
 

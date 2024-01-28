@@ -54,19 +54,6 @@ public class EquipmentPickupSlotController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        List<EquipmentPickupSlot> updatedSlots = new ArrayList<>();
-        List<EquipmentPickupSlot> slots = equipmentPickupSlotService.getAll();
-        for(EquipmentPickupSlot slot : slots) {
-            if(slot.getVersion() == 1){
-                updatedSlots.add(slot);
-            }
-        }
-        for(EquipmentPickupSlot updatedSlot : updatedSlots) {
-            if(equipmentPickupSlotService.areSlotsOverlapping(updatedSlot,newSlot)){
-                return new ResponseEntity("Conflict. Someone else has replied. Please refresh and try again.", HttpStatus.CONFLICT);
-            }
-        }
-
         EquipmentPickupSlot savedEquipmentPickupSlot = equipmentPickupSlotService.save(newSlot);
 
         return new ResponseEntity<>(savedEquipmentPickupSlot, HttpStatus.CREATED);

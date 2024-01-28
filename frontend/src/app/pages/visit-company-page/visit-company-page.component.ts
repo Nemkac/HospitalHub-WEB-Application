@@ -26,6 +26,7 @@ import { MessageService } from 'primeng/api'
 import { NgToastService } from 'ng-angular-popup'
 import * as moment from 'moment-timezone';
 import { EquipmentService } from 'src/app/services/equipment.service';
+import { CreateContractComponent } from 'src/app/components/create-contract/create-contract.component';
 
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
@@ -289,6 +290,14 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
   public viewCalendar() : void{
     this.showEquipment = false;
     this.showCalendar = true
+  }
+
+  public createContract(){
+    const modalRef = this.modalService.open(
+      CreateContractComponent,
+      {backdrop:'static',keyboard:true}
+    );
+    modalRef.componentInstance.companyId = this.companyId;
   }
 
   public getEventStyles(extendedProps: any): any {

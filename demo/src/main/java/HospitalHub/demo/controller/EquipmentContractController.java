@@ -7,6 +7,7 @@ import HospitalHub.demo.publisher.RabbitMQEquipmentContractProducer;
 import HospitalHub.demo.service.CompanyService;
 import HospitalHub.demo.service.EquipmentContractService;
 import HospitalHub.demo.service.MedicalEqupimentService;
+import HospitalHub.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,9 @@ public class EquipmentContractController {
 
     @Autowired
     private EquipmentContractService equipmentContractService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private CompanyService companyService;
@@ -54,8 +58,8 @@ public class EquipmentContractController {
         return ResponseEntity.ok(activeContracts);
     }
 
-    @PostMapping("/create/{companyId}")
-    public ResponseEntity<EquipmentContract> createContract(@RequestBody EquipmentContract contract, @PathVariable Integer companyId) {
+    @PostMapping("/create/{companyId}/{userId}")
+    public ResponseEntity<EquipmentContract> createContract(@RequestBody EquipmentContract contract, @PathVariable Integer companyId, @PathVariable Integer userId) {
         scheduleDeliveryNotification(contract);
 
         Company company = companyService.getById(companyId);
@@ -80,6 +84,7 @@ public class EquipmentContractController {
         }
 
         contract.setCompany(company);
+        contract.setUser(userService.getById(userId));
         EquipmentContract createdContract = equipmentContractService.createContract(contract);
         rabbitMQEquipmentContractProducer.sendEquipmentContract(createdContract);
         return new ResponseEntity<>(createdContract, HttpStatus.CREATED);

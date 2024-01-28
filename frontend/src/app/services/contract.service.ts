@@ -11,8 +11,8 @@ export class ContractService{
 
     constructor(private http:HttpClient){}
 
-    public createContract(contract:Contract){
-        return this.http.post<Contract>(`${this.apiServerUrl}/api/contract/create/1`,contract);
+    public createContract(contract:Contract,companyId:number,userId:number){
+        return this.http.post<Contract>(`${this.apiServerUrl}/api/contract/create/${companyId}/${userId}`,contract);
     }
  
 
