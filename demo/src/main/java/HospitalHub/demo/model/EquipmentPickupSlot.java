@@ -25,6 +25,9 @@ public class EquipmentPickupSlot {
     @Version
     private Long version;
 
+    @Column(name="ifPredefined")
+    private boolean ifPredefined;
+
     @ManyToOne
     @JoinColumn(name = "userId")
     @JsonIgnoreProperties("equipmentPickupSlots")
@@ -60,6 +63,15 @@ public class EquipmentPickupSlot {
         this.reservedBy = reservedBy;
         this.companyAdministrator = companyAdministrator;
         this.equipment = equipment;
+    }
+
+    public EquipmentPickupSlot(LocalDateTime dateTime, Integer duration, User reservedBy, CompanyAdministrator companyAdministrator, int[] equipment,boolean ifPredefined) {
+        this.dateTime = dateTime;
+        this.duration = duration;
+        this.reservedBy = reservedBy;
+        this.companyAdministrator = companyAdministrator;
+        this.equipment = equipment;
+        this.ifPredefined = ifPredefined;
     }
 
     
@@ -131,6 +143,14 @@ public class EquipmentPickupSlot {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public boolean isIfPredefined() {
+        return ifPredefined;
+    }
+
+    public void setIfPredefined(boolean ifPredefined) {
+        this.ifPredefined = ifPredefined;
     }
 }
 

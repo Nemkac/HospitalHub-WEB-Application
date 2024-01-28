@@ -42,7 +42,7 @@ public class UserProfileDTO {
         this.city = user.getCity();
         this.profession = user.getProfession();
         this.companyInfo = user.getCompanyInfo();
-        this.penaltyPoints = 0; // izmeniti kasnije da kupi iz baze da ga jebem nmp ili da poziva servis neki odma
+        this.penaltyPoints = user.getPenaltyPoints(); // izmeniti kasnije da kupi iz baze da ga jebem nmp ili da poziva servis neki odma
     }
 
     public String getName() {

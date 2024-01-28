@@ -153,6 +153,7 @@ public class EquipmentPickupSlotService {
         if(!foundAdmins.isEmpty()) {
             slot.setReservedBy(userService.getById(userId));
             slot.setCompanyAdministrator(foundAdmins.get(0));
+            slot.setIfPredefined(false);
             return equipmentPickupSlotRepository.save(slot);
         }
         return  null;
@@ -196,9 +197,14 @@ public class EquipmentPickupSlotService {
             Integer penaltyPoints = user.getPenaltyPoints();
             user.setPenaltyPoints(penaltyPoints+1);
             userService.save(user);
-            slot.setReservedBy(null);
-            slot.setEquipment(null);
-            equipmentPickupSlotRepository.save(slot);
+            if(slot.isIfPredefined()) {
+                slot.setReservedBy(null);
+                slot.setEquipment(null);
+                equipmentPickupSlotRepository.save(slot);
+            } else {
+                equipmentPickupSlotRepository.delete(slot);
+            }
+
             return slot;
         }
         return null;
