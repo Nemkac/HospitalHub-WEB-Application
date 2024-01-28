@@ -23,6 +23,7 @@ export class ShowCompaniesComponent implements OnInit {
   byCountry! : string;
   byCity!: string;
   byRate!: number;
+  sortBy : 'name' | 'country' | 'rate' = 'name'
   constructor(private showCompaniesService : CompanyService, 
               private route : ActivatedRoute,
               private router : Router) {}
@@ -42,8 +43,9 @@ export class ShowCompaniesComponent implements OnInit {
     });
     this.showCompaniesService.showCompanies(this.filterName,this.filterCountry,this.filterCity,this.filterAvgRate).subscribe(
       (response:Company[]) => {
-        this.showCompaniesService.showCompanies();
+        //this.showCompaniesService.showCompanies();
         this.companies = response;
+        this.sortCompanies();
         console.log(this.companies);
       },
       (error: HttpErrorResponse) => {
@@ -54,4 +56,19 @@ export class ShowCompaniesComponent implements OnInit {
   public goToCompany(id:number) : void {
     this.showCompaniesService.goToCompany(id);
   }
+
+  sortCompanies() {
+    let sortedArray: Company[] = []
+  
+    if (this.sortBy === 'name') {
+      sortedArray = [...this.companies].sort((a, b) => a.name.localeCompare(b.name));
+    } else if (this.sortBy == 'country') {
+      sortedArray = [...this.companies].sort((a, b) => a.country.localeCompare(b.country));
+    } else if (this.sortBy == 'rate') {
+        sortedArray = [...this.companies].sort((a, b) => a.avgRate - b.avgRate);
+      }
+  
+    this.companies = sortedArray;
+  }
+  
 }

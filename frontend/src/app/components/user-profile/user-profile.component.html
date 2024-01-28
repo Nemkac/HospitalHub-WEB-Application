@@ -6,7 +6,7 @@
     <p class="font-inter text-third font-bold mx-auto text-[30px]">{{ userProfile?.name }}</p>
     <div class="flex flex-row items-center mx-auto w-full items-center justify-center">
       <p class="font-inter font-light text-[#7f8fa6]">Penalty points:</p>
-      <p class="font-inter font-light text-[#7f8fa6] ml-[10px]">{{ userProfile?.penaltyPoints }}</p>
+      <p class="font-inter font-light text-[#7f8fa6] ml-[10px]">{{ userProfile?.penaltyPoints }}
     </div>
     <div class="flex flex-row items-center mx-auto w-full items-center justify-center">
         <p class="font-inter font-light text-[#7f8fa6]">Loyalty membership:</p>
@@ -116,9 +116,17 @@
         <fa-icon [icon]="faCalendar" class="text-third text-[22px]"/>
         <p class="font-inter font-semibold text-third text-[28px] ml-2">My Upcoming Appointments</p>
       </div>
+      <div>
+        <button (click)="sortUpcomingBy = 'duration'; sortUpcoming()">
+          <i class="fas fa-heart"></i> Sort by duration
+        </button> <br>
+        <button (click)="sortUpcomingBy = 'date'; sortUpcoming()">
+          <i class="fas fa-calendar"></i> Sort by date
+        </button>
+      </div>
       <div class="flex flex-col w-full h-auto max-h-[800px] mt-2">
         <ul class="divide-y divide-gray-300">
-          <div *ngFor="let slot of slots" class="py-3">
+          <div *ngFor="let slot of upcomingSlots" class="py-3">
             <div class="flex flex-row w-full justify-between justify-center items-center">
               <div class="flex flex-col w-[40%]">
                 <p class="text-lg font-semibold text-gray-800">
@@ -134,11 +142,47 @@
                               font-inter text-[16px] font-semibold rounded-md" (click)="goToRequestDelivery(slot.companyAdministrator.company.id)">
                   Request delivery
                 </button>
+                <button class="w-[170px] p-[5px] h-[35px] text-white bg-red hover:bg-lightBlue transition-[0.5s] 
+                font-inter text-[16px] font-semibold rounded-md" (click)="cancelReservation(slot.id)">
+                  Cancel reservation
+                </button>
               </div>
             </div>
           </div>
         </ul>
-        </div>
+      </div>
+      <br> <br> <br> <br> <br>
+      <div class="flex flex-row w-full items-center justify-start justify-center">
+        <fa-icon [icon]="faCalendar" class="text-third text-[22px]"/>
+        <p class="font-inter font-semibold text-third text-[28px] ml-2">My past Appointments</p>
+      </div>
+      <div>
+        <button (click)="sortPastBy = 'duration'; sortPast()">
+          <i class="fas fa-heart"></i> Sort by duration
+        </button> <br>
+        <button (click)="sortPastBy = 'date'; sortPast()">
+          <i class="fas fa-calendar"></i> Sort by date
+        </button>
+      </div>
+      <div class="flex flex-col w-full h-auto max-h-[800px] mt-2">
+        <ul class="divide-y divide-gray-300">
+          <div *ngFor="let slot of pastSlots" class="py-3">
+            <div class="flex flex-row w-full justify-between justify-center items-center">
+              <div class="flex flex-col w-[40%]">
+                <p class="text-lg font-semibold text-gray-800">
+                  {{ slot.dateTime | date:'medium' }}
+                </p>
+                <p class="text-sm text-gray-500">
+                  Duration: {{ slot.duration }} minutes
+                </p>
+              </div>
+              <div class="flex flex-row justify-between w-[220px] items-center">
+                <fa-icon [icon]="faQrcode" class="text-third text-[24px] hover:text-lightBlue transition-[0.5s] cursor-pointer"/>
+              </div>
+            </div>
+          </div>
+        </ul>
+      </div>
     </ng-form>
   </div>
 

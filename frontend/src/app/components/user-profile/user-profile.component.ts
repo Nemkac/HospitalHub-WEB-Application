@@ -39,6 +39,11 @@ export class UserProfileComponent implements OnInit{
   user !: User ;
   equipments!:Equipment[];
   slots!:EquipmentPickupSlot[];
+  upcomingSlots!:EquipmentPickupSlot[];
+  pastSlots!:EquipmentPickupSlot[];
+  sortUpcomingBy : 'duration' | 'date' = 'date'
+  sortPastBy : 'duration' | 'date' = 'date'
+
 
   @ViewChild('calendar') calendarRef!: ElementRef;
 
@@ -83,6 +88,8 @@ export class UserProfileComponent implements OnInit{
           }
           if(response.roles === "ROLE_USER"){
             this.getUsersUpcomingAppointments();
+            this.getUsersUpcomingAppointments1();
+            this.getUsersPastAppointments();
           }
         },
         (error: HttpErrorResponse) => {
@@ -212,6 +219,30 @@ export class UserProfileComponent implements OnInit{
     )
   }
 
+  getUsersUpcomingAppointments1(){
+    this.userService.getUsersUpcomingAppoitments1(this.userId).subscribe(
+      (slots) => {
+        this.upcomingSlots = slots;
+        console.log("buduci slotovi su ",this.slots);
+        slots.forEach(slot => {
+          this.getSlotsEquipment(slot.id);
+        });
+      }
+    )
+  }
+
+  getUsersPastAppointments(){
+    this.userService.getUsersPastAppoitments(this.userId).subscribe(
+      (slots) => {
+        this.pastSlots = slots;
+        console.log("prosli slotovi su ",this.slots);
+        slots.forEach(slot => {
+          this.getSlotsEquipment(slot.id);
+        });
+      }
+    )
+  }
+
   getSlotsEquipment(slotId:Number){
       this.slotService.getSlotsEquipment(slotId).subscribe(
         (equipments) => {
@@ -220,4 +251,35 @@ export class UserProfileComponent implements OnInit{
         }
       )
   }
+
+  cancelReservation(slotId: number) {
+    this.slotService.cancelReservation(slotId).subscribe(
+      (slot) => {
+        if (slot != null) {
+          window.location.reload();
+        }
+      },
+      (error) => {
+        alert("Reservations within next 24 hours cannot be canceled");
+      }
+    );
+  }
+
+  sortUpcoming() {
+    if (this.sortUpcomingBy === 'duration') {
+      this.upcomingSlots.sort((a, b) => a.duration - b.duration);
+    } else if (this.sortUpcomingBy === 'date') {
+      this.upcomingSlots.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
+    }
+  }
+
+  sortPast() {
+    if (this.sortPastBy === 'duration') {
+      this.pastSlots.sort((a, b) => a.duration - b.duration);
+    } else if (this.sortPastBy === 'date') {
+      this.pastSlots.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
+    }
+  }
+  
+
 }

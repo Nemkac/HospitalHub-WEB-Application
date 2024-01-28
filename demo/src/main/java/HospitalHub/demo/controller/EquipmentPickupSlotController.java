@@ -9,6 +9,7 @@ import HospitalHub.demo.service.*;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -38,8 +39,9 @@ public class EquipmentPickupSlotController {
     @Autowired
     private MedicalEqupimentService medicalEqupimentService;
 
-
+    // TODO: OVDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
     @PostMapping("/createPredefinedSlot/{userId}")
+    @Transactional
     public ResponseEntity<EquipmentPickupSlot> createPredefinedSlot(@RequestBody EquipmentPickupSlotDTO slotDTO, @PathVariable Integer userId) {
 
         CompanyAdministrator companyAdministrator = companyAdministratorService.getByUserId1(userId);
@@ -50,6 +52,19 @@ public class EquipmentPickupSlotController {
         );
         if (equipmentPickupSlotService.isSlotOverlapping(newSlot) || equipmentPickupSlotService.isSlotBeforeNow(newSlot) || !equipmentPickupSlotService.isSlotWithinCompanyWorkingHours(newSlot)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        List<EquipmentPickupSlot> updatedSlots = new ArrayList<>();
+        List<EquipmentPickupSlot> slots = equipmentPickupSlotService.getAll();
+        for(EquipmentPickupSlot slot : slots) {
+            if(slot.getVersion() == 1){
+                updatedSlots.add(slot);
+            }
+        }
+        for(EquipmentPickupSlot updatedSlot : updatedSlots) {
+            if(equipmentPickupSlotService.areSlotsOverlapping(updatedSlot,newSlot)){
+                return new ResponseEntity("Conflict. Someone else has replied. Please refresh and try again.", HttpStatus.CONFLICT);
+            }
         }
 
         EquipmentPickupSlot savedEquipmentPickupSlot = equipmentPickupSlotService.save(newSlot);
@@ -74,6 +89,26 @@ public class EquipmentPickupSlotController {
         }
     }
 
+    @GetMapping("/getUpcomingUsersSlots/{id}")
+    public ResponseEntity<List<EquipmentPickupSlot>> getUpcomingUsersSlots(@PathVariable Integer id) {
+        List<EquipmentPickupSlot> usersSlots = equipmentPickupSlotService.getUsersUpcomingSlots(id);
+        if (usersSlots.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(usersSlots, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/getPastUsersSlots/{id}")
+    public ResponseEntity<List<EquipmentPickupSlot>> getPastUsersSlots(@PathVariable Integer id) {
+        List<EquipmentPickupSlot> usersSlots = equipmentPickupSlotService.getUsersPastSlots(id);
+        if (usersSlots.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(usersSlots, HttpStatus.OK);
+        }
+    }
+
     /*@PostMapping("/saveExtraSlot/{companyId}/{userId}")
     public ResponseEntity<EquipmentPickupSlot> saveExtraSlot(@RequestBody EquipmentPickupSlot slot, @PathVariable Integer companyId, @PathVariable Integer userId){
         if(equipmentPickupSlotService.saveExtraSlot(slot,companyId,userId) != null) {
@@ -82,6 +117,7 @@ public class EquipmentPickupSlotController {
         return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
     } */
 
+    // TODO : OVDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
     @PostMapping(consumes = "application/json", value = "/saveExtraSlot/{companyId}/{userId}")
     public ResponseEntity<EquipmentPickupSlot> saveExtraSlot(@RequestBody EquipmentPickupSlot slot, @PathVariable Integer companyId, @PathVariable Integer userId) {
         //DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -203,6 +239,15 @@ public class EquipmentPickupSlotController {
         } else {
             return new ResponseEntity("Appointment status: EXPIRED", HttpStatus.OK);
         }
+    }
+
+    @PutMapping("/cancelReservation/{slotId}")
+    public ResponseEntity<EquipmentPickupSlot> cancelReservation(@PathVariable Integer slotId){
+        EquipmentPickupSlot canceledSlot = equipmentPickupSlotService.cancelReservation(slotId);
+        if(canceledSlot != null){
+            return new ResponseEntity<>(canceledSlot,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /*@PutMapping("/deliverEquipment")

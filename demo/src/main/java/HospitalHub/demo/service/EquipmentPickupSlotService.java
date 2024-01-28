@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import java.time.LocalDate;
 
 import java.time.LocalDateTime;
@@ -86,7 +88,7 @@ public class EquipmentPickupSlotService {
         return false;
     }
 
-    private boolean areSlotsOverlapping(EquipmentPickupSlot slot1, EquipmentPickupSlot slot2) {
+    public boolean areSlotsOverlapping(EquipmentPickupSlot slot1, EquipmentPickupSlot slot2) {
         LocalDateTime start1 = slot1.getDateTime();
         LocalDateTime end1 = start1.plusMinutes(slot1.getDuration());
 
@@ -133,7 +135,6 @@ public class EquipmentPickupSlotService {
     }
 
     public EquipmentPickupSlot saveExtraSlot(EquipmentPickupSlot slot, Integer companyId, Integer userId) {
-
         if (isSlotOverlappingWithAny(slot, companyId)) {
             return null;
         }
@@ -149,6 +150,7 @@ public class EquipmentPickupSlotService {
         if(!foundAdmins.isEmpty()) {
             slot.setReservedBy(userService.getById(userId));
             slot.setCompanyAdministrator(foundAdmins.get(0));
+            slot.setIfPredefined(false);
             return equipmentPickupSlotRepository.save(slot);
         }
         return  null;
@@ -160,6 +162,50 @@ public class EquipmentPickupSlotService {
             equipments.add(medicalEqupimentService.getEquipmentById(id));
         }
         return equipments;
+    }
+
+    public List<EquipmentPickupSlot> getUsersUpcomingSlots(Integer userId){
+        List<EquipmentPickupSlot> allSlots = equipmentPickupSlotRepository.findAll();
+        List<EquipmentPickupSlot> upcomingSlots = new ArrayList<>();
+        for(EquipmentPickupSlot slot: allSlots) {
+            if(slot.getReservedBy()!=null && Objects.equals(slot.getReservedBy().getId(), userId) && slot.getDateTime().isAfter(LocalDateTime.now())){
+                upcomingSlots.add(slot);
+            }
+        }
+        return upcomingSlots;
+    }
+
+    public List<EquipmentPickupSlot> getUsersPastSlots(Integer userId){
+        List<EquipmentPickupSlot> allSlots = equipmentPickupSlotRepository.findAll();
+        List<EquipmentPickupSlot> pastSlots = new ArrayList<>();
+        for(EquipmentPickupSlot slot: allSlots) {
+            if(slot.getReservedBy()!=null && Objects.equals(slot.getReservedBy().getId(), userId) && slot.getDateTime().isBefore(LocalDateTime.now())){
+                pastSlots.add(slot);
+            }
+        }
+        return pastSlots;
+    }
+
+    public EquipmentPickupSlot cancelReservation(Integer slotId){
+        EquipmentPickupSlot slot = equipmentPickupSlotRepository.getById(slotId);
+        if(!slot.getDateTime().minusHours(24).isBefore(LocalDateTime.now())){
+            User user = slot.getReservedBy();
+            //User user = new User(slot.getReservedBy());
+            Integer penaltyPoints = user.getPenaltyPoints();
+            user.setPenaltyPoints(penaltyPoints+1);
+            userService.save(user);
+            if(slot.isIfPredefined()) {
+                slot.setReservedBy(null);
+                slot.setEquipment(null);
+                equipmentPickupSlotRepository.save(slot);
+            } else {
+                equipmentPickupSlotRepository.delete(slot);
+            }
+
+            return slot;
+        }
+        return null;
+
     }
 
 

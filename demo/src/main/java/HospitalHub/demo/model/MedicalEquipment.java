@@ -46,6 +46,9 @@ public class MedicalEquipment {
     @Column(name = "quantity")
     private Integer quantity;
 
+    @Version
+    private Long version;
+
 
     public MedicalEquipment() {}
 
@@ -121,6 +124,14 @@ public class MedicalEquipment {
 
     public Integer getQuantity() {
         return quantity;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     public void setQuantity(Integer quantity) {

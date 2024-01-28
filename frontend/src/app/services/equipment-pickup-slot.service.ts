@@ -64,6 +64,10 @@ export class EquipmentPickupSlotService {
     const url = `${this.apiServerUrl}/api/slots/updateStatusForExpiredSlots`;
     return this.http.patch<EquipmentPickupSlot[]>(url, null);
   }*/
+
+  public cancelReservation(slotId:Number):Observable<EquipmentPickupSlot>{
+    return this.http.put<EquipmentPickupSlot>(`${this.apiServerUrl}/api/slots/cancelReservation/${slotId}`,null);
+  }
   
 
 }

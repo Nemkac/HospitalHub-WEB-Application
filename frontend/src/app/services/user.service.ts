@@ -69,5 +69,13 @@ export class UserService {
         return this.http.get<EquipmentPickupSlot[]>(`${this.apiServerUrl}/api/slots/getUsersSlots/${userId}`);
     }
 
+    public getUsersUpcomingAppoitments1(userId:Number):Observable<EquipmentPickupSlot[]>{
+        return this.http.get<EquipmentPickupSlot[]>(`${this.apiServerUrl}/api/slots/getUpcomingUsersSlots/${userId}`);
+    }
+
+    public getUsersPastAppoitments(userId:Number):Observable<EquipmentPickupSlot[]>{
+        return this.http.get<EquipmentPickupSlot[]>(`${this.apiServerUrl}/api/slots/getPastUsersSlots/${userId}`);
+    }
+
     
 }
