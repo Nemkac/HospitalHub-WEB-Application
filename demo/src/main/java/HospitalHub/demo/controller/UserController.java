@@ -122,7 +122,7 @@ public class UserController {
             User user = userService.getByUsername(username);
 
             if (user != null) {
-                System.out.println("????Dobar je user?");
+                //System.out.println("????Dobar je user?");
                 return new ResponseEntity<User>(user, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
