@@ -15,6 +15,8 @@ import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -63,10 +65,7 @@ public class EquipmentContractController {
             return ResponseEntity.notFound().build();
         }
 
-        if(!checkIfDeliveryIsPossibile(contract, contract.getEquipmentType(), company)) {
-            scheduleContractTerminationNotification(contract);
-        }
-
+        scheduleEquipmentStateCheck(contract, contract.getEquipmentType(), company);
 
         if (!isEquipmentTypeValid(contract.getEquipmentType(), company)) {
             return ResponseEntity.notFound().build();
@@ -103,26 +102,37 @@ public class EquipmentContractController {
         rabbitMQEquipmentContractProducer.sendContractTerminationNotification(contract);
     }
 
-    private boolean checkIfDeliveryIsPossibile(EquipmentContract contract, String equipmentType, Company company) {
+    private void scheduleEquipmentStateCheck(EquipmentContract contract, String equipmentType, Company company) {
+        LocalDate deliveryDate = contract.getDeliveryDate();
+        int dayOfMonth = deliveryDate.getDayOfMonth() - 3;
+
+        taskScheduler.schedule(() -> checkIfDeliveryIsPossible(contract, equipmentType, company), new CronTrigger("0 14 19 " + dayOfMonth + " * *"));
+    }
+
+    private void checkIfDeliveryIsPossible(EquipmentContract contract, String equipmentType, Company company) {
         List<MedicalEquipment> companyEquipmentList = company.getMedicalEquipmentList();
         int totalAvailableQuantity = 0;
 
+        // Log the equipment quantities
+        System.out.println("Equipment quantities before check:");
+
+        for (MedicalEquipment equipment : companyEquipmentList) {
+            System.out.println("Type: " + equipment.getType() + ", Quantity: " + equipment.getQuantity());
+        }
         for (MedicalEquipment equipment : companyEquipmentList) {
             if (equipment.getType().equalsIgnoreCase(equipmentType)) {
                 totalAvailableQuantity = equipment.getQuantity();
                 break;
             }
         }
+        System.out.println("Total available quantity: " + totalAvailableQuantity);
 
-        if (totalAvailableQuantity >= contract.getQuantity()) {
-            contract.setDeliveryPossible(true);
-            return true;
+        if (totalAvailableQuantity < contract.getQuantity()) {
+            rabbitMQEquipmentContractProducer.sendDeliveryStartNotification(contract);
         } else {
             rabbitMQEquipmentContractProducer.sendDeliveryNotification(contract);
             equipmentContractService.deactivateContract(contract.getId());
             rabbitMQEquipmentContractProducer.sendContractTerminationNotification(contract);
-
-            return false;
         }
     }
     private boolean checkDeliveryPossibility(EquipmentContract contract, String equipmentType, Company company) {

@@ -180,7 +180,7 @@ public class InitialDataInsertionService {
         MedicalEquipment equipment3 = new MedicalEquipment("CT Scanner", "Imaging", "Cutting-edge CT scanner for precise diagnostics.", company2, 1230.00, "ctscanner.png", 15);
         MedicalEquipment equipment4 = new MedicalEquipment("Ultrasound", "Imaging", "Advanced ultrasound equipment for detailed imaging.", company2, 250.00, "ultrasound.png", 40);
         MedicalEquipment equipment5 = new MedicalEquipment("Anesthesia Machine", "Machine", "High-performance anesthesia machine for safe administration.", company3, 225.00, "anesthesia.png", 32);
-        MedicalEquipment equipment6 = new MedicalEquipment("Hemodialysis Machine", "Machine", "Cutting-edge hemodialysis machine for life-saving treatment.", company1, 2000.00, "hemodialysis.png", 77);
+        MedicalEquipment equipment6 = new MedicalEquipment("Hemodialysis Machine", "Diagnostics", "Cutting-edge hemodialysis machine for life-saving treatment.", company1, 2000.00, "hemodialysis.png", 77);
         MedicalEquipment equipment7 = new MedicalEquipment("Hip Prosthesis", "Implantable", "Top-quality hip prosthesis to enhance mobility.", company1, 500.00, "prosthesis.png", 9);
         MedicalEquipment equipment8 = new MedicalEquipment("Pacemaker", "Implantable", "Advanced pacemaker for reliable heart rhythm management.", company1, 1250.00, "pacemaker.png", 1);
 
