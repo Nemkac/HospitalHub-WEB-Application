@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgToastService } from 'ng-angular-popup';
 import { Contract } from 'src/app/models/Contract';
 import { ContractService } from 'src/app/services/contract.service';
 import { UserService } from 'src/app/services/user.service';
@@ -23,7 +24,8 @@ export class CreateContractComponent implements OnInit{
 
   constructor( private contractService : ContractService,
                private modalService: NgbActiveModal,
-               private userService : UserService ){}
+               private userService : UserService,
+               private toast : NgToastService ){}
 
   ngOnInit():void{
     if(this.token){
@@ -41,6 +43,7 @@ export class CreateContractComponent implements OnInit{
       (response:Contract) => {
         console.log("Created contract: ",response);
         this.modalService.close();
+        this.toast.success({detail:"Contract created", summary:"You have successfully set up the montly delivery"})
       }
     )
   }

@@ -24,6 +24,7 @@ import { CreateCompanyFormComponent } from '../create-company-form/create-compan
 import { Equipment } from 'src/Equipment';
 import { RequestDeliveryService } from 'src/app/services/request-delivery.service';
 import { UsersContractsComponent } from '../users-contracts/users-contracts.component';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-user-profile',
@@ -67,7 +68,8 @@ export class UserProfileComponent implements OnInit{
               private route: ActivatedRoute,
               private modalService: NgbModal,
               private slotService : EquipmentPickupSlotService,
-              private requestDeliveryService: RequestDeliveryService){}
+              private requestDeliveryService: RequestDeliveryService,
+              private toast : NgToastService){}
 
   faGear = faGear;
   faUser = faUser;
@@ -261,7 +263,7 @@ export class UserProfileComponent implements OnInit{
         }
       },
       (error) => {
-        alert("Reservations within next 24 hours cannot be canceled");
+        this.toast.error({detail:"Cancelation denied",summary:"Reservations within following 24 hours cannot be canceled"})
       }
     );
   }

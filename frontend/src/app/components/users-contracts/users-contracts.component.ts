@@ -3,6 +3,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Contract } from 'src/app/models/Contract';
 import { ContractService } from 'src/app/services/contract.service';
 import { CreateContractComponent } from '../create-contract/create-contract.component';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-users-contracts',
@@ -16,8 +17,8 @@ export class UsersContractsComponent implements OnInit{
   constructor(
     private modalServiceChild : NgbActiveModal,
     private contractService : ContractService,
-    private modalServiceParent: NgbModal
-
+    private modalServiceParent: NgbModal,
+    private toast : NgToastService
   ){}
 
   ngOnInit(): void {
@@ -33,6 +34,7 @@ export class UsersContractsComponent implements OnInit{
     this.contractService.cancelContract(contractId).subscribe(
       (canceledContract) => {
         console.log("Contract canceled");
+        this.toast.success({detail:"Contract canceled", summary:"You have successfully canceled the montly subscription."})
         this.modalServiceChild.close();
       }
     )
