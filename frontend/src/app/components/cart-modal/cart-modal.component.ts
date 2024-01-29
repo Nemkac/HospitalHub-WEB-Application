@@ -87,7 +87,7 @@ export class CartModalComponent implements OnInit{
       },
       (error : HttpErrorResponse) => {
         //alert(error.message);
-        this.toast.error({detail:"Completing order unsuccessful",summary:"Selected pickup slot has been booked by another user in meanwhile"});
+        this.toast.error({detail:"Completing order went wrong",summary:"Selected pickup timeslot has been booked by another user in a meanwhile"});
       }
     );
 
