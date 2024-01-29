@@ -6,7 +6,6 @@ import HospitalHub.demo.model.MedicalEquipment;
 import HospitalHub.demo.publisher.RabbitMQEquipmentContractProducer;
 import HospitalHub.demo.service.CompanyService;
 import HospitalHub.demo.service.EquipmentContractService;
-import HospitalHub.demo.service.MedicalEqupimentService;
 import HospitalHub.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +15,6 @@ import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,9 +29,6 @@ public class EquipmentContractController {
 
     @Autowired
     private CompanyService companyService;
-
-    @Autowired
-    private MedicalEqupimentService medicalEqupimentService;
 
     @Autowired
     private TaskScheduler taskScheduler;
@@ -103,18 +97,9 @@ public class EquipmentContractController {
         taskScheduler.schedule(() -> sendDeliveryNotification(contract), new CronTrigger("0 21 17 " + dayOfMonth + " * *"));
     }
 
-    private void scheduleContractTerminationNotification(EquipmentContract contract) {
-        LocalDate deliveryDate = contract.getDeliveryDate();
-        int dayOfMonth = deliveryDate.getDayOfMonth() - 3;
-            taskScheduler.schedule(() -> sendContractTerminationNotification(contract), new CronTrigger("0 25 1 " + dayOfMonth + " * *"));
-    }
     private void sendDeliveryNotification(EquipmentContract contract) {
         rabbitMQEquipmentContractProducer.sendDeliveryStartNotification(contract);
     }
-    private void sendContractTerminationNotification(EquipmentContract contract) {
-        rabbitMQEquipmentContractProducer.sendContractTerminationNotification(contract);
-    }
-
     private void scheduleEquipmentStateCheck(EquipmentContract contract, String equipmentType, Company company) {
         LocalDate deliveryDate = contract.getDeliveryDate();
         int dayOfMonth = deliveryDate.getDayOfMonth() - 3;
@@ -125,21 +110,12 @@ public class EquipmentContractController {
     private void checkIfDeliveryIsPossible(EquipmentContract contract, String equipmentType, Company company) {
         List<MedicalEquipment> companyEquipmentList = company.getMedicalEquipmentList();
         int totalAvailableQuantity = 0;
-
-        // Log the equipment quantities
-        System.out.println("Equipment quantities before check:");
-
-        for (MedicalEquipment equipment : companyEquipmentList) {
-            System.out.println("Type: " + equipment.getType() + ", Quantity: " + equipment.getQuantity());
-        }
         for (MedicalEquipment equipment : companyEquipmentList) {
             if (equipment.getType().equalsIgnoreCase(equipmentType)) {
                 totalAvailableQuantity = equipment.getQuantity();
                 break;
             }
         }
-        System.out.println("Total available quantity: " + totalAvailableQuantity);
-
         if (totalAvailableQuantity < contract.getQuantity()) {
             rabbitMQEquipmentContractProducer.sendDeliveryStartNotification(contract);
         } else {
