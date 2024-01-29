@@ -11,6 +11,7 @@ import { EquipmentPickupSlot } from 'src/app/models/EquipmentPickupSlot';
 import { EquipmentPickupSlotService } from 'src/app/services/equipment-pickup-slot.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-cart-modal',
@@ -33,6 +34,7 @@ export class CartModalComponent implements OnInit{
               private equipmentService : EquipmentService,
               private equipmentPickupSlotService : EquipmentPickupSlotService,
               private router: Router,
+              private toast : NgToastService,
               private location: Location){}
 
   faClose = faClose;
@@ -84,7 +86,8 @@ export class CartModalComponent implements OnInit{
         }
       },
       (error : HttpErrorResponse) => {
-        alert(error.message);
+        //alert(error.message);
+        this.toast.error({detail:"Completing order went wrong",summary:"Selected pickup timeslot has been booked by another user in a meanwhile"});
       }
     );
 
