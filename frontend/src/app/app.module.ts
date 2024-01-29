@@ -53,6 +53,7 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { RequestDeliveryPageComponent } from './pages/request-delivery-page/request-delivery-page.component';
 import { CreateContractComponent } from './components/create-contract/create-contract.component';
 import { UsersContractsComponent } from './components/users-contracts/users-contracts.component';
+import { CompanyContractsComponent } from './components/company-contracts/company-contracts.component';
 
 
 @NgModule({
@@ -95,6 +96,7 @@ import { UsersContractsComponent } from './components/users-contracts/users-cont
           RequestDeliveryPageComponent,
           CreateContractComponent,
           UsersContractsComponent,
+          CompanyContractsComponent,
       ],
       imports: [
           BrowserAnimationsModule,

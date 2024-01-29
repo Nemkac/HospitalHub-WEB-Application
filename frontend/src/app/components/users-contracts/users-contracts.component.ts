@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Contract } from 'src/app/models/Contract';
 import { ContractService } from 'src/app/services/contract.service';
+import { CreateContractComponent } from '../create-contract/create-contract.component';
 
 @Component({
   selector: 'app-users-contracts',
@@ -13,8 +14,10 @@ export class UsersContractsComponent implements OnInit{
   userId !: number;
   
   constructor(
-    private modalService : NgbActiveModal,
-    private contractService : ContractService
+    private modalServiceChild : NgbActiveModal,
+    private contractService : ContractService,
+    private modalServiceParent: NgbModal
+
   ){}
 
   ngOnInit(): void {
@@ -30,9 +33,19 @@ export class UsersContractsComponent implements OnInit{
     this.contractService.cancelContract(contractId).subscribe(
       (canceledContract) => {
         console.log("Contract canceled");
-        this.modalService.close();
+        this.modalServiceChild.close();
       }
     )
   }
+
+  updateContract(companyId:number){
+    this.modalServiceChild.close();
+    const modalRef = this.modalServiceParent.open(
+      CreateContractComponent,
+      {backdrop:'static',keyboard:true}
+    );
+    modalRef.componentInstance.companyId = companyId;
+  }
+
   
 }

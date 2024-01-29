@@ -26,6 +26,7 @@ import { EquipmentPickupSlotService } from 'src/app/services/equipment-pickup-sl
 import { UserDTO } from 'src/app/userDTO';
 import * as moment from 'moment-timezone';
 import { NgToastService } from 'ng-angular-popup';
+import { CompanyContractsComponent } from 'src/app/components/company-contracts/company-contracts.component';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -421,4 +422,14 @@ export class CompanyAdminProfilPageComponent implements OnInit{
       return { backgroundColor: '#003554', color: '#F5F6FA' };
     }
   }
+
+  public goToCompanyContracts(){
+    const modalRef = this.modalService.open(
+      CompanyContractsComponent,
+      {backdrop:'static',keyboard:true}
+    );
+    modalRef.componentInstance.companyId = this.selectedCompany?.id;
+  }
+
+
 }

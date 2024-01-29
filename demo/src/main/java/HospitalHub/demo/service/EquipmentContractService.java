@@ -34,6 +34,12 @@ public class EquipmentContractService {
         return equipmentContractRepository.findByCompanyId(companyId);
     }
     public EquipmentContract createContract(EquipmentContract equipmentContract) {
+        List<EquipmentContract> allContracts = equipmentContractRepository.findAll();
+        for(EquipmentContract contract : allContracts) {
+            if(contract.getUser().getId() == equipmentContract.getUser().getId() && contract.getCompany().getId() == equipmentContract.getCompany().getId()) {
+                contract.setActive(false);
+            }
+        }
         equipmentContract.setActive(true);
         return equipmentContractRepository.save(equipmentContract);
     }

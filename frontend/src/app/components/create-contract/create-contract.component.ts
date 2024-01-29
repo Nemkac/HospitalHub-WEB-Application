@@ -35,7 +35,6 @@ export class CreateContractComponent implements OnInit{
     }
 }
 
-
   createContract(contract:NgForm){
     console.log(contract.value);
     this.contractService.createContract(contract.value,this.companyId,this.userId).subscribe(
@@ -45,6 +44,5 @@ export class CreateContractComponent implements OnInit{
       }
     )
   }
-
 
 }

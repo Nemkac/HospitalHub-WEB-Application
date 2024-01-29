@@ -5,18 +5,10 @@
 
     <div *ngFor="let contract of contracts" class="mb-4 p-4 border rounded-md flex items-center justify-between">
         <div>
-            <p class="text-sm font-medium text-gray-700">Company name: {{ contract.company.name }}</p>
+            <p class="text-sm font-medium text-gray-700">User's name: {{ contract.user.name }} {{contract.user.lastName}}</p>
             <p class="text-sm font-medium text-gray-700">Equipment: {{ contract.equipmentType }}</p>
             <p class="text-sm font-medium text-gray-700">Quantity: {{ contract.quantity }}</p>
             <p class="text-sm font-medium text-gray-700">First delivery Date: {{ contract.deliveryDate | date:'shortDate' }}</p>
-        </div>
-        <div class="flex items-center">
-            <button type="button" class="bg-third text-white px-3 py-1 rounded-md mr-2" (click)="updateContract(contract.company.id)">
-                Renew
-            </button>
-            <button type="button" class="bg-red text-white px-3 py-1 rounded-md" (click)="cancelContract(contract.id)">
-                Cancel
-            </button>
         </div>
     </div>
 </div>
