@@ -9,6 +9,11 @@
             <p class="text-sm font-medium text-gray-700">Equipment: {{ contract.equipmentType }}</p>
             <p class="text-sm font-medium text-gray-700">Quantity: {{ contract.quantity }}</p>
             <p class="text-sm font-medium text-gray-700">First delivery Date: {{ contract.deliveryDate | date:'shortDate' }}</p>
+            <p class="text-sm font-medium" [ngClass]="{'text-third': contract.active, 'text-red': !contract.active}">
+                Contract status: 
+                <span *ngIf="contract.active; else notActive">Active</span>
+                <ng-template #notActive>Not Active</ng-template>
+            </p>
         </div>
     </div>
 </div>

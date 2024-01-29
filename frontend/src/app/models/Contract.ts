@@ -8,4 +8,5 @@ export interface Contract{
     quantity : number;
     deliveryDate : Date;
     company : Company;
+    active : boolean;
 }
