@@ -59,7 +59,7 @@ public class User {
 
     @Column(name = "penaltyPoints")
     private Integer penaltyPoints;
-
+    
     private String roles;
 
     @OneToMany(mappedBy = "reservedBy")
@@ -294,4 +294,5 @@ public class User {
     public void setPenaltyPoints(Integer penaltyPoints) {
         this.penaltyPoints = penaltyPoints;
     }
+
 }

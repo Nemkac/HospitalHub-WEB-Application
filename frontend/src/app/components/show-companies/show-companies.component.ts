@@ -5,6 +5,9 @@ import { Observable } from 'rxjs';
 import { CompanyService } from 'src/app/services/company.service';
 import { FilterCompanies } from 'src/app/models/filter-companies';
 import { Company } from 'src/company';
+import { User } from 'src/user';
+import { NgToastService } from 'ng-angular-popup';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -23,13 +26,24 @@ export class ShowCompaniesComponent implements OnInit {
   byCountry! : string;
   byCity!: string;
   byRate!: number;
+  user !: User;
+  token = localStorage.getItem('token');
   sortBy : 'name' | 'country' | 'rate' = 'name'
   constructor(private showCompaniesService : CompanyService, 
               private route : ActivatedRoute,
-              private router : Router) {}
+              private router : Router,
+              private toast : NgToastService,
+              private userService : UserService) {}
 
   ngOnInit() : void {
-    this.ShowCompanies();                  
+    if(this.token) {
+      this.userService.getUserByToken(this.token).subscribe(
+        (user) => {
+          this.user = user;
+          }
+      )
+    } 
+    this.ShowCompanies();                 
   }
 
 
@@ -54,7 +68,12 @@ export class ShowCompaniesComponent implements OnInit {
     )
   }
   public goToCompany(id:number) : void {
-    this.showCompaniesService.goToCompany(id);
+    if(this.user.penaltyPoints < 3) {
+      console.log("Penalty points : ",this.user.penaltyPoints);
+      this.showCompaniesService.goToCompany(id);
+    } else {
+        this.toast.error({detail:"You are under a ban",summary:"You have too many penalty points! They clear out first day of the month."})
+    }
   }
 
   sortCompanies() {

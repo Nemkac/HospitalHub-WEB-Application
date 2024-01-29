@@ -192,7 +192,7 @@ public class EquipmentPickupSlotService {
         return pastSlots;
     }
 
-    public EquipmentPickupSlot cancelReservation(Integer slotId){
+    public EquipmentPickupSlot cancelReservation1(Integer slotId){
         EquipmentPickupSlot slot = equipmentPickupSlotRepository.getById(slotId);
         if(!slot.getDateTime().minusHours(24).isBefore(LocalDateTime.now())){
             User user = slot.getReservedBy();
@@ -210,7 +210,25 @@ public class EquipmentPickupSlotService {
             return slot;
         }
         return null;
-
+    }
+    public EquipmentPickupSlot cancelReservation(Integer slotId){
+        EquipmentPickupSlot slot = equipmentPickupSlotRepository.getById(slotId);
+        User user = slot.getReservedBy();
+        Integer penaltyPoints = user.getPenaltyPoints();
+        if(slot.getDateTime().minusHours(24).isBefore(LocalDateTime.now())){
+            user.setPenaltyPoints(penaltyPoints+2);
+        } else {
+            user.setPenaltyPoints(penaltyPoints+1);
+        }
+        if(slot.isIfPredefined()) {
+            slot.setReservedBy(null);
+            slot.setEquipment(null);
+            equipmentPickupSlotRepository.save(slot);
+        } else {
+            equipmentPickupSlotRepository.delete(slot);
+        }
+        userService.save(user);
+        return slot;
     }
 
 
