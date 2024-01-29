@@ -120,6 +120,7 @@
         <fa-icon [icon]="faCalendar" class="text-third text-[22px]"/>
         <p class="font-inter font-semibold text-third text-[28px] ml-2">My Upcoming Appointments</p>
       </div>
+  
       <div>
         <button (click)="sortUpcomingBy = 'duration'; sortUpcoming()">
           <i class="fas fa-heart"></i> Sort by duration
@@ -128,6 +129,7 @@
           <i class="fas fa-calendar"></i> Sort by date
         </button>
       </div>
+
       <div class="flex flex-col w-full h-auto max-h-[800px] mt-2">
         <ul class="divide-y divide-gray-300">
           <div *ngFor="let slot of upcomingSlots" class="py-3">
