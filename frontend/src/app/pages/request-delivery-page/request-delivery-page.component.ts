@@ -7,9 +7,13 @@ import { ActivatedRoute } from '@angular/router';
 import { CompanyService } from 'src/app/services/company.service';
 import { Company } from 'src/company';
 import { RabbitmqLiveLocationService } from 'src/app/services/rabbitmq-live-location.service';
-import { NgToastService } from 'ng-angular-popup';import { RxStomp } from '@stomp/rx-stomp';
+import { NgToastService } from 'ng-angular-popup';
+import { RxStomp } from '@stomp/rx-stomp';
 import { RxStompService } from 'src/app/services/rx-stomp.service';
 import { rxStompServiceFactory } from 'src/app/rx-stomp-service-factory';
+import { HttpHeaders } from '@angular/common/http';
+
+
 
 @Component({
   selector: 'app-request-delivery-page',
@@ -116,6 +120,14 @@ export class RequestDeliveryPageComponent implements OnInit{
 		);
 
 		//this.rabbitmqLiveLocationService.sendLiveLocationMessage(liveLocation).subscribe();
+		const token = localStorage.getItem('token');
+    
+    // Set the Authorization header with the bearer token
+		const headers = new HttpHeaders({
+		'Content-Type': 'application/json',
+		'Authorization': `Bearer ${token}`
+		});
+		this.rabbitmeLiveLocationService.sendLiveLocationMessage(liveLocation,headers).subscribe();
 	}
 
 	startDelivery() : void{

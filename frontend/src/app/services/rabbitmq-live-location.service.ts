@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { RxStomp } from '@stomp/rx-stomp';
 import { Observable, catchError, tap } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +20,10 @@ export class RabbitmqLiveLocationService {
     
   }
 
-  public sendLiveLocationMessage(liveLocation: LiveLocation) : Observable<LiveLocation> {
-    return this.http.post<LiveLocation>(`${this.apiServerUrl}/api/liveLocation/publish/json`, liveLocation);
+  public sendLiveLocationMessage(liveLocation: LiveLocation,headers:HttpHeaders) : Observable<LiveLocation> {
+
+    return this.http.post<LiveLocation>(`${this.apiServerUrl}/api/liveLocation/publish/json`, liveLocation,{headers:headers});
+    
   }
 
   /*public receiveLiveLocationMessages(): Observable<LiveLocation> {

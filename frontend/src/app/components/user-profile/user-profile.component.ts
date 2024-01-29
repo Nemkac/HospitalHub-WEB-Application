@@ -23,6 +23,8 @@ import { Equipment } from 'src/Equipment';
 import { RequestDeliveryService } from 'src/app/services/request-delivery.service';
 import { UsersContractsComponent } from '../users-contracts/users-contracts.component';
 import { NgToastService } from 'ng-angular-popup';
+import { CancellAppointmentDTO } from 'src/app/models/CancellAppointmentDTO';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-profile',
@@ -106,6 +108,34 @@ export class UserProfileComponent implements OnInit{
     this.requestDeliveryService.goToRequestDelivery(id);
   }
 
+  public cancelAppointment(userId: number, appointmentId: number): void {
+    const token = localStorage.getItem('token');
+    
+    // Set the Authorization header with the bearer token
+		const headers = new HttpHeaders({
+
+		'Content-Type': 'application/json',
+		'Authorization': `Bearer ${token}`
+		});
+    const cancellAppointmentDTO: CancellAppointmentDTO = {
+        userId: userId,
+        appointmentId: appointmentId
+    };
+
+    this.equipmentPickupSlotService.cancelAppointment(cancellAppointmentDTO,headers)
+        .subscribe(
+            (response) => {
+                
+                console.log(response);
+            },
+            (error) => {
+                
+                console.error(error);
+            }
+        );
+}
+
+
   public getEquipmentPickupSlots(id: number) : void{
     this.equipmentPickupSlotService.getAdminsSlots(id).subscribe(
       (response: EquipmentPickupSlot[]) => {
@@ -129,6 +159,7 @@ export class UserProfileComponent implements OnInit{
       }
     )
   }
+
 
   public showUserProfile():void{
     if(this.token) {

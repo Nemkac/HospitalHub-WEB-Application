@@ -76,7 +76,7 @@ export class CartModalComponent implements OnInit{
       pickupSlotId: this.selectedAppointmentId,
     };
 
-    this.equipmentService.orderEquipment(createdOrder).subscribe(
+    this.equipmentService.orderEquipment(createdOrder,this.slot?.version).subscribe(
       (response : EquipmentPickupSlot) => {
         console.log(response);
         if (this.handleOrderComplete) {

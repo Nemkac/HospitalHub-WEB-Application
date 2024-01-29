@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EquipmentPickupSlot } from '../models/EquipmentPickupSlot';
 import { Observable } from 'rxjs';
 import { Equipment } from 'src/Equipment';
 import { UserDTO } from '../userDTO';
 import { List } from 'postcss/lib/list';
+import { CancellAppointmentDTO } from '../models/CancellAppointmentDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -69,5 +70,9 @@ export class EquipmentPickupSlotService {
     return this.http.put<EquipmentPickupSlot>(`${this.apiServerUrl}/api/slots/cancelReservation/${slotId}`,null);
   }
   
+  public cancelAppointment(cancellAppointmentDTO:CancellAppointmentDTO,headers:HttpHeaders) : Observable<CancellAppointmentDTO>{
+    console.log(cancellAppointmentDTO);
+    return this.http.post<CancellAppointmentDTO>(`${this.apiServerUrl}/api/equipment/cancelAppointment`,cancellAppointmentDTO,{headers:headers});
+  }
 
 }
