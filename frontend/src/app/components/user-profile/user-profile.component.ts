@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserProfileService } from 'src/app/services/user-profile.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { ActivatedRoute } from '@angular/router';
-import { faGear, faUser, faPlus, faCalendar, faQrcode } from '@fortawesome/free-solid-svg-icons';
+import { faGear, faUser, faPlus, faCalendar, faQrcode, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateUserProfileComponent } from '../update-user-profile/update-user-profile.component';
 import { UserService } from 'src/app/services/user.service';
@@ -14,8 +14,6 @@ import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid' ;
-import { start } from '@popperjs/core';
-import { isSameDay } from 'date-fns';
 import { EquipmentPickupSlotDisplayModalComponent } from '../equipment-pickup-slot-display-modal/equipment-pickup-slot-display-modal.component';
 import { CreatePickupSlotFormComponent } from '../create-pickup-slot-form/create-pickup-slot-form.component';
 import { CreateCompanyAdministratorFormComponent } from '../create-company-administrator-form/create-company-administrator-form.component';
@@ -76,6 +74,7 @@ export class UserProfileComponent implements OnInit{
   faPlus = faPlus;
   faCalendar = faCalendar;
   faQrcode = faQrcode;
+  faTrash = faTrash;
 
   ngOnInit(): void {
     if(this.token){

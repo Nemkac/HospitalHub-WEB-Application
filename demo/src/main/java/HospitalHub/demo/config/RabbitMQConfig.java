@@ -18,6 +18,13 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+import org.springframework.messaging.simp.stomp.StompBrokerRelayMessageHandler;
+import org.springframework.messaging.simp.stomp.StompHeaders;
+import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 @Configuration
 public class RabbitMQConfig {
@@ -121,5 +128,21 @@ public class RabbitMQConfig {
         return rabbitTemplate;
     }
 
+    @Bean
+    public StompSessionHandlerAdapter stompSessionHandlerAdapter() {
+        return new StompSessionHandlerAdapter() {
+            @Override
+            public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
+                // Dodajte logiku koja treba da se izvrši nakon uspostavljanja konekcije
+            }
+        };
+    }
+
+    @Bean
+    public WebSocketStompClient stompClient() {
+        WebSocketStompClient stompClient = new WebSocketStompClient(new StandardWebSocketClient());
+        stompClient.setMessageConverter(new MappingJackson2MessageConverter());
+        return stompClient;
+    }
 
 }

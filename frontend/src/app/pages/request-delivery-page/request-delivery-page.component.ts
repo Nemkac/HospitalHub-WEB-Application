@@ -6,11 +6,10 @@ import 'leaflet-routing-machine';
 import { ActivatedRoute } from '@angular/router';
 import { CompanyService } from 'src/app/services/company.service';
 import { Company } from 'src/company';
-import { RequestDeliveryService } from 'src/app/services/request-delivery.service';
 import { RabbitmqLiveLocationService } from 'src/app/services/rabbitmq-live-location.service';
-import { NgToastService } from 'ng-angular-popup';
-
-
+import { NgToastService } from 'ng-angular-popup';import { RxStomp } from '@stomp/rx-stomp';
+import { RxStompService } from 'src/app/services/rx-stomp.service';
+import { rxStompServiceFactory } from 'src/app/rx-stomp-service-factory';
 
 @Component({
   selector: 'app-request-delivery-page',
@@ -40,9 +39,9 @@ export class RequestDeliveryPageComponent implements OnInit{
 
 	constructor(private route: ActivatedRoute,
 				private companyService: CompanyService,
-				private requestDeliveryService: RequestDeliveryService,
-				private rabbitmeLiveLocationService: RabbitmqLiveLocationService,
-				private toast: NgToastService) {} 
+				private rabbitmqLiveLocationService: RabbitmqLiveLocationService,
+				private toast: NgToastService,
+				private rxStompService: RxStompService) {} 
 
 	ngOnInit(): void {
 		const idFromRoute = this.route.snapshot.paramMap.get('id');
@@ -97,6 +96,7 @@ export class RequestDeliveryPageComponent implements OnInit{
 					const lastStep = lastRoute.instructions[lastRoute.instructions.length - 1];
 					this.destinationAddress = lastStep.road;
 					this.routeCoordinates = e.routes[0].coordinates;
+					this.adjustLeafletControlPosition();
 				})
 				.addTo(this.map!);
 			}
@@ -109,7 +109,13 @@ export class RequestDeliveryPageComponent implements OnInit{
 			longitude: longitude,
 		};
 
-		this.rabbitmeLiveLocationService.sendLiveLocationMessage(liveLocation).subscribe();
+		this.rabbitmqLiveLocationService.sendLiveLocationMessage(liveLocation).subscribe(
+			(response: LiveLocation) => {
+				this.setMarkerOnCoordinates(response.latitude, response.longitude);
+		  	}
+		);
+
+		//this.rabbitmqLiveLocationService.sendLiveLocationMessage(liveLocation).subscribe();
 	}
 
 	startDelivery() : void{
@@ -125,7 +131,7 @@ export class RequestDeliveryPageComponent implements OnInit{
 					}	
 					const currentCoordinate = this.routeCoordinates[index];
 					this.sendCoordinateToRabbitMQ(currentCoordinate.lat, currentCoordinate.lng);
-					this.marker.setLatLng([currentCoordinate.lat, currentCoordinate.lng]);
+					this.consumeLiveLocationCoordinates();
 					index++;
 					this.deliveryStarted = true;
 				} else {
@@ -137,10 +143,43 @@ export class RequestDeliveryPageComponent implements OnInit{
 						this.destinationLongitude = 0;
 						this.routeCoordinates = null;
 						this.destinationMarker = null;
-					 }, 3000);
+					 }, 2000);
 					 this.toast.success({detail:"Equipment delivered", summary:"If the equipment was damaged during transport, please contact us by email."})	
 				}
-			}, 1000);
+			}, 3000);
 		}
+	}
+	
+	private adjustLeafletControlPosition() {
+		const leafletTopRight = document.querySelector('.leaflet-top.leaflet-right') as HTMLElement;
+		if (leafletTopRight) {
+			leafletTopRight.style.position = 'absolute';
+			leafletTopRight.style.top = '50%';
+			leafletTopRight.style.right = '0';
+			leafletTopRight.style.transform = 'translateY(-50%)';
+			leafletTopRight.style.zIndex = '1000';
+		}
+	}
+
+	private setMarkerOnCoordinates(latitude: number, longitude: number) {
+		if (this.marker) {
+		  this.marker.setLatLng([latitude, longitude]);
+		}
+	}
+
+	public consumeLiveLocationCoordinates(): void {
+		/*this.rabbitmqLiveLocationService.receiveLiveLocationMessages().subscribe(
+			(liveLocation: LiveLocation) => {
+			  this.setMarkerOnCoordinates(liveLocation.latitude, liveLocation.longitude);
+			},
+			(error) => {
+			  console.error('Error receiving live location messages:', error);
+			}
+		);*/
+		this.rxStompService.watch('/topic/liveLocation').subscribe((message) => {
+			console.log('Received message:', message.body);
+			// Ovde možete obraditi primljenu poruku
+		});
+		
 	}
 }

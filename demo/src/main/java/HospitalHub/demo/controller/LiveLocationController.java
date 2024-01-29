@@ -26,8 +26,13 @@ public class LiveLocationController {
     }*/
 
     @PostMapping(value = "/publish/json")
-    public ResponseEntity<String> sendJsonMessage(@RequestBody LiveLocationDTO liveLocationDTO){
+    public ResponseEntity<LiveLocationDTO> sendJsonMessage(@RequestBody LiveLocationDTO liveLocationDTO){
         rabbitMQJsonProducer.sendJsonMessage(liveLocationDTO);
-        return ResponseEntity.ok("Json message sent to RabbitMQ ...");
+        return ResponseEntity.ok(liveLocationDTO);
     }
+
+    /*@PostMapping(value = "/publish/json")
+    public void sendJsonMessage(@RequestBody LiveLocationDTO liveLocationDTO){
+        rabbitMQJsonProducer.sendJsonMessage(liveLocationDTO);
+    }*/
 }

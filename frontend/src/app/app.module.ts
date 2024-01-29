@@ -55,6 +55,9 @@ import { CreateContractComponent } from './components/create-contract/create-con
 import { UsersContractsComponent } from './components/users-contracts/users-contracts.component';
 import { CompanyContractsComponent } from './components/company-contracts/company-contracts.component';
 
+import { StompConfig, StompService } from '@stomp/ng2-stompjs';
+import { rxStompServiceFactory } from './rx-stomp-service-factory';
+import { RxStompService } from './services/rx-stomp.service';
 
 @NgModule({
       declarations: [
@@ -114,9 +117,15 @@ import { CompanyContractsComponent } from './components/company-contracts/compan
           MatDatepickerModule,
           FullCalendarModule,
           NgToastModule,
-          ZXingScannerModule
+          ZXingScannerModule,
       ],
-      providers: [MessageService],
+      providers: [
+        MessageService,
+        {
+            provide: RxStompService,
+            useFactory: rxStompServiceFactory,
+          },
+        ],
       bootstrap: [AppComponent],
     })
-    export class AppModule { }
+export class AppModule { }
