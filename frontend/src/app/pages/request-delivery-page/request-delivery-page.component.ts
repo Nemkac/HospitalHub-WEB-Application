@@ -7,8 +7,9 @@ import { ActivatedRoute } from '@angular/router';
 import { CompanyService } from 'src/app/services/company.service';
 import { Company } from 'src/company';
 import { RabbitmqLiveLocationService } from 'src/app/services/rabbitmq-live-location.service';
-import { NgToastService } from 'ng-angular-popup';;
-
+import { NgToastService } from 'ng-angular-popup';import { RxStomp } from '@stomp/rx-stomp';
+import { RxStompService } from 'src/app/services/rx-stomp.service';
+import { rxStompServiceFactory } from 'src/app/rx-stomp-service-factory';
 
 @Component({
   selector: 'app-request-delivery-page',
@@ -39,7 +40,8 @@ export class RequestDeliveryPageComponent implements OnInit{
 	constructor(private route: ActivatedRoute,
 				private companyService: CompanyService,
 				private rabbitmqLiveLocationService: RabbitmqLiveLocationService,
-				private toast: NgToastService) {} 
+				private toast: NgToastService,
+				private rxStompService: RxStompService) {} 
 
 	ngOnInit(): void {
 		const idFromRoute = this.route.snapshot.paramMap.get('id');
@@ -112,6 +114,8 @@ export class RequestDeliveryPageComponent implements OnInit{
 				this.setMarkerOnCoordinates(response.latitude, response.longitude);
 		  	}
 		);
+
+		//this.rabbitmqLiveLocationService.sendLiveLocationMessage(liveLocation).subscribe();
 	}
 
 	startDelivery() : void{
@@ -127,6 +131,7 @@ export class RequestDeliveryPageComponent implements OnInit{
 					}	
 					const currentCoordinate = this.routeCoordinates[index];
 					this.sendCoordinateToRabbitMQ(currentCoordinate.lat, currentCoordinate.lng);
+					this.consumeLiveLocationCoordinates();
 					index++;
 					this.deliveryStarted = true;
 				} else {
@@ -160,5 +165,21 @@ export class RequestDeliveryPageComponent implements OnInit{
 		if (this.marker) {
 		  this.marker.setLatLng([latitude, longitude]);
 		}
+	}
+
+	public consumeLiveLocationCoordinates(): void {
+		/*this.rabbitmqLiveLocationService.receiveLiveLocationMessages().subscribe(
+			(liveLocation: LiveLocation) => {
+			  this.setMarkerOnCoordinates(liveLocation.latitude, liveLocation.longitude);
+			},
+			(error) => {
+			  console.error('Error receiving live location messages:', error);
+			}
+		);*/
+		this.rxStompService.watch('/topic/liveLocation').subscribe((message) => {
+			console.log('Received message:', message.body);
+			// Ovde možete obraditi primljenu poruku
+		});
+		
 	}
 }
