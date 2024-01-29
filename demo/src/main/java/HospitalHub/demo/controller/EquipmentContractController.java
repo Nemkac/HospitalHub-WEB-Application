@@ -50,6 +50,14 @@ public class EquipmentContractController {
         return ResponseEntity.ok(contracts);
     }
 
+    @GetMapping("/contractsByUser/{userId}")
+    public ResponseEntity<List<EquipmentContract>> getContractsByUser(@PathVariable Integer userId){
+        if(equipmentContractService.getUsersContracts(userId) == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return new ResponseEntity<>(equipmentContractService.getUsersContracts(userId),HttpStatus.OK);
+    }
+
     @GetMapping("/activeContractsbyCompany/{companyId}")
     public ResponseEntity<List<EquipmentContract>> getActiveContractsByCompanyId(@PathVariable Integer companyId) {
         Company company = companyService.getById(companyId);

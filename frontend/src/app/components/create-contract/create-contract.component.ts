@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Contract } from 'src/app/models/Contract';
 import { ContractService } from 'src/app/services/contract.service';
 import { UserService } from 'src/app/services/user.service';
@@ -21,6 +22,7 @@ export class CreateContractComponent implements OnInit{
   deliveryDateUpdate !: Date;
 
   constructor( private contractService : ContractService,
+               private modalService: NgbActiveModal,
                private userService : UserService ){}
 
   ngOnInit():void{
@@ -38,18 +40,10 @@ export class CreateContractComponent implements OnInit{
     console.log(contract.value);
     this.contractService.createContract(contract.value,this.companyId,this.userId).subscribe(
       (response:Contract) => {
-        console.log("Vracen contract: ",response);
+        console.log("Created contract: ",response);
+        this.modalService.close();
       }
     )
-  }
-
-  updateContract(contract:NgForm){
-    console.log(contract.value);
-
-  }
-
-  cancelContract(){
-
   }
 
 

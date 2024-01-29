@@ -1,60 +1,25 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Angular Tailwind Form</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    </head>
-        <body class="bg-gray-200 p-4">
-            <br><br><br><br><br><br>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<form #createContractForm = "ngForm" (ngSubmit)="createContract(createContractForm)" class=" w-[600px] mx-auto bg-white p-4 rounded shadow-lg relative">
+    <div class="text-center mb-4">
+        <h2 class="text-3xl font-bold text-gray-800">Create a contract</h2>
+    </div>
+    <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 text-xl">Equipment</label>
+        <input ngModel name="equipmentType" type="text"  class="mt-1 p-2 w-full border rounded-md">
+        <br> <br>
+        <div class="flex-1 mr-2">
+            <label class="block text-sm font-medium text-gray-700 text-xl">Quantity</label>
+            <input ngModel name="quantity" type="number"  class="mt-1 p-2 w-full border rounded-md">
+        </div>
+        <br>
 
-            <form #createContractForm = "ngForm" (ngSubmit)="createContract(createContractForm)" class=" w-[600px] mx-auto bg-white p-4 rounded shadow-lg relative">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700">Equipment</label>
-                    <input ngModel name="equipmentType" type="text"  class="mt-1 p-2 w-full border rounded-md">
+        <div class="flex-1 mr-2">
+            <label class="block text-sm font-medium text-gray-700 text-xl">Delivery date</label>
+            <input ngModel name="deliveryDate" type="date"  class="mt-1 p-2 w-full border rounded-md">
+        </div>
 
-                    <div class="flex-1 mr-2">
-                        <label class="block text-sm font-medium text-gray-700">Quantity</label>
-                        <input ngModel name="quantity" type="number"  class="mt-1 p-2 w-full border rounded-md">
-                    </div>
-
-                    <div class="flex-1 mr-2">
-                        <label class="block text-sm font-medium text-gray-700">Delivery date</label>
-                        <input ngModel name="deliveryDate" type="date"  class="mt-1 p-2 w-full border rounded-md">
-                    </div>
-
-                    <div class="flex-1 mt-4">
-                        <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md">Create</button>
-                    </div>
-                </div>
-             </form>
-
-             <!--<form #updateContractFrom = "ngForm" (ngSubmit)="updateContract(updateContractFrom)" class=" w-[600px] mx-auto bg-white p-4 rounded shadow-lg relative">
-
-                <div class="mb-4">
-                    <div class="flex-1 mr-2">
-                        <label class="block text-sm font-medium text-gray-700">Equipment</label>
-                        <input type="text" name="equipmentTypeUpdate" class="mt-1 p-2 w-full border rounded-md">
-                    </div>
-
-                    <div class="flex-1 mr-2">
-                        <label class="block text-sm font-medium text-gray-700">Quantity</label>
-                        <input type="text" name="quantityUpdate" class="mt-1 p-2 w-full border rounded-md">
-                    </div>
-
-                    <div class="flex-1 mr-2">
-                        <label class="block text-sm font-medium text-gray-700">Delivery date</label>
-                        <input type="date"  class="mt-1 p-2 w-full border rounded-md">
-                    </div>
-
-                    <div class="flex-1 mt-4">
-                        <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded-md">Update</button>
-                    </div>
-                </div>
-            </form>
-        -->
-
-            <div class="flex justify-center mt-2">
-                <button type="button" class="bg-red-400 text-white px-4 py-2 rounded-md">Cancel</button>
-            </div>
-
-        </body>
+        <div class="flex mt-4 items-center justify-center">
+            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md text-xl">Create</button>
+        </div>
+    </div>
+</form>

@@ -6,6 +6,7 @@ import HospitalHub.demo.repository.EquipmentContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -49,5 +50,17 @@ public class EquipmentContractService {
             equipmentContractRepository.save(contract);
         });
     }
+
+    public List<EquipmentContract> getUsersContracts(Integer userId){
+        List<EquipmentContract> foundContracts = new ArrayList<>();
+        List<EquipmentContract> allContracts = equipmentContractRepository.findAll();
+        for(EquipmentContract contract : allContracts) {
+            if(contract.getUser().getId() == userId && contract.isActive()){
+                foundContracts.add(contract);
+            }
+        }
+        return foundContracts;
+    }
+
 
 }

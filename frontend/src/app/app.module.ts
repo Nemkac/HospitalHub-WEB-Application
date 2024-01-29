@@ -52,6 +52,7 @@ import { QrCodeScannerPageComponent } from './pages/qr-code-scanner-page/qr-code
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { RequestDeliveryPageComponent } from './pages/request-delivery-page/request-delivery-page.component';
 import { CreateContractComponent } from './components/create-contract/create-contract.component';
+import { UsersContractsComponent } from './components/users-contracts/users-contracts.component';
 
 
 @NgModule({
@@ -93,6 +94,7 @@ import { CreateContractComponent } from './components/create-contract/create-con
           QrCodeScannerPageComponent,
           RequestDeliveryPageComponent,
           CreateContractComponent,
+          UsersContractsComponent,
       ],
       imports: [
           BrowserAnimationsModule,

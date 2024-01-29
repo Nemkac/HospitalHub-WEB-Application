@@ -1,0 +1,17 @@
+<div class="max-w-[600px] mx-auto bg-white p-4 rounded shadow-lg">
+    <div class="text-center mb-4">
+        <h2 class="text-3xl font-bold text-gray-800">List of Contracts</h2>
+    </div>
+
+    <div *ngFor="let contract of contracts" class="mb-4 p-4 border rounded-md flex items-center justify-between">
+        <div>
+            <p class="text-sm font-medium text-gray-700">Company name: {{ contract.company.name }}</p>
+            <p class="text-sm font-medium text-gray-700">Equipment: {{ contract.equipmentType }}</p>
+            <p class="text-sm font-medium text-gray-700">Quantity: {{ contract.quantity }}</p>
+            <p class="text-sm font-medium text-gray-700">Delivery Date: {{ contract.deliveryDate | date:'shortDate' }}</p>
+        </div>
+        <button type="button" class="bg-red text-white px-3 py-1 rounded-md" (click)="cancelContract(contract.id)">
+            Cancel
+        </button>
+    </div>
+</div>

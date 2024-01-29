@@ -23,6 +23,7 @@ import { CreateNewSysAdmninistratorFormComponent } from '../create-new-sys-admni
 import { CreateCompanyFormComponent } from '../create-company-form/create-company-form.component';
 import { Equipment } from 'src/Equipment';
 import { RequestDeliveryService } from 'src/app/services/request-delivery.service';
+import { UsersContractsComponent } from '../users-contracts/users-contracts.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -279,6 +280,14 @@ export class UserProfileComponent implements OnInit{
     } else if (this.sortPastBy === 'date') {
       this.pastSlots.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
     }
+  }
+
+  public goToContracts(){
+    const modalRef = this.modalService.open(
+      UsersContractsComponent,
+      {backdrop:'static',keyboard:true}
+    );
+    modalRef.componentInstance.userId = this.userId;
   }
   
 

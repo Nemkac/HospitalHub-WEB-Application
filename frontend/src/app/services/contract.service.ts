@@ -14,6 +14,18 @@ export class ContractService{
     public createContract(contract:Contract,companyId:number,userId:number){
         return this.http.post<Contract>(`${this.apiServerUrl}/api/contract/create/${companyId}/${userId}`,contract);
     }
+
+    public getUsersContracts(userId:number){
+        return this.http.get<Contract[]>(`${this.apiServerUrl}/api/contract/contractsByUser/${userId}`);
+    }
+
+    public getContractsByCompany(companyId:number){
+        return this.http.get<Contract[]>(`${this.apiServerUrl}/api/contract/contractsbyCompany/${companyId}`);
+    }
+
+    public cancelContract(contractId:number){
+        return this.http.put<Contract>(`${this.apiServerUrl}/api/contract/deactivate/${contractId}`,null);
+    }
  
 
 
