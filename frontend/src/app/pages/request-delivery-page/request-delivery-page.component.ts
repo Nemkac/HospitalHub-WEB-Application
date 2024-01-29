@@ -113,12 +113,6 @@ export class RequestDeliveryPageComponent implements OnInit{
 			longitude: longitude,
 		};
 
-		this.rabbitmqLiveLocationService.sendLiveLocationMessage(liveLocation).subscribe(
-			(response: LiveLocation) => {
-				this.setMarkerOnCoordinates(response.latitude, response.longitude);
-		  	}
-		);
-
 		//this.rabbitmqLiveLocationService.sendLiveLocationMessage(liveLocation).subscribe();
 		const token = localStorage.getItem('token');
     
@@ -127,7 +121,11 @@ export class RequestDeliveryPageComponent implements OnInit{
 		'Content-Type': 'application/json',
 		'Authorization': `Bearer ${token}`
 		});
-		this.rabbitmeLiveLocationService.sendLiveLocationMessage(liveLocation,headers).subscribe();
+		this.rabbitmqLiveLocationService.sendLiveLocationMessage(liveLocation,headers).subscribe(
+			(response: LiveLocation) => {
+				this.setMarkerOnCoordinates(response.latitude, response.longitude);
+		  	}
+		);
 	}
 
 	startDelivery() : void{

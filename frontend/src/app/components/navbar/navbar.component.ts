@@ -7,6 +7,8 @@ import { faBell as fasBell } from '@fortawesome/free-solid-svg-icons';
 import { faBell as farBell } from '@fortawesome/free-regular-svg-icons';
 import { ComplaintService } from 'src/app/services/complaint.service';
 import { Complaint } from 'src/app/models/Complaint';
+import { CompanyAdministratorService } from 'src/app/services/companyAdministrator.service';
+import { HttpHeaders } from '@angular/common/http';
 
 
 @Component({
@@ -17,6 +19,7 @@ export class NavbarComponent implements OnInit {
   constructor(private router: Router,
               public userService: UserService,
               private cdr: ChangeDetectorRef,
+              private companyAdministratorService : CompanyAdministratorService,
               private complaintService: ComplaintService) {}
 
   protected username? =  this.userService.loggedInUser;

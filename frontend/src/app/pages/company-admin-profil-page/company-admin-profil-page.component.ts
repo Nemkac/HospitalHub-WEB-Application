@@ -7,7 +7,7 @@ import { UserService } from 'src/app/services/user.service';
 import { icon, Marker } from 'leaflet';
 import { faStar, faTrash, faGear, faCamera, faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { EquipmentService } from 'src/app/services/equipment.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateEquipmentMyCompanyComponent } from 'src/app/components/update-equipment-my-company/update-equipment-my-company.component';
 import { AddEquipmentMyCompanyFormComponent } from 'src/app/components/add-equipment-my-company-form/add-equipment-my-company-form.component';
@@ -27,6 +27,7 @@ import { UserDTO } from 'src/app/userDTO';
 import * as moment from 'moment-timezone';
 import { NgToastService } from 'ng-angular-popup';
 import { CompanyContractsComponent } from 'src/app/components/company-contracts/company-contracts.component';
+import { CompanyAdministratorService } from 'src/app/services/companyAdministrator.service';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -62,6 +63,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
   userId! : number;
   reservedUsers: UserDTO[] = [];
   isOpen : boolean = false;
+  isAdmin : boolean = false;
 
 
   faUser = faUser;
@@ -98,9 +100,11 @@ export class CompanyAdminProfilPageComponent implements OnInit{
               private equipmentService: EquipmentService,
               private equipmentPickupSlotService : EquipmentPickupSlotService,
               private modalService: NgbModal,
+              private companyAdministratorService : CompanyAdministratorService,
               private toast: NgToastService) {}
 
   ngOnInit(): void {
+    this.checkCompanyAdmin();
     this.getAdminsCompanyData();
     this.checkIsOpen();
   }
@@ -277,7 +281,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
             }
         }
     );
-}
+  }
 
   openUpdateForm(equipment: Equipment) {
     this.selectedEquipmentForUpdate = equipment;
@@ -431,5 +435,20 @@ export class CompanyAdminProfilPageComponent implements OnInit{
     modalRef.componentInstance.companyId = this.selectedCompany?.id;
   }
 
+  public checkCompanyAdmin() : boolean{
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+      });
+     this.companyAdministratorService.checkCompanyAdmin(headers).subscribe(
+      (response : boolean) => {
+        this.isAdmin = response;
+      },(error) => {
+        this.isAdmin = false;
+      }
+     );
+
+    return this.isAdmin;
+  }
 
 }

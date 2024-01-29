@@ -194,6 +194,12 @@ public class CompanyController {
         for(EquipmentPickupSlot appointment : appointments){
             if(appointment.getDateTime().isBefore(LocalDateTime.now())){
                 appointment.setStatus(EquipmentPickupSlot.Status.EXPIRED);
+                if(appointment.getReservedBy() != null){
+                    User user = appointment.getReservedBy();
+                    Integer penalties = user.getPenaltyPoints() + 2;
+                    user.setPenaltyPoints(penalties);
+                    userService.save(user);
+                }
             }
         }
 

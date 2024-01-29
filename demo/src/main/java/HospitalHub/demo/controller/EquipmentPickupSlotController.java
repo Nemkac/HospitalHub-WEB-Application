@@ -54,6 +54,7 @@ public class EquipmentPickupSlotController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        newSlot.setIfPredefined(true);
         EquipmentPickupSlot savedEquipmentPickupSlot = equipmentPickupSlotService.save(newSlot);
 
         return new ResponseEntity<>(savedEquipmentPickupSlot, HttpStatus.CREATED);
@@ -82,6 +83,9 @@ public class EquipmentPickupSlotController {
         if (usersSlots.isEmpty()) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } else {
+            for(EquipmentPickupSlot slot : usersSlots){
+                System.out.println(slot.getCompanyAdministrator().getCompany().getName());
+            }
             return new ResponseEntity<>(usersSlots, HttpStatus.OK);
         }
     }
@@ -189,27 +193,7 @@ public class EquipmentPickupSlotController {
     }
 
 
-    @PatchMapping("/updateStatusForExpiredSlots")
-    public ResponseEntity<String> updateStatusForExpiredSlots() {
-        List<EquipmentPickupSlot> allSlots = equipmentPickupSlotService.getAll();
-        List<EquipmentPickupSlot> updatedSlots = new ArrayList<>();
-
-        for (EquipmentPickupSlot slot : allSlots) {
-            if (equipmentPickupSlotService.isSlotExpired(slot)) {
-                slot.setStatus(EquipmentPickupSlot.Status.EXPIRED);
-                EquipmentPickupSlot updatedSlot = equipmentPickupSlotService.saveNewStatus(slot);
-                updatedSlots.add(updatedSlot);
-            }
-        }
-
-        if (updatedSlots.isEmpty()) {
-            return new ResponseEntity<>("NOT Ok", HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>("OK", HttpStatus.OK);
-        }
-    }
-
-    @PutMapping("/makeSlotExpired")
+    @PostMapping("/makeSlotExpired")
     public ResponseEntity<EquipmentPickupSlot> makeSlotExpired(@RequestBody Integer slotId){
         EquipmentPickupSlot slot = equipmentPickupSlotService.getById(slotId);
         if(slot.getStatus() != EquipmentPickupSlot.Status.EXPIRED){

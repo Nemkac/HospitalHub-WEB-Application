@@ -25,6 +25,7 @@ import { UsersContractsComponent } from '../users-contracts/users-contracts.comp
 import { NgToastService } from 'ng-angular-popup';
 import { CancellAppointmentDTO } from 'src/app/models/CancellAppointmentDTO';
 import { HttpHeaders } from '@angular/common/http';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-user-profile',
@@ -40,8 +41,8 @@ export class UserProfileComponent implements OnInit{
   token = localStorage.getItem('token');
   user !: User ;
   equipments!:Equipment[];
-  slots!:EquipmentPickupSlot[];
-  upcomingSlots!:EquipmentPickupSlot[];
+  //slots!:EquipmentPickupSlot[];
+  upcomingSlots:EquipmentPickupSlot[] = [];
   pastSlots!:EquipmentPickupSlot[];
   sortUpcomingBy : 'duration' | 'date' = 'date'
   sortPastBy : 'duration' | 'date' = 'date'
@@ -91,7 +92,7 @@ export class UserProfileComponent implements OnInit{
             this.getEquipmentPickupSlots(response.id);
           }
           if(response.roles === "ROLE_USER"){
-            this.getUsersUpcomingAppointments();
+            //this.getUsersUpcomingAppointments();
             this.getUsersUpcomingAppointments1();
             this.getUsersPastAppointments();
           }
@@ -240,7 +241,7 @@ export class UserProfileComponent implements OnInit{
     );
   }
 
-  getUsersUpcomingAppointments(){
+  /*getUsersUpcomingAppointments(){
     this.userService.getUsersUpcomingAppoitments(this.userId).subscribe(
       (slots) => {
         this.slots = slots;
@@ -250,14 +251,15 @@ export class UserProfileComponent implements OnInit{
         });
       }
     )
-  }
+  }*/
 
   getUsersUpcomingAppointments1(){
     this.userService.getUsersUpcomingAppoitments1(this.userId).subscribe(
-      (slots) => {
-        this.upcomingSlots = slots;
-        console.log("buduci slotovi su ",this.slots);
-        slots.forEach(slot => {
+      (response: EquipmentPickupSlot[]) => {
+        this.upcomingSlots = response;
+        console.log("buduci slotovi su ",this.upcomingSlots);
+        this.upcomingSlots.forEach(slot => {
+          console.log("slot: ",slot);
           this.getSlotsEquipment(slot.id);
         });
       }
@@ -268,7 +270,7 @@ export class UserProfileComponent implements OnInit{
     this.userService.getUsersPastAppoitments(this.userId).subscribe(
       (slots) => {
         this.pastSlots = slots;
-        console.log("prosli slotovi su ",this.slots);
+        console.log("prosli slotovi su ",this.pastSlots);
         slots.forEach(slot => {
           this.getSlotsEquipment(slot.id);
         });

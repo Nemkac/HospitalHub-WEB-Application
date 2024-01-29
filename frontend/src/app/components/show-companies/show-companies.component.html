@@ -17,36 +17,38 @@
       </div>
     </form>
   </div>
-  <br>
   
-  <div class="flex items-center space-x-2 justify-start">
-    <label for="sortBy" class="text-gray-600">Sort by:</label>
-    <select id="sortBy" [(ngModel)]="sortBy" (change)="sortCompanies()" class="border border-gray-300 rounded-md p-1">
-      <option value="name">Name</option>
-      <option value="country">Country</option>
-      <option value="rate">Rate</option>
-    </select>
-  </div>
-
-  <div class="flex w-full items-center mt-4">
-    <div class="flex flex-row flex-wrap items-center justify-between">
-      <ul class="divide-y divide-gray-300">
-        <div *ngFor="let company of companies" class="h-[220px] w-[680px] rounded overflow-hidden shadow-md mt-[60px] flex">
-          <div class="flex-shrink-0">
-            <img class="w-[300px] h-auto object-cover " src="./assets/hospital.jpg" alt="Company Logo">
-          </div>
-          <div class="flex flex-col bg-white font-inter text-third py-2 px-4 w-full h-full justify-between">
-            <div class="font-bold text-xl">{{ company.name }}</div>
-            <p class="text-base">Country: {{ company.country }}</p>
-            <p class="text-base">City: {{ company.city }}</p>
-            <p class="text-base">Average Rate: {{ company.avgRate }} out of 5</p>
-            <p class="text-base">Address: {{ company.address }}</p>
-            <button class="w-full text-[20px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold text-white rounded-md h-[45px]" (click)="goToCompany(company.id)">
-              Visit company
-            </button>
-          </div>
-        </div>  
-        </ul>
+  
+  <div class="flex flex-col h-full w-full py-4">
+    <div class="flex items-center text-gray font-inter font-light w-[300px] justify-between">
+      <label for="sortBy" class="text-gray font-inter font-light text-[24px]">Sort by:</label>
+      <select id="sortBy" [(ngModel)]="sortBy" (change)="sortCompanies()" class="border border-gray rounded-md p-2 h-[40px] w-[200px]">
+        <option value="name">Name</option>
+        <option value="country">Country</option>
+        <option value="rate">Rate</option>
+      </select>
+    </div>
+  
+    <div class="flex w-full items-center">
+      <div class="flex flex-row flex-wrap items-center justify-between">
+        <ul class="flex flex-row flex-wrap items-center justify-between">
+          <div *ngFor="let company of companies" class="h-[220px] w-[680px] rounded overflow-hidden shadow-md mt-[60px] flex">
+            <div class="flex-shrink-0">
+              <img class="w-[300px] h-auto object-cover " src="./assets/hospital.jpg" alt="Company Logo">
+            </div>
+            <div class="flex flex-col bg-white font-inter text-third py-2 px-4 w-full h-full justify-between">
+              <div class="font-bold text-xl">{{ company.name }}</div>
+              <p class="text-base">Country: {{ company.country }}</p>
+              <p class="text-base">City: {{ company.city }}</p>
+              <p class="text-base">Average Rate: {{ company.avgRate }} out of 5</p>
+              <p class="text-base">Address: {{ company.address }}</p>
+              <button class="w-full text-[20px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold text-white rounded-md h-[45px]" (click)="goToCompany(company.id)">
+                Visit company
+              </button>
+            </div>
+          </div>  
+          </ul>
+      </div>
     </div>
   </div>
 </div>

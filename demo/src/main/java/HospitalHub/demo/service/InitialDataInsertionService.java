@@ -248,7 +248,7 @@ public class InitialDataInsertionService {
         EquipmentPickupSlot slot10 = new EquipmentPickupSlot(slot10DateTime, 45, user1, companyAdministrator2, new int[]{1, 2, 3});
         //slot1.setReservedBy(user1);
         LocalDateTime slot11DateTime = LocalDateTime.of(2024, 2, 13, 12, 30);
-        EquipmentPickupSlot slot11 = new EquipmentPickupSlot(slot11DateTime, 30, user1, companyAdministrator2, new int[]{1, 2, 3});
+        EquipmentPickupSlot slot11 = new EquipmentPickupSlot(slot11DateTime, 30, user1, companyAdministrator1, new int[]{1, 2, 3});
         //slot2.setReservedBy(user2);
         LocalDateTime slot12DateTime = LocalDateTime.of(2024, 4, 3, 15, 30);
         EquipmentPickupSlot slot12 = new EquipmentPickupSlot(slot12DateTime, 15, companyAdministrator1);
