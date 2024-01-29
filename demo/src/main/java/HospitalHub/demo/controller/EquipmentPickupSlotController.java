@@ -228,6 +228,7 @@ public class EquipmentPickupSlotController {
         }
     }
 
+
     @PutMapping("/cancelReservation/{slotId}")
     public ResponseEntity<EquipmentPickupSlot> cancelReservation(@PathVariable Integer slotId){
         EquipmentPickupSlot canceledSlot = equipmentPickupSlotService.cancelReservation(slotId);

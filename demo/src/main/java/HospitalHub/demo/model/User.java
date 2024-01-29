@@ -59,7 +59,7 @@ public class User {
 
     @Column(name = "penaltyPoints")
     private Integer penaltyPoints;
-    
+
     private String roles;
 
     @OneToMany(mappedBy = "reservedBy")

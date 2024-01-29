@@ -8,13 +8,17 @@ import HospitalHub.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.scheduling.annotation.Scheduled;
+
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+@EnableScheduling
 @RestController
 @RequestMapping(value = "api/user")
 public class UserController {
@@ -147,6 +151,14 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    //@Scheduled(cron = "0 0 0 1 * ?")
+    @Scheduled(cron = "0 6 5 29 1 ?")
+    @PostMapping(value="/clearOutPenaltyPoints")
+    public ResponseEntity clearOutPenaltyPoints(){
+        this.userService.clearOutPenaltyPoints();
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }

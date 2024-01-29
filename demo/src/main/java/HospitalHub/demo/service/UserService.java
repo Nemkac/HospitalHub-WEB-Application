@@ -100,5 +100,13 @@ public class UserService implements UserDetailsService {
         return foundSlots;
     }
 
+    public void clearOutPenaltyPoints(){
+        List<User> users = userRepository.findAll();
+        for(User user : users) {
+            user.setPenaltyPoints(0);
+            userRepository.save(user);
+        }
+    }
+
 
 }
