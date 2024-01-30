@@ -37,6 +37,7 @@
     "@zxing/library": "^0.20.0",
     "@zxing/ngx-scanner": "^17.0.0",
     "angular-calendar": "^0.31.0",
+    "angularx-qrcode": "^16.0.2",
     "bootstrap": "^5.2.3",
     "date-fns": "^2.30.0",
     "jsqr": "^1.4.0",

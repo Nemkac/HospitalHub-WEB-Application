@@ -54,7 +54,7 @@ import { RequestDeliveryPageComponent } from './pages/request-delivery-page/requ
 import { CreateContractComponent } from './components/create-contract/create-contract.component';
 import { UsersContractsComponent } from './components/users-contracts/users-contracts.component';
 import { CompanyContractsComponent } from './components/company-contracts/company-contracts.component';
-
+import { QRCodeModule } from 'angularx-qrcode';
 import { StompConfig, StompService } from '@stomp/ng2-stompjs';
 import { rxStompServiceFactory } from './rx-stomp-service-factory';
 import { RxStompService } from './services/rx-stomp.service';
@@ -118,6 +118,7 @@ import { RxStompService } from './services/rx-stomp.service';
           FullCalendarModule,
           NgToastModule,
           ZXingScannerModule,
+          QRCodeModule
       ],
       providers: [
         MessageService,

@@ -158,6 +158,7 @@
                               font-inter text-[16px] font-semibold rounded-md" (click)="goToRequestDelivery(slot.companyId)">
                   Request delivery
                 </button>
+                <qrcode  [qrdata]="'Hello wordld'" [allowEmptyString]="true" > </qrcode>
                 <fa-icon [icon]="faTrash" class="text-red text-[24px] transition-[0.5s] cursor-pointer" (click)="cancelReservation(slot.id)"/>
               </div>
             </div>
