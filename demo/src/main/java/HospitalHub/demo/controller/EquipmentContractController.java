@@ -93,13 +93,21 @@ public class EquipmentContractController {
     private void scheduleStartDeliveryNotification(EquipmentContract contract) {
         LocalDate deliveryDate = contract.getDeliveryDate();
         int dayOfMonth = deliveryDate.getDayOfMonth();
-
-        taskScheduler.schedule(() -> sendDeliveryNotification(contract), new CronTrigger("0 14 01 " + dayOfMonth + " * *"));
+        Integer hours = 1;
+        Integer minutes = 38;
+        Integer hoursEnd = hours;
+        Integer minutesEnd = minutes+1;
+        taskScheduler.schedule(() -> sendDeliveryNotification(contract), new CronTrigger("0 " + minutes + " "+ hours + " " + dayOfMonth + " * *"));
+        taskScheduler.schedule(() -> sendDeliveryEndNotification(contract), new CronTrigger("0 " + minutesEnd + " "+ hoursEnd + " " + dayOfMonth + " * *"));
     }
 
 
     private void sendDeliveryNotification(EquipmentContract contract) {
         rabbitMQEquipmentContractProducer.sendDeliveryStartNotification(contract);
+    }
+
+    private void sendDeliveryEndNotification(EquipmentContract contract) {
+        rabbitMQEquipmentContractProducer.sendDeliveryEndNotification(contract);
     }
     private void scheduleEquipmentStateCheck(EquipmentContract contract, String equipmentType, Company company) {
         LocalDate deliveryDate = contract.getDeliveryDate();
