@@ -26,6 +26,8 @@ import { NgToastService } from 'ng-angular-popup';
 import { CancellAppointmentDTO } from 'src/app/models/CancellAppointmentDTO';
 import { HttpHeaders } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
+import { EquipmentPageComponent } from 'src/app/pages/equipment-page/equipment-page.component';
+import { EquipmentPickupSlotDTO } from 'src/app/models/EquipmentPickupSlotDTO';
 
 @Component({
   selector: 'app-user-profile',
@@ -43,6 +45,7 @@ export class UserProfileComponent implements OnInit{
   equipments!:Equipment[];
   //slots!:EquipmentPickupSlot[];
   upcomingSlots:EquipmentPickupSlot[] = [];
+  upcomingSlotsDTOS:EquipmentPickupSlotDTO[] = [];
   pastSlots!:EquipmentPickupSlot[];
   sortUpcomingBy : 'duration' | 'date' = 'date'
   sortPastBy : 'duration' | 'date' = 'date'
@@ -259,7 +262,19 @@ export class UserProfileComponent implements OnInit{
         this.upcomingSlots = response;
         console.log("buduci slotovi su ",this.upcomingSlots);
         this.upcomingSlots.forEach(slot => {
-          console.log("slot: ",slot);
+          const dto : EquipmentPickupSlotDTO = {
+            id: slot.id,
+            dateTime: slot.dateTime,
+            duration: slot.duration,
+            reservedBy: slot.reservedBy,
+            companyAdministrator: slot.companyAdministrator,
+            equipment: slot.equipment,
+            status: slot.status,
+            version: slot.version,
+            companyId: slot.companyAdministrator.compAdminId
+          }          
+          this.upcomingSlotsDTOS.push(dto)
+          console.log("slot: ",dto);
           this.getSlotsEquipment(slot.id);
         });
       }

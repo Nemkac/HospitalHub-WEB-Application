@@ -38,6 +38,8 @@ public class EquipmentPickupSlotController {
     private EmailService emailService;
     @Autowired
     private MedicalEqupimentService medicalEqupimentService;
+    @Autowired
+    private CompanyService companyService;
 
     // TODO: OVDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
     @PostMapping("/createPredefinedSlot/{userId}")
@@ -83,9 +85,6 @@ public class EquipmentPickupSlotController {
         if (usersSlots.isEmpty()) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } else {
-            for(EquipmentPickupSlot slot : usersSlots){
-                System.out.println(slot.getCompanyAdministrator().getCompany().getName());
-            }
             return new ResponseEntity<>(usersSlots, HttpStatus.OK);
         }
     }
@@ -98,6 +97,18 @@ public class EquipmentPickupSlotController {
         } else {
             return new ResponseEntity<>(usersSlots, HttpStatus.OK);
         }
+    }
+    @GetMapping("/getCompId/{compAdminId}")
+    public Integer getCompanyId(@PathVariable Integer compAdminId){
+        List<Company> companies = companyService.findAll();
+        for(Company comp : companies){
+            for(CompanyAdministrator admin : comp.getCompanyAdministrators()){
+                if(admin.getCompAdminId().equals(compAdminId)){
+                    return comp.getId();
+                }
+            }
+        }
+        return null;
     }
 
     /*@PostMapping("/saveExtraSlot/{companyId}/{userId}")

@@ -184,7 +184,7 @@ public class EquipmentPickupSlotService {
     public List<EquipmentPickupSlot> getUsersPastSlots(Integer userId){
         List<EquipmentPickupSlot> allSlots = equipmentPickupSlotRepository.findAll();
         List<EquipmentPickupSlot> pastSlots = new ArrayList<>();
-        for(EquipmentPickupSlot slot: allSlots) {
+        for(EquipmentPickupSlot slot : allSlots) {
             if(slot.getReservedBy()!=null && Objects.equals(slot.getReservedBy().getId(), userId) && slot.getDateTime().isBefore(LocalDateTime.now())){
                 pastSlots.add(slot);
             }
