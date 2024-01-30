@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserProfileService } from 'src/app/services/user-profile.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { ActivatedRoute } from '@angular/router';
-import { faGear, faUser, faPlus, faCalendar, faQrcode, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faGear, faUser, faPlus, faCalendar, faQrcode, faTrash, faClock,faSort } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateUserProfileComponent } from '../update-user-profile/update-user-profile.component';
 import { UserService } from 'src/app/services/user.service';
@@ -81,6 +81,8 @@ export class UserProfileComponent implements OnInit{
   faCalendar = faCalendar;
   faQrcode = faQrcode;
   faTrash = faTrash;
+  faClock = faClock;
+  faSort = faSort;
 
   ngOnInit(): void {
     if(this.token){
@@ -317,9 +319,9 @@ export class UserProfileComponent implements OnInit{
 
   sortUpcoming() {
     if (this.sortUpcomingBy === 'duration') {
-      this.upcomingSlots.sort((a, b) => a.duration - b.duration);
+      this.upcomingSlotsDTOS.sort((a, b) => a.duration - b.duration);
     } else if (this.sortUpcomingBy === 'date') {
-      this.upcomingSlots.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
+      this.upcomingSlotsDTOS.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
     }
   }
 
