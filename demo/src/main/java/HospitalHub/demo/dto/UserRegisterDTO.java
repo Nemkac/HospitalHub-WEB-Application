@@ -16,7 +16,24 @@ public class UserRegisterDTO {
     private String profession;
     private String companyInfo;
 
+    public UserRegisterDTO() {
+
+    }
+
     public UserRegisterDTO(String name, String lastName, String password, String retypePassword, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
+        this.name = name;
+        this.lastName = lastName;
+        this.password = password;
+        this.retypePassword = retypePassword;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.country = country;
+        this.city = city;
+        this.profession = profession;
+        this.companyInfo = companyInfo;
+    }
+    public UserRegisterDTO(String name,String lastName,LocalDate dateOfBirth,String phoneNumber,String profession,String companyInfo,String username,String password,String retypePassword,String email,String country,String city){
         this.name = name;
         this.lastName = lastName;
         this.password = password;
