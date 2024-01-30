@@ -133,7 +133,6 @@ public class RabbitMQConfig {
         return new StompSessionHandlerAdapter() {
             @Override
             public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
-                // Dodajte logiku koja treba da se izvrši nakon uspostavljanja konekcije
             }
         };
     }

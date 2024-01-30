@@ -111,24 +111,6 @@ public class CompanyController {
 
     }
 
-
-   /* @GetMapping(value = "/getAdminsCompany")
-    public ResponseEntity<Company> getAdminsCompany() {
-
-        CompanyAdministrator companyAdministrator = companyAdministratorService.getByCompAdminId(1);
-
-        if (companyAdministrator == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        Company selectedCompany = companyAdministrator.getCompany();
-
-        selectedCompany.getMedicalEquipmentList().forEach(equipment -> {
-            equipment.setCompany(null);
-        });
-
-        return new ResponseEntity<>(selectedCompany, HttpStatus.OK);
-    }*/
     @GetMapping(value = "/getAdminsCompany/{id}")
     public ResponseEntity<Company> getAdminsCompany(@PathVariable Integer id) {
         User loggedInUser = userService.getById(id);

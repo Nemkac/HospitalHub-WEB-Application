@@ -64,7 +64,7 @@ public class EquipmentContractController {
 
     @PostMapping("/create/{companyId}/{userId}")
     public ResponseEntity<EquipmentContract> createContract(@RequestBody EquipmentContract contract, @PathVariable Integer companyId, @PathVariable Integer userId) {
-        scheduleDeliveryNotification(contract);
+        scheduleStartDeliveryNotification(contract);
 
         Company company = companyService.getById(companyId);
         if (company == null) {
@@ -90,12 +90,13 @@ public class EquipmentContractController {
         rabbitMQEquipmentContractProducer.sendEquipmentContract(createdContract);
         return new ResponseEntity<>(createdContract, HttpStatus.CREATED);
     }
-    private void scheduleDeliveryNotification(EquipmentContract contract) {
+    private void scheduleStartDeliveryNotification(EquipmentContract contract) {
         LocalDate deliveryDate = contract.getDeliveryDate();
         int dayOfMonth = deliveryDate.getDayOfMonth();
 
-        taskScheduler.schedule(() -> sendDeliveryNotification(contract), new CronTrigger("0 21 17 " + dayOfMonth + " * *"));
+        taskScheduler.schedule(() -> sendDeliveryNotification(contract), new CronTrigger("0 14 01 " + dayOfMonth + " * *"));
     }
+
 
     private void sendDeliveryNotification(EquipmentContract contract) {
         rabbitMQEquipmentContractProducer.sendDeliveryStartNotification(contract);

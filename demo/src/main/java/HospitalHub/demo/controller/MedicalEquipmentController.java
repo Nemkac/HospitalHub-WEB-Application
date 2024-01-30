@@ -55,9 +55,6 @@ public class MedicalEquipmentController {
     private UserRepository userRepository;
 
     @Autowired
-    private EmailService emailService;
-
-    @Autowired
     private JavaMailSender mailSender;
     @Autowired
     private EquipmentPickupSlotRepository equipmentPickupSlotRepository;
@@ -225,7 +222,6 @@ public class MedicalEquipmentController {
         foundSlot.setEquipment(orderEquipmentDTO.getEquipmentIds());
         EquipmentPickupSlot check = slotRepository.save(foundSlot);
 
-        //Slanje qr koda na mejl korisnika
         List<MedicalEquipment> equipment = medicalEqupimentService.findAllById(orderEquipmentDTO.getEquipmentIds());
 
         String namesOfEquipment = new String();
@@ -265,7 +261,6 @@ public class MedicalEquipmentController {
     @PostMapping("/cancelAppointment")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<CancellAppointmentDTO> cancelAppointment(@RequestBody CancellAppointmentDTO cancellAppointmentDTO){
-        //Treba mi user id da mu lupim penal, i treba mi id apointmenta da ga oslobodim od rezervisanog korisnika.
         EquipmentPickupSlot slot = equipmentPickupSlotService.getById(cancellAppointmentDTO.getAppointmentId());
         User user = userRepository.getById(cancellAppointmentDTO.getUserId());
         slot.setReservedBy(null);

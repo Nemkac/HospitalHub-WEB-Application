@@ -36,6 +36,10 @@ public class RabbitMQEquipmentContractProducer {
         LOGGER.info(String.format("Your scheduled equipment delivery just started -> %s", contract.toString()));
         rabbitTemplate.convertAndSend(exchange, routingEquipmentContractKey, contract);
     }
+    public void sendDeliveryEndNotification(EquipmentContract contract) {
+        LOGGER.info(String.format("The equipment has just been delivered -> %s", contract.toString()));
+        rabbitTemplate.convertAndSend(exchange, routingEquipmentContractKey, contract);
+    }
     public void sendContractTerminationNotification(EquipmentContract contract) {
         LOGGER.info(String.format("Contract is terminated -> %s", contract.toString()));
         rabbitTemplate.convertAndSend(exchange, routingEquipmentContractKey, contract);
