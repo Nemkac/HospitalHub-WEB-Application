@@ -99,12 +99,13 @@ public class EquipmentPickupSlotController {
             return new ResponseEntity<>(usersSlots, HttpStatus.OK);
         }
     }
+
     @GetMapping("/getCompId/{compAdminId}")
-    public Integer getCompanyId(@PathVariable Integer compAdminId){
+    public Integer getCompanyId(@PathVariable Integer compAdminId) {
         List<Company> companies = companyService.findAll();
-        for(Company comp : companies){
-            for(CompanyAdministrator admin : comp.getCompanyAdministrators()){
-                if(admin.getCompAdminId().equals(compAdminId)){
+        for (Company comp : companies) {
+            for (CompanyAdministrator admin : comp.getCompanyAdministrators()) {
+                if (admin.getCompAdminId().equals(compAdminId)) {
                     return comp.getId();
                 }
             }
@@ -185,9 +186,9 @@ public class EquipmentPickupSlotController {
 
 
     @PostMapping("/makeSlotExpired")
-    public ResponseEntity<EquipmentPickupSlot> makeSlotExpired(@RequestBody Integer slotId){
+    public ResponseEntity<EquipmentPickupSlot> makeSlotExpired(@RequestBody Integer slotId) {
         EquipmentPickupSlot slot = equipmentPickupSlotService.getById(slotId);
-        if(slot.getStatus() != EquipmentPickupSlot.Status.EXPIRED){
+        if (slot.getStatus() != EquipmentPickupSlot.Status.EXPIRED) {
             User user = slot.getReservedBy();
 
             Integer penalties = user.getPenaltyPoints() + 2;
@@ -205,39 +206,33 @@ public class EquipmentPickupSlotController {
 
 
     @PutMapping("/cancelReservation/{slotId}")
-    public ResponseEntity<EquipmentPickupSlot> cancelReservation(@PathVariable Integer slotId){
+    public ResponseEntity<EquipmentPickupSlot> cancelReservation(@PathVariable Integer slotId) {
         EquipmentPickupSlot canceledSlot = equipmentPickupSlotService.cancelReservation(slotId);
-        if(canceledSlot != null){
-            return new ResponseEntity<>(canceledSlot,HttpStatus.OK);
+        if (canceledSlot != null) {
+            return new ResponseEntity<>(canceledSlot, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/getQRcodeContent/{slotId}")
-    public ResponseEntity<QRcodeEquipmentPickUpSlotDTO> getQRcodeContent(@PathVariable Integer slotId){
+    public ResponseEntity<QRcodeEquipmentPickUpSlotDTO> getQRcodeContent(@PathVariable Integer slotId) {
         EquipmentPickupSlot slot = equipmentPickupSlotService.getById(slotId);
-        QRcodeEquipmentPickUpSlotDTO QRcode = new QRcodeEquipmentPickUpSlotDTO(slot,this.equipmentPickupSlotService);
-        if(QRcode != null) {
+        QRcodeEquipmentPickUpSlotDTO QRcode = new QRcodeEquipmentPickUpSlotDTO(slot, this.equipmentPickupSlotService);
+        if (QRcode != null) {
             return new ResponseEntity<>(QRcode, HttpStatus.OK);
-        } return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/getQRcodesOutOfSlots")
-    public ResponseEntity<List<QRcodeEquipmentPickUpSlotDTO>> getQRcodesOutOfSlots(@RequestBody List<Integer> slotIds){
+    public ResponseEntity<List<QRcodeEquipmentPickUpSlotDTO>> getQRcodesOutOfSlots(@RequestBody List<Integer> slotIds) {
         List<EquipmentPickupSlot> slots = equipmentPickupSlotService.getSlotsOutOfIds(slotIds);
         List<QRcodeEquipmentPickUpSlotDTO> QRcodes = equipmentPickupSlotService.getQRsOutOfSlots(slots);
-        if(QRcodes != null) {
-            return new ResponseEntity<>(QRcodes,HttpStatus.OK);
-        } return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        if (QRcodes != null) {
+            return new ResponseEntity<>(QRcodes, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
-
-    /*@PutMapping("/deliverEquipment")
-    @Transactional
-    public ResponseEntity<EquipmentPickupSlot> deliverEquipment(@RequestBody Integer slotId){
-        //EquipmentPickupSlot slot = equipmentPickupSlotService.getById(slotId);
-        //User mailUser = slot.getReservedBy();
-        //List<MedicalEquipment> orderedEquipment = medicalEqupimentService.findAllById(slot.getEquipment());
-
 
     @PutMapping("/deliverEquipment")
     @Transactional
@@ -296,7 +291,6 @@ public class EquipmentPickupSlotController {
             return new ResponseEntity("Appointment status: PICKED UP", HttpStatus.OK);
         }
     }
-
 }
 
 
