@@ -3,6 +3,8 @@ package HospitalHub.demo.controller;
 import HospitalHub.demo.dto.LiveLocationDTO;
 import HospitalHub.demo.publisher.RabbitMQJsonProducer;
 import HospitalHub.demo.publisher.RabbitMQProducer;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +26,13 @@ public class LiveLocationController {
         rabbitMQProducer.sendMessage(message);
         return ResponseEntity.ok("Message sent to RabbitMQ ...");
     }*/
+
     @PostMapping(value = "/api/liveLocation/publish/json")
-    //@CrossOrigin(origins = "http://localhost:4200/")
+    @CrossOrigin(origins = "http://localhost:4200")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<LiveLocationDTO> sendJsonMessage(@RequestBody LiveLocationDTO liveLocationDTO){
         rabbitMQJsonProducer.sendJsonMessage(liveLocationDTO);
-        return ResponseEntity.ok(liveLocationDTO);
+        return new ResponseEntity(liveLocationDTO, HttpStatus.OK);
     }
 
     /*@PostMapping(value = "/publish/json")

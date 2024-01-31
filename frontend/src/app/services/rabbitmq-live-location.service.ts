@@ -21,7 +21,6 @@ export class RabbitmqLiveLocationService {
   }
 
   public sendLiveLocationMessage(liveLocation: LiveLocation,headers:HttpHeaders) : Observable<LiveLocation> {
-
     return this.http.post<LiveLocation>(`${this.apiServerUrl}/api/liveLocation/publish/json`, liveLocation,{headers:headers});
     
   }
