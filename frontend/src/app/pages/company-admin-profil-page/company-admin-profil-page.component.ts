@@ -28,6 +28,8 @@ import * as moment from 'moment-timezone';
 import { NgToastService } from 'ng-angular-popup';
 import { CompanyContractsComponent } from 'src/app/components/company-contracts/company-contracts.component';
 import { CompanyAdministratorService } from 'src/app/services/companyAdministrator.service';
+import { Contract } from 'src/app/models/Contract';
+import { ContractService } from 'src/app/services/contract.service';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -62,6 +64,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
   companyAdministrators : User[] = [];
   userId! : number;
   reservedUsers: UserDTO[] = [];
+  contracts : Contract[] = [];
   isOpen : boolean = false;
   isAdmin : boolean = false;
 
@@ -78,7 +81,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
   showCalendar : boolean = false;
   showAdministrators : boolean = false;
   showUsers: boolean = false; 
-
+  showContracts: boolean = false;
   
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
@@ -101,7 +104,8 @@ export class CompanyAdminProfilPageComponent implements OnInit{
               private equipmentPickupSlotService : EquipmentPickupSlotService,
               private modalService: NgbModal,
               private companyAdministratorService : CompanyAdministratorService,
-              private toast: NgToastService) {}
+              private toast: NgToastService,
+              private contractService : ContractService) {}
 
   ngOnInit(): void {
     this.checkCompanyAdmin();
@@ -209,6 +213,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
   
               this.loadMap();
               this.getReservedUsersList();
+              this.getCompantContracts(this.selectedCompany.id);
             },
             (error) => {
               console.error('Error fetching company data.', error);
@@ -220,6 +225,14 @@ export class CompanyAdminProfilPageComponent implements OnInit{
         }
       );
     }
+  }
+
+  getCompantContracts(companyId: number) : void{
+    this.contractService.getContractsByCompany(companyId).subscribe(
+      (companyContracts) => {
+        this.contracts = companyContracts;
+      }
+    );
   }
 
   public getEquipmentPickupSlots(id: number) : void{
@@ -343,6 +356,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
     this.showCalendar = false
     this.showAdministrators = false;
     this.showUsers = false;
+    this.showContracts = false;
     this.getAdminsCompanyData();
   }
 
@@ -351,6 +365,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
     this.showCalendar = true
     this.showAdministrators = false;
     this.showUsers = false;
+    this.showContracts = false;
 
   }
 
@@ -359,6 +374,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
     this.showCalendar = false
     this.showAdministrators = true;
     this.showUsers = false;
+    this.showContracts = false;
   }
 
   public viewUsers() :void{
@@ -366,6 +382,15 @@ export class CompanyAdminProfilPageComponent implements OnInit{
     this.showEquipment = false;
     this.showCalendar = false;
     this.showAdministrators = false;
+    this.showContracts = false;
+  }
+
+  public viewContracts() :void{
+    this.showUsers = false;
+    this.showEquipment = false;
+    this.showCalendar = false;
+    this.showAdministrators = false;
+    this.showContracts = true;
   }
 
   public getReservedUsersList(): void {

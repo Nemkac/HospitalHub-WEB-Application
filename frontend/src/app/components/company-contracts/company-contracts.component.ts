@@ -18,7 +18,7 @@ export class CompanyContractsComponent implements OnInit{
       (companyContracts) => {
         this.contracts = companyContracts;
       }
-    )
+    );
   }
 
 }
