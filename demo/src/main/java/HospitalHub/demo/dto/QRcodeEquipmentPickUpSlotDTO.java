@@ -20,7 +20,7 @@ public class QRcodeEquipmentPickUpSlotDTO {
         String eq = equipmentPickupSlotService.getEquipmentsFromIdsViaString(slot.getEquipment());
         this.adminName = slot.getCompanyAdministrator().getUser().getName() + " " + slot.getCompanyAdministrator().getUser().getLastName();
         String admin = slot.getCompanyAdministrator().getUser().getName() + " " + slot.getCompanyAdministrator().getUser().getLastName();
-        this.combined = "Company: " + company  + ". Equipment: " + eq + ". Company admin: " + admin;
+        this.combined = "Company˸ " + company  + ". Equipment: " + eq + ". Company admin: " + admin;
     }
 
     public Integer getId() {

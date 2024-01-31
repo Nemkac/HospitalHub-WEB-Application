@@ -356,15 +356,16 @@ export class UserProfileComponent implements OnInit{
   }
 
   public showQRs(){
-    //if(this.ifShowQRs == true) {
-    this.equipmentPickupSlotService.getQRcodesOutOfSlots(this.getIdsFromSlots(this.upcomingSlots)).subscribe(
-      (response:QRcodeEquipmentPickUpSlot[]) => {
-        this.QRcodes = response;
-        console.log("QR kodovi : ",response);
-      }
-    )
-    //} else {
-    //  this.QRcodes = [];
+    if(this.ifShowQRs == true) {
+      this.ifShowQRs = false;
+    } else {
+      this.equipmentPickupSlotService.getQRcodesOutOfSlots(this.getIdsFromSlots(this.upcomingSlots)).subscribe(
+        (response:QRcodeEquipmentPickUpSlot[]) => {
+          this.QRcodes = response;
+        }
+      )
+      this.ifShowQRs = true;
+    }
     }
   
 

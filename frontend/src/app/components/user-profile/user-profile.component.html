@@ -122,23 +122,21 @@
           <p class="font-inter font-semibold text-third text-[28px] ml-2">My Upcoming Appointments</p>
         </div>
     
-        <div style="display: flex; margin-bottom: 10px;">
-          <fa-icon [icon]="faSort" class="text-third text-[16px] transition-[0.5s] cursor-pointer" (click)="sortUpcomingBy = 'duration'; sortUpcoming()"></fa-icon>
-          <span style="margin-right: 2px;"></span>
-          <fa-icon [icon]="faClock" class="text-yellow text-[16px] transition-[0.5s] cursor-pointer" (click)="sortUpcomingBy = 'duration'; sortUpcoming()"></fa-icon>
-          <span style="margin-right: 20px;"></span>
-          <fa-icon [icon]="faSort" class="text-third text-[16px] transition-[0.5s] cursor-pointer" (click)="sortUpcomingBy = 'date'; sortUpcoming()"></fa-icon>
-          <span style="margin-right: 2px;"></span>
-          <fa-icon [icon]="faCalendar" class="text-yellow text-[16px] transition-[0.5s] cursor-pointer" (click)="sortUpcomingBy = 'date'; sortUpcoming()"></fa-icon>
-          <button class="w-16 text-center text-[10px] bg-yellow hover:bg-yellow transition-[0.5s] font-inter font-semibold 
-          text-white rounded-md h-[20px]"ifShowQRs = true; (click)="showQRs()">
-            Show qrs
-          </button>
-          
+        <div class="justify-between " style="display: flex; margin-bottom: 10px; margin-right: 155px;">
+          <div style="display: flex; margin-bottom: 10px;">
+            <fa-icon [icon]="faSort" class="text-third text-[26px] transition-[0.5s] cursor-pointer" (click)="sortUpcomingBy = 'duration'; sortUpcoming()"></fa-icon>
+            <span style="margin-right: 2px;"></span>
+            <fa-icon [icon]="faClock" class="text-yellow text-[26px] transition-[0.5s] cursor-pointer" (click)="sortUpcomingBy = 'duration'; sortUpcoming()"></fa-icon>
+            <span style="margin-right: 20px;"></span>
+            <fa-icon [icon]="faSort" class="text-third text-[26px] transition-[0.5s] cursor-pointer" (click)="sortUpcomingBy = 'date'; sortUpcoming()"></fa-icon>
+            <span style="margin-right: 2px;"></span>
+            <fa-icon [icon]="faCalendar" class="text-yellow text-[26px] transition-[0.5s] cursor-pointer" (click)="sortUpcomingBy = 'date'; sortUpcoming()"></fa-icon> 
+          </div>
+            <fa-icon [icon]="faQrcode" class="text-third text-[26px] transition-[0.5s] cursor-pointer" (click)="showQRs()"></fa-icon>
         </div>
         
         <div class="flex flex-col w-full h-auto max-h-[800px] mt-2">
-          <div *ngFor="let slot of upcomingSlotsDTOS" class="py-3">
+          <div *ngFor="let slot of upcomingSlotsDTOS; let i=index" class="py-3">
             <div class="flex flex-row w-full justify-between justify-center items-center">
               <div class="flex flex-col w-[40%]">
                 <p class="text-lg font-bold text-gray-800">
@@ -157,13 +155,15 @@
                   <b>Contact number :</b> {{ slot.companyAdministrator.company.name }}
                 </p>
               </div>
-              <div class="flex flex-row justify-between w-[250px] items-center">
-                <qrcode  [qrdata]="'Company˸ HealthTech Solutions. Equipment: Respirator, EKG, CT Scanner. Company admin: Aleksa Simeunovic'" [allowEmptyString]="true" > </qrcode>
+              <div *ngIf="ifShowQRs==false" class="flex flex-row justify-between w-[250px] items-center">
                 <button class="w-[170px] p-[5px] h-[35px] text-white bg-third hover:bg-lightBlue transition-[0.5s] 
                               font-inter text-[16px] font-semibold rounded-md" (click)="goToRequestDelivery(slot.companyId)">
                   Request delivery
                 </button>
                 <fa-icon [icon]="faTrash" class="text-red text-[24px] transition-[0.5s] cursor-pointer" (click)="cancelReservation(slot.id)"/>
+              </div>
+              <div *ngIf="ifShowQRs==true" class="flex flex-row justify-between w-[250px] items-center" style="margin-right:-32px">
+                <qrcode  [width]="105"  [qrdata]="QRcodes[i].combined" [allowEmptyString]="true" > </qrcode>
               </div>
             </div>
           </div>
@@ -185,7 +185,7 @@
           <fa-icon [icon]="faCalendar" class="text-yellow text-[16px] transition-[0.5s] cursor-pointer" (click)="sortPastBy = 'date'; sortPast()"></fa-icon>
         </div>
         <div class="flex flex-col w-full h-auto max-h-[800px] mt-2">
-          <div *ngFor="let slot of pastSlots" class="py-3">
+          <div *ngFor="let slot of pastSlots; let i=index" class="py-3">
             <div class="flex flex-row w-full justify-between justify-center items-center">
               <div class="flex flex-col w-[40%]">
                 <p class="text-lg font-bold text-gray-800">
@@ -201,8 +201,8 @@
                   <b>Contact number :</b> {{ slot.companyAdministrator.user.phoneNumber }}
                 </p>
               </div>
-              <div class="flex flex-row justify-end w-[250px] items-center">
-                <fa-icon [icon]="faQrcode" class="text-third text-[24px] hover:text-lightBlue transition-[0.5s] cursor-pointer"/>
+              <div *ngIf="ifShowQRs==true" class="flex flex-row justify-between w-[250px] items-center" style="margin-right:-32px">
+                <qrcode  [width]="105"  [qrdata]="QRcodes[i].combined" [allowEmptyString]="true" > </qrcode>
               </div>
             </div>
           </div>
