@@ -1,16 +1,17 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { faQrcode } from '@fortawesome/free-solid-svg-icons';
 import jsQR from 'jsqr';
 import { EquipmentPickupSlotService } from 'src/app/services/equipment-pickup-slot.service';
 import { NgToastService } from 'ng-angular-popup'
 import { EquipmentPickupSlot } from 'src/app/models/EquipmentPickupSlot';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { CompanyAdministratorService } from 'src/app/services/companyAdministrator.service';
 
 @Component({
   selector: 'app-qr-code-scanner-page',
   templateUrl: './qr-code-scanner-page.component.html',
 })
-export class QrCodeScannerPageComponent {
+export class QrCodeScannerPageComponent implements OnInit{
   @ViewChild('fileInput', { static: false })
   fileInput!: ElementRef;
   scanResult: any = '';
@@ -29,8 +30,32 @@ export class QrCodeScannerPageComponent {
 
   faQrcode = faQrcode
 
+  token = localStorage.getItem('token');
+  isAdmin : boolean = false;
+
   constructor(private equipmentPickupSlotService : EquipmentPickupSlotService,
-              private toast: NgToastService){}
+              private toast: NgToastService,
+              private companyAdministratorService : CompanyAdministratorService,){}
+
+  ngOnInit(): void {
+    this.checkCompanyAdmin();
+  }
+
+  public checkCompanyAdmin() : boolean{
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+      });
+     this.companyAdministratorService.checkCompanyAdmin(headers).subscribe(
+      (response : boolean) => {
+        this.isAdmin = response;
+      },(error) => {
+        this.isAdmin = false;
+      }
+     );
+
+    return this.isAdmin;
+  }
 
   handleImageChange(event: any): void {
     const file = event.target.files[0];
