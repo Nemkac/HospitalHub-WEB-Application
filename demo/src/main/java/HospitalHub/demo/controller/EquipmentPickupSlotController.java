@@ -2,11 +2,13 @@ package HospitalHub.demo.controller;
 
 import HospitalHub.demo.dto.EquipmentPickupSlotDTO;
 import HospitalHub.demo.dto.MedicalEquipmentDTO;
+import HospitalHub.demo.dto.QRcodeEquipmentPickUpSlotDTO;
 import HospitalHub.demo.dto.UserDTO;
 import HospitalHub.demo.model.*;
 import HospitalHub.demo.repository.EquipmentPickupSlotRepository;
 import HospitalHub.demo.service.*;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.persistence.FetchType;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -41,7 +43,6 @@ public class EquipmentPickupSlotController {
     @Autowired
     private CompanyService companyService;
 
-    // TODO: OVDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
     @PostMapping("/createPredefinedSlot/{userId}")
     @Transactional
     public ResponseEntity<EquipmentPickupSlot> createPredefinedSlot(@RequestBody EquipmentPickupSlotDTO slotDTO, @PathVariable Integer userId) {
@@ -111,15 +112,6 @@ public class EquipmentPickupSlotController {
         return null;
     }
 
-    /*@PostMapping("/saveExtraSlot/{companyId}/{userId}")
-    public ResponseEntity<EquipmentPickupSlot> saveExtraSlot(@RequestBody EquipmentPickupSlot slot, @PathVariable Integer companyId, @PathVariable Integer userId){
-        if(equipmentPickupSlotService.saveExtraSlot(slot,companyId,userId) != null) {
-            return new ResponseEntity<>(equipmentPickupSlotService.saveExtraSlot(slot,companyId,userId), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
-    } */
-
-    // TODO : OVDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
     @PostMapping(consumes = "application/json", value = "/saveExtraSlot/{companyId}/{userId}")
     public ResponseEntity<EquipmentPickupSlot> saveExtraSlot(@RequestBody EquipmentPickupSlot slot, @PathVariable Integer companyId, @PathVariable Integer userId) {
         //DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -131,26 +123,15 @@ public class EquipmentPickupSlotController {
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("/saveTestSlot")
-    public ResponseEntity<EquipmentPickupSlot> saveTestSlot(@RequestBody EquipmentPickupSlot slot) {
-
-        EquipmentPickupSlot slot1 = new EquipmentPickupSlot();
-        slot.setDateTime(LocalDateTime.now().plusDays(3));
-        slot.setDuration(30);
-        equipmentPickupSlotService.saveExtraSlot(slot1, 1, 1);
-        return new ResponseEntity<>(slot, HttpStatus.OK);
-    }
-
-    @GetMapping("/xxx")
-    public ResponseEntity<EquipmentPickupSlot> xxx() {
-        EquipmentPickupSlot slot = new EquipmentPickupSlot();
-        return new ResponseEntity<>(equipmentPickupSlotRepository.save(slot), HttpStatus.OK);
-    }
-
     @GetMapping("/getEquipment/{slotId}")
     public ResponseEntity<List<MedicalEquipment>> getEquipments(@PathVariable Integer slotId) {
         return new ResponseEntity<>(equipmentPickupSlotService.getEquipmentsFromIds(equipmentPickupSlotRepository.getById(slotId).getEquipment()), HttpStatus.OK);
     }
+
+/*    @GetMapping("/getEquipmentViaString/{slotId}")
+    public ResponseEntity<String> getEquipmentsViaString(@PathVariable Integer slotId) {
+        return new ResponseEntity<>(equipmentPickupSlotService.getEquipmentsFromIdsViaString(equipmentPickupSlotRepository.getById(slotId).getEquipment()), HttpStatus.OK);
+    }*/
 
     @GetMapping("/getReservedUsers/{userId}")
     public ResponseEntity<List<UserDTO>> getReservedUsers(@PathVariable Integer userId) {
@@ -231,6 +212,24 @@ public class EquipmentPickupSlotController {
             return new ResponseEntity<>(canceledSlot,HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/getQRcodeContent/{slotId}")
+    public ResponseEntity<QRcodeEquipmentPickUpSlotDTO> getQRcodeContent(@PathVariable Integer slotId){
+        EquipmentPickupSlot slot = equipmentPickupSlotService.getById(slotId);
+        QRcodeEquipmentPickUpSlotDTO QRcode = new QRcodeEquipmentPickUpSlotDTO(slot,this.equipmentPickupSlotService);
+        if(QRcode != null) {
+            return new ResponseEntity<>(QRcode, HttpStatus.OK);
+        } return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/getQRcodesOutOfSlots")
+    public ResponseEntity<List<QRcodeEquipmentPickUpSlotDTO>> getQRcodesOutOfSlots(@RequestBody List<Integer> slotIds){
+        List<EquipmentPickupSlot> slots = equipmentPickupSlotService.getSlotsOutOfIds(slotIds);
+        List<QRcodeEquipmentPickUpSlotDTO> QRcodes = equipmentPickupSlotService.getQRsOutOfSlots(slots);
+        if(QRcodes != null) {
+            return new ResponseEntity<>(QRcodes,HttpStatus.OK);
+        } return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
     }
 
     /*@PutMapping("/deliverEquipment")

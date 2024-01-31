@@ -130,6 +130,11 @@
           <fa-icon [icon]="faSort" class="text-third text-[16px] transition-[0.5s] cursor-pointer" (click)="sortUpcomingBy = 'date'; sortUpcoming()"></fa-icon>
           <span style="margin-right: 2px;"></span>
           <fa-icon [icon]="faCalendar" class="text-yellow text-[16px] transition-[0.5s] cursor-pointer" (click)="sortUpcomingBy = 'date'; sortUpcoming()"></fa-icon>
+          <button class="w-16 text-center text-[10px] bg-yellow hover:bg-yellow transition-[0.5s] font-inter font-semibold 
+          text-white rounded-md h-[20px]"ifShowQRs = true; (click)="showQRs()">
+            Show qrs
+          </button>
+          
         </div>
         
         <div class="flex flex-col w-full h-auto max-h-[800px] mt-2">
@@ -153,12 +158,11 @@
                 </p>
               </div>
               <div class="flex flex-row justify-between w-[250px] items-center">
-                <fa-icon [icon]="faQrcode" class="text-third text-[24px] hover:text-lightBlue transition-[0.5s] cursor-pointer"/>
+                <qrcode  [qrdata]="'Company˸ HealthTech Solutions. Equipment: Respirator, EKG, CT Scanner. Company admin: Aleksa Simeunovic'" [allowEmptyString]="true" > </qrcode>
                 <button class="w-[170px] p-[5px] h-[35px] text-white bg-third hover:bg-lightBlue transition-[0.5s] 
                               font-inter text-[16px] font-semibold rounded-md" (click)="goToRequestDelivery(slot.companyId)">
                   Request delivery
                 </button>
-                <qrcode  [qrdata]="'Hello wordld'" [allowEmptyString]="true" > </qrcode>
                 <fa-icon [icon]="faTrash" class="text-red text-[24px] transition-[0.5s] cursor-pointer" (click)="cancelReservation(slot.id)"/>
               </div>
             </div>

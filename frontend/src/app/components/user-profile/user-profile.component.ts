@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Output, ViewChild } from '@angular/core';
 import { UserProfileService } from 'src/app/services/user-profile.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { ActivatedRoute } from '@angular/router';
@@ -28,6 +28,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import { EquipmentPageComponent } from 'src/app/pages/equipment-page/equipment-page.component';
 import { EquipmentPickupSlotDTO } from 'src/app/models/EquipmentPickupSlotDTO';
+import { QRcodeEquipmentPickUpSlot } from 'src/app/models/QRcodeEquipmentPickUpSlot';
 
 @Component({
   selector: 'app-user-profile',
@@ -49,6 +50,10 @@ export class UserProfileComponent implements OnInit{
   pastSlots!:EquipmentPickupSlot[];
   sortUpcomingBy : 'duration' | 'date' = 'date'
   sortPastBy : 'duration' | 'date' = 'date'
+  QRoutput !: string;
+  QRcodes !: QRcodeEquipmentPickUpSlot[];
+  slotsIds !: number[];
+  ifShowQRs : boolean = false;
 
 
   @ViewChild('calendar') calendarRef!: ElementRef;
@@ -108,6 +113,15 @@ export class UserProfileComponent implements OnInit{
       );
     }
     this.showUserProfile();
+  }
+
+  getQRcodes(){
+    this.equipmentPickupSlotService.getQRcodesOutOfSlots(this.getIdsFromSlots(this.upcomingSlots)).subscribe(
+      (response:QRcodeEquipmentPickUpSlot[]) => {
+        this.QRcodes = response; 
+        console.log("kodovi ",this.QRcodes);
+      }
+    )
   }
 
   goToRequestDelivery(id: number) : void{
@@ -339,6 +353,28 @@ export class UserProfileComponent implements OnInit{
       {backdrop:'static',keyboard:true}
     );
     modalRef.componentInstance.userId = this.userId;
+  }
+
+  public showQRs(){
+    //if(this.ifShowQRs == true) {
+    this.equipmentPickupSlotService.getQRcodesOutOfSlots(this.getIdsFromSlots(this.upcomingSlots)).subscribe(
+      (response:QRcodeEquipmentPickUpSlot[]) => {
+        this.QRcodes = response;
+        console.log("QR kodovi : ",response);
+      }
+    )
+    //} else {
+    //  this.QRcodes = [];
+    }
+  
+
+
+  public getIdsFromSlots(slots:EquipmentPickupSlot[]):number[]{
+    let slotIds : number[] = [];
+    slots.forEach(slot => {
+      slotIds.push(slot.id)
+    })
+    return slotIds;
   }
   
 
