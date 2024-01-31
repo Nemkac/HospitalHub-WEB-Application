@@ -210,6 +210,7 @@ public class MedicalEquipmentController {
 
         Optional<EquipmentPickupSlot> slot = slotRepository.findById(orderEquipmentDTO.getPickupSlotId());
         EquipmentPickupSlot foundSlot = new EquipmentPickupSlot();
+        List<MedicalEquipment> equipment = medicalEqupimentService.findAllById(orderEquipmentDTO.getEquipmentIds());
 
         if(slot.isPresent()){
             foundSlot = slot.get();
@@ -219,6 +220,13 @@ public class MedicalEquipmentController {
             return new ResponseEntity<>(foundSlot,HttpStatus.CONFLICT);
         }
 
+       /* for(MedicalEquipment medEq : equipment){
+            if(!medEq.getVersion().equals(orderEquipmentDTO.getVersionIds().get(medEq.getId()))){
+                return new ResponseEntity<>(foundSlot,HttpStatus.CONFLICT);
+            }
+        }
+        
+        */
 
         Optional<User> user = userRepository.findById(orderEquipmentDTO.getUserId());
         User mailUser = new User();
@@ -231,7 +239,6 @@ public class MedicalEquipmentController {
 
         EquipmentPickupSlot check = slotRepository.save(foundSlot);
 
-        List<MedicalEquipment> equipment = medicalEqupimentService.findAllById(orderEquipmentDTO.getEquipmentIds());
         for(MedicalEquipment equ : equipment){
             equ.setVersion(equ.getVersion() + 1);
             medicalEquipmentRepository.save(equ);

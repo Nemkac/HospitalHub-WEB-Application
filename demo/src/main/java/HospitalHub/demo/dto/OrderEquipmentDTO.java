@@ -1,5 +1,7 @@
 package HospitalHub.demo.dto;
 
+import java.util.HashMap;
+
 public class OrderEquipmentDTO {
 
     private Integer id;
@@ -10,6 +12,7 @@ public class OrderEquipmentDTO {
 
     private Integer userId;
     private Integer pickupSlotId;
+    private HashMap<Integer,Long> versionIds;
     public OrderEquipmentDTO() {
     }
 
@@ -19,6 +22,23 @@ public class OrderEquipmentDTO {
         this.companyId = companyId;
         this.userId = userId;
         this.pickupSlotId = pickupSlotId;
+    }
+
+    public OrderEquipmentDTO(Integer id, int[] equipmentIds, Integer companyId, Integer userId, Integer pickupSlotId, HashMap<Integer, Long> versionIds) {
+        this.id = id;
+        this.equipmentIds = equipmentIds;
+        this.companyId = companyId;
+        this.userId = userId;
+        this.pickupSlotId = pickupSlotId;
+        this.versionIds = versionIds;
+    }
+
+    public HashMap<Integer, Long> getVersionIds() {
+        return versionIds;
+    }
+
+    public void setVersionIds(HashMap<Integer, Long> versionIds) {
+        this.versionIds = versionIds;
     }
 
     public Integer getPickupSlotId() {

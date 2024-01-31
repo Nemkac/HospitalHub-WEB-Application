@@ -29,6 +29,7 @@ export class CartModalComponent implements OnInit{
   company : Company | undefined;
   equipmentList : Equipment[] = [];
   slot : EquipmentPickupSlot | undefined;
+  versionMap = new Map();
 
   constructor(private modalService: NgbActiveModal,
               private companyService : CompanyService,
@@ -45,6 +46,7 @@ export class CartModalComponent implements OnInit{
       this.equipmentService.getEquipmentById(id,-1).subscribe(
         (response : Equipment) => {
           this.equipmentList.push(response);
+          this.versionMap.set(id,response.version);
         },
         (error : HttpErrorResponse) => {
           alert(error.message);
@@ -77,6 +79,7 @@ export class CartModalComponent implements OnInit{
       companyId: this.companyId,
       userId: this.userId,
       pickupSlotId: this.selectedAppointmentId,
+      versionIds : this.versionMap,
     };
 
     this.equipmentService.orderEquipment(createdOrder,this.slot?.version).subscribe(

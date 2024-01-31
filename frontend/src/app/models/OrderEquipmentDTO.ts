@@ -3,4 +3,5 @@ export interface OrderEquipmentDTO{
     companyId : number;
     userId: number;
     pickupSlotId: number;
+    versionIds: Map<number,number>;
 }
