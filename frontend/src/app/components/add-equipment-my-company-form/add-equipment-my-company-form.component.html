@@ -1,0 +1,25 @@
+<form #addEquipmentForm="ngForm" (ngSubmit)="onAddEquipment(addEquipmentForm)">
+  <div class="flex flex-col h-auto bg-white w-[600px] p-4 items-center rounded-md justify-between">
+    <div class="flex w-full justify-end">
+      <fa-icon [icon]="faClose" (click)="closeModal()"
+      class="flex cursor-pointer text-[28px] text-third hover:text-lightBlue transition-[0.5s]"/>
+    </div>
+    <div class="w-full grid grid-cols-1 gap-4 items-center">
+      <h2 class="text-2xl text-third font-bold mb-4 text-center">Add New Equipment For Company</h2>
+  
+      <input ngModel name="name" type="text" class="border p-2 rounded w-full" placeholder="Equipment Name" required>
+      <input ngModel name="type" type="text" class="border p-2 rounded w-full" placeholder="Equipment Type" required>
+      <textarea ngModel name="description" class="border p-2 rounded w-full" placeholder="Equipment Description" required></textarea>
+      <input ngModel name="price" type="number" class="border p-2 rounded w-full" placeholder="Equipment Price" required>
+      <input ngModel name="image" type="text" class="border p-2 rounded w-full" placeholder="Equipment Image URL" required>
+      <input ngModel name="quantity" type="number" class="border p-2 rounded w-full" placeholder="Equipment Quantity" required>
+
+  
+      <button class="text-[20px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
+                    text-white rounded-md h-[45px]" type="submit">
+        Add Equipment
+      </button>
+    </div>
+  </div>
+</form>
+  

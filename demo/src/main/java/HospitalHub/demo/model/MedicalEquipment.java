@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
+import java.util.List;
 import java.util.Objects;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -23,7 +24,6 @@ public class MedicalEquipment {
     private String name;
 
     @Column(name = "type")
-    
     private String type;
 
     @Column(name = "description")
@@ -35,20 +35,31 @@ public class MedicalEquipment {
     @Column(name = "image")
     private String image;
 
-    @JsonIgnoreProperties("medicalEquipmentList")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne
     @JoinColumn(name="company_id")
     private Company company;
 
+    @OneToMany(mappedBy = "medicalEquipment")
+    private List<EquipmentAvailability> equipmentAvailabilityList;
+
+    @Column(name = "quantity")
+    private Integer quantity;
+
+    @Version
+    private Long version;
+
+
     public MedicalEquipment() {}
 
-    public MedicalEquipment(String name, String type, String description, Company company, Double price, String image) {
+    public MedicalEquipment(String name, String type, String description, Company company, Double price, String image, Integer quantity) {
         this.name = name;
         this.type = type;
         this.description = description;
         this.company = company;
         this.price = price;
         this.image = image;
+        this.quantity = quantity;
     }
 
     public Integer getId() {
@@ -101,6 +112,30 @@ public class MedicalEquipment {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public List<EquipmentAvailability> getEquipmentAvailabilityList() {
+        return equipmentAvailabilityList;
+    }
+
+    public void setEquipmentAvailabilityList(List<EquipmentAvailability> equipmentAvailabilityList) {
+        this.equipmentAvailabilityList = equipmentAvailabilityList;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     @Override

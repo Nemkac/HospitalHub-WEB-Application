@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { LogInDTO } from "src/LogInDTO";
 import { catchError, map ,tap} from 'rxjs/operators';
 import { User } from "src/user";
+import { UserProfile } from '../models/user-profile';
+import { EquipmentPickupSlot } from '../models/EquipmentPickupSlot';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +20,8 @@ export class UserService {
         console.log("Update Company Administrator: ", userDTO);  
         return this.http.put<UserDTO>(`${this.apiServerUrl}/api/user/update/${id}`, userDTO);
     }
-
-    
-    private _loggedInUser?: String = "LOGIN";
+   
+    protected _loggedInUser?: String = "LOGIN";
 
     get loggedInUser(): String {
         return this._loggedInUser as String;
@@ -28,19 +29,56 @@ export class UserService {
     set loggedInUser(user: String) {
         this._loggedInUser = user;
     }
-  
+
+    protected _loggedInUserId? :Number ;
+    get loggedInUserId():Number{
+        return this._loggedInUserId as Number;
+    }
+    set loggedInUserId(id:Number){
+        this._loggedInUserId = id;
+    }
+    protected _loggedInUserRole? :String = "ROLE_USER" ;
+
+    get loggedInUserRole():String{
+        return this._loggedInUserRole as String;
+    }
+    set loggedInUserRole(id:String){
+        this._loggedInUserRole = id;
+    }
+
     public logIn(logInDTO: LogInDTO):Observable<LogInDTO>{      
         return this.http.post<LogInDTO>(`${this.apiServerUrl}/logIn`, logInDTO).pipe(
           tap((response:LogInDTO)=>{
-              localStorage.setItem('token', response.email);
+              localStorage.setItem('token', response.email);              
         })
     )}
 
-    public register(userDto:User):Observable<User>{
-        return this.http.post<User>(`${this.apiServerUrl}/register`, userDto);
+    public register(userDto:User):Observable<UserDTO>{
+        return this.http.post<UserDTO>(`${this.apiServerUrl}/register`, userDto);
     }
 
     public getUserByToken(token: string): Observable<User> {
         return this.http.get<User>(`${this.apiServerUrl}/api/user/getUserByToken/${token}`);
     }
+
+    public getUserProfileByToken(token: string): Observable<UserProfile> {
+        return this.http.get<UserProfile>(`${this.apiServerUrl}/api/user/getUserProfileByToken/${token}`);
+    }
+
+    public getUsersUpcomingAppoitments(userId:Number):Observable<EquipmentPickupSlot[]>{
+        return this.http.get<EquipmentPickupSlot[]>(`${this.apiServerUrl}/api/slots/getUsersSlots/${userId}`);
+    }
+
+    public getUsersUpcomingAppoitments1(userId:Number):Observable<EquipmentPickupSlot[]>{
+        return this.http.get<EquipmentPickupSlot[]>(`${this.apiServerUrl}/api/slots/getUpcomingUsersSlots/${userId}`);
+    }
+
+    public getUsersPastAppoitments(userId:Number):Observable<EquipmentPickupSlot[]>{
+        return this.http.get<EquipmentPickupSlot[]>(`${this.apiServerUrl}/api/slots/getPastUsersSlots/${userId}`);
+    }
+    
+    public checkIsAusthorised(headers:HttpHeaders): Observable<boolean> {
+        return this.http.get<boolean>(`${this.apiServerUrl}/api/user/checkIsAuthorised`, {headers:headers});
+    }
+    
 }

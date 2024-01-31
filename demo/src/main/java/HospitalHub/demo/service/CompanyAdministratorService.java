@@ -2,6 +2,8 @@ package HospitalHub.demo.service;
 
 
 import HospitalHub.demo.model.CompanyAdministrator;
+import HospitalHub.demo.model.SystemAdministrator;
+import HospitalHub.demo.model.User;
 import HospitalHub.demo.repository.CompanyAdministratorRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -19,6 +21,9 @@ public class CompanyAdministratorService {
         return companyAdministratorRepository.findById(id).orElseGet(null);
     }
 
+    public CompanyAdministrator getByUserId1(Integer userId){
+        return companyAdministratorRepository.findByUserId(userId);
+    }
     public CompanyAdministrator getByCompAdminId(Integer compAdminId) {
         return companyAdministratorRepository.getByCompAdminId(compAdminId);
     }
@@ -26,4 +31,10 @@ public class CompanyAdministratorService {
     public CompanyAdministrator save(CompanyAdministrator companyAdministrator){
         return companyAdministratorRepository.save(companyAdministrator);
     }
+
+    public CompanyAdministrator getByUser(User user){
+
+        return companyAdministratorRepository.getByUser(user);
+    }
+
 }

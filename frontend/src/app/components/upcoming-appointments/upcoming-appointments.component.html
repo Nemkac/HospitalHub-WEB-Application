@@ -1,0 +1,19 @@
+<div class="grid grid-cols-1 gap p-4 md:w-2/3 lg:w-1/2 mx-auto flex h-[100vh]">
+  <h2 class="text-3xl font-bold mb-6 text-center text-blue-600">My Upcoming Appointments</h2>
+  
+  <ul class="divide-y divide-gray-300">
+    <div *ngFor="let slot of slots" class="py-3">
+      <div class="flex flex-row w-full justify-between items-center">
+        <div class="flex flex-col w-[40%]">
+          <p class="text-lg font-semibold text-gray-800">
+            {{ slot.dateTime | date:'medium' }}
+          </p>
+          <p class="text-sm text-gray-500">
+            Duration: {{ slot.duration }} minutes
+          </p>
+        </div>
+      </div>
+    </div>
+  </ul>
+</div>
+  

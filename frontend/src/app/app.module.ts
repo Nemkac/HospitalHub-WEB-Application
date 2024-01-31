@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
 import { NgbModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -36,6 +37,29 @@ import { BackToTopButtonComponent } from './components/back-to-top-button/back-t
 import { CreateNewSysAdmninistratorFormComponent } from './components/create-new-sys-admninistrator-form/create-new-sys-admninistrator-form.component';
 import { PasswordChangeModalComponent } from './components/password-change-modal/password-change-modal.component';
 import { ComplaintsPageComponent } from './pages/complaints-page/complaints-page.component';
+import { VisitCompanyPageComponent } from './pages/visit-company-page/visit-company-page.component';
+import { UpdateEquipmentMyCompanyComponent } from './components/update-equipment-my-company/update-equipment-my-company.component';
+import { AddEquipmentMyCompanyFormComponent } from './components/add-equipment-my-company-form/add-equipment-my-company-form.component';
+import { EquipmentPickupSlotDisplayModalComponent } from './components/equipment-pickup-slot-display-modal/equipment-pickup-slot-display-modal.component';
+import { CreatePickupSlotFormComponent } from './components/create-pickup-slot-form/create-pickup-slot-form.component';
+import { UpcomingAppointmentsComponent } from './components/upcoming-appointments/upcoming-appointments.component';
+import { BookEquipmentComponent } from './components/book-equipment/book-equipment.component';
+import { CartModalComponent } from './components/cart-modal/cart-modal.component';
+import { CreateExtraSlotComponent } from './components/create-extra-slot/create-extra-slot.component';
+import { MessageService } from 'primeng/api';
+import { NgToastModule } from 'ng-angular-popup';
+import { QrCodeScannerPageComponent } from './pages/qr-code-scanner-page/qr-code-scanner-page.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { RequestDeliveryPageComponent } from './pages/request-delivery-page/request-delivery-page.component';
+import { CreateContractComponent } from './components/create-contract/create-contract.component';
+import { UsersContractsComponent } from './components/users-contracts/users-contracts.component';
+import { CompanyContractsComponent } from './components/company-contracts/company-contracts.component';
+import { StompService } from './services/stomp.service';
+import { StompConfig } from '@stomp/ng2-stompjs';
+import { QRCodeModule } from 'angularx-qrcode';
+//import { StompConfig, StompService } from '@stomp/ng2-stompjs';
+import { rxStompServiceFactory } from './rx-stomp-service-factory';
+import { RxStompService } from './services/rx-stomp.service';
 
 @NgModule({
       declarations: [
@@ -64,6 +88,20 @@ import { ComplaintsPageComponent } from './pages/complaints-page/complaints-page
           CreateNewSysAdmninistratorFormComponent,
           PasswordChangeModalComponent,
           ComplaintsPageComponent,
+          VisitCompanyPageComponent,
+          UpdateEquipmentMyCompanyComponent,
+          AddEquipmentMyCompanyFormComponent,
+          EquipmentPickupSlotDisplayModalComponent,
+          CreatePickupSlotFormComponent,
+          UpcomingAppointmentsComponent,
+          BookEquipmentComponent,
+          CartModalComponent,
+          CreateExtraSlotComponent,
+          QrCodeScannerPageComponent,
+          RequestDeliveryPageComponent,
+          CreateContractComponent,
+          UsersContractsComponent,
+          CompanyContractsComponent,
       ],
       imports: [
           BrowserAnimationsModule,
@@ -79,8 +117,15 @@ import { ComplaintsPageComponent } from './pages/complaints-page/complaints-page
           MatFormFieldModule,
           MatInputModule,
           MatDatepickerModule,
+          FullCalendarModule,
+          NgToastModule,
+          ZXingScannerModule,
+          QRCodeModule
       ],
-      providers: [],
-      bootstrap: [AppComponent]
+      providers: [
+        MessageService,
+        StompService,
+      ],
+      bootstrap: [AppComponent],
     })
-    export class AppModule { }
+export class AppModule { }

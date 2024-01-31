@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -56,7 +57,13 @@ public class User {
     @Column(name = "enabled")
     private boolean Enabled = false;
 
+    @Column(name = "penaltyPoints")
+    private Integer penaltyPoints;
+
     private String roles;
+
+    @OneToMany(mappedBy = "reservedBy")
+    private List<EquipmentPickupSlot> equipmentPickupSlots;
 
     public User(){
 
@@ -76,7 +83,43 @@ public class User {
         this.profession = profession;
         this.companyInfo = companyInfo;
         this.roles = role;
+        this.penaltyPoints = 0;
     }
+
+/*    public User(User user){
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.name = user.getName();
+        this.lastName = user.getLastName();
+        this.password = user.getPassword();
+        this.dateOfBirth = user.getDateOfBirth();
+        this.email = user.getEmail();
+        this.phoneNumber = user.getPhoneNumber();
+        this.country = user.getCountry();
+        this.city = user.getCity();
+        this.profession = user.getProfession();
+        this.companyInfo = user.getCompanyInfo();
+        this.roles = user.getRoles();
+        this.penaltyPoints = user.getPenaltyPoints();
+    }*/
+
+    public User(String username,String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo,String role,Integer penaltyPoints) {
+        this.username = username;
+        this.name = name;
+        this.lastName = lastName;
+        this.password = password;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.country = country;
+        this.city = city;
+        this.profession = profession;
+        this.companyInfo = companyInfo;
+        this.roles = role;
+        this.penaltyPoints = penaltyPoints;
+    }
+
+
     //Initial data insertion constructor
     public User(String username,String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo,String role, boolean enabled) {
         this.username = username;
@@ -92,6 +135,7 @@ public class User {
         this.companyInfo = companyInfo;
         this.roles = role;
         this.Enabled = enabled;
+        this.penaltyPoints = 0;
     }
 
     public User(String username,String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
@@ -106,6 +150,7 @@ public class User {
         this.city = city;
         this.profession = profession;
         this.companyInfo = companyInfo;
+        this.penaltyPoints = 0;
     }
 
     public User(Integer id, String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, String companyInfo) {
@@ -120,6 +165,7 @@ public class User {
         this.city = city;
         this.profession = profession;
         this.companyInfo = companyInfo;
+        this.penaltyPoints = 0;
     }
 
 
@@ -231,6 +277,22 @@ public class User {
 
     public void setEnabled(boolean enabled) {
         Enabled = enabled;
+    }
+
+    public List<EquipmentPickupSlot> getEquipmentPickupSlots() {
+        return equipmentPickupSlots;
+    }
+
+    public void setEquipmentPickupSlots(List<EquipmentPickupSlot> equipmentPickupSlots) {
+        this.equipmentPickupSlots = equipmentPickupSlots;
+    }
+
+    public Integer getPenaltyPoints() {
+        return penaltyPoints;
+    }
+
+    public void setPenaltyPoints(Integer penaltyPoints) {
+        this.penaltyPoints = penaltyPoints;
     }
 
 }

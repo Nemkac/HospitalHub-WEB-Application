@@ -1,0 +1,153 @@
+<div class="flex flex-row h-auto px-64 py-32 bg-lightBlue/5 justify-between pb-32 relative">
+    <div class="flex flex-col p-4 h-[900px] w-[30%] bg-white rounded-md shadow-xl">
+        <p class="font-inter text-third font-bold mx-auto text-[24px]">{{selectedCompany?.name}}</p>
+        <ng-form *ngIf="isOpen">
+            <div class="flex flex-row items-center mx-auto w-[150px] justify-evenly">
+                <div class="flex rounded-full h-[10px] w-[10px] bg-[#44bd32]"></div>
+                <p class="font-inter text-[#44bd32] text-[16px] font-light">Currently open</p>
+            </div>
+        </ng-form>
+        <ng-form *ngIf="!isOpen">
+            <div class="flex flex-row items-center mx-auto w-[150px] justify-evenly">
+                <div class="flex rounded-full h-[10px] w-[10px] bg-red"></div>
+                <p class="font-inter text-red text-[16px] font-light">Currently closed</p>
+            </div>
+        </ng-form>
+        <div class="flex flex-row items-center mx-auto w-[200px] justify-evenly">
+            <p class="font-inter font-light text-[#7f8fa6] ml-2 flex-shrink-0">Working hours:</p>
+            <p class="font-inter font-light text-[#7f8fa6] ml-2 flex-shrink-0">{{formattedOpeningTime}} - {{formattedClosingTime}}</p>
+        </div>
+        <hr class="w-full bg-gray mt-4 mb-2">
+        <div class="flex flex-col w-full h-[400px]">
+            <p class="text-gray font-inter font-light text-[18px]">Description:</p>
+            <p class="text-third font-inter font-regular text-[18px]">{{selectedCompany?.description}}</p>
+        </div>
+        <hr class="w-full bg-gray mt-2 mb-4">
+        <div class="flex flex-row w-full justify-between">
+            <p class="text-gray font-inter font-light text-[18px]">Location:</p>
+            <p class="text-third font-inter font-medium text-[18px]">{{selectedCompany?.city}},{{selectedCompany?.country}}</p>
+        </div>
+        <hr class="w-full bg-gray mt-4 mb-2">
+        <div class="flex flex-col w-full">
+            <p class="text-gray font-inter font-light text-[18px]">Address:</p>
+            <p class="text-third font-inter font-regular text-[18px]">{{selectedCompany?.address}}</p>
+            <div class="flex flex-row">
+                <div class="flex flex-row">
+                    <p class="font-inter text-third font-regular text-[14px]">Lat:</p>
+                    <p class="font-inter text-third font-regular text-[14px] ml-2">{{selectedCompany?.latitude}}</p>
+                </div>
+                <div class="flex flex-row ml-4">
+                    <p class="font-inter text-third font-regular text-[14px]">Long:</p>
+                    <p class="font-inter text-third font-regular text-[14px] ml-2">{{selectedCompany?.longitude}}</p>
+                </div>
+            </div>
+        </div>
+        <div #mapContainer class="flex h-[40vh] mt-2 w-auto z-[0] rounded-md shadow-md"></div> <br>
+        <button class="w-full text-center text-[22px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
+                        text-white rounded-md h-[60px]" (click)="createContract()">
+             Create a contract with company
+        </button>
+    </div>
+
+    <div class="flex flex-col w-[65%] h-full items-center">
+        <div class="flex w-full justify-start">
+            <button [ngClass]="{'text-lightBlue border-b-[1px] border-lightBlue': showEquipment,
+                                'text-gray': !showEquipment}"
+                    class="w-[250px] h-[40px] font-inter font-semibold text-[24px] hover:text-lightBlue transition-[0.5s]"
+                    (click)="viewEquipment()">
+                Medical Equipment
+            </button>
+            <button [ngClass]="{'text-lightBlue border-b-[1px] border-lightBlue': showCalendar,
+                                'text-gray': !showCalendar}"
+                    class="w-[250px] h-[40px] font-inter font-semibold text-[24px] hover:text-lightBlue transition-[0.5s]"
+                    (click)="viewCalendar()">
+                Company calendar
+            </button>
+        </div>      
+        <ng-form *ngIf="showEquipment && !showCalendar" class="flex flex-row flex-wrap w-full mt-4 justify-between">
+            <div *ngFor="let equipment of equipments" class="flex flex-row bg-white w-[440px] h-[310px] max-h-[350px] rounded-md shadow-md mt-4 font-inter
+                                            cursor-pointer hover:shadow-xl transition-[0.5s] hover:translate-y-[-0.3rem] ease-in-out">
+                <div class="flex p-2 w-[45%]">
+                    <img src="../../../assets/{{equipment.image}}" />
+                </div>
+                <div class="flex w-[60%] flex-col p-4 font-inter text-third">
+                    <p class="font-semibold text-[18px]">{{ equipment?.name }}</p>
+                    <p class="font-light text-[14px]">{{ equipment?.type }}</p>
+                    <hr class="w-full mt-[10px] mb-[5px]">
+                    <div class="flex flex-col h-[120px] max-h-[120px]">
+                        <p class="text-[12px] font-light">Description:</p>
+                        <p class="text-[14px] font-regular">{{ equipment?.description }}</p>
+                    </div>
+                    <hr class="w-full mb-[10px] mt-[5px] items-center">
+                    <ng-container *ngIf="equipment.quantity > 0">
+                        <div class="flex felx-row justify-between mb-[5px]">
+                            <p class="font-light text-[14px]">Available in stock</p>
+                            <p class="font-light text-[14px]">{{equipment.quantity}}</p>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="equipment.quantity === 0">
+                        <div class="flex felx-row justify-between mb-[5px]">
+                            <p class="font-light text-red text-[14px]">Out of stock</p>
+                        </div>
+                    </ng-container>
+                    <div class="flex felx-row justify-between mb-[5px] items-center">
+                        <p class="font-semibold text-[16px]">Price</p>
+                        <p class="font-semibold text-[16px]">${{equipment.price}}</p>
+                    </div>
+                    <hr class="w-full mb-[10px] mt-[5px] items-center">
+                    <button class="flex items-center h-[60px] justify-center items-center rounded-md w-full transition-[0.5s]
+                                    font-semibold text-white font-inter text-[18px]"
+                            [ngClass]="{
+                                'bg-third': !equipment.isAddedToCart,
+                                'bg-darkGreen': equipment.isAddedToCart,
+                                'hover:bg-lightBlue': !equipment.isAddedToCart,
+                            }"
+                            (click)="addEquipmentToOrder(equipment.id,equipment.version)">
+                        {{ equipment.isAddedToCart ? 'Item added!' : 'Add to cart' }}
+                    </button>
+                </div>
+            </div>
+        </ng-form>
+        <ng-form *ngIf="!showEquipment && showCalendar" class="flex flex-row h-auto flex-wrap w-full mt-4 justify-between">
+            <div class="flex flex-col w-full p-[12px] bg-white h-auto max-h-[1000px] rounded-md shadow-md">
+                <full-calendar class="w-full" [options]="calendarOptions">
+                  <ng-template #eventContent let-arg class="overflow-scroll">
+                    <div *ngIf="arg.event.extendedProps" (click)="selectAppointment(arg.event.extendedProps.slot.id)"
+                          [ngStyle]="getEventStyles(arg.event.extendedProps)"
+                          class="flex flex-col font-inter text-white p-[5px] w-full rounded-md cursor-pointer">
+                      <p>Start: {{ arg.event.start | date: 'HH:mm' }}</p>
+                      <p>Duration: {{ arg.event.extendedProps.duration }} min</p>
+                      <p>
+                          Free appointment
+                      </p>
+                    </div>
+                  </ng-template>
+                </full-calendar>
+                <button class="w-full text-center h-[60px] mt-4 rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="openCreatePickupSlotForm()">
+                  <p>Request new appointment</p>
+                </button>
+              </div>
+        </ng-form>
+    </div>
+    <div *ngIf="addedToChart || appointmentSelected" [@fadeInOut] class="flex flex-col h-[130px] w-[130px] absolute top-[120px] right-[120px] items-center justify-center">
+        <div class="flex items-center justify-center h-[80px] w-[80px] rounded-full bg-third hover:bg-lightBlue transition-[0.5s] cursor-pointer"
+            (click)="openChartModal()">
+            <fa-icon [icon]="faCartShopping" class="text-white text-[28px]"/>
+        </div>
+        <div class="flex flex-row absolute top-[80px] right-0 w-full justify-evenly">
+            <ng-form *ngIf="addedToChart || appointmentSelected">
+                <div class="flex items-center justify-center h-[40px] w-[40px] rounded-full bg-yellow cursor-pointer transition-[0.5s]">
+                    <!--<fa-icon [icon]="faBasketShopping" class="text-third text-[18px]"/>-->
+                    <p class="text-third font-inter font-bold text-[18px]">{{numOfItemsInCart}}</p>
+                </div>
+            </ng-form>
+            <ng-form *ngIf="addedToChart || appointmentSelected">
+                <div [ngClass]="{'bg-red' : !appointmentSelected,
+                                'bg-darkGreen' : appointmentSelected}" 
+                    class="flex items-center justify-center h-[40px] w-[40px] rounded-full transition-[0.5s] cursor-pointer">
+                    <fa-icon [icon]="faCalendarCheck" class="text-white text-[18px]"/>
+                </div>
+            </ng-form>
+        </div>
+    </div>
+</div>

@@ -38,15 +38,12 @@ public class EmailController {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private PasswordEncoder encoder;
-    @Autowired
-    JwtService jwtService; //dodavanje jwt servisa posle
+    JwtService jwtService;
 
     @PostMapping(value =  "/register")
      public ResponseEntity<User>register(@RequestBody UserRegisterDTO userRegisterDto){
 
-        if(userService.checkData(userRegisterDto)) {   //Dodati proveru za unique email, i onda napraviti adekvatan exception
-                                                        //I za pasword retype
+        if(userService.checkData(userRegisterDto)) {
             User firstUser = new User(
                     userRegisterDto.getUsername(),
                     userRegisterDto.getName(),
@@ -93,7 +90,7 @@ public class EmailController {
     }
 
     @PostMapping("/logIn")
-    public ResponseEntity<UserLoginDTO> logIn(@RequestBody UserLoginDTO userLoginDTO) //Ubaciti ovde authentication iz /generateToken
+    public ResponseEntity<UserLoginDTO> logIn(@RequestBody UserLoginDTO userLoginDTO)
     {
         User user = userRepository.findByEmailIgnoreCase(userLoginDTO.getEmail());
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -101,7 +98,7 @@ public class EmailController {
         {
             if(user.isEnabled()) {
                 if (encoder.matches(userLoginDTO.getPassword(),user.getPassword())) {
-                    String token = jwtService.generateToken(user.getUsername()); //Moze biti problema sa logovanjem. Jer se loguje pomocu mejla. A security trazi username(oko generisanja tokena)
+                    String token = jwtService.generateToken(user.getUsername());
 
                     return new ResponseEntity<>(new UserLoginDTO(token, ""), HttpStatus.OK);
                 }else{
@@ -134,7 +131,7 @@ public class EmailController {
     @GetMapping(value = "/users/TestAuthToken")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public String getTokenTest(){
-        return "RADI BATO";
+        return "It works !";
     }
 
 }

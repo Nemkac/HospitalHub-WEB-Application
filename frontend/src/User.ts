@@ -11,5 +11,7 @@ export interface User{
     city: string; 
     profession: string; 
     companyInfo: string;
-    roles: string; 
+    penaltyPoints: number;
+    roles: string;
+    banningDate : Date;
 }

@@ -12,20 +12,29 @@ import { UpdateUserProfileComponent } from './components/update-user-profile/upd
 import { LogInFormComponent } from './components/log-in-form/log-in-form.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { ComplaintsPageComponent } from './pages/complaints-page/complaints-page.component';
+import { VisitCompanyPageComponent } from './pages/visit-company-page/visit-company-page.component';
+import { UpcomingAppointmentsComponent } from './components/upcoming-appointments/upcoming-appointments.component';
+import { QrCodeScannerPageComponent } from './pages/qr-code-scanner-page/qr-code-scanner-page.component';
+import { RequestDeliveryPageComponent } from './pages/request-delivery-page/request-delivery-page.component';
+import { CreateContractComponent } from './components/create-contract/create-contract.component';
 
 const routes: Routes = [
     //Promeniti kada se doda login da se umesto logina ispise ime usera i onda da se ide na profil usera
     //Zameniti companies sa profile a komponentu promeniti u zavisnosti od role ulogovanog korisnika
-    {path: 'companies', component: SystemAdminProfilePageComponent},
+    {path: 'companies', component: ShowCompaniesComponent},
     {path: 'equipment', component: EquipmentPageComponent},
     {path: 'mycompany', component: CompanyAdminProfilPageComponent},
-    {path: 'api/user/updateProfile/:id', component: UpdateUserProfileComponent },
     {path: 'api/user/companies', component: ShowCompaniesComponent},
-    {path: 'api/user/profile/:id', component: UserProfileComponent},
+    {path: 'profile', component: UserProfileComponent},
+    {path: 'update-profile', component: UpdateUserProfileComponent},
     {path: '', component: LandingPageComponent},  
     {path: 'logIn',component:LogInFormComponent},
     {path: 'register',component:RegisterFormComponent},
-    {path: 'complaints', component:ComplaintsPageComponent}
+    {path: 'company/:id',component:VisitCompanyPageComponent},
+    {path: 'complaints', component:ComplaintsPageComponent},
+    {path: 'profile/upcoming-appoitments', component:UpcomingAppointmentsComponent},
+    {path: 'qr-code-scanner', component: QrCodeScannerPageComponent},
+    {path: 'request-delivery/:id', component: RequestDeliveryPageComponent}
 ];
 
 @NgModule({

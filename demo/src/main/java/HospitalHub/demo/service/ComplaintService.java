@@ -20,4 +20,6 @@ public class ComplaintService {
     public List<Complaint> findAll(){
         return complaintRepository.findAll();
     }
+
+    public Complaint getById(Integer id) { return complaintRepository.getById(id); }
 }

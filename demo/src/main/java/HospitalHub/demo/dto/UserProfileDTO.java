@@ -17,6 +17,10 @@ public class UserProfileDTO {
     private Integer penaltyPoints;
     private String companyInfo;
 
+    public UserProfileDTO() {
+
+    }
+
     public UserProfileDTO(String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, Integer penaltyPoints, String companyInfo) {
         this.name = name;
         this.lastName = lastName;
@@ -42,7 +46,7 @@ public class UserProfileDTO {
         this.city = user.getCity();
         this.profession = user.getProfession();
         this.companyInfo = user.getCompanyInfo();
-        this.penaltyPoints = 0; // izmeniti kasnije da kupi iz baze da ga jebem nmp ili da poziva servis neki odma
+        this.penaltyPoints = user.getPenaltyPoints(); // izmeniti kasnije da kupi iz baze da ga jebem nmp ili da poziva servis neki odma
     }
 
     public String getName() {

@@ -1,23 +1,31 @@
-<form #updateCompanyForm="ngForm" (ngSubmit)="onUpdateCompany()">
-  <div class="flex flex-col bg-white w-[300px] h-[350px] py-4 items-center rounded-md justify-between border-[1px] border-secondary/10">
-    <div>
-      <p class="font-inter text-third font-medium text-[18px]">Id</p>
-      <input #idInput="ngModel" [(ngModel)]="updateCompany.id" name="id" class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none" placeholder="Id" required>
+<form #updateCompanyForm="ngForm" (ngSubmit)="onUpdateCompany(updateCompanyForm)" class="w-[600px] mx-auto bg-white p-4 rounded shadow-lg relative">
+  <fa-icon [icon]="faClose" (click)="closeModal()"
+          class="flex absolute top-[16px] right-[16px] cursor-pointer text-[28px] text-third hover:text-lightBlue transition-[0.5s]"></fa-icon>
+  <div class="grid grid-cols-1 gap-4 items-center">
+    <h2 class="text-2xl text-third font-bold mb-4 text-center">Update Company</h2>
+    <div class="flex flex-col w-full">
+      <input [(ngModel)]="updateCompany.name" name="name" class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md" placeholder="Company name" required>
     </div>
-    <div>
-      <p class="font-inter text-third font-medium text-[18px]">Company name</p>
-      <input [(ngModel)]="updateCompany.name" name="name" class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none" placeholder="Company name" required>
+    <div class="flex flex-col w-full">
+      <input [(ngModel)]="updateCompany.country" name="country" class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md" placeholder="Country" required>
     </div>
-    <div>
-      <p class="font-inter text-third font-medium text-[18px]">Country</p>
-      <input [(ngModel)]="updateCompany.country" name="country" class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none" placeholder="Country" required>
+    <div class="flex flex-col w-full">
+      <input [(ngModel)]="updateCompany.city" name="city" class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md" placeholder="City" required>
     </div>
-    <div>
-      <p class="font-inter text-third font-medium text-[18px]">City</p>
-      <input [(ngModel)]="updateCompany.city" name="city" class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none" placeholder="City" required>
+    <div class="flex flex-col w-full">
+      <input [(ngModel)]="updateCompany.address" name="address" class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md" placeholder="Address" required>
     </div>
-    <div class="modal-footer">
-      <button type="submit" class="w-[200px] text-[20px] bg-[#0582ca] hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
+    <div class="flex flex-col w-full">
+      <input [(ngModel)]="updateCompany.latitude" name="latitude" type="number" class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md" placeholder="Latitude" required>
+    </div>
+    <div class="flex flex-col w-full">
+      <input [(ngModel)]="updateCompany.longitude" name="longitude" type="number" class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md" placeholder="Longitude" required>
+    </div>
+    <div class="flex flex-col w-full">
+      <textarea [(ngModel)]="updateCompany.description" name="description" class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md" placeholder="Description" required></textarea>
+    </div>
+    <div class="w-full">
+      <button type="submit" class="w-full text-[20px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
                                   text-white rounded-md h-[45px]">Update company</button>
     </div>
     <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>

@@ -1,73 +1,67 @@
 <form #createCompanyAdministratorForm="ngForm" (ngSubmit)="CreateCompanyAdministrator(createCompanyAdministratorForm)">
-    <div class="flex flex-col h-[900px] bg-white w-[500px] py-4 items-center rounded-md justify-between border-[1px] border-secondary/10">
-        <div>
-            <p class="font-inter text-third font-medium text-[18px]">Username</p>
-            <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+    <div class="flex flex-col h-[1000px] bg-white w-[600px] p-4 items-center rounded-md justify-between">
+        <div class="flex w-full justify-end">
+            <fa-icon [icon]="faClose" (click)="closeModal()"
+                    class="flex cursor-pointer text-[28px] text-third hover:text-lightBlue transition-[0.5s]"/>
+        </div>
+        <h2 class="text-2xl font-inter text-third font-bold mb-4 text-center">Create new company administrator</h2>
+        <div class="flex flex-col w-full">
+            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
                     placeholder="Username"
                     ngModel name="username" required>
         </div>
-        <div>
-            <p class="font-inter text-third font-medium text-[18px]">Name</p>
-            <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                    placeholder="Name"
+        <div class="flex flex-col w-full mt-2">
+            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
+                    placeholder="First name"
                     ngModel name="name" required>
         </div>
-        <div>
-            <p class="font-inter text-third font-medium text-[18px]">Lastname</p>
-            <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                    placeholder="Lastname"
+        <div class="flex flex-col w-full mt-2">
+            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
+                    placeholder="Last name"
                     ngModel name="lastName" required>
         </div>
-        <div>
-            <p class="font-inter text-third font-medium text-[18px]">Password</p>
-            <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+        <div class="flex flex-col w-full mt-2">
+            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
                     placeholder="Password"
                     ngModel name="password" required>
         </div>
-        <div>
-            <p class="font-inter text-third font-medium text-[18px]">Date of birth</p>
-            <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                    placeholder="YYYY-MM-DD"
+        <div class="flex flex-col w-full mt-2">
+            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
+                    placeholder="Date of birth"
                     ngModel name="dateOfBirth" required>
         </div>
-        <div>
-            <p class="font-inter text-third font-medium text-[18px]">Email</p>
-            <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+        <div class="flex flex-col w-full mt-2">
+            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
                     placeholder="Email"
                     ngModel name="email" required>
         </div>
-        <div>
-            <p class="font-inter text-third font-medium text-[18px]">Phone number</p>
-            <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+        <div class="flex flex-col w-full mt-2">
+            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
                     placeholder="Phone number"
                     ngModel name="phoneNumber" required>
         </div>
-        <div>
-            <p class="font-inter text-third font-medium text-[18px]">Country</p>
-            <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+        <div class="flex flex-col w-full mt-2">
+            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
                     placeholder="Country"
                     ngModel name="country" required>
         </div>
-        <div>
-            <p class="font-inter text-third font-medium text-[18px]">City</p>
-            <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+        <div class="flex flex-col w-full mt-2">
+            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
                     placeholder="City"
                     ngModel name="city" required>
         </div>
-        <div>
-            <p class="font-inter text-third font-medium text-[18px]">Profession</p>
-            <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+        <div class="flex flex-col w-full mt-2">
+            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
                     placeholder="Profession"
                     ngModel name="profession">
         </div>
-        <div>
-            <p class="font-inter text-third font-medium text-[18px]">Company info</p>
-            <input class="w-[400px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+        <div class="flex flex-col w-full mt-2">
+            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
                     placeholder="Company info"
                     ngModel name="companyInfo">
         </div>
         
-        <button class="w-[400px] text-[20px] bg-[#0582ca] hover:bg-lightBlue cursor-pointer transition-[0.5s] font-inter font-semibold 
+        <button class="w-full text-[20px] bg-third hover:bg-lightBlue cursor-pointer mt-2 transition-[0.5s] font-inter font-semibold 
                         text-white rounded-md h-[45px]" type="submit"
                 [disabled]="createCompanyAdministratorForm.invalid || !createCompanyAdministratorForm.dirty">
             Create company administrator

@@ -1,43 +1,58 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { UserService } from 'src/app/services/user.service';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgForm } from '@angular/forms';
+import { CompanyService } from 'src/app/services/company.service';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-update-company-form',
   templateUrl: './update-company-form.component.html',
 })
-export class UpdateCompanyFormComponent {
+export class UpdateCompanyFormComponent implements OnInit{
+  @Input() userId!: number;
   updateCompany: any = {};
   successMessage: string = '';
   errorMessage: string = '';
+  token = localStorage.getItem('token');
 
-  constructor(private http: HttpClient) { }
+  faClose = faClose;
 
-  onUpdateCompany() {
-    console.log('Update Company: ', this.updateCompany);
-
-    this.http.put(`http://localhost:8081/api/company/update/${this.updateCompany.id}`, this.updateCompany)
-      .subscribe(response => {
-        console.log('Success:', response);
-        this.successMessage = 'Company updated successfully!';
-        this.errorMessage = '';
-        this.clearForm();
-      }, error => {
-        console.error('Error:', error);
-        this.successMessage = '';
-        this.errorMessage = 'Failed to update company. Please check the data and try again.';
-        this.clearIdAndFocus();
-      });
+  constructor(private http: HttpClient, private userService: UserService,
+              private modalService : NgbActiveModal,private companyService : CompanyService,
+              private toast: NgToastService) { }
+  
+  ngOnInit(): void {
   }
 
-  clearForm() {
-    this.updateCompany = {};
+  public onUpdateCompany(companyToUpdateForm: NgForm) {
+      this.companyService.updateCompany(companyToUpdateForm.value, this.userId).subscribe(
+        (response: any) => {
+          if (response instanceof Object) {
+            this.updateCompany = response;
+            this.toast.success({detail: "Success" ,summary: "Company has been updated successfully!"});
+            window.location.reload();
+            console.log(response);
+          } else {
+            //console.log('Update successful');
+            this.toast.success({detail: "Success" ,summary: "Company has been updated successfully!"});
+            window.location.reload();
+          }
+        },
+        (error: HttpErrorResponse) => {
+          //alert(error.message);
+          this.toast.error({detail: "Error message" ,summary: "Error updating company information!" + error.message});
+        }
+      );
   }
 
-  clearIdAndFocus() {
-    this.updateCompany.id = null;
-    const idInput = document.getElementById('idInput') as HTMLInputElement;
-    if (idInput) {
-      idInput.focus();
-    }
+  public clearForm(): void {
+    this.modalService.close();
+  }
+
+  public closeModal(): void {
+    this.modalService.close();
   }
 }

@@ -1,25 +1,33 @@
 <form #createCompanyForm="ngForm" (ngSubmit)="CreateCompany(createCompanyForm)">
-    <div class="flex flex-col justify-between items-center w-[300px] h-[400px] bg-white py-4 border-[1px] border-secondary/10 rounded-md">
-        <div>
-            <p class="font-inter text-third font-medium text-[18px]">Company name</p>
-            <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+    <div class="flex flex-col h-[500px] bg-white w-[600px] p-4 items-center rounded-md justify-between">
+        <div class="flex w-full justify-end">
+            <fa-icon [icon]="faClose" (click)="closeModal()"
+                    class="flex cursor-pointer text-[28px] text-third hover:text-lightBlue transition-[0.5s]"/>
+        </div>
+        <h2 class="text-2xl font-inter text-third font-bold mb-4 text-center">Create new company</h2>
+        <div class="flex flex-col w-full">
+            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
                     placeholder="Company name"
                     ngModel name="name" required>
         </div>
-        <div>
-            <p class="font-inter text-third font-medium text-[18px]">Country</p>
-            <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+        <div class="flex flex-col w-full">
+            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
                     placeholder="Country"
                     ngModel name="country" required>
         </div>
-        <div>
-            <p class="font-inter text-third font-medium text-[18px]">City</p>
-            <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
+        <div class="flex flex-col w-full">
+            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
                     placeholder="City"
                     ngModel name="city" required>
         </div>
+
+        <div class="flex flex-col w-full">
+            <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
+                    placeholder="Desc"
+                    ngModel name="description" required>
+        </div>
         
-        <button class="w-[200px] text-[20px] bg-[#0582ca] hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
+        <button class="w-full text-[20px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
                         text-white rounded-md h-[45px] cursor-pointer" type="submit"
                 [disabled]="createCompanyForm.invalid || !createCompanyForm.dirty">
             Create company

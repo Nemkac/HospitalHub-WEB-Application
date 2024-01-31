@@ -24,39 +24,46 @@
                 EQUIPMENT
             </a>
         </li>
-        <div class="flex items-center justify-between w-[160px]">
+        <div class="flex items-center justify-between w-auto ml-10">
             <ng-container *ngIf="username === 'LOGIN'; else loggedInUser">
-                <li class="hover:text-third transition-[0.5s] ml-10">
+                <li class="hover:text-third transition-[0.5s]">
                     <a routerLink="/logIn">
                         {{ username }}
                     </a>
                 </li>
             </ng-container>
             <ng-template #loggedInUser>
-                <li class="hover:text-third transition-[0.5s] ml-10">
+                <li class="hover:text-third transition-[0.5s]">
                     <div class="relative" ngbDropdown>
                         <a class="nav-link dropdown-toggle" ngbDropdownToggle>
                             {{ username }}
                         </a>
-                        <div ngbDropdownMenu>
-                            <div class="flex w-full text-third hover:bg-third hover:text-white px-2 ">
-                                <a class="font-inter font-regular text-[18px]" routerLink="api/user/profile/{{userId}}">Profile</a>
+                        <div ngbDropdownMenu class="transition-all rounded-md h-auto shadow-md bg-white border-[0px] py-0">
+                            <div class="flex w-full rounded-t-md text-third hover:bg-third hover:text-white p-[8px] ">
+                                <a class="font-inter font-regular text-[17px]" routerLink="profile">Profile</a>
                             </div>
                             <ng-container *ngIf="userRole === 'ROLE_COMPANYADMIN'">
-                                <div class="flex w-full text-third hover:bg-third hover:text-white px-2">
-                                    <a class="font-inter font-regular text-[18px]" routerLink="/mycompany">My company</a>
+                                <div class="flex w-full text-third hover:bg-third hover:text-white p-[8px]">
+                                    <a class="font-inter font-regular text-[17px]" routerLink="/mycompany">My company</a>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="userRole === 'ROLE_COMPANYADMIN'">
+                                <div class="flex w-full text-third hover:bg-third hover:text-white p-[8px]">
+                                    <a class="font-inter font-regular text-[17px]" routerLink="/qr-code-scanner">QR Scanner</a>
                                 </div>
                             </ng-container>
                             <ng-container *ngIf="userRole === 'ROLE_SYSADMIN'">
-                                <div class="flex w-full text-third hover:bg-third hover:text-white px-2">
-                                    <a class="font-inter font-regular text-[18px]" routerLink="/complaints">Complaints</a>
+                                <div class="flex flex-row items-center justify-between w-full text-third hover:bg-third hover:text-white p-[8px]" routerLink="/complaints">
+                                    <a class="font-inter font-regular text-[17px]">Complaints</a>
+                                    <ng-container *ngIf="complaintsNotificationFlag">
+                                        <div class="flex rounded-full w-[20px] h-[20px] bg-yellow items-center justify-center">
+                                            <p class="flex font-inter font-semibold text-[12px] text-third">{{complaintsCount}}</p>
+                                        </div>
+                                    </ng-container>
                                 </div>
                             </ng-container>
-                            <div class="flex w-full text-third hover:bg-third hover:text-white px-2">
-                                <a class="font-inter font-regular text-[18px]" href="#">Settings</a>
-                            </div>
-                            <div class="flex w-full text-third hover:bg-third hover:text-white px-2">
-                                <a class="font-inter font-regular text-[18px]"  (click)="logOut()" href="#">LogOut</a>
+                            <div class="flex w-full rounded-b-md text-third hover:bg-third hover:text-white p-[8px]">
+                                <a class="font-inter font-regular text-[17px]"  (click)="logOut()" href="#">LogOut</a>
                             </div>
                         </div>
                     </div>

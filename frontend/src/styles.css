@@ -3,8 +3,55 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Nunito:wght@200;300;400;600;700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Oswald:wght@200;400;500;600;700&display=swap');
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+
 
 .carousel-item {
     transition: transform 0.65s ease-in-out; /* Adjust the duration and timing function as needed */
     width: calc(100% + 20px);
 }   
+
+.fc-daygrid-day {
+    height: 80px; /* Prilagodite visinu prema potrebi */
+  }
+  
+/* Omogućavanje scroll-a unutar polja za datum */
+.fc-daygrid-day-events {
+    overflow-y: auto;
+    max-height: 140px; /* Prilagodite visinu prema potrebi */
+}
+
+.fc-more {
+    cursor: pointer;
+}
+
+:root{
+  --fc-button-text-color: #F5F6FA;
+  --fc-button-bg-color: #003554;
+  --fc-button-border-color: transparent;
+  --fc-button-hover-bg-color: #00A6FB;
+  --fc-button-hover-border-color: transparent;
+  --fc-button-active-bg-color: #00A6FB;
+  --fc-button-active-border-color: transparent;
+
+  --fc-event-bg-color: transparent;
+  --fc-event-border-color: transparent;
+
+  --fc-small-font-size: .85em;
+  --fc-page-bg-color: #F5F6FA;
+  --fc-neutral-bg-color: rgba(208, 208, 208, 0.3);
+  --fc-neutral-text-color: #808080;
+  --fc-border-color: #ddd;
+}
+  
+.full-calendar-button:hover {
+    background-color: #e74c3c; /* Crvena boja dugmeta pri hoveru */
+}
+  
+.full-calendar-event {
+    cursor: pointer;
+}
+  
+.full-calendar-event:hover {
+    background-color: #f39c12; /* Žuta boja eventa pri hoveru */
+}

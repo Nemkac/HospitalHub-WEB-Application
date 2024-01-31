@@ -1,11 +1,14 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserProfileService } from 'src/app/services/user-profile.service';
-import { UserProfile } from 'src/assets/user-profile';
-import { UserProfileToUpdate } from 'src/assets/user-profile-to-update';
+import { UserProfile } from 'src/app/models/user-profile';
+import { UserProfileToUpdate } from 'src/app/models/user-profile-to-update';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-update-user-profile',
@@ -16,38 +19,54 @@ export class UpdateUserProfileComponent implements OnInit{
   userProfileToUpdate! : UserProfileToUpdate;
   userInfo! : Observable<UserProfile>;
   user! : UserProfile;
+  token = localStorage.getItem('token');
   date = new FormControl(new Date());
   usersBirthDate = "";
+
+  faClose = faClose;
+
   constructor(private userProfileService:UserProfileService,
-              private route : ActivatedRoute){}
+              private route : ActivatedRoute,
+              private modalService: NgbActiveModal,
+              private userService : UserService){}
+              
 
   ngOnInit(): void {
-    const idFromRoute = this.route.snapshot.paramMap.get('id');
-    if(idFromRoute != null) {
-    this.userId =+ idFromRoute
-    } else {
-      console.error('User ID not found in the route');
-    }
-    this.userInfo = this.userProfileService.showUserProfile(this.userId);
-    this.userInfo.subscribe(
-      (user:UserProfile) =>{
-        this.user = user;
-        this.usersBirthDate = user.dateOfBirth.toString();
-      }
-    )
+    if(this.token){
+      this.userService.getUserByToken(this.token).subscribe(
+        (user1) => {
+      this.userInfo = this.userProfileService.showUserProfile(user1.id);
+      this.userInfo.subscribe(
+        (user:UserProfile) =>{
+          this.user = user;
+          this.usersBirthDate = user.dateOfBirth.toString();
+        }
+      )}
+    )}
   }
   
   public updateUserProfile(userProfileToUpdate: NgForm):void{
-    this.userProfileService.updateUserProfile(this.userId,userProfileToUpdate.value).subscribe(
-      (response:UserProfileToUpdate) => {
-        this.userProfileToUpdate = response;
-        window.location.reload();
-        console.log(response);
-      },
-      (error:HttpErrorResponse) => {
-        alert(error.message);
+    if(this.token) {
+    // Set the Authorization header with the bearer token
+		const headers = new HttpHeaders({
+		'Content-Type': 'application/json',
+		'Authorization': `Bearer ${this.token}`
+		});
+    this.userService.getUserByToken(this.token).subscribe(
+      (user) => {
+        this.userProfileService.updateUserProfile(user.id,userProfileToUpdate.value,headers).subscribe(
+          (response:UserProfileToUpdate) => {
+            this.userProfileToUpdate = response;
+            window.location.reload();
+            console.log(response);
+          },
+          (error:HttpErrorResponse) => {
+            alert(error.message);
+          }
+        )
       }
     )
+    }
   }
 
   public getPasswordPlaceholder():string{
@@ -55,6 +74,8 @@ export class UpdateUserProfileComponent implements OnInit{
     return '*'.repeat(passwordLength);
   }
 
-
+  public closeModal(): void {
+    this.modalService.close();
   }
+}
   

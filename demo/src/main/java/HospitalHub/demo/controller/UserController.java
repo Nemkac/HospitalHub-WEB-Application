@@ -1,26 +1,21 @@
 package HospitalHub.demo.controller;
 
-import HospitalHub.demo.dto.CompanyDTO;
 import HospitalHub.demo.dto.UserProfileDTO;
-import HospitalHub.demo.model.Company;
+import HospitalHub.demo.model.*;
 import HospitalHub.demo.dto.UserDTO;
-import HospitalHub.demo.model.CompanyAdministrator;
-import HospitalHub.demo.model.SystemAdministrator;
-import HospitalHub.demo.model.User;
-import HospitalHub.demo.service.CompanyAdministratorService;
-import HospitalHub.demo.service.CompanyService;
-import HospitalHub.demo.service.JwtService;
-import HospitalHub.demo.service.UserService;
+import HospitalHub.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
+@EnableScheduling
 @RestController
 @RequestMapping(value = "api/user")
 public class UserController {
@@ -32,6 +27,7 @@ public class UserController {
     private CompanyService companyService;
     @Autowired
     JwtService jwtService;
+
 
     @PutMapping(consumes = "application/json", value = "/update/{id}")
     public ResponseEntity<UserDTO> updateCompanyAdministrator(@RequestBody UserDTO userDTO, @PathVariable Integer id)
@@ -78,8 +74,8 @@ public class UserController {
 
 
     @PutMapping(consumes="application/json", value="updateProfile/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_COMPANYADMIN','ROLE_SYSADMIN')")
     public ResponseEntity<UserProfileDTO> updateUser(@RequestBody UserProfileDTO userProfileDTO, @PathVariable Integer id){
-        // ako je neko polje prazno, da uzme staru vrednost
         if(userService.getById(id) != null){
             if(userProfileDTO.getName() != ""){userService.getById(id).setName(userProfileDTO.getName());}
             if(userProfileDTO.getLastName() != ""){userService.getById(id).setLastName(userProfileDTO.getLastName()); }
@@ -133,5 +129,36 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping(value = "/getUserProfileByToken/{token}")
+    public ResponseEntity<UserProfileDTO> getUserProfileByToken(@PathVariable String token) {
+        try {
+            String username = jwtService.extractUsername(token);
+            User user = userService.getByUsername(username);
+            UserProfileDTO userProfile = new UserProfileDTO(user);
+
+            if (user != null) {
+                return new ResponseEntity<UserProfileDTO>(userProfile, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //@Scheduled(cron = "0 0 0 1 * ?")
+    @Scheduled(cron = "0 37 15 31 1 ?")
+    @PostMapping(value="/clearOutPenaltyPoints")
+    public ResponseEntity clearOutPenaltyPoints(){
+        this.userService.clearOutPenaltyPoints();
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/checkIsAuthorised")
+    @PreAuthorize("hasAnyRole('ROLE_SYSADMIN', 'ROLE_USER', 'ROLE_COMPANYADMIN')")
+    public boolean checkIsAuthorised(){
+        return true;
     }
 }

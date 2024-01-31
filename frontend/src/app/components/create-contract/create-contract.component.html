@@ -1,0 +1,25 @@
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<form #createContractForm = "ngForm" (ngSubmit)="createContract(createContractForm)" class=" w-[600px] mx-auto bg-white p-4 rounded shadow-lg relative">
+    <div class="text-center mb-4">
+        <h2 class="text-3xl font-bold text-gray-800">Create a contract</h2>
+    </div>
+    <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 text-xl">Equipment</label>
+        <input ngModel name="equipmentType" type="text"  class="mt-1 p-2 w-full border rounded-md">
+        <br> <br>
+        <div class="flex-1 mr-2">
+            <label class="block text-sm font-medium text-gray-700 text-xl">Quantity</label>
+            <input ngModel name="quantity" type="number"  class="mt-1 p-2 w-full border rounded-md">
+        </div>
+        <br>
+
+        <div class="flex-1 mr-2">
+            <label class="block text-sm font-medium text-gray-700 text-xl">First delivery date</label>
+            <input ngModel name="deliveryDate" type="date"  class="mt-1 p-2 w-full border rounded-md">
+        </div>
+
+        <div class="flex mt-4 items-center justify-center">
+            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md text-xl">Create</button>
+        </div>
+    </div>
+</form>

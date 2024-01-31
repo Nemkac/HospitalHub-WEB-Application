@@ -10,4 +10,5 @@ import java.util.List;
 public interface ComplaintRepository extends JpaRepository<Complaint, Integer> {
     Complaint save(Complaint complaint);
     List<Complaint> findAll();
+    Complaint getById(Integer id);
 }

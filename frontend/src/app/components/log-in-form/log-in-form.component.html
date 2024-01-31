@@ -1,24 +1,61 @@
 <form #LogInForm="ngForm" (ngSubmit)="logIn(LogInForm)">
-    <div class="flex w-full h-[100vh] px-64 bg-lightBlue/5 justify-center items-center">
-        <div class="flex flex-col bg-white w-[500px] h-[350px] py-4 items-center rounded-md justify-between border-[1px] border-secondary/10">
-            <div>
-                <p class="font-inter text-third font-medium text-[18px]">Email</p>
-                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                        placeholder="Email"
-                        ngModel name="email" required>
+    <div class="flex  w-full h-[100vh] items-center justify-center bg-lightBlue/5 py-32">
+        <div class="flex flex-row shadow-lg h-auto w-auto">
+            <div class="flex w-[400px] h-[600px] bg-third rounded-l-lg items-center justify-center p-2 relative">
+                <img src="../../../assets/loginImage.jpg" class="absolute top-0 left-0 opacity-[5%] object-cover h-full z-[1]">
+                <div class="h-[220px] flex flex-col items-center justify-center justify-evenly">
+                    <p class="font-inter font-bold text-white text-[38px]">Welcome to</p>
+                    <img src="../../../assets/NavLogo-White.png" class="w-[350px] h-auto"/>
+                    <p class="font-inter font-light text-white text-[24px] text-center">Your Trusted Source for Medical Equipment Delivery</p>
+                </div>
             </div>
-            <div>
-                <p class="font-inter text-third font-medium text-[18px]">Password</p>
-                <input class="w-[200px] text-[18px] text-third font-inter px-4 rounded-md h-[30px] bg-gray/20 focus:outline-none"
-                        type = "password"
-                        placeholder="Password"
-                        ngModel name="password" required>
+            <div class="flex flex-col w-[550px] h-[600px] bg-white rounded-r-lg items-center justify-center p-4">
+                <div class="flex flex-col justify-start w-full my-2">
+                    <p class="font-inter font-bold text-third text-[30px]">Login</p>
+                    <p class="font-inter font-light text-gray text-[22px]">Don't have an account yet? 
+                        <span class="hover:text-third transition-[0.5s] font-medium cursor-pointer">
+                            <a routerLink="/register">Register now</a>
+                        </span>
+                    </p>
+                </div>
+                <div class="flex flex-col w-full my-4">
+                    <div class="flex flex-col">
+                        <p class="font-inter font-medium text-third text-[18px]">Email Address</p>
+                        <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
+                                placeholder="you@gmail.com"
+                                ngModel name="email" required>
+                    </div>
+                    <div class="flex flex-col">
+                        <p class="font-inter font-medium text-third text-[18px] mt-2">Password</p>
+                        <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md mb-2"
+                                type = "password"
+                                placeholder="Password"
+                                ngModel name="password" required>
+                    </div>
+                </div>
+                <button class="w-full text-[20px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
+                                text-white rounded-md h-[45px] cursor-pointer my-2" type="submit"
+                        [disabled]="LogInForm.invalid || !LogInForm.dirty">
+                    Log in
+                </button>
+                <div class="flex flex-row w-full items-center my-4 justify-center justify-evenly">
+                    <hr class="text-gray w-[200px]">
+                    <p class="font-inter font-light text-gray text-[16px]">or login with</p>
+                    <hr class="text-gray w-[200px]">
+                </div>
+                <div class="flex flex-row w-full items-center justify-center justify-between">
+                    <div class="flex flex-row w-[45%] items-center justify-center p-2 rounded-md border-[2px] 
+                                border-[#DB4437] hover:bg-[#DB4437]/10 transition-[0.5s] cursor-pointer">
+                        <img src="../../../assets/google.png" class="w-[25px]"/>
+                        <p class="font-inter font-semibold text-[#DB4437] text-[18px] ml-2">Google</p>
+                    </div>
+                    <div class="flex flex-row w-[45%] items-center justify-center p-2 rounded-md border-[2px] border-[#4267B2]
+                                hover:bg-[#4267B2]/10 transition-[0.5s] cursor-pointer">
+                        <img src="../../../assets/facebook.png" class="w-[30px] hover:color-white"/>
+                        <p class="font-inter font-semibold text-[#4267B2] text-[18px] ml-2">Facebook</p>
+                    </div>
+                </div>
             </div>
-            <button class="w-[200px] text-[20px] bg-secondary hover:bg-third transition-[0.5s] font-inter font-semibold 
-                            text-white rounded-md h-[45px]" type="submit"
-                    [disabled]="LogInForm.invalid || !LogInForm.dirty">
-                Log in
-            </button>
         </div>
     </div>
 </form>

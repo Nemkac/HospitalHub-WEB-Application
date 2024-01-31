@@ -1,8 +1,10 @@
 package HospitalHub.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "CompanyAdministrator")
@@ -15,9 +17,18 @@ public class CompanyAdministrator{
     @OneToOne
     private User user;
 
-    @OneToOne
-    @JoinColumn(name = "company_id") // Use the name of the foreign key column in the database
+    @ManyToOne
+    @JoinColumn(name = "company_id")
     private Company company;
+
+    @OneToMany(mappedBy = "companyAdministrator")
+    private List<EquipmentAvailability> equipmentAvailabilityList;
+
+    @OneToMany(mappedBy = "companyAdministrator")
+    private List<EquipmentPickupSlot> equipmentPickupSlots;
+
+    @Column
+    private boolean passwordChanged;
 
     public CompanyAdministrator() {
     }
@@ -25,11 +36,13 @@ public class CompanyAdministrator{
     public CompanyAdministrator(User user) {
         this.user = user;
         this.company = null;
+        this.passwordChanged = false;
     }
 
     public CompanyAdministrator(User user, Company company) {
         this.user = user;
         this.company = company;
+        this.passwordChanged = false;
     }
     public Integer getCompAdminId() {
         return compAdminId;
@@ -53,4 +66,34 @@ public class CompanyAdministrator{
     public void setCompany(Company company) {
         this.company = company;
     }
+
+    public List<EquipmentAvailability> getEquipmentAvailabilityList() {
+        return equipmentAvailabilityList;
+    }
+
+    public void setEquipmentAvailabilityList(List<EquipmentAvailability> equipmentAvailabilityList) {
+        this.equipmentAvailabilityList = equipmentAvailabilityList;
+    }
+
+    public void setSysAdminId(Integer compAdminId) {
+        this.compAdminId = compAdminId;
+        this.passwordChanged = false;
+    }
+
+    public boolean isPasswordChanged() {
+        return passwordChanged;
+    }
+
+    public void setPasswordChanged(boolean passwordChanged) {
+        this.passwordChanged = passwordChanged;
+    }
+
+    public List<EquipmentPickupSlot> getEquipmentPickupSlots() {
+        return equipmentPickupSlots;
+    }
+
+    public void setEquipmentPickupSlots(List<EquipmentPickupSlot> equipmentPickupSlots) {
+        this.equipmentPickupSlots = equipmentPickupSlots;
+    }
 }
+

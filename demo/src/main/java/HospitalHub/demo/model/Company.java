@@ -1,11 +1,12 @@
 package HospitalHub.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
@@ -17,45 +18,91 @@ public class Company {
 
     @Column(name = "name")
     private String name;
+
     @Column(name = "city")
     private String city;
+
     @Column(name = "country")
     private String country;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
+
     @Column(name = "avgRate")
     private Double avgRate;
 
-    @OneToOne(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "company_admin_id") // Use the name of the foreign key column in the database
-    private CompanyAdministrator companyAdministrator;
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "openingTime")
+    private LocalTime openingTime;
+
+    @Column(name = "closingTime")
+    private LocalTime closingTime;
+
+    @OneToMany(mappedBy = "company")
+    private List<CompanyAdministrator> companyAdministrators;
 
     @JsonIgnoreProperties("company")
     @OneToMany(mappedBy = "company")
     private List<MedicalEquipment> medicalEquipmentList;
 
+    @OneToMany(mappedBy = "company")
+    private List<EquipmentContract> equipmentContracts;
 
-    /*Treba dodati polje sa relacijom koje ce predstavljati id administratora
-    koji je zaduzen za odredjenu kompaniju.*/
-    //CompanyAdministrator companyAdministrator
+    @OneToMany(mappedBy = "company")
+    private List<EquipmentAvailability> equipmentAvailabilityList;
 
     public Company() {
 
     }
 
-    public Company(String name, String city, String country) {
+    public Company(String name, String city, String country, String description) {
         this.name = name;
         this.city = city;
         this.country = country;
+        this.description = description;
         this.avgRate = 0.0;
-        this.companyAdministrator = null;
+        this.companyAdministrators = new ArrayList<>();
     }
 
-    public Company(Integer id, String name, String city, String country) {
+    public Company(Integer id, String name, String city, String country, String address, double latitude, double longitude, String description, LocalTime openingTime, LocalTime closingTime) {
         this.id = id;
         this.name = name;
         this.city = city;
         this.country = country;
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.avgRate = 0.0;
-        this.companyAdministrator = null;
+        this.description = description;
+        this.companyAdministrators = new ArrayList<>();
+        this.openingTime = openingTime;
+        this.closingTime = closingTime;
+    }
+
+    public Company(Integer id, String name, String city, String country, String address, Double latitude, Double longitude, Double avgRate, String description, LocalTime openingTime, LocalTime closingTime, List<CompanyAdministrator> companyAdministrators, List<MedicalEquipment> medicalEquipmentList, List<EquipmentContract> equipmentContracts, List<EquipmentAvailability> equipmentAvailabilityList) {
+        this.id = id;
+        this.name = name;
+        this.city = city;
+        this.country = country;
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.avgRate = avgRate;
+        this.description = description;
+        this.openingTime = openingTime;
+        this.closingTime = closingTime;
+        this.companyAdministrators = companyAdministrators;
+        this.medicalEquipmentList = medicalEquipmentList;
+        this.equipmentContracts = equipmentContracts;
+        this.equipmentAvailabilityList = equipmentAvailabilityList;
     }
 
     public Integer getId() {
@@ -105,12 +152,83 @@ public class Company {
     public void setMedicalEquipmentList(List<MedicalEquipment> medicalEquipmentList) {
         this.medicalEquipmentList = medicalEquipmentList;
     }
-
-    public CompanyAdministrator getCompanyAdministrator() {
-        return companyAdministrator;
+    public List<EquipmentAvailability> getEquipmentAvailabilityList() {
+        return equipmentAvailabilityList;
     }
 
-    public void setCompanyAdministrator(CompanyAdministrator companyAdministrator) {
-        this.companyAdministrator = companyAdministrator;
+    public void setEquipmentAvailabilityList(List<EquipmentAvailability> equipmentAvailabilityList) {
+        this.equipmentAvailabilityList = equipmentAvailabilityList;
+    }
+
+    public List<CompanyAdministrator> getCompanyAdministrator() {
+        return companyAdministrators;
+    }
+
+    public void setCompanyAdministrator(List<CompanyAdministrator> companyAdministrator) {
+        this.companyAdministrators = companyAdministrator;
+    }
+
+    public List<CompanyAdministrator> getCompanyAdministrators() {
+        return companyAdministrators;
+    }
+
+    public void setCompanyAdministrators(List<CompanyAdministrator> companyAdministrators) {
+        this.companyAdministrators = companyAdministrators;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalTime getOpeningTime() {
+        return openingTime;
+    }
+
+    public void setOpeningTime(LocalTime openingTime) {
+        this.openingTime = openingTime;
+    }
+
+    public LocalTime getClosingTime() {
+        return closingTime;
+    }
+
+    public void setClosingTime(LocalTime closingTime) {
+        this.closingTime = closingTime;
+    }
+
+    public List<EquipmentContract> getEquipmentContracts() {
+        return equipmentContracts;
+    }
+
+    public void setEquipmentContracts(List<EquipmentContract> equipmentContracts) {
+        this.equipmentContracts = equipmentContracts;
     }
 }
