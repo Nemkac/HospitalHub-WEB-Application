@@ -36,8 +36,8 @@ export class EquipmentService {
         return this.http.put(url, equipmentToUpdate);
     }
 
-    getEquipmentById(equipmentId: number): Observable<Equipment> {
-        const url = `${this.baseUrl}/${equipmentId}`;
+    getEquipmentById(equipmentId: number,version :number): Observable<Equipment> {
+        const url = `${this.baseUrl}/${equipmentId}/${version}`;
         return this.http.get<Equipment>(url);
     }
 

@@ -12,6 +12,7 @@ import { EquipmentPickupSlotService } from 'src/app/services/equipment-pickup-sl
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgToastService } from 'ng-angular-popup';
+import { version } from 'leaflet';
 
 @Component({
   selector: 'app-cart-modal',
@@ -41,7 +42,7 @@ export class CartModalComponent implements OnInit{
 
   ngOnInit(): void {
     this.selectedEquipmentIds.forEach( id => {
-      this.equipmentService.getEquipmentById(id).subscribe(
+      this.equipmentService.getEquipmentById(id,-1).subscribe(
         (response : Equipment) => {
           this.equipmentList.push(response);
         },

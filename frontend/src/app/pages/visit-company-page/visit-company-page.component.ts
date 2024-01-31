@@ -227,6 +227,9 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
         this.selectedCompany = response;
         if(this.showEquipment){
           this.equipments = response.medicalEquipmentList;
+          console.log("verzija prve", this.equipments[0].version)
+          console.log("OPREME",this.equipments);
+          
         }
         this.companyLatitude = response.latitude; 
         this.companyLongitude = response.longitude;
@@ -325,9 +328,12 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
       });
   }
 
-  public addEquipmentToOrder(id : number) :void{
-    this.equipmentService.getEquipmentById(id).subscribe(
+  public addEquipmentToOrder(id : number,version : number) :void{
+
+
+    this.equipmentService.getEquipmentById(id,version).subscribe(
       (response: Equipment) => {
+        
         if(response.quantity > 0) {
           this.selectedEquipmentsForOrder.push(id);
           console.log(this.selectedEquipmentsForOrder);
@@ -343,7 +349,13 @@ export class VisitCompanyPageComponent implements OnInit, AfterViewInit{
         } else {
           this.toast.error({detail: "Error message", summary:"Equipment out of stock!"});
         }
+      },
+      (error : HttpErrorResponse) =>{
+        if(error.status === 409){
+          this.toast.error({detail: "Error message", summary:"Piece of equipment already ordered!"});
+        }
       }
+      
     )
   }
 

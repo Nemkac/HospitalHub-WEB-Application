@@ -1,4 +1,4 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -47,9 +47,14 @@ export class UpdateUserProfileComponent implements OnInit{
   
   public updateUserProfile(userProfileToUpdate: NgForm):void{
     if(this.token) {
+    // Set the Authorization header with the bearer token
+		const headers = new HttpHeaders({
+		'Content-Type': 'application/json',
+		'Authorization': `Bearer ${this.token}`
+		});
     this.userService.getUserByToken(this.token).subscribe(
       (user) => {
-        this.userProfileService.updateUserProfile(user.id,userProfileToUpdate.value).subscribe(
+        this.userProfileService.updateUserProfile(user.id,userProfileToUpdate.value,headers).subscribe(
           (response:UserProfileToUpdate) => {
             this.userProfileToUpdate = response;
             window.location.reload();

@@ -17,6 +17,10 @@ public class UserProfileDTO {
     private Integer penaltyPoints;
     private String companyInfo;
 
+    public UserProfileDTO() {
+
+    }
+
     public UserProfileDTO(String name, String lastName, String password, LocalDate dateOfBirth, String email, String phoneNumber, String country, String city, String profession, Integer penaltyPoints, String companyInfo) {
         this.name = name;
         this.lastName = lastName;

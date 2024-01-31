@@ -53,8 +53,8 @@ export class UserService {
         })
     )}
 
-    public register(userDto:User):Observable<User>{
-        return this.http.post<User>(`${this.apiServerUrl}/register`, userDto);
+    public register(userDto:User):Observable<UserDTO>{
+        return this.http.post<UserDTO>(`${this.apiServerUrl}/register`, userDto);
     }
 
     public getUserByToken(token: string): Observable<User> {

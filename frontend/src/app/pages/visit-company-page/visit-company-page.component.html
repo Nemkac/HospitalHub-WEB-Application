@@ -102,7 +102,7 @@
                                 'bg-darkGreen': equipment.isAddedToCart,
                                 'hover:bg-lightBlue': !equipment.isAddedToCart,
                             }"
-                            (click)="addEquipmentToOrder(equipment.id)">
+                            (click)="addEquipmentToOrder(equipment.id,equipment.version)">
                         {{ equipment.isAddedToCart ? 'Item added!' : 'Add to cart' }}
                     </button>
                 </div>

@@ -7,4 +7,5 @@ export interface Equipment{
     image: string;
     isAddedToCart: boolean;
     quantity: number;
+    version : number;
 }
