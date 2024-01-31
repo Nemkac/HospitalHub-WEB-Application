@@ -12,7 +12,10 @@ import { RxStomp } from '@stomp/rx-stomp';
 import { RxStompService } from 'src/app/services/rx-stomp.service';
 import { rxStompServiceFactory } from 'src/app/rx-stomp-service-factory';
 import { HttpHeaders } from '@angular/common/http';
+import { StompService } from 'src/app/services/stomp.service';
 
+import * as SockJS from 'sockjs-client';
+import * as Stomp from 'stompjs';
 
 
 @Component({
@@ -44,14 +47,35 @@ export class RequestDeliveryPageComponent implements OnInit{
 	constructor(private route: ActivatedRoute,
 				private companyService: CompanyService,
 				private rabbitmqLiveLocationService: RabbitmqLiveLocationService,
-				private toast: NgToastService,
-				private rxStompService: RxStompService) {} 
+				private toast: NgToastService) {} 
 
 	ngOnInit(): void {
+		this.establishWebSocketConnection();
 		const idFromRoute = this.route.snapshot.paramMap.get('id');
 		if(idFromRoute != null) {
 			this.companyId =+ idFromRoute
 			this.getCompanyData();
+		}
+	}
+
+	public establishWebSocketConnection(): void {
+		const socket = new SockJS('http://localhost:8081/livelocation-websocket');
+		const stompClient = Stomp.over(socket);
+	
+		stompClient.connect({}, (frame) => {
+			console.log('Connected to WebSocket');
+			stompClient.subscribe('/livelocation-websocket', (message) => {
+				console.log("Subscribed to topic");
+				const location: LiveLocation = JSON.parse(message.body);
+				console.log('New location received:', location);
+				this.updateMarkerPosition(location.latitude, location.longitude);
+			});
+		});
+	}
+	
+	private updateMarkerPosition(latitude: number, longitude: number): void {
+		if (this.marker) {
+			this.marker.setLatLng([latitude, longitude]);
 		}
 	}
 
@@ -68,9 +92,8 @@ export class RequestDeliveryPageComponent implements OnInit{
 			console.error('Error fetching company data.', error);
 		  }
 		);
-	  }
+	}
 
-	///STARO SA LEAFLET
 	loadMap() {
 		this.map = L.map(this.mapContainer.nativeElement).setView(
 			[this.companyLatitude, this.companyLongitude],
@@ -113,19 +136,12 @@ export class RequestDeliveryPageComponent implements OnInit{
 			longitude: longitude,
 		};
 
-		//this.rabbitmqLiveLocationService.sendLiveLocationMessage(liveLocation).subscribe();
 		const token = localStorage.getItem('token');
-    
-    // Set the Authorization header with the bearer token
 		const headers = new HttpHeaders({
 		'Content-Type': 'application/json',
 		'Authorization': `Bearer ${token}`
 		});
-		this.rabbitmqLiveLocationService.sendLiveLocationMessage(liveLocation,headers).subscribe(
-			(response: LiveLocation) => {
-				this.setMarkerOnCoordinates(response.latitude, response.longitude);
-		  	}
-		);
+		this.rabbitmqLiveLocationService.sendLiveLocationMessage(liveLocation,headers).subscribe();
 	}
 
 	startDelivery() : void{
@@ -141,7 +157,6 @@ export class RequestDeliveryPageComponent implements OnInit{
 					}	
 					const currentCoordinate = this.routeCoordinates[index];
 					this.sendCoordinateToRabbitMQ(currentCoordinate.lat, currentCoordinate.lng);
-					this.consumeLiveLocationCoordinates();
 					index++;
 					this.deliveryStarted = true;
 				} else {
@@ -169,27 +184,5 @@ export class RequestDeliveryPageComponent implements OnInit{
 			leafletTopRight.style.transform = 'translateY(-50%)';
 			leafletTopRight.style.zIndex = '1000';
 		}
-	}
-
-	private setMarkerOnCoordinates(latitude: number, longitude: number) {
-		if (this.marker) {
-		  this.marker.setLatLng([latitude, longitude]);
-		}
-	}
-
-	public consumeLiveLocationCoordinates(): void {
-		/*this.rabbitmqLiveLocationService.receiveLiveLocationMessages().subscribe(
-			(liveLocation: LiveLocation) => {
-			  this.setMarkerOnCoordinates(liveLocation.latitude, liveLocation.longitude);
-			},
-			(error) => {
-			  console.error('Error receiving live location messages:', error);
-			}
-		);*/
-		this.rxStompService.watch('/topic/liveLocation').subscribe((message) => {
-			console.log('Received message:', message.body);
-			// Ovde možete obraditi primljenu poruku
-		});
-		
 	}
 }
