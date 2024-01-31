@@ -58,6 +58,13 @@ public class EquipmentPickupSlot {
         this.companyAdministrator = companyAdministrator;
     }
 
+    public EquipmentPickupSlot(LocalDateTime dateTime, Integer duration, CompanyAdministrator companyAdministrator, boolean ifPredefined) {
+        this.dateTime = dateTime;
+        this.duration = duration;
+        this.companyAdministrator = companyAdministrator;
+        this.ifPredefined = ifPredefined;
+    }
+
     public EquipmentPickupSlot(LocalDateTime dateTime, Integer duration, User reservedBy, CompanyAdministrator companyAdministrator, int[] equipment) {
         this.dateTime = dateTime;
         this.duration = duration;
