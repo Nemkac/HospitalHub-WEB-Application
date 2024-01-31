@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { UserProfile } from "src/app/models/user-profile";
@@ -21,8 +21,8 @@ export class UserProfileService{
         return this.http.get<UserProfile>(`${this.apiServerUrl}/api/user/profile/${id}`)
     }
 
-    public updateUserProfile(id:number, userProfileToUpdate:UserProfileToUpdate) : Observable<UserProfileToUpdate>{
-        return this.http.put<UserProfileToUpdate>(`${this.apiServerUrl}/api/user/updateProfile/${id}`, userProfileToUpdate)
+    public updateUserProfile(id:number, userProfileToUpdate:UserProfileToUpdate,headers : HttpHeaders) : Observable<UserProfileToUpdate>{
+        return this.http.put<UserProfileToUpdate>(`${this.apiServerUrl}/api/user/updateProfile/${id}`, userProfileToUpdate,{headers : headers})
     }
 
     public goToUpdateProfile1(id:number):void {

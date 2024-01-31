@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -78,6 +79,7 @@ public class UserController {
 
 
     @PutMapping(consumes="application/json", value="updateProfile/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_COMPANYADMIN','ROLE_SYSADMIN')")
     public ResponseEntity<UserProfileDTO> updateUser(@RequestBody UserProfileDTO userProfileDTO, @PathVariable Integer id){
         // ako je neko polje prazno, da uzme staru vrednost
         if(userService.getById(id) != null){

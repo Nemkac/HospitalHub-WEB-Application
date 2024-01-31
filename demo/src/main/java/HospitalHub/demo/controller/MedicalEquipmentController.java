@@ -61,6 +61,8 @@ public class MedicalEquipmentController {
     private JavaMailSender mailSender;
     @Autowired
     private EquipmentPickupSlotRepository equipmentPickupSlotRepository;
+    @Autowired
+    private MedicalEquipmentRepository medicalEquipmentRepository;
 
     @GetMapping(value = "/getAll")
     public ResponseEntity<List<MedicalEquipmentDTO>> getAllEquipment(){
@@ -154,11 +156,17 @@ public class MedicalEquipmentController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<MedicalEquipment> getEquipmentById(@PathVariable Integer id) {
+    @GetMapping("/{id}/{version}")
+    @Transactional
+    public ResponseEntity<MedicalEquipment> getEquipmentById(@PathVariable Integer id,@PathVariable Long version) {
         MedicalEquipment equipment = medicalEqupimentService.getEquipmentById(id);
 
         if (equipment != null) {
+            if(version != -1) {
+                if (!equipment.getVersion().equals(version)) {
+                    return new ResponseEntity<>(equipment, HttpStatus.CONFLICT);
+                }
+            }
             return new ResponseEntity<>(equipment, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -223,10 +231,15 @@ public class MedicalEquipmentController {
         }
 
         foundSlot.setEquipment(orderEquipmentDTO.getEquipmentIds());
+
         EquipmentPickupSlot check = slotRepository.save(foundSlot);
 
         //Slanje qr koda na mejl korisnika
         List<MedicalEquipment> equipment = medicalEqupimentService.findAllById(orderEquipmentDTO.getEquipmentIds());
+        for(MedicalEquipment equ : equipment){
+            equ.setVersion(equ.getVersion() + 1);
+            medicalEquipmentRepository.save(equ);
+        }
 
         String namesOfEquipment = new String();
         for(MedicalEquipment x : equipment){
