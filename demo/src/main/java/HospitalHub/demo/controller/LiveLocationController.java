@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class LiveLocationController {
 
-    //private RabbitMQProducer rabbitMQProducer;
-
     private RabbitMQJsonProducer rabbitMQJsonProducer;
 
     public LiveLocationController(/*RabbitMQProducer rabbitMQProducer,*/ RabbitMQJsonProducer rabbitMQJsonProducer) {
@@ -21,11 +19,6 @@ public class LiveLocationController {
         this.rabbitMQJsonProducer = rabbitMQJsonProducer;
     }
 
-    /*@GetMapping(value = "/publish")
-    public ResponseEntity<String> sendMessage(@RequestParam("message") String message){
-        rabbitMQProducer.sendMessage(message);
-        return ResponseEntity.ok("Message sent to RabbitMQ ...");
-    }*/
 
     @PostMapping(value = "/api/liveLocation/publish/json")
     @CrossOrigin(origins = "http://localhost:4200")
@@ -35,8 +28,4 @@ public class LiveLocationController {
         return new ResponseEntity(liveLocationDTO, HttpStatus.OK);
     }
 
-    /*@PostMapping(value = "/publish/json")
-    public void sendJsonMessage(@RequestBody LiveLocationDTO liveLocationDTO){
-        rabbitMQJsonProducer.sendJsonMessage(liveLocationDTO);
-    }*/
 }

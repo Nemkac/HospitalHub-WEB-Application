@@ -1,6 +1,5 @@
 package HospitalHub.demo.controller;
 
-import HospitalHub.demo.dto.CompanyDTO;
 import HospitalHub.demo.dto.UserProfileDTO;
 import HospitalHub.demo.model.*;
 import HospitalHub.demo.dto.UserDTO;
@@ -12,11 +11,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.scheduling.annotation.Scheduled;
 
-
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 @EnableScheduling
 @RestController
@@ -30,8 +26,7 @@ public class UserController {
     private CompanyService companyService;
     @Autowired
     JwtService jwtService;
-    @Autowired
-    private EquipmentPickupSlotService equipmentPickupSlotService;
+
 
     @PutMapping(consumes = "application/json", value = "/update/{id}")
     public ResponseEntity<UserDTO> updateCompanyAdministrator(@RequestBody UserDTO userDTO, @PathVariable Integer id)
@@ -79,7 +74,6 @@ public class UserController {
 
     @PutMapping(consumes="application/json", value="updateProfile/{id}")
     public ResponseEntity<UserProfileDTO> updateUser(@RequestBody UserProfileDTO userProfileDTO, @PathVariable Integer id){
-        // ako je neko polje prazno, da uzme staru vrednost
         if(userService.getById(id) != null){
             if(userProfileDTO.getName() != ""){userService.getById(id).setName(userProfileDTO.getName());}
             if(userProfileDTO.getLastName() != ""){userService.getById(id).setLastName(userProfileDTO.getLastName()); }
@@ -126,7 +120,6 @@ public class UserController {
             User user = userService.getByUsername(username);
 
             if (user != null) {
-                //System.out.println("????Dobar je user?");
                 return new ResponseEntity<User>(user, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -29,11 +29,6 @@ public class RabbitMQJsonConsumer {
         this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
-    /*@RabbitListener(queues = "liveLocationJSON_queue")
-    public void consumeJsonMessage(LiveLocationDTO liveLocationDTO){
-        LOGGER.info(String.format("Received JSON message -> %s", liveLocationDTO.toString()));
-    }*/
-
     @RabbitListener(queues = "liveLocationJSON_queue")
     @MessageMapping("/send/liveLocation")
     public void consumeJsonMessage(LiveLocationDTO liveLocationDTO) throws JsonProcessingException {

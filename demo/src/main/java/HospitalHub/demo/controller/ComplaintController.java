@@ -22,10 +22,6 @@ public class ComplaintController {
     @Autowired
     private ComplaintService complaintService;
 
-    /*
-        TODO: Dodati boolean controller koji proverava da li je otvorena zalba odgovorena ili ne.
-         Na osnovu toga videti da li se prikazuje polje za dodavanje odgovora na zalbu ili ne.
-    */
 
     @GetMapping(value = "/getProcessed")
     public ResponseEntity<List<Complaint>> getAllProcessedComplaints(){
@@ -67,14 +63,6 @@ public class ComplaintController {
     @Transactional
     public ResponseEntity<ComplaintDTO> reply(@PathVariable Integer id, @RequestBody ReplyDTO replyDTO){
         try{
-            /*Complaint complaint = complaintService.getById(id);
-            complaint.setReply(replyDTO.getReply());
-            complaint.setReplyDate(replyDTO.getReplyDate());
-            complaintService.save(complaint);
-
-            ComplaintDTO dto = new ComplaintDTO(complaint);
-
-            return new ResponseEntity<ComplaintDTO>(dto, HttpStatus.OK);*/
 
             Complaint complaint = complaintService.getById(id);
 
@@ -106,19 +94,6 @@ public class ComplaintController {
 
     @GetMapping(value = "/getAll")
     public ResponseEntity<List<Complaint>> getAllComplaints(){
-        /*try{
-            List<Complaint> complaints = complaintService.findAll();
-            List<ComplaintDTO> dtos = new ArrayList<>();
-
-            for(Complaint complaint : complaints){
-                ComplaintDTO dto = new ComplaintDTO(complaint);
-                dtos.add(dto);
-            }
-
-            return new ResponseEntity<List<ComplaintDTO>>(dtos, HttpStatus.FOUND);
-        } catch (Exception e){
-            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }*/
         List<Complaint> complaints = complaintService.findAll();
         List<ComplaintDTO> dtos = new ArrayList<>();
 

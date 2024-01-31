@@ -111,7 +111,6 @@ public class EquipmentContractController {
     }
     private void scheduleEquipmentStateCheck(EquipmentContract contract, String equipmentType, Company company) {
         LocalDate deliveryDate = contract.getDeliveryDate();
-       // int dayOfMonth = deliveryDate.getDayOfMonth() - 3;
         int dayOfMonth = deliveryDate.minusDays(3).getDayOfMonth();
 
         taskScheduler.schedule(() -> checkIfDeliveryIsPossible(contract, equipmentType, company), new CronTrigger("0 48 21 " + dayOfMonth + " * *"));

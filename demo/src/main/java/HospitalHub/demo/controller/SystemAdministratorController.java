@@ -41,11 +41,6 @@ public class SystemAdministratorController {
         return new ResponseEntity<List<User>>(users, HttpStatus.FOUND);
     }
 
-    /*
-    TODO:
-     Ubaciti odabir kompanije u kojoj ce biti zaposlen admin. U dropdown menu se ubacuju samo kompanije koje nemaju
-     trenutno admina. Kad se odabere kompanija, admin se dodaje u njenu listu administratora, a kod admina se dodaje id kompanije
-    */
 
     @PutMapping(value = "/newCompanyAdmin")
     public ResponseEntity<CompanyAdministrator> createCompanyAdministrator(@RequestBody UserDTO userDTO){
