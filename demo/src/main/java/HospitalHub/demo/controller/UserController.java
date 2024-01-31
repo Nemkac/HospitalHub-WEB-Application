@@ -149,7 +149,7 @@ public class UserController {
     }
 
     //@Scheduled(cron = "0 0 0 1 * ?")
-    @Scheduled(cron = "0 6 5 29 1 ?")
+    @Scheduled(cron = "0 37 15 31 1 ?")
     @PostMapping(value="/clearOutPenaltyPoints")
     public ResponseEntity clearOutPenaltyPoints(){
         this.userService.clearOutPenaltyPoints();

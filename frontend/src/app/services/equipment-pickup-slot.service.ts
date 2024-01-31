@@ -6,6 +6,7 @@ import { Equipment } from 'src/Equipment';
 import { UserDTO } from '../userDTO';
 import { List } from 'postcss/lib/list';
 import { CancellAppointmentDTO } from '../models/CancellAppointmentDTO';
+import { QRcodeEquipmentPickUpSlot } from '../models/QRcodeEquipmentPickUpSlot';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +45,10 @@ export class EquipmentPickupSlotService {
     return this.http.get<Equipment[]>(`${this.apiServerUrl}/api/slots/getEquipment/${slotId}`);
   }
 
+  //public getSlotsEquipmentViaString(slotId:Number) : Observable<string>{
+  //  return this.http.get<string>(`${this.apiServerUrl}/api/slots/getEquipmentViaString/${slotId}`);
+  //}
+
   public getReservedUsers(userId: number): Observable<UserDTO[]> {
     const url = `${this.apiServerUrl}/api/slots/getReservedUsers/${userId}`;
     return this.http.get<UserDTO[]>(url);
@@ -73,6 +78,14 @@ export class EquipmentPickupSlotService {
   public cancelAppointment(cancellAppointmentDTO:CancellAppointmentDTO,headers:HttpHeaders) : Observable<CancellAppointmentDTO>{
     console.log(cancellAppointmentDTO);
     return this.http.post<CancellAppointmentDTO>(`${this.apiServerUrl}/api/equipment/cancelAppointment`,cancellAppointmentDTO,{headers:headers});
+  }
+
+  public getQRcodeContent(slotId:number):Observable<QRcodeEquipmentPickUpSlot>{
+    return this.http.get<QRcodeEquipmentPickUpSlot>(`${this.apiServerUrl}/api/slots/getQRcodeContent/${slotId}`);
+  }
+
+  public getQRcodesOutOfSlots(slots:number[]):Observable<QRcodeEquipmentPickUpSlot[]>{
+    return this.http.post<QRcodeEquipmentPickUpSlot[]>(`${this.apiServerUrl}/api/slots/getQRcodesOutOfSlots`,slots);
   }
 
 }

@@ -1,5 +1,6 @@
 package HospitalHub.demo.service;
 
+import HospitalHub.demo.dto.QRcodeEquipmentPickUpSlotDTO;
 import HospitalHub.demo.model.CompanyAdministrator;
 import HospitalHub.demo.model.EquipmentPickupSlot;
 import HospitalHub.demo.model.MedicalEquipment;
@@ -170,6 +171,19 @@ public class EquipmentPickupSlotService {
         return equipments;
     }
 
+    public String getEquipmentsFromIdsViaString(int[] ids){
+        List<MedicalEquipment> equipments = new ArrayList<>();
+        for(int id : ids){
+            equipments.add(medicalEqupimentService.getEquipmentById(id));
+        }
+        String output = "";
+        for(MedicalEquipment equipment : equipments){
+            output += equipment.getName() + ", ";
+        }
+        output = output.substring(0,output.length()-2);
+        return output;
+    }
+
     public List<EquipmentPickupSlot> getUsersUpcomingSlots(Integer userId){
         List<EquipmentPickupSlot> allSlots = equipmentPickupSlotRepository.findAll();
         List<EquipmentPickupSlot> upcomingSlots = new ArrayList<>();
@@ -229,6 +243,22 @@ public class EquipmentPickupSlotService {
         }
         userService.save(user);
         return slot;
+    }
+
+    public List<QRcodeEquipmentPickUpSlotDTO> getQRsOutOfSlots(List<EquipmentPickupSlot> slots){
+        List<QRcodeEquipmentPickUpSlotDTO> QRcodes = new ArrayList<>();
+        for(EquipmentPickupSlot slot : slots) {
+            QRcodes.add(new QRcodeEquipmentPickUpSlotDTO(slot,this));
+        }
+        return QRcodes;
+    }
+
+    public List<EquipmentPickupSlot> getSlotsOutOfIds(List<Integer> ids){
+        List<EquipmentPickupSlot> slots = new ArrayList<>();
+        for(Integer id : ids){
+            slots.add(getById(id));
+        }
+        return slots;
     }
 
 

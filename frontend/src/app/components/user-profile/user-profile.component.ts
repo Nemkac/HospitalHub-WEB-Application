@@ -1,9 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Output, ViewChild } from '@angular/core';
 import { UserProfileService } from 'src/app/services/user-profile.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { ActivatedRoute } from '@angular/router';
-import { faGear, faUser, faPlus, faCalendar, faQrcode, faTrash, faFileContract } from '@fortawesome/free-solid-svg-icons';
+import { faGear, faUser, faPlus, faCalendar, faQrcode, faTrash, faFileContract, faClock,faSort } from '@fortawesome/free-solid-svg-icons';
+//import { faGear, faUser, faPlus, faCalendar, faQrcode, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateUserProfileComponent } from '../update-user-profile/update-user-profile.component';
 import { UserService } from 'src/app/services/user.service';
@@ -31,6 +32,7 @@ import { EquipmentPickupSlotDTO } from 'src/app/models/EquipmentPickupSlotDTO';
 import { Contract } from 'src/app/models/Contract';
 import { ContractService } from 'src/app/services/contract.service';
 import { CreateContractComponent } from '../create-contract/create-contract.component';
+import { QRcodeEquipmentPickUpSlot } from 'src/app/models/QRcodeEquipmentPickUpSlot';
 
 @Component({
   selector: 'app-user-profile',
@@ -49,10 +51,16 @@ export class UserProfileComponent implements OnInit{
   //slots!:EquipmentPickupSlot[];
   upcomingSlots:EquipmentPickupSlot[] = [];
   upcomingSlotsDTOS:EquipmentPickupSlotDTO[] = [];
-  pastSlots!:EquipmentPickupSlot[];
+  pastSlots:EquipmentPickupSlot[]=[];
   sortUpcomingBy : 'duration' | 'date' = 'date'
   sortPastBy : 'duration' | 'date' = 'date'
   contracts : Contract[] = [];
+  QRoutput !: string;
+  upcomingQRcodes !: QRcodeEquipmentPickUpSlot[];
+  pastQRcodes !: QRcodeEquipmentPickUpSlot[];
+  slotsIds !: number[];
+  ifShowQRs : boolean = false;
+
 
   @ViewChild('calendar') calendarRef!: ElementRef;
 
@@ -87,6 +95,8 @@ export class UserProfileComponent implements OnInit{
   faQrcode = faQrcode;
   faTrash = faTrash;
   faFileContract = faFileContract;
+  faClock = faClock;
+  faSort = faSort;
 
   ngOnInit(): void {
     if(this.token){
@@ -120,6 +130,20 @@ export class UserProfileComponent implements OnInit{
       (usersContracts) => {
         this.contracts = usersContracts;
         console.log(usersContracts);
+      }
+    )
+  }
+  getQRcodes(){
+    this.equipmentPickupSlotService.getQRcodesOutOfSlots(this.getIdsFromSlots(this.upcomingSlotsDTOS)).subscribe(
+      (response:QRcodeEquipmentPickUpSlot[]) => {
+        this.upcomingQRcodes = response; 
+        console.log("buduci kodovi ",this.upcomingQRcodes);
+      }
+    )
+    this.equipmentPickupSlotService.getQRcodesOutOfSlots(this.getIdsFromSlots(this.pastSlots)).subscribe(
+      (response:QRcodeEquipmentPickUpSlot[]) => {
+        this.pastQRcodes = response; 
+        console.log("prosli kodovi ",this.pastQRcodes);
       }
     )
   }
@@ -345,7 +369,10 @@ export class UserProfileComponent implements OnInit{
     this.slotService.cancelReservation(slotId).subscribe(
       (slot) => {
         if (slot != null) {
-          window.location.reload();
+          this.toast.success({detail:"Reservation canceled",summary:"Be carefull. Canceling too many reservation can make you banned."})
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         }
       },
       (error) => {
@@ -354,11 +381,12 @@ export class UserProfileComponent implements OnInit{
     );
   }
 
+
   sortUpcoming() {
     if (this.sortUpcomingBy === 'duration') {
-      this.upcomingSlots.sort((a, b) => a.duration - b.duration);
+      this.upcomingSlotsDTOS.sort((a, b) => a.duration - b.duration);
     } else if (this.sortUpcomingBy === 'date') {
-      this.upcomingSlots.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
+      this.upcomingSlotsDTOS.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
     }
   }
 
@@ -376,6 +404,44 @@ export class UserProfileComponent implements OnInit{
       {backdrop:'static',keyboard:true}
     );
     modalRef.componentInstance.userId = this.userId;
+  }
+
+  public showQRs(){
+    if(this.ifShowQRs == true) {
+      this.ifShowQRs = false;
+    } else {
+      this.equipmentPickupSlotService.getQRcodesOutOfSlots(this.getIdsFromSlots(this.upcomingSlotsDTOS)).subscribe(
+        (response:QRcodeEquipmentPickUpSlot[]) => {
+          this.upcomingQRcodes = response;
+        }
+      )
+      this.equipmentPickupSlotService.getQRcodesOutOfSlots(this.getIdsFromSlots(this.pastSlots)).subscribe(
+        (response:QRcodeEquipmentPickUpSlot[]) => {
+          this.pastQRcodes = response;
+        }
+      )
+      this.ifShowQRs = true;
+    }
+    }
+
+  getQRCodeBySlotIdUpcoming(slotId: number): any {
+      const qrCode = this.upcomingQRcodes.find(qr => qr.id === slotId);
+      return qrCode || {};
+    }
+
+  getQRCodeBySlotIdPast(slotId: number): any {
+      const qrCode = this.pastQRcodes.find(qr => qr.id === slotId);
+      return qrCode || {};
+    }
+    
+  
+
+  public getIdsFromSlots(slots:EquipmentPickupSlot[]):number[]{
+    let slotIds : number[] = [];
+    slots.forEach(slot => {
+      slotIds.push(slot.id)
+    })
+    return slotIds;
   }
   
 
