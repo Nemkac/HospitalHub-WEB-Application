@@ -239,55 +239,73 @@ public class InitialDataInsertionService {
         complaintService.save(complaint4);
 
         LocalDateTime slot1DateTime = LocalDateTime.of(2023, 2, 2, 8, 30);
-        EquipmentPickupSlot slot1 = new EquipmentPickupSlot(slot1DateTime, 45, companyAdministrator2);
+        EquipmentPickupSlot slot1 = new EquipmentPickupSlot(slot1DateTime, 45, companyAdministrator2, true);
         //slot1.setReservedBy(user1);
+
         LocalDateTime slot2DateTime = LocalDateTime.of(2023, 2, 13, 12, 30);
-        EquipmentPickupSlot slot2 = new EquipmentPickupSlot(slot2DateTime, 30, companyAdministrator2);
+        EquipmentPickupSlot slot2 = new EquipmentPickupSlot(slot2DateTime, 30, companyAdministrator2, true);
         //lot2.setReservedBy(user2);
+
         LocalDateTime slot3DateTime = LocalDateTime.of(2023, 4, 3, 15, 30);
-        EquipmentPickupSlot slot3 = new EquipmentPickupSlot(slot3DateTime, 15, companyAdministrator1);
+        EquipmentPickupSlot slot3 = new EquipmentPickupSlot(slot3DateTime, 15, companyAdministrator1, true);
+
         LocalDateTime slot4DateTime = LocalDateTime.of(2023, 4, 4, 14, 30);
-        EquipmentPickupSlot slot4 = new EquipmentPickupSlot(slot4DateTime, 30, companyAdministrator1);
+        EquipmentPickupSlot slot4 = new EquipmentPickupSlot(slot4DateTime, 30, companyAdministrator1, true);
         //slot4.setReservedBy(user1);
+
         LocalDateTime slot5DateTime = LocalDateTime.of(2023, 5, 2, 13, 30);
-        EquipmentPickupSlot slot5 = new EquipmentPickupSlot(slot5DateTime, 30, companyAdministrator1);
+        EquipmentPickupSlot slot5 = new EquipmentPickupSlot(slot5DateTime, 30, companyAdministrator1, true);
         //slot5.setReservedBy(user2);
+
         LocalDateTime slot6DateTime = LocalDateTime.of(2023, 5, 2, 12, 30);
-        EquipmentPickupSlot slot6 = new EquipmentPickupSlot(slot6DateTime, 45, companyAdministrator2);
+        EquipmentPickupSlot slot6 = new EquipmentPickupSlot(slot6DateTime, 45, companyAdministrator2, true);
+
         LocalDateTime slot7DateTime = LocalDateTime.of(2023, 7, 3, 11, 30);
-        EquipmentPickupSlot slot7 = new EquipmentPickupSlot(slot7DateTime, 60, companyAdministrator1);
+        EquipmentPickupSlot slot7 = new EquipmentPickupSlot(slot7DateTime, 60, companyAdministrator1, true);
         //slot7.setReservedBy(user1);
+
         LocalDateTime slot8DateTime = LocalDateTime.of(2023, 9, 2, 10, 30);
-        EquipmentPickupSlot slot8 = new EquipmentPickupSlot(slot8DateTime, 30, companyAdministrator2);
+        EquipmentPickupSlot slot8 = new EquipmentPickupSlot(slot8DateTime, 30, companyAdministrator2, true);
         //slot8.setReservedBy(user2);
+
         LocalDateTime slot9DateTime = LocalDateTime.of(2023, 5, 2, 10, 30);
-        EquipmentPickupSlot slot9 = new EquipmentPickupSlot(slot9DateTime, 30, companyAdministrator1);
+        EquipmentPickupSlot slot9 = new EquipmentPickupSlot(slot9DateTime, 30, companyAdministrator1, true);
+
         LocalDateTime slot10DateTime = LocalDateTime.of(2024, 2, 2, 8, 30);
         EquipmentPickupSlot slot10 = new EquipmentPickupSlot(slot10DateTime, 45, user1, companyAdministrator2, new int[]{1, 2, 3});
         //slot1.setReservedBy(user1);
+
         LocalDateTime slot11DateTime = LocalDateTime.of(2024, 2, 13, 12, 30);
         EquipmentPickupSlot slot11 = new EquipmentPickupSlot(slot11DateTime, 30, user1, companyAdministrator1, new int[]{1, 2, 3});
         //slot2.setReservedBy(user2);
+
         LocalDateTime slot12DateTime = LocalDateTime.of(2024, 4, 3, 15, 30);
-        EquipmentPickupSlot slot12 = new EquipmentPickupSlot(slot12DateTime, 15, companyAdministrator1);
+        EquipmentPickupSlot slot12 = new EquipmentPickupSlot(slot12DateTime, 15, companyAdministrator1, true);
+
         LocalDateTime slot13DateTime = LocalDateTime.of(2024, 4, 4, 14, 30);
-        EquipmentPickupSlot slot13 = new EquipmentPickupSlot(slot13DateTime, 30, companyAdministrator1);
-        slot13.setReservedBy(user7);
+        EquipmentPickupSlot slot13 = new EquipmentPickupSlot(slot13DateTime, 30, companyAdministrator1, true);
+        //slot13.setReservedBy(user7);
+
         LocalDateTime slot14DateTime = LocalDateTime.of(2024, 5, 2, 13, 30);
         EquipmentPickupSlot slot14 = new EquipmentPickupSlot(slot14DateTime, 30, user2, companyAdministrator1, new int[]{1, 2, 3});
         //slot5.setReservedBy(user2);
+
         LocalDateTime slot15DateTime = LocalDateTime.of(2024, 5, 2, 12, 30);
-        EquipmentPickupSlot slot15 = new EquipmentPickupSlot(slot15DateTime, 45, companyAdministrator2);
+        EquipmentPickupSlot slot15 = new EquipmentPickupSlot(slot15DateTime, 45, companyAdministrator2, true);
+
         LocalDateTime slot16DateTime = LocalDateTime.of(2024, 7, 3, 11, 30);
-        EquipmentPickupSlot slot16 = new EquipmentPickupSlot(slot16DateTime, 60, companyAdministrator1);
-        slot16.setReservedBy(user7);
+        EquipmentPickupSlot slot16 = new EquipmentPickupSlot(slot16DateTime, 60, companyAdministrator1, true);
+        //slot16.setReservedBy(user7);
+
         LocalDateTime slot17DateTime = LocalDateTime.of(2024, 1, 1, 22, 53);
         EquipmentPickupSlot slot17 = new EquipmentPickupSlot(slot17DateTime, 30, user2, companyAdministrator2, new int[]{4, 5, 6});
+
         LocalDateTime slot18DateTime = LocalDateTime.of(2024, 1, 1, 23, 30);
-        EquipmentPickupSlot slot18 = new EquipmentPickupSlot(slot18DateTime, 30, companyAdministrator1);
+        EquipmentPickupSlot slot18 = new EquipmentPickupSlot(slot18DateTime, 30, companyAdministrator1, true);
+
         LocalDateTime slot19DateTime = LocalDateTime.of(2024, 1, 5, 21, 48);
-        EquipmentPickupSlot slot19 = new EquipmentPickupSlot(slot19DateTime, 20, companyAdministrator1);
-        slot19.setReservedBy(user7);
+        EquipmentPickupSlot slot19 = new EquipmentPickupSlot(slot19DateTime, 20, companyAdministrator1, true);
+        //slot19.setReservedBy(user7);
 
 
         equipmentPickupSlotRepository.save(slot1);
