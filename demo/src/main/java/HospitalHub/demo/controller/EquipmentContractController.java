@@ -7,6 +7,7 @@ import HospitalHub.demo.publisher.RabbitMQEquipmentContractProducer;
 import HospitalHub.demo.service.CompanyService;
 import HospitalHub.demo.service.EquipmentContractService;
 import HospitalHub.demo.service.UserService;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -93,8 +95,9 @@ public class EquipmentContractController {
     private void scheduleStartDeliveryNotification(EquipmentContract contract) {
         LocalDate deliveryDate = contract.getDeliveryDate();
         int dayOfMonth = deliveryDate.getDayOfMonth();
-        Integer hours = 1;
-        Integer minutes = 38;
+        LocalDateTime current = LocalDateTime.now().plusMinutes(1);
+        Integer hours = current.getHour();
+        Integer minutes = current.getMinute();
         Integer hoursEnd = hours;
         Integer minutesEnd = minutes+1;
         taskScheduler.schedule(() -> sendDeliveryNotification(contract), new CronTrigger("0 " + minutes + " "+ hours + " " + dayOfMonth + " * *"));
