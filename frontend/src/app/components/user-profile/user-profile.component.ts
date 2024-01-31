@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserProfileService } from 'src/app/services/user-profile.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { ActivatedRoute } from '@angular/router';
-import { faGear, faUser, faPlus, faCalendar, faQrcode, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faGear, faUser, faPlus, faCalendar, faQrcode, faTrash, faFileContract } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateUserProfileComponent } from '../update-user-profile/update-user-profile.component';
 import { UserService } from 'src/app/services/user.service';
@@ -28,6 +28,9 @@ import { HttpHeaders } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import { EquipmentPageComponent } from 'src/app/pages/equipment-page/equipment-page.component';
 import { EquipmentPickupSlotDTO } from 'src/app/models/EquipmentPickupSlotDTO';
+import { Contract } from 'src/app/models/Contract';
+import { ContractService } from 'src/app/services/contract.service';
+import { CreateContractComponent } from '../create-contract/create-contract.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -49,7 +52,7 @@ export class UserProfileComponent implements OnInit{
   pastSlots!:EquipmentPickupSlot[];
   sortUpcomingBy : 'duration' | 'date' = 'date'
   sortPastBy : 'duration' | 'date' = 'date'
-
+  contracts : Contract[] = [];
 
   @ViewChild('calendar') calendarRef!: ElementRef;
 
@@ -73,7 +76,9 @@ export class UserProfileComponent implements OnInit{
               private modalService: NgbModal,
               private slotService : EquipmentPickupSlotService,
               private requestDeliveryService: RequestDeliveryService,
-              private toast : NgToastService){}
+              private toast : NgToastService,
+              private modalServiceParent: NgbModal,
+              private contractService : ContractService){}
 
   faGear = faGear;
   faUser = faUser;
@@ -81,6 +86,7 @@ export class UserProfileComponent implements OnInit{
   faCalendar = faCalendar;
   faQrcode = faQrcode;
   faTrash = faTrash;
+  faFileContract = faFileContract;
 
   ngOnInit(): void {
     if(this.token){
@@ -98,6 +104,7 @@ export class UserProfileComponent implements OnInit{
             //this.getUsersUpcomingAppointments();
             this.getUsersUpcomingAppointments1();
             this.getUsersPastAppointments();
+            this.getContracts();
           }
         },
         (error: HttpErrorResponse) => {
@@ -106,6 +113,15 @@ export class UserProfileComponent implements OnInit{
       );
     }
     this.showUserProfile();
+  }
+
+  public getContracts() : void {
+    this.contractService.getUsersContracts(this.userId).subscribe(
+      (usersContracts) => {
+        this.contracts = usersContracts;
+        console.log(usersContracts);
+      }
+    )
   }
 
   goToRequestDelivery(id: number) : void{
@@ -127,17 +143,34 @@ export class UserProfileComponent implements OnInit{
     };
 
     this.equipmentPickupSlotService.cancelAppointment(cancellAppointmentDTO,headers)
-        .subscribe(
-            (response) => {
-                
-                console.log(response);
-            },
-            (error) => {
-                
-                console.error(error);
-            }
-        );
-}
+      .subscribe(
+        (response) => {
+            
+            console.log(response);
+        },
+        (error) => {
+            
+            console.error(error);
+        }
+    );
+  }
+
+  cancelContract(contractId:number){
+    this.contractService.cancelContract(contractId).subscribe(
+      (canceledContract) => {
+        console.log("Contract canceled");
+        this.toast.success({detail:"Contract canceled", summary:"You have successfully canceled the montly subscription."})
+      }
+    )
+  }
+
+  updateContract(companyId:number){
+    const modalRef = this.modalServiceParent.open(
+      CreateContractComponent,
+      {backdrop:'static',keyboard:true}
+    );
+    modalRef.componentInstance.companyId = companyId;
+  }
 
 
   public getEquipmentPickupSlots(id: number) : void{
@@ -190,6 +223,11 @@ export class UserProfileComponent implements OnInit{
 		  modalRef.componentInstance.userId = this.userId;
   }
 
+  public handleDeliveryComplete = (): void => {
+    this.toast.success({detail:"Delivery successful!", summary:"Equipment successfully delivered. Appointment status: PICKED_UP"});
+    this.showUserProfile();
+  };
+
   public displayEquipmentPickupSlot(slot: EquipmentPickupSlot) : void{
     const modalRef = this.modalService.open(
       EquipmentPickupSlotDisplayModalComponent,
@@ -199,6 +237,7 @@ export class UserProfileComponent implements OnInit{
     );
 
     modalRef.componentInstance.slot = slot;
+    modalRef.componentInstance.handleDeliveryComplete = this.handleDeliveryComplete;
   }
 
   openCreatePickupSlotForm(): void {

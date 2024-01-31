@@ -56,10 +56,6 @@
         <p class="text-gray font-inter font-light text-[18px]">Bio / Company info:</p>
         <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.companyInfo }}</p>
       </div>
-      <button class="w-full text-center text-[24px] bg-yellow hover:bg-yellow transition-[0.5s] font-inter font-semibold 
-                    text-white rounded-md h-[40px]" (click)="goToContracts()">
-        My contracts
-      </button>
       <hr class="w-full bg-gray mt-4 mb-4">
     </div>
     <button class="w-full text-center text-[24px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
@@ -122,7 +118,7 @@
           <p class="font-inter font-semibold text-third text-[28px] ml-2">My Upcoming Appointments</p>
         </div>
     
-        <div>
+        <div class="mt-2">
           <button (click)="sortUpcomingBy = 'duration'; sortUpcoming()">
             <i class="fas fa-heart"></i> Sort by duration
           </button> <br>
@@ -157,7 +153,7 @@
                               font-inter text-[16px] font-semibold rounded-md" (click)="goToRequestDelivery(slot.companyId)">
                   Request delivery
                 </button>
-                <fa-icon [icon]="faTrash" class="text-red text-[24px] transition-[0.5s] cursor-pointer" (click)="cancelReservation(slot.id)"/>
+                <fa-icon [icon]="faTrash" class="text-red hover:text-lightRed transition-[0.5s] text-[24px] transition-[0.5s] cursor-pointer" (click)="cancelReservation(slot.id)"/>
               </div>
             </div>
           </div>
@@ -169,7 +165,7 @@
           <fa-icon [icon]="faCalendar" class="text-third text-[22px]"/>
           <p class="font-inter font-semibold text-third text-[28px] ml-2">My past Appointments</p>
         </div>
-        <div>
+        <div class="mt-2">
           <button (click)="sortPastBy = 'duration'; sortPast()">
             <i class="fas fa-heart"></i> Sort by duration
           </button> <br>
@@ -200,6 +196,40 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="flex flex-col p-4 bg-white rounded-md shadow-md w-full max-h-[800px] overflow-y-scroll mt-10">
+        <div class="flex flex-row w-full items-center justify-start justify-center">
+          <fa-icon [icon]="faFileContract" class="text-third text-[22px]"/>
+          <p class="font-inter font-semibold text-third text-[28px] ml-2">My contracts</p>
+        </div>
+
+        <div *ngFor="let contract of contracts" class="my-[60px] border-[3px] border-gray rounded-md flex flex-row relative
+                                                      items-center justify-between flex-wrap w-[250px] h-[270px] max-h-[340px]">
+          <div class="absolute top-[-50px] w-full">
+            <img src="../../../assets/contractActive.png" class="w-[100px] h-auto mx-auto">
+          </div>
+          <div class="px-[14px] pt-4 w-full">
+            <p class="text-[16px] font-medium text-third">User: {{ contract.user.name }} {{contract.user.lastName}}</p>
+            <p class="text-sm font-medium text-third">Equipment: {{ contract.equipmentType }}</p>
+            <p class="text-sm font-medium text-third">Quantity: {{ contract.quantity }}</p>
+            <p class="text-sm font-medium text-third">First delivery Date: {{ contract.deliveryDate | date:'shortDate' }}</p>
+            <p class="text-sm font-medium" [ngClass]="{'text-third': contract.active, 'text-red': !contract.active}">
+                Contract status: 
+                <span *ngIf="contract.active; else notActive" class="font-inter text-darkGreen font-regular">Active</span>
+                <ng-template #notActive class="font-inter font-regular text-red">Not Active</ng-template>
+            </p>
+            <div class="flex items-center w-full justify-between mt-4">
+              <button type="button" class="bg-third hover:bg-lightBlue transition-[0.5s] text-white w-[47%] px-3 py-1 rounded-md" (click)="updateContract(contract.company.id)">
+                  Renew
+              </button>
+              <button type="button" class="bg-red hover:bg-lightRed transition-[0.5s] text-white w-[47%] px-3 py-1 rounded-md" (click)="cancelContract(contract.id)">
+                  Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </ng-form>
   </div>
