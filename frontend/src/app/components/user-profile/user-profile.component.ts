@@ -329,7 +329,10 @@ export class UserProfileComponent implements OnInit{
     this.slotService.cancelReservation(slotId).subscribe(
       (slot) => {
         if (slot != null) {
-          window.location.reload();
+          this.toast.success({detail:"Reservation canceled",summary:"Be carefull. Canceling too many reservation can make you banned."})
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         }
       },
       (error) => {
@@ -337,6 +340,7 @@ export class UserProfileComponent implements OnInit{
       }
     );
   }
+
 
   sortUpcoming() {
     if (this.sortUpcomingBy === 'duration') {
