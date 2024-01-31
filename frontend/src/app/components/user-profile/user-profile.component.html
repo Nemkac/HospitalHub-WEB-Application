@@ -151,9 +151,6 @@
                 <p class="text-sm text-gray-500">
                   <b>Contact number :</b> {{ slot.companyAdministrator.user.phoneNumber }}
                 </p>
-                <p class="text-sm text-gray-500">
-                  <b>Contact number :</b> {{ slot.companyAdministrator.company.name }}
-                </p>
               </div>
               <div *ngIf="ifShowQRs==false" class="flex flex-row justify-between w-[250px] items-center">
                 <button class="w-[170px] p-[5px] h-[35px] text-white bg-third hover:bg-lightBlue transition-[0.5s] 
@@ -163,7 +160,7 @@
                 <fa-icon [icon]="faTrash" class="text-red text-[24px] transition-[0.5s] cursor-pointer" (click)="cancelReservation(slot.id)"/>
               </div>
               <div *ngIf="ifShowQRs==true" class="flex flex-row justify-between w-[250px] items-center" style="margin-right:-32px">
-                <qrcode  [width]="105"  [qrdata]="QRcodes[i].combined" [allowEmptyString]="true" > </qrcode>
+                <qrcode  [width]="105"  [qrdata]="getQRCodeBySlotIdUpcoming(slot.id).combined" [allowEmptyString]="true" > </qrcode>
               </div>
             </div>
           </div>
@@ -176,13 +173,13 @@
           <p class="font-inter font-semibold text-third text-[28px] ml-2">My past Appointments</p>
         </div>
         <div style="display: flex; margin-bottom: 10px;">
-          <fa-icon [icon]="faSort" class="text-third text-[16px] transition-[0.5s] cursor-pointer" (click)="sortPastBy = 'duration'; sortPast()"></fa-icon>
+          <fa-icon [icon]="faSort" class="text-third text-[26px] transition-[0.5s] cursor-pointer" (click)="sortPastBy = 'duration'; sortPast()"></fa-icon>
           <span style="margin-right: 2px;"></span>
-          <fa-icon [icon]="faClock" class="text-yellow text-[16px] transition-[0.5s] cursor-pointer" (click)="sortPastBy = 'duration'; sortPast()"></fa-icon>
+          <fa-icon [icon]="faClock" class="text-yellow text-[26px] transition-[0.5s] cursor-pointer" (click)="sortPastBy = 'duration'; sortPast()"></fa-icon>
           <span style="margin-right: 20px;"></span>
-          <fa-icon [icon]="faSort" class="text-third text-[16px] transition-[0.5s] cursor-pointer" (click)="sortPastBy = 'date'; sortPast()"></fa-icon>
+          <fa-icon [icon]="faSort" class="text-third text-[26px] transition-[0.5s] cursor-pointer" (click)="sortPastBy = 'date'; sortPast()"></fa-icon>
           <span style="margin-right: 2px;"></span>
-          <fa-icon [icon]="faCalendar" class="text-yellow text-[16px] transition-[0.5s] cursor-pointer" (click)="sortPastBy = 'date'; sortPast()"></fa-icon>
+          <fa-icon [icon]="faCalendar" class="text-yellow text-[26px] transition-[0.5s] cursor-pointer" (click)="sortPastBy = 'date'; sortPast()"></fa-icon>
         </div>
         <div class="flex flex-col w-full h-auto max-h-[800px] mt-2">
           <div *ngFor="let slot of pastSlots; let i=index" class="py-3">
@@ -202,7 +199,7 @@
                 </p>
               </div>
               <div *ngIf="ifShowQRs==true" class="flex flex-row justify-between w-[250px] items-center" style="margin-right:-32px">
-                <qrcode  [width]="105"  [qrdata]="QRcodes[i].combined" [allowEmptyString]="true" > </qrcode>
+                <qrcode  [width]="105"  [qrdata]="getQRCodeBySlotIdPast(slot.id).combined" [allowEmptyString]="true" > </qrcode>
               </div>
             </div>
           </div>

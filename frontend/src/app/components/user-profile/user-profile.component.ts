@@ -51,7 +51,8 @@ export class UserProfileComponent implements OnInit{
   sortUpcomingBy : 'duration' | 'date' = 'date'
   sortPastBy : 'duration' | 'date' = 'date'
   QRoutput !: string;
-  QRcodes !: QRcodeEquipmentPickUpSlot[];
+  upcomingQRcodes !: QRcodeEquipmentPickUpSlot[];
+  pastQRcodes !: QRcodeEquipmentPickUpSlot[];
   slotsIds !: number[];
   ifShowQRs : boolean = false;
 
@@ -116,10 +117,16 @@ export class UserProfileComponent implements OnInit{
   }
 
   getQRcodes(){
-    this.equipmentPickupSlotService.getQRcodesOutOfSlots(this.getIdsFromSlots(this.upcomingSlots)).subscribe(
+    this.equipmentPickupSlotService.getQRcodesOutOfSlots(this.getIdsFromSlots(this.upcomingSlotsDTOS)).subscribe(
       (response:QRcodeEquipmentPickUpSlot[]) => {
-        this.QRcodes = response; 
-        console.log("kodovi ",this.QRcodes);
+        this.upcomingQRcodes = response; 
+        console.log("buduci kodovi ",this.upcomingQRcodes);
+      }
+    )
+    this.equipmentPickupSlotService.getQRcodesOutOfSlots(this.getIdsFromSlots(this.pastSlots)).subscribe(
+      (response:QRcodeEquipmentPickUpSlot[]) => {
+        this.pastQRcodes = response; 
+        console.log("prosli kodovi ",this.pastQRcodes);
       }
     )
   }
@@ -359,16 +366,31 @@ export class UserProfileComponent implements OnInit{
     if(this.ifShowQRs == true) {
       this.ifShowQRs = false;
     } else {
-      this.equipmentPickupSlotService.getQRcodesOutOfSlots(this.getIdsFromSlots(this.upcomingSlots)).subscribe(
+      this.equipmentPickupSlotService.getQRcodesOutOfSlots(this.getIdsFromSlots(this.upcomingSlotsDTOS)).subscribe(
         (response:QRcodeEquipmentPickUpSlot[]) => {
-          this.QRcodes = response;
+          this.upcomingQRcodes = response;
+        }
+      )
+      this.equipmentPickupSlotService.getQRcodesOutOfSlots(this.getIdsFromSlots(this.pastSlots)).subscribe(
+        (response:QRcodeEquipmentPickUpSlot[]) => {
+          this.pastQRcodes = response;
         }
       )
       this.ifShowQRs = true;
     }
     }
-  
 
+  getQRCodeBySlotIdUpcoming(slotId: number): any {
+      const qrCode = this.upcomingQRcodes.find(qr => qr.id === slotId);
+      return qrCode || {};
+    }
+
+  getQRCodeBySlotIdPast(slotId: number): any {
+      const qrCode = this.pastQRcodes.find(qr => qr.id === slotId);
+      return qrCode || {};
+    }
+    
+  
 
   public getIdsFromSlots(slots:EquipmentPickupSlot[]):number[]{
     let slotIds : number[] = [];
