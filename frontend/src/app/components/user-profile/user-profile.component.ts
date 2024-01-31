@@ -47,7 +47,7 @@ export class UserProfileComponent implements OnInit{
   //slots!:EquipmentPickupSlot[];
   upcomingSlots:EquipmentPickupSlot[] = [];
   upcomingSlotsDTOS:EquipmentPickupSlotDTO[] = [];
-  pastSlots!:EquipmentPickupSlot[];
+  pastSlots:EquipmentPickupSlot[]=[];
   sortUpcomingBy : 'duration' | 'date' = 'date'
   sortPastBy : 'duration' | 'date' = 'date'
   QRoutput !: string;
