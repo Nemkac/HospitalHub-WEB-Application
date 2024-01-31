@@ -26,6 +26,7 @@ public class LiveLocationController {
         rabbitMQProducer.sendMessage(message);
         return ResponseEntity.ok("Message sent to RabbitMQ ...");
     }*/
+
     @PostMapping(value = "/api/liveLocation/publish/json")
     @CrossOrigin(origins = "http://localhost:4200")
     @PreAuthorize("hasAuthority('ROLE_USER')")
