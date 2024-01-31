@@ -1,249 +1,267 @@
-<div class="flex flex-row h-auto px-64 py-32 bg-lightBlue/5 justify-between pb-32">
-  <div class="flex flex-col p-4 h-[1100px] w-[35%] bg-white rounded-md shadow-xl relative">
-    <div class="flex rounded-full bg-third mx-auto my-2 h-[130px] w-[130px] items-center transition-[0.5s]">
-        <fa-icon [icon]="faUser" class="mx-auto text-white text-[48px] cursor-pointer"/>
-    </div>
-    <p class="font-inter text-third font-bold mx-auto text-[30px]">{{ userProfile?.name }}</p>
-    <div class="flex flex-row items-center mx-auto w-full items-center justify-center">
-      <p class="font-inter font-light text-[#7f8fa6]">Penalty points:</p>
-      <p class="font-inter font-light text-[#7f8fa6] ml-[10px]">{{ userProfile?.penaltyPoints }}
-    </div>
-    <div class="flex flex-row items-center mx-auto w-full items-center justify-center">
-        <p class="font-inter font-light text-[#7f8fa6]">Loyalty membership:</p>
-        <p class="font-inter font-light text-[#7f8fa6] ml-[10px]">No available programs</p>
-    </div>
-    <hr class="w-full bg-gray mt-4 mb-4">
-    <div class="flex flex-col w-full">
-      <p class="text-third font-inter font-medium text-[14px]">Personal info</p>
-      <div *ngIf="userProfile?.name" class="flex flex-row w-full justify-between mt-2">
-        <p class="text-gray font-inter font-light text-[18px]">First name:</p>
-        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.name }}</p>
+<ng-container *ngIf="isAuthorised">
+  <div class="flex flex-row h-auto px-64 py-32 bg-lightBlue/5 justify-between pb-32">
+    <div class="flex flex-col p-4 h-[1100px] w-[35%] bg-white rounded-md shadow-xl relative">
+      <div class="flex rounded-full bg-third mx-auto my-2 h-[130px] w-[130px] items-center transition-[0.5s]">
+          <fa-icon [icon]="faUser" class="mx-auto text-white text-[48px] cursor-pointer"/>
       </div>
-      <div *ngIf="userProfile?.name" class="flex flex-row w-full justify-between mt-2">
-        <p class="text-gray font-inter font-light text-[18px]">Last name:</p>
-        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.lastName }}</p>
+      <p class="font-inter text-third font-bold mx-auto text-[30px]">{{ userProfile?.name }}</p>
+      <div class="flex flex-row items-center mx-auto w-full items-center justify-center">
+        <p class="font-inter font-light text-[#7f8fa6]">Penalty points:</p>
+        <p class="font-inter font-light text-[#7f8fa6] ml-[10px]">{{ userProfile?.penaltyPoints }}
       </div>
-      <div *ngIf="userProfile?.dateOfBirth" class="flex flex-row w-full justify-between mt-2">
-        <p class="text-gray font-inter font-light text-[18px]">Date of birth:</p>
-        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.dateOfBirth }}</p>
-      </div>
-      <div *ngIf="userProfile?.city" class="flex flex-row w-full justify-between mt-2">
-        <p class="text-gray font-inter font-light text-[18px]">Location:</p>
-        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.city }}, {{ userProfile?.country }}</p>
-      </div>
-    </div>
-    <hr class="w-full bg-gray mt-4 mb-4">
-    <div class="flex flex-col w-full">
-      <p class="text-third font-inter font-medium text-[14px]">Contact</p>
-      <div *ngIf="userProfile?.email" class="flex flex-row w-full justify-between mt-2">
-        <p class="text-gray font-inter font-light text-[18px]">Email:</p>
-        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.email }}</p>
-      </div>
-      <div *ngIf="userProfile?.phoneNumber" class="flex flex-row w-full justify-between mt-2">
-        <p class="text-gray font-inter font-light text-[18px]">Phone number:</p>
-        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.phoneNumber }}</p>
-      </div>
-    </div>
-    <hr class="w-full bg-gray mt-4 mb-4">
-    <div class="flex flex-col w-full">
-      <p class="text-third font-inter font-medium text-[14px]">Professional</p>
-      <div class="flex flex-row w-full justify-between mt-2">
-        <p class="text-gray font-inter font-light text-[18px]">Profession:</p>
-        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.profession }}</p>
+      <div class="flex flex-row items-center mx-auto w-full items-center justify-center">
+          <p class="font-inter font-light text-[#7f8fa6]">Loyalty membership:</p>
+          <p class="font-inter font-light text-[#7f8fa6] ml-[10px]">No available programs</p>
       </div>
       <hr class="w-full bg-gray mt-4 mb-4">
-      <div class="flex flex-col w-full h-[200px]">
-        <p class="text-gray font-inter font-light text-[18px]">Bio / Company info:</p>
-        <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.companyInfo }}</p>
+      <div class="flex flex-col w-full">
+        <p class="text-third font-inter font-medium text-[14px]">Personal info</p>
+        <div *ngIf="userProfile?.name" class="flex flex-row w-full justify-between mt-2">
+          <p class="text-gray font-inter font-light text-[18px]">First name:</p>
+          <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.name }}</p>
+        </div>
+        <div *ngIf="userProfile?.name" class="flex flex-row w-full justify-between mt-2">
+          <p class="text-gray font-inter font-light text-[18px]">Last name:</p>
+          <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.lastName }}</p>
+        </div>
+        <div *ngIf="userProfile?.dateOfBirth" class="flex flex-row w-full justify-between mt-2">
+          <p class="text-gray font-inter font-light text-[18px]">Date of birth:</p>
+          <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.dateOfBirth }}</p>
+        </div>
+        <div *ngIf="userProfile?.city" class="flex flex-row w-full justify-between mt-2">
+          <p class="text-gray font-inter font-light text-[18px]">Location:</p>
+          <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.city }}, {{ userProfile?.country }}</p>
+        </div>
       </div>
       <hr class="w-full bg-gray mt-4 mb-4">
+      <div class="flex flex-col w-full">
+        <p class="text-third font-inter font-medium text-[14px]">Contact</p>
+        <div *ngIf="userProfile?.email" class="flex flex-row w-full justify-between mt-2">
+          <p class="text-gray font-inter font-light text-[18px]">Email:</p>
+          <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.email }}</p>
+        </div>
+        <div *ngIf="userProfile?.phoneNumber" class="flex flex-row w-full justify-between mt-2">
+          <p class="text-gray font-inter font-light text-[18px]">Phone number:</p>
+          <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.phoneNumber }}</p>
+        </div>
+      </div>
+      <hr class="w-full bg-gray mt-4 mb-4">
+      <div class="flex flex-col w-full">
+        <p class="text-third font-inter font-medium text-[14px]">Professional</p>
+        <div class="flex flex-row w-full justify-between mt-2">
+          <p class="text-gray font-inter font-light text-[18px]">Profession:</p>
+          <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.profession }}</p>
+        </div>
+        <hr class="w-full bg-gray mt-4 mb-4">
+        <div class="flex flex-col w-full h-[200px]">
+          <p class="text-gray font-inter font-light text-[18px]">Bio / Company info:</p>
+          <p class="text-third font-inter font-regular text-[18px]">{{ userProfile?.companyInfo }}</p>
+        </div>
+        <hr class="w-full bg-gray mt-4 mb-4">
+      </div>
+      <button class="w-full text-center text-[24px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
+                    text-white rounded-md h-[55px]" (click)="goToUpdate()">
+              Update profile
+      </button>
     </div>
-    <button class="w-full text-center text-[24px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 
-                  text-white rounded-md h-[55px]" (click)="goToUpdate()">
-            Update profile
-    </button>
-  </div>
-  <div class="flex flex-col w-[60%] items-center space-y-8">
-    <ng-form *ngIf="user?.roles === 'ROLE_COMPANYADMIN'" class="flex w-full">
-      <div class="flex flex-col w-full p-[12px] bg-white h-auto max-h-[800px] rounded-md shadow-md">
-        <full-calendar class="w-full" [options]="calendarOptions">
-          <ng-template #eventContent let-arg class="overflow-scroll">
-            <div *ngIf="arg.event.extendedProps" (click)="displayEquipmentPickupSlot(arg.event.extendedProps.slot)"
-                  [ngStyle]="getEventStyles(arg.event.extendedProps)"
-                  class="flex flex-col font-inter text-white p-[5px] w-full rounded-md cursor-pointer">
-              <p>Start: {{ arg.event.start | date: 'HH:mm' }}</p>
-              <p>Duration: {{ arg.event.extendedProps.duration }} min</p>
-              <p>
-                <ng-container *ngIf="arg.event.extendedProps.firstname && arg.event.extendedProps.lastname">
-                  {{ arg.event.extendedProps.firstname }} {{ arg.event.extendedProps.lastname }}
-                </ng-container>
-                <ng-container *ngIf="!arg.event.extendedProps.firstname && !arg.event.extendedProps.lastname">
-                  Free appointment
-                </ng-container>
-              </p>
-            </div>
-          </ng-template>
-        </full-calendar>
-        <button class="w-full text-center h-[60px] mt-4 rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="openCreatePickupSlotForm()">
-          <p>Add new appointment</p>
-        </button>
-      </div>  
-    </ng-form>
-    <ng-form *ngIf="user?.roles === 'ROLE_SYSADMIN'" class="flex w-full">
-      <div class="flex flex-row w-full h-auto max-h-[800px] justify-between">
-        <div class="flex flex-col items-center w-[250px] h-[250px] shadow-md justify-center rounded-md border-[2px] border-gray text-center
-                    hover:bg-third hover:text-white text-third hover:border-third transition-[0.5s] cursor-pointer"
-            (click)="openCreateCompanyAdminForm()">
-          <fa-icon [icon]="faPlus" class="text-[50px]"></fa-icon>
-          <p class="font-inter font-semibold text-[28px]">New Company Administrator</p>
-        </div>
-        <div class="flex flex-col items-center w-[250px] h-[250px] justify-center rounded-md border-[2px] border-gray text-center
-                    hover:bg-third hover:text-white text-third hover:border-third transition-[0.5s] cursor-pointer"
-            (click)="openCreateSystemAdminForm()">
-          <fa-icon [icon]="faPlus" class="text-[50px]"></fa-icon>
-          <p class="font-inter font-semibold text-[28px]">New System Administrator</p>
-        </div>
-        <div class="flex flex-col items-center w-[250px] h-[250px] justify-center rounded-md border-[2px] border-gray text-center
-                    hover:bg-third hover:text-white text-third hover:border-third transition-[0.5s] cursor-pointer"
-            (click)="openCreateCompanyForm()">
-          <fa-icon [icon]="faPlus" class="text-[50px]"></fa-icon>
-          <p class="font-inter font-semibold text-[28px]">New Company</p>
-        </div>
-      </div>  
-    </ng-form>
-    <ng-form *ngIf="user?.roles === 'ROLE_USER'" class="flex flex-col w-full p-4">
-      <div class="flex flex-col p-4 bg-white rounded-md shadow-md w-full max-h-[800px] overflow-y-scroll">
-        <div class="flex flex-row w-full items-center justify-start justify-center">
-          <fa-icon [icon]="faCalendar" class="text-third text-[22px]"/>
-          <p class="font-inter font-semibold text-third text-[28px] ml-2">My Upcoming Appointments</p>
-        </div>
-    
-        <div class="justify-between " style="display: flex; margin-bottom: 10px; margin-right: 155px;">
-          <div style="display: flex; margin-bottom: 10px;">
-            <fa-icon [icon]="faSort" class="text-third text-[26px] transition-[0.5s] cursor-pointer" (click)="sortUpcomingBy = 'duration'; sortUpcoming()"></fa-icon>
-            <span style="margin-right: 2px;"></span>
-            <fa-icon [icon]="faClock" class="text-yellow text-[26px] transition-[0.5s] cursor-pointer" (click)="sortUpcomingBy = 'duration'; sortUpcoming()"></fa-icon>
-            <span style="margin-right: 20px;"></span>
-            <fa-icon [icon]="faSort" class="text-third text-[26px] transition-[0.5s] cursor-pointer" (click)="sortUpcomingBy = 'date'; sortUpcoming()"></fa-icon>
-            <span style="margin-right: 2px;"></span>
-            <fa-icon [icon]="faCalendar" class="text-yellow text-[26px] transition-[0.5s] cursor-pointer" (click)="sortUpcomingBy = 'date'; sortUpcoming()"></fa-icon> 
+    <div class="flex flex-col w-[60%] items-center space-y-8">
+      <ng-form *ngIf="user?.roles === 'ROLE_COMPANYADMIN'" class="flex w-full">
+        <div class="flex flex-col w-full p-[12px] bg-white h-auto max-h-[800px] rounded-md shadow-md">
+          <full-calendar class="w-full" [options]="calendarOptions">
+            <ng-template #eventContent let-arg class="overflow-scroll">
+              <div *ngIf="arg.event.extendedProps" (click)="displayEquipmentPickupSlot(arg.event.extendedProps.slot)"
+                    [ngStyle]="getEventStyles(arg.event.extendedProps)"
+                    class="flex flex-col font-inter text-white p-[5px] w-full rounded-md cursor-pointer">
+                <p>Start: {{ arg.event.start | date: 'HH:mm' }}</p>
+                <p>Duration: {{ arg.event.extendedProps.duration }} min</p>
+                <p>
+                  <ng-container *ngIf="arg.event.extendedProps.firstname && arg.event.extendedProps.lastname">
+                    {{ arg.event.extendedProps.firstname }} {{ arg.event.extendedProps.lastname }}
+                  </ng-container>
+                  <ng-container *ngIf="!arg.event.extendedProps.firstname && !arg.event.extendedProps.lastname">
+                    Free appointment
+                  </ng-container>
+                </p>
+              </div>
+            </ng-template>
+          </full-calendar>
+          <button class="w-full text-center h-[60px] mt-4 rounded-md bg-third hover:bg-lightBlue transition-[0.5s] text-white font-inter text-[24px] font-medium" (click)="openCreatePickupSlotForm()">
+            <p>Add new appointment</p>
+          </button>
+        </div>  
+      </ng-form>
+      <ng-form *ngIf="user?.roles === 'ROLE_SYSADMIN'" class="flex w-full">
+        <div class="flex flex-row w-full h-auto max-h-[800px] justify-between">
+          <div class="flex flex-col items-center w-[250px] h-[250px] shadow-md justify-center rounded-md border-[2px] border-gray text-center
+                      hover:bg-third hover:text-white text-third hover:border-third transition-[0.5s] cursor-pointer"
+              (click)="openCreateCompanyAdminForm()">
+            <fa-icon [icon]="faPlus" class="text-[50px]"></fa-icon>
+            <p class="font-inter font-semibold text-[28px]">New Company Administrator</p>
           </div>
-            <fa-icon [icon]="faQrcode" class="text-third text-[26px] transition-[0.5s] cursor-pointer" (click)="showQRs()"></fa-icon>
+          <div class="flex flex-col items-center w-[250px] h-[250px] justify-center rounded-md border-[2px] border-gray text-center
+                      hover:bg-third hover:text-white text-third hover:border-third transition-[0.5s] cursor-pointer"
+              (click)="openCreateSystemAdminForm()">
+            <fa-icon [icon]="faPlus" class="text-[50px]"></fa-icon>
+            <p class="font-inter font-semibold text-[28px]">New System Administrator</p>
+          </div>
+          <div class="flex flex-col items-center w-[250px] h-[250px] justify-center rounded-md border-[2px] border-gray text-center
+                      hover:bg-third hover:text-white text-third hover:border-third transition-[0.5s] cursor-pointer"
+              (click)="openCreateCompanyForm()">
+            <fa-icon [icon]="faPlus" class="text-[50px]"></fa-icon>
+            <p class="font-inter font-semibold text-[28px]">New Company</p>
+          </div>
+        </div>  
+      </ng-form>
+      <ng-form *ngIf="user?.roles === 'ROLE_USER'" class="flex flex-col w-full p-4">
+        <div class="flex flex-col p-4 bg-white rounded-md shadow-md w-full max-h-[800px] overflow-y-scroll">
+          <div class="flex flex-row w-full items-center justify-start justify-center">
+            <fa-icon [icon]="faCalendar" class="text-third text-[22px]"/>
+            <p class="font-inter font-semibold text-third text-[28px] ml-2">My Upcoming Appointments</p>
+          </div>
+      
+          <div class="my-4 flex flex-row justify-between w-full">
+            <div class="flex flex-row justify-between w-[15%]">
+              <div class="flex flex-row justify-between">
+                <fa-icon [icon]="faSort" class="text-third hover:text-lightBlue transition-[0.5s] text-[26px] transition-[0.5s] cursor-pointer" (click)="sortUpcomingBy = 'duration'; sortUpcoming()"></fa-icon>
+                <fa-icon [icon]="faClock" class="text-yellow text-[26px] transition-[0.5s] cursor-pointer ml-[5px]" (click)="sortUpcomingBy = 'duration'; sortUpcoming()"></fa-icon>
+              </div>
+              <div class="flex flex-row justify-between">
+                <fa-icon [icon]="faSort" class="text-third hover:text-lightBlue transition-[0.5s] text-[26px] transition-[0.5s] cursor-pointer" (click)="sortUpcomingBy = 'date'; sortUpcoming()"></fa-icon>
+                <fa-icon [icon]="faCalendar" class="text-yellow text-[26px] transition-[0.5s] cursor-pointer ml-[5px]" (click)="sortUpcomingBy = 'date'; sortUpcoming()"></fa-icon> 
+              </div>
+            </div>
+            <div class="flex flex-row justify-center w-[60%] items-center">
+              <fa-icon [icon]="faQrcode" class="ml-[100px] mr-2 text-third hover:text-lightBlue text-[26px] transition-[0.5s] cursor-pointer" (click)="showQRs()"></fa-icon>
+              <p class="font-inter font-light text-gray text-[18px]">Show QR Codes</p>
+            </div>
+          </div>
+          <hr class="w-full text-gray">
+          <div class="flex flex-col w-full h-auto max-h-[800px] mt-2">
+            <div *ngFor="let slot of upcomingSlotsDTOS; let i=index" class="py-3">
+              <div class="flex flex-row w-full justify-between justify-center items-center">
+                <div class="flex flex-col w-[40%]">
+                  <p class="text-lg font-bold text-gray-800">
+                    {{ slot.dateTime | date:'medium' }}
+                  </p>
+                  <p class="text-sm text-gray-500">
+                    <b>Duration :</b> {{ slot.duration }} minutes
+                  </p>
+                  <p class="text-sm text-gray-500">
+                    <b>Company administrator :</b> {{ slot.companyAdministrator.user.name +' '+ slot.companyAdministrator.user.lastName }}
+                  </p>
+                  <p class="text-sm text-gray-500">
+                    <b>Contact number :</b> {{ slot.companyAdministrator.user.phoneNumber }}
+                  </p>
+                </div>
+                <div *ngIf="ifShowQRs==false" class="flex flex-row justify-between w-[250px] items-center">
+                  <button class="w-[170px] p-[5px] h-[35px] text-white bg-third hover:bg-lightBlue transition-[0.5s] 
+                                font-inter text-[16px] font-semibold rounded-md" (click)="goToRequestDelivery(slot.companyId)">
+                    Request delivery
+                  </button>
+                  <fa-icon [icon]="faTrash" class="text-red hover:text-lightRed transition-[0.5s] text-[24px] transition-[0.5s] cursor-pointer" (click)="cancelReservation(slot.id)"/>
+                </div>
+                <div *ngIf="ifShowQRs==true" class="flex flex-row justify-between w-[250px] items-center" style="margin-right:-32px">
+                  <qrcode  [width]="105"  [qrdata]="getQRCodeBySlotIdUpcoming(slot.id).combined" [allowEmptyString]="true" > </qrcode>
+                </div>
+              </div>
+              <hr class="w-full text-gray my-2">
+            </div>
+          </div>
         </div>
         
-        <div class="flex flex-col w-full h-auto max-h-[800px] mt-2">
-          <div *ngFor="let slot of upcomingSlotsDTOS; let i=index" class="py-3">
-            <div class="flex flex-row w-full justify-between justify-center items-center">
-              <div class="flex flex-col w-[40%]">
-                <p class="text-lg font-bold text-gray-800">
-                  {{ slot.dateTime | date:'medium' }}
-                </p>
-                <p class="text-sm text-gray-500">
-                  <b>Duration :</b> {{ slot.duration }} minutes
-                </p>
-                <p class="text-sm text-gray-500">
-                  <b>Company administrator :</b> {{ slot.companyAdministrator.user.name +' '+ slot.companyAdministrator.user.lastName }}
-                </p>
-                <p class="text-sm text-gray-500">
-                  <b>Contact number :</b> {{ slot.companyAdministrator.user.phoneNumber }}
-                </p>
+        <div class="flex flex-col p-4 bg-white rounded-md shadow-md w-full max-h-[800px] overflow-y-scroll mt-10">
+          <div class="flex flex-row w-full items-center justify-start justify-center">
+            <fa-icon [icon]="faCalendar" class="text-third text-[22px]"/>
+            <p class="font-inter font-semibold text-third text-[28px] ml-2">My past Appointments</p>
+          </div>
+          <div class="my-4 flex flex-row justify-between w-full">
+            <div class="flex flex-row justify-between w-[15%]">
+              <div class="flex flex-row justify-between">
+                <fa-icon [icon]="faSort" class="text-third hover:text-lightBlue transition-[0.5s] text-[26px] transition-[0.5s] cursor-pointer" (click)="sortUpcomingBy = 'duration'; sortUpcoming()"></fa-icon>
+                <fa-icon [icon]="faClock" class="text-yellow text-[26px] transition-[0.5s] cursor-pointer ml-[5px]" (click)="sortUpcomingBy = 'duration'; sortUpcoming()"></fa-icon>
               </div>
-              <div *ngIf="ifShowQRs==false" class="flex flex-row justify-between w-[250px] items-center">
-                <button class="w-[170px] p-[5px] h-[35px] text-white bg-third hover:bg-lightBlue transition-[0.5s] 
-                              font-inter text-[16px] font-semibold rounded-md" (click)="goToRequestDelivery(slot.companyId)">
-                  Request delivery
-                </button>
-                <fa-icon [icon]="faTrash" class="text-red hover:text-lightRed transition-[0.5s] text-[24px] transition-[0.5s] cursor-pointer" (click)="cancelReservation(slot.id)"/>
+              <div class="flex flex-row justify-between">
+                <fa-icon [icon]="faSort" class="text-third hover:text-lightBlue transition-[0.5s] text-[26px] transition-[0.5s] cursor-pointer" (click)="sortUpcomingBy = 'date'; sortUpcoming()"></fa-icon>
+                <fa-icon [icon]="faCalendar" class="text-yellow text-[26px] transition-[0.5s] cursor-pointer ml-[5px]" (click)="sortUpcomingBy = 'date'; sortUpcoming()"></fa-icon> 
               </div>
-              <div *ngIf="ifShowQRs==true" class="flex flex-row justify-between w-[250px] items-center" style="margin-right:-32px">
-                <qrcode  [width]="105"  [qrdata]="getQRCodeBySlotIdUpcoming(slot.id).combined" [allowEmptyString]="true" > </qrcode>
+            </div>
+          </div>
+          <hr class="w-full text-gray">
+          <div class="flex flex-col w-full h-auto max-h-[800px] mt-2">
+            <div *ngFor="let slot of pastSlots; let i=index" class="py-3">
+              <div class="flex flex-row w-full justify-between justify-center items-center">
+                <div class="flex flex-col w-[40%]">
+                  <p class="text-lg font-bold text-gray-800">
+                    {{ slot.dateTime | date:'medium' }}
+                  </p>
+                  <p class="text-sm text-gray-500">
+                    <b>Duration :</b> {{ slot.duration }} minutes
+                  </p>
+                  <p class="text-sm text-gray-500">
+                    <b>Company administrator :</b> {{ slot.companyAdministrator.user.name +' '+ slot.companyAdministrator.user.lastName }}
+                  </p>
+                  <p class="text-sm text-gray-500">
+                    <b>Contact number :</b> {{ slot.companyAdministrator.user.phoneNumber }}
+                  </p>
+                </div>
+                <div *ngIf="ifShowQRs==true" class="flex flex-row justify-between w-[250px] items-center" style="margin-right:-32px">
+                  <qrcode  [width]="105"  [qrdata]="getQRCodeBySlotIdPast(slot.id).combined" [allowEmptyString]="true" > </qrcode>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      
-      <div class="flex flex-col p-4 bg-white rounded-md shadow-md w-full max-h-[800px] overflow-y-scroll mt-10">
-        <div class="flex flex-row w-full items-center justify-start justify-center">
-          <fa-icon [icon]="faCalendar" class="text-third text-[22px]"/>
-          <p class="font-inter font-semibold text-third text-[28px] ml-2">My past Appointments</p>
-        </div>
-        <div style="display: flex; margin-bottom: 10px;">
-          <fa-icon [icon]="faSort" class="text-third text-[26px] transition-[0.5s] cursor-pointer" (click)="sortPastBy = 'duration'; sortPast()"></fa-icon>
-          <span style="margin-right: 2px;"></span>
-          <fa-icon [icon]="faClock" class="text-yellow text-[26px] transition-[0.5s] cursor-pointer" (click)="sortPastBy = 'duration'; sortPast()"></fa-icon>
-          <span style="margin-right: 20px;"></span>
-          <fa-icon [icon]="faSort" class="text-third text-[26px] transition-[0.5s] cursor-pointer" (click)="sortPastBy = 'date'; sortPast()"></fa-icon>
-          <span style="margin-right: 2px;"></span>
-          <fa-icon [icon]="faCalendar" class="text-yellow text-[26px] transition-[0.5s] cursor-pointer" (click)="sortPastBy = 'date'; sortPast()"></fa-icon>
-        </div>
-        <div class="flex flex-col w-full h-auto max-h-[800px] mt-2">
-          <div *ngFor="let slot of pastSlots; let i=index" class="py-3">
-            <div class="flex flex-row w-full justify-between justify-center items-center">
-              <div class="flex flex-col w-[40%]">
-                <p class="text-lg font-bold text-gray-800">
-                  {{ slot.dateTime | date:'medium' }}
-                </p>
-                <p class="text-sm text-gray-500">
-                  <b>Duration :</b> {{ slot.duration }} minutes
-                </p>
-                <p class="text-sm text-gray-500">
-                  <b>Company administrator :</b> {{ slot.companyAdministrator.user.name +' '+ slot.companyAdministrator.user.lastName }}
-                </p>
-                <p class="text-sm text-gray-500">
-                  <b>Contact number :</b> {{ slot.companyAdministrator.user.phoneNumber }}
-                </p>
-              </div>
-              <div *ngIf="ifShowQRs==true" class="flex flex-row justify-between w-[250px] items-center" style="margin-right:-32px">
-                <qrcode  [width]="105"  [qrdata]="getQRCodeBySlotIdPast(slot.id).combined" [allowEmptyString]="true" > </qrcode>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex flex-col p-4 bg-white rounded-md shadow-md w-full max-h-[800px] overflow-y-scroll mt-10">
-        <div class="flex flex-row w-full items-center justify-start justify-center">
-          <fa-icon [icon]="faFileContract" class="text-third text-[22px]"/>
-          <p class="font-inter font-semibold text-third text-[28px] ml-2">My contracts</p>
-        </div>
-
-        <div *ngFor="let contract of contracts" class="my-[60px] border-[3px] border-gray rounded-md flex flex-row relative
-                                                      items-center justify-between flex-wrap w-[250px] h-[270px] max-h-[340px]">
-          <div class="absolute top-[-50px] w-full">
-            <img src="../../../assets/contractActive.png" class="w-[100px] h-auto mx-auto">
-          </div>
-          <div class="px-[14px] pt-4 w-full">
-            <p class="text-[16px] font-medium text-third">User: {{ contract.user.name }} {{contract.user.lastName}}</p>
-            <p class="text-sm font-medium text-third">Equipment: {{ contract.equipmentType }}</p>
-            <p class="text-sm font-medium text-third">Quantity: {{ contract.quantity }}</p>
-            <p class="text-sm font-medium text-third">First delivery Date: {{ contract.deliveryDate | date:'shortDate' }}</p>
-            <p class="text-sm font-medium" [ngClass]="{'text-third': contract.active, 'text-red': !contract.active}">
-                Contract status: 
-                <span *ngIf="contract.active; else notActive" class="font-inter text-darkGreen font-regular">Active</span>
-                <ng-template #notActive class="font-inter font-regular text-red">Not Active</ng-template>
-            </p>
-            <div class="flex items-center w-full justify-between mt-4">
-              <button type="button" class="bg-third hover:bg-lightBlue transition-[0.5s] text-white w-[47%] px-3 py-1 rounded-md" (click)="updateContract(contract.company.id)">
-                  Renew
-              </button>
-              <button type="button" class="bg-red hover:bg-lightRed transition-[0.5s] text-white w-[47%] px-3 py-1 rounded-md" (click)="cancelContract(contract.id)">
-                  Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </ng-form>
-  </div>
-
-  <div *ngIf="!userProfile" class="text-center mt-8">
-    <p>Loading...</p>
-  </div>
   
-  <div *ngIf="userProfile === null" class="text-center mt-8">
-    <p>Error loading user profile.</p>
+        <div class="flex flex-col p-4 bg-white rounded-md shadow-md w-full max-h-[800px] overflow-y-scroll mt-10">
+          <div class="flex flex-row w-full items-center justify-start justify-center">
+            <fa-icon [icon]="faFileContract" class="text-third text-[22px]"/>
+            <p class="font-inter font-semibold text-third text-[28px] ml-2">My contracts</p>
+          </div>
+  
+          <div *ngFor="let contract of contracts" class="my-[60px] border-[3px] border-gray rounded-md flex flex-row relative
+                                                        items-center justify-between flex-wrap w-[250px] h-[270px] max-h-[340px]">
+            <div class="absolute top-[-50px] w-full">
+              <img src="../../../assets/contractActive.png" class="w-[100px] h-auto mx-auto">
+            </div>
+            <div class="px-[14px] pt-4 w-full">
+              <p class="text-[16px] font-medium text-third">User: {{ contract.user.name }} {{contract.user.lastName}}</p>
+              <p class="text-sm font-medium text-third">Equipment: {{ contract.equipmentType }}</p>
+              <p class="text-sm font-medium text-third">Quantity: {{ contract.quantity }}</p>
+              <p class="text-sm font-medium text-third">First delivery Date: {{ contract.deliveryDate | date:'shortDate' }}</p>
+              <p class="text-sm font-medium" [ngClass]="{'text-third': contract.active, 'text-red': !contract.active}">
+                  Contract status: 
+                  <span *ngIf="contract.active; else notActive" class="font-inter text-darkGreen font-regular">Active</span>
+                  <ng-template #notActive class="font-inter font-regular text-red">Not Active</ng-template>
+              </p>
+              <div class="flex items-center w-full justify-between mt-4">
+                <button type="button" class="bg-third hover:bg-lightBlue transition-[0.5s] text-white w-[47%] px-3 py-1 rounded-md" (click)="updateContract(contract.company.id)">
+                    Renew
+                </button>
+                <button type="button" class="bg-red hover:bg-lightRed transition-[0.5s] text-white w-[47%] px-3 py-1 rounded-md" (click)="cancelContract(contract.id)">
+                    Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      </ng-form>
+    </div>
+  
+    <div *ngIf="!userProfile" class="text-center mt-8">
+      <p>Loading...</p>
+    </div>
+    
+    <div *ngIf="userProfile === null" class="text-center mt-8">
+      <p>Error loading user profile.</p>
+    </div>
+  
+  </div>  
+</ng-container>
+<ng-container *ngIf="!isAuthorised">
+  <div class="w-full bg-lightBlue/5 h-[100vh] py-32 text-center">
+    <p class="font-inter font-light text-third text-[24px]">
+      You do not have permission to access the page
+    </p>
   </div>
-
-</div>
+</ng-container>

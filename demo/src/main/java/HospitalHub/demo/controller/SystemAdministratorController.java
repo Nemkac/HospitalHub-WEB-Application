@@ -12,6 +12,7 @@ import HospitalHub.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -125,5 +126,11 @@ public class SystemAdministratorController {
         systemAdministratorService.save(systemAdministrator);
 
         return new ResponseEntity<User>(loggedInUser, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/checkSystemAdmin")
+    @PreAuthorize("hasAuthority('ROLE_SYSADMIN')")
+    public boolean checkSystemAdmin(){
+        return true;
     }
 }

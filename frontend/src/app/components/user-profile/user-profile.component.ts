@@ -60,6 +60,7 @@ export class UserProfileComponent implements OnInit{
   pastQRcodes !: QRcodeEquipmentPickUpSlot[];
   slotsIds !: number[];
   ifShowQRs : boolean = false;
+  isAuthorised: boolean = false;
 
 
   @ViewChild('calendar') calendarRef!: ElementRef;
@@ -99,6 +100,7 @@ export class UserProfileComponent implements OnInit{
   faSort = faSort;
 
   ngOnInit(): void {
+    this.checkIsAuthorised();
     if(this.token){
       this.userService.getUserByToken(this.token).subscribe(
         (response: User) => {
@@ -123,6 +125,22 @@ export class UserProfileComponent implements OnInit{
       );
     }
     this.showUserProfile();
+  }
+
+  public checkIsAuthorised() : boolean{
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+      });
+     this.userService.checkIsAusthorised(headers).subscribe(
+      (response : boolean) => {
+        this.isAuthorised = response;
+      },(error) => {
+        this.isAuthorised = false;
+      }
+     );
+
+    return this.isAuthorised;
   }
 
   public getContracts() : void {

@@ -1,5 +1,6 @@
+import { SystemAdministratorService } from 'src/app/services/systemAdministrator.service';
 import { Reply } from './../../models/Reply';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Complaint } from 'src/app/models/Complaint';
 import { ComplaintService } from 'src/app/services/complaint.service';
@@ -29,14 +30,34 @@ export class ComplaintsPageComponent implements OnInit {
   public processedComplaintsFlag: boolean = false;
   public loggedAdmin: User | undefined;
   public loggedAdminUsername: string = "";
+  public isSysAdmin: boolean = false;
+  public token = localStorage.getItem('token');
 
   constructor(private complaintService: ComplaintService,
+              private systemAdministratorService: SystemAdministratorService,
               private toast: NgToastService,
               private userService: UserService) {}
 
   ngOnInit(): void { 
     //this.getComplaints();
+    this.checkSystemAdmin();
     this.getUnprocessedComplaints();
+  }
+
+  public checkSystemAdmin() : boolean{
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+      });
+     this.systemAdministratorService.checkSystemAdministrator(headers).subscribe(
+      (response : boolean) => {
+        this.isSysAdmin = response;
+      },(error) => {
+        this.isSysAdmin = false;
+      }
+     );
+
+    return this.isSysAdmin;
   }
 
   public getUnprocessedComplaints() : void{

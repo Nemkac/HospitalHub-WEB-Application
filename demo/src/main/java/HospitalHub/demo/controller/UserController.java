@@ -156,5 +156,9 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-
+    @GetMapping(value = "/checkIsAuthorised")
+    @PreAuthorize("hasAnyRole('ROLE_SYSADMIN', 'ROLE_USER', 'ROLE_COMPANYADMIN')")
+    public boolean checkIsAuthorised(){
+        return true;
+    }
 }

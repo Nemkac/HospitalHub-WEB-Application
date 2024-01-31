@@ -77,5 +77,8 @@ export class UserService {
         return this.http.get<EquipmentPickupSlot[]>(`${this.apiServerUrl}/api/slots/getPastUsersSlots/${userId}`);
     }
     
+    public checkIsAusthorised(headers:HttpHeaders): Observable<boolean> {
+        return this.http.get<boolean>(`${this.apiServerUrl}/api/user/checkIsAuthorised`, {headers:headers});
+    }
     
 }

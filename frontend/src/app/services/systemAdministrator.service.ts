@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserDTO } from 'src/userDTO';
 import { User } from 'src/user';
@@ -27,5 +27,9 @@ export class SystemAdministratorService {
 
     public updatePassword(id: any, password: string): Observable<User> {
         return this.http.put<User>(`${this.apiServerUrl}/api/profile/changePassword/${id}`, password);
+    }
+
+    public checkSystemAdministrator(headers:HttpHeaders): Observable<boolean> {
+        return this.http.get<boolean>(`${this.apiServerUrl}/api/profile/checkSystemAdmin`, {headers:headers});
     }
 }
