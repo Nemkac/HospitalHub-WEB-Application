@@ -55,6 +55,12 @@ Before starting, you need to have node.js and npm installed on your computer and
 # Application structure
 <a href='https://postimg.cc/7CkTppvC' target='_blank'><img src='https://i.postimg.cc/5tHqFVnm/Hospital-Hub-Class-Diagram-drawio.png' border='0' alt='Hospital-Hub-Class-Diagram-drawio'/></a>
 
+# Database design
+### 1. Logical 
+<a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/sxFWbkm9/Hospital-Hub-Logical-Model.png' border='0' alt='Hospital-Hub-Logical-Model'/></a>
+
+### 2. Relational
+<a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/MHDGtNFG/Hospital-Hub-Relational-Model.png' border='0' alt='Hospital-Hub-Relational-Model'/></a>
 # Backend
 
 The backend part of the application was created using Java Spring Boot technology. PostgreSQL database is used for data storage.
