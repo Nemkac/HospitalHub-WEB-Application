@@ -1,5 +1,5 @@
 <form #createCompanyForm="ngForm" (ngSubmit)="CreateCompany(createCompanyForm)">
-    <div class="flex flex-col h-[500px] bg-white w-[600px] p-4 items-center rounded-md justify-between">
+    <div class="flex flex-col h-[900px] bg-white w-[800px] p-4 items-center rounded-md justify-between">
         <div class="flex w-full justify-end">
             <fa-icon [icon]="faClose" (click)="closeModal()"
                     class="flex cursor-pointer text-[28px] text-third hover:text-lightBlue transition-[0.5s]"/>
@@ -25,6 +25,22 @@
             <input class="border p-2 rounded w-full text-[18px] text-third font-inter px-4 rounded-md"
                     placeholder="Desc"
                     ngModel name="description" required>
+        </div>
+        <div class="flex flex-row justify-between justify-center h-auto w-full">
+            <div #mapContainer class="flex h-[400px] mt-2 w-[47%] z-[0] rounded-md shadow-md"></div>
+            <div class="flex flex-col w-[47%] h-[150px] justify-between">
+                <div class="flex flex-col justify-start">
+                    <p class="font-inter font-light text-[16px] text-gray">Latitude</p>
+                    <input class="border border-gray focus:outline-third text-third p-2 rounded w-full font-inter"
+                            [(ngModel)]="destinationLatitude" name="latitude" required>
+                </div>
+                <div class="flex flex-col justify-start">
+                    <p class="font-inter font-light text-[16px] text-gray">Latitude</p>
+                    <input class="border focus:outline-third text-third border-gray p-2 rounded w-full font-inter"
+                            [(ngModel)]="destinationLongitude" name="longitude" required>
+
+                </div>
+            </div>
         </div>
         
         <button class="w-full text-[20px] bg-third hover:bg-lightBlue transition-[0.5s] font-inter font-semibold 

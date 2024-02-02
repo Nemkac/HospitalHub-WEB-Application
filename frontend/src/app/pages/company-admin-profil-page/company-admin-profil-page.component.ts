@@ -96,7 +96,15 @@ export class CompanyAdminProfilPageComponent implements OnInit{
     },
   };
 
-  @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
+  private mapContainer!: ElementRef;
+
+  //@ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
+
+  @ViewChild('mapContainer') set content(content: ElementRef) {
+    if(content){
+      this.mapContainer = content;
+    }
+  }
 
   constructor(private companyService: CompanyService,
               private userService: UserService,
@@ -110,6 +118,7 @@ export class CompanyAdminProfilPageComponent implements OnInit{
   ngOnInit(): void {
     this.checkCompanyAdmin();
     this.getAdminsCompanyData();
+    //this.loadMap();
     this.checkIsOpen();
   }
 

@@ -53,7 +53,7 @@ public class SecurityConfig {
                 .cors() // Dodajte ovu liniju za konfiguraciju CORS
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/logIn", "/register", "/generateToken","/confirm_account**","/getTokenUsername","/api/**","/livelocation-websocket/**").permitAll()
+                .requestMatchers("/logIn", "/register", "/generateToken","/confirm_account**","/getTokenUsername","/api/**","/livelocation-websocket/**","/actuator/prometheus").permitAll()
                 .and()
                 .authorizeHttpRequests().requestMatchers("/users/**").authenticated()
                 .and()

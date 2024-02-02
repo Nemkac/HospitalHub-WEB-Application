@@ -7,6 +7,8 @@ import HospitalHub.demo.model.User;
 import HospitalHub.demo.model.UserInfoDetails;
 import HospitalHub.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,7 +37,9 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+    //@Cacheable(value = "users", key = "#id")
     public User getById(Integer id){
+        //System.out.println("Retriving user from database...");
         return userRepository.getById(id);
     }
 
@@ -56,6 +60,7 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found " + username));
     }
 
+    //@CachePut(cacheNames = "users", key = "#result.id")
     public User addUser(User userInfo) {
         userInfo.setPassword(encoder.encode(userInfo.getPassword()));
         userRepository.save(userInfo);
@@ -81,11 +86,14 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
+    @Cacheable(value = "users", key = "#email")
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
+    //@Cacheable(value = "users", key = "#username")
     public User getByUsername(String username){
+        System.out.println("Retriving user from database...");
         return userRepository.getByUsername(username);
     }
 

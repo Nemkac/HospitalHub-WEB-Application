@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/contract")
-public class EquipmentContractController {
+public class  EquipmentContractController {
 
     @Autowired
     private EquipmentContractService equipmentContractService;
@@ -116,7 +116,7 @@ public class EquipmentContractController {
         LocalDate deliveryDate = contract.getDeliveryDate();
         int dayOfMonth = deliveryDate.minusDays(3).getDayOfMonth();
 
-        taskScheduler.schedule(() -> checkIfDeliveryIsPossible(contract, equipmentType, company), new CronTrigger("0 48 21 " + dayOfMonth + " * *"));
+        taskScheduler.schedule(() -> checkIfDeliveryIsPossible(contract, equipmentType, company), new CronTrigger("0 30 23 " + dayOfMonth + " * *"));
     }
 
     private void checkIfDeliveryIsPossible(EquipmentContract contract, String equipmentType, Company company) {
