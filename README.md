@@ -202,8 +202,87 @@ When he has completed all the necessary steps, he can complete the order and aft
 <a href='https://postimg.cc/yWFMPWfT' target='_blank'><img src='https://i.postimg.cc/jq9RR7PB/cart.png' border='0' alt='cart'/></a>
 
 ### Delivery tracking
+Once the order has been created, the user can request that the ordered equipment be delivered to the desired address. In addition, delivery tracking is enabled in real time so that the user, at any time, can check where his equipment is located and how long it will take to reach the desired address.
+
+To implement this functionality, RabbitMQ was used in combination with WebSocket.When the user indicates which address he wants delivery to and when he requests delivery, the route from the company to the desired location is drawn and it is possible to track the movement of the delivery vehicle along that route.
+
+When the user indicates which address he wants delivery to and when he requests delivery, the route from the company to the desired location is drawn and it is possible to track the movement of the delivery vehicle along that route. Every 3 seconds, a message representing the current position of the delivery vehicle is entered into the message queue. The sent message is read from the message queue and forwarded to the WebSocket. The frontend is subscribed to the endpoint to which the WebSocket sends the message and reads it from there. After reading the message, the marker representing the vehicle moves to the received coordinates.
+
+<a href='https://postimg.cc/D47vZ4LK' target='_blank'><img src='https://i.postimg.cc/1Xqfvpz4/Request-Delivery.png' border='0' alt='Request-Delivery'/></a>
+
+# Scalability
+### 1. Suggested strategy for data partitioning
+Data partitioning in PostgreSQL is a strategy for organizing large tables to improve query performance and ease data management.
+
+- Quicker search:
+
+  Queries can execute faster because PostgreSQL can focus only on specific partitions that are relevant to the query.
+
+- Easier maintenance:
+  
+  Adding, deleting, and managing data becomes simpler because it can be done at the level of individual partitions.
+
+- More efficient queries:
+  
+  Proper partitioning can result in fewer rows being scanned when executing a query, thus reducing system load.
+
+- Improved handling:
+
+  Existing management tools, such as PgAdmin4, provide support for working with partitioned tables, thus facilitating data administration.
+
+- Scalability
+
+  Partitioning can improve system performance and allow for easier database scaling as data volume increases.
+
+- Optimization for special needs:
+
+  You can customize the partitioning to meet the specific needs of our application, for example, distributing data by geographic regions or time periods.
+
+- Easier data tracking:
+
+  Partitions make it easier to view and track data, especially when organized according to logical criteria.
+
+In our example, partitioning could be done according to the types of ordered equipment.
+Each order contains information on which equipment is ordered. Partitioning would help in that case,
+when querying the table because all that equipment goes through the cycle of ordering, delivery, removal...
+
+### 2. Suggested strategy for database replication and ensuring fault tolerance
+Database replication is the process of copying data from one database to another to provide redundancy, improve availability, and support read scaling. In the context of our PostgreSQL database application, replication can offer several advantages:
+
+- High availability:
+
+  If the source database experiences a hardware failure, network problem, or other technical difficulty, the replicas can take over functionality, ensuring minimal disruption to the application.
+
+- Load reduction:
+
+  Replicas can be used to distribute read queries, reducing the load on the database source and improving system performance.
+
+- Recovery from major failures:
+
+  In the event of a severe failure, replicas enable faster recovery and reestablishment of the system, reducing downtime.
+
+- Analytics and reporting support:
+
+  Replicas can be used for data analysis or reporting, allowing users to access data without affecting the performance of the transactional system.
+
+There are 2 types of replication. Streaming and logical replication. They differ in the periods of synchronization of bases. The first is continuous (up to date) while the second is more configurable and better suits our requirements.
+
+### 3. Suggest which user operations should be monitored in order to improve the system
+
+We assume that the greatest attention should be paid to the reservation of equipment.
+Situations such as: 
+  1. The number of canceled reservations, the number of accesses to the reservation page should be monitored to see if something is distracting users from completing the action.
+  2. Time spent on equipment pages, to see if users are sufficiently informed about the equipment they order.
+
+### 4. Suggested data caching strategy
+Regarding data caching, it is necessary to cache those data that are needed to perform the largest number of operations.
+We use the built-in data caching library in Spring Boot.
 
 
+On the micro example, data related to the user is cached. In particular, once the data related to the logged-in user is supplied, there is no longer any need to create queries to the database, but all that data is extracted from the cache memory. Only the first access goes to the base, all others go to the cache.
+
+
+In addition to this, candidates for cashing are EquipmentPickupSlots as well as information about the company, whether it is from the user or the company administrator.
 
 # Authors
 * <a href="https://github.com/NemanjaRanitovic">Nemanja Ranitović
