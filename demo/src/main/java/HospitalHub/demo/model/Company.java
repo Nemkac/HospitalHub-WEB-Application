@@ -72,6 +72,17 @@ public class Company {
         this.companyAdministrators = new ArrayList<>();
     }
 
+    public Company(String name, String city, String country, String description, Double latitude, Double longitude) {
+        this.name = name;
+        this.city = city;
+        this.country = country;
+        this.description = description;
+        this.avgRate = 0.0;
+        this.companyAdministrators = new ArrayList<>();
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public Company(Integer id, String name, String city, String country, String address, double latitude, double longitude, String description, LocalTime openingTime, LocalTime closingTime) {
         this.id = id;
         this.name = name;

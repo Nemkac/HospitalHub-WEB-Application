@@ -1,0 +1,13 @@
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    network_mode: host
+    container_name: goofy-ellis
+    restart: unless-stopped
+    volumes:
+      - ./src/main/java/HospitalHub/demo/config:/etc/prometheus/
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yaml"
+    ports:
+      - 9090:9090
+

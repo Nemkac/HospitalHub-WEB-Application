@@ -19,16 +19,14 @@ public class CompanyDTO {
     }
 
     public CompanyDTO(Company company){
-        this(company.getName(), company.getCity(), company.getCountry(), company.getDescription());
+        this(company.getName(), company.getCity(), company.getCountry(), company.getDescription(), company.getLatitude(), company.getLongitude());
     }
 
-    public CompanyDTO(Integer id, String name, String city, String country, Double avgRate, String address, Double latitude, Double longitude) {
-        this.id = id;
+    public CompanyDTO(String name, String city, String country, Double latitude, Double longitude) {
         this.name = name;
         this.city = city;
         this.country = country;
-        this.avgRate = avgRate;
-        this.address = address;
+        this.avgRate = 0.0;
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -61,12 +59,14 @@ public class CompanyDTO {
         this.longitude = longitude;
     }
 
-    public CompanyDTO(String name, String city, String country, String description) {
+    public CompanyDTO(String name, String city, String country, String description, Double latitude, Double longitude) {
         this.name = name;
         this.city = city;
         this.country = country;
         this.avgRate = 0.0;
         this.description = description;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public Integer getId() {

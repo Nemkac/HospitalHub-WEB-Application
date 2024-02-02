@@ -53,7 +53,9 @@ public class CompanyController {
                 companyDTO.getName(),
                 companyDTO.getCity(),
                 companyDTO.getCountry(),
-                companyDTO.getDescription()
+                companyDTO.getDescription(),
+                companyDTO.getLatitude(),
+                companyDTO.getLongitude()
         );
 
         this.companyService.save(company);
