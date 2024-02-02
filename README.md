@@ -271,18 +271,35 @@ There are 2 types of replication. Streaming and logical replication. They differ
 
 We assume that the greatest attention should be paid to the reservation of equipment.
 Situations such as: 
-  1. The number of canceled reservations, the number of accesses to the reservation page should be monitored to see if something is distracting users from completing the action.
+  1. The number of canceled reservations and the number of accesses to the reservation page should be monitored to see if something is distracting users from completing the action.
   2. Time spent on equipment pages, to see if users are sufficiently informed about the equipment they order.
 
 ### 4. Suggested data caching strategy
 Regarding data caching, it is necessary to cache those data that are needed to perform the largest number of operations.
 We use the built-in data caching library in Spring Boot.
 
-
-On the micro example, data related to the user is cached. In particular, once the data related to the logged-in user is supplied, there is no longer any need to create queries to the database, but all that data is extracted from the cache memory. Only the first access goes to the base, all others go to the cache.
-
+In the micro example, data related to the user is cached. In particular, once the data related to the logged-in user is supplied, there is no longer any need to create queries to the database, but all that data is extracted from the cache memory. Only the first access goes to the base, all others go to the cache.
 
 In addition to this, candidates for cashing are EquipmentPickupSlots as well as information about the company, whether it is from the user or the company administrator.
+
+### 5. Suggested strategy for setting up a load balancer
+Load balancers play a pivotal role in distributing incoming network traffic across multiple servers to prevent any one server from becoming overwhelmed, thereby optimizing resource utilization and ensuring high availability. In the context of our application, the strategic placement of the load balancer is crucial for the following reasons:
+
+- High Availability:
+
+  Placing the load balancer at the frontend ensures continuous availability by evenly distributing traffic across multiple backend servers. This minimizes the risk of downtime due to server failures or maintenance activities.
+
+- Scalability:
+  
+  By intelligently distributing incoming requests, a load balancer enables seamless horizontal scaling. As our application experiences increased demand, additional servers can be easily added to the backend pool, and the load balancer dynamically adjusts traffic distribution to accommodate the surge in traffic.
+
+- Performance Optimization:
+
+  Load balancers can perform health checks on backend servers, directing traffic only to healthy servers. Additionally, they can employ advanced algorithms to route requests based on factors such as server load, geographic proximity, or session persistence, thereby optimizing performance and user experience.
+
+- Security Enhancement:
+
+  Load balancers can act as a barrier between the internet and backend servers, providing an additional layer of security by concealing server IP addresses and mitigating common web-based attacks such as DDoS (Distributed Denial of Service) attacks.
 
 # Authors
 * <a href="https://github.com/NemanjaRanitovic">Nemanja Ranitović
