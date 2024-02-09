@@ -30,7 +30,6 @@ public class EquipmentContractService {
     }
 
     public List<EquipmentContract> getByCompanyId(Integer companyId) {
-        // Implementiraj funkcionalnost za pronalaženje ugovora na osnovu ID-a kompanije
         return equipmentContractRepository.findByCompanyId(companyId);
     }
     public EquipmentContract createContract(EquipmentContract equipmentContract) {

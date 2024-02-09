@@ -220,14 +220,6 @@ public class MedicalEquipmentController {
             return new ResponseEntity<>(foundSlot,HttpStatus.CONFLICT);
         }
 
-       /* for(MedicalEquipment medEq : equipment){
-            if(!medEq.getVersion().equals(orderEquipmentDTO.getVersionIds().get(medEq.getId()))){
-                return new ResponseEntity<>(foundSlot,HttpStatus.CONFLICT);
-            }
-        }
-        
-        */
-
         Optional<User> user = userRepository.findById(orderEquipmentDTO.getUserId());
         User mailUser = new User();
         if(user.isPresent()){

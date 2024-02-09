@@ -101,7 +101,6 @@ public class CompanyService {
         List<Termin> takenPeriods = getCompaniesTakenPeriods(CompanyId);
         if(takenPeriods != null) {
             for (Termin termin : takenPeriods) {
-                // logika koja izbacuje dane iz liste slobodnih dana ukoliko je dan zauzet
             }
             return freeDays;
         }
@@ -110,7 +109,6 @@ public class CompanyService {
 
     public Boolean isThereAvailableSlotsInDate(Integer CompanyId, LocalDate day){
         List<Termin> takenPeriods = getCompaniesTakenPeriods(CompanyId);
-        // ista ona logika odozgo koja treba da proveri da li ima slobodnih termina u danu
         return true;
     }
 

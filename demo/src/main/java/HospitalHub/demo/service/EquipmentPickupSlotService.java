@@ -79,7 +79,6 @@ public class EquipmentPickupSlotService {
     }
 
     public boolean isSlotOverlapping(EquipmentPickupSlot newSlot) {
-        //List<EquipmentPickupSlot> existingSlots = equipmentPickupSlotRepository.getAllByCompanyAdministrator(newSlot.getCompanyAdministrator());
         List<EquipmentPickupSlot> existingSlots = equipmentPickupSlotRepository.findAll();
         List<EquipmentPickupSlot> companySlots = new ArrayList<>();
         for(EquipmentPickupSlot slot : existingSlots) {
@@ -106,9 +105,6 @@ public class EquipmentPickupSlotService {
 
     }
 
-    /*public List<EquipmentPickupSlot> getAdminsSlots(Integer id){
-        return equipmentPickupSlotRepository.getAllByCompanyAdministrator(id);
-    }*/
 
     public ArrayList<LocalDate> GetAvailablePickUpDatesInFollowing10(Integer companyId){
         ArrayList<LocalDate> availableDates = new ArrayList<>();
