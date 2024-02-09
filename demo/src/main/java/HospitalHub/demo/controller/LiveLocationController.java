@@ -14,7 +14,7 @@ public class LiveLocationController {
 
     private RabbitMQJsonProducer rabbitMQJsonProducer;
 
-    public LiveLocationController(/*RabbitMQProducer rabbitMQProducer,*/ RabbitMQJsonProducer rabbitMQJsonProducer) {
+    public LiveLocationController(RabbitMQJsonProducer rabbitMQJsonProducer) {
         //this.rabbitMQProducer = rabbitMQProducer;
         this.rabbitMQJsonProducer = rabbitMQJsonProducer;
     }

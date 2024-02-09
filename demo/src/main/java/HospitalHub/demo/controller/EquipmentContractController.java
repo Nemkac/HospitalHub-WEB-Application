@@ -167,7 +167,7 @@ public class  EquipmentContractController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public EquipmentContractController(/*RabbitMQProducer rabbitMQProducer,*/ RabbitMQEquipmentContractProducer rabbitMQEquipmentContractProducer) {
+    public EquipmentContractController(RabbitMQEquipmentContractProducer rabbitMQEquipmentContractProducer) {
         this.rabbitMQEquipmentContractProducer = rabbitMQEquipmentContractProducer;
     }
     private boolean isEquipmentTypeValid(String equipmentType, Company company) {

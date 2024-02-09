@@ -128,10 +128,6 @@ public class EquipmentPickupSlotController {
         return new ResponseEntity<>(equipmentPickupSlotService.getEquipmentsFromIds(equipmentPickupSlotRepository.getById(slotId).getEquipment()), HttpStatus.OK);
     }
 
-/*    @GetMapping("/getEquipmentViaString/{slotId}")
-    public ResponseEntity<String> getEquipmentsViaString(@PathVariable Integer slotId) {
-        return new ResponseEntity<>(equipmentPickupSlotService.getEquipmentsFromIdsViaString(equipmentPickupSlotRepository.getById(slotId).getEquipment()), HttpStatus.OK);
-    }*/
 
     @GetMapping("/getReservedUsers/{userId}")
     public ResponseEntity<List<UserDTO>> getReservedUsers(@PathVariable Integer userId) {
