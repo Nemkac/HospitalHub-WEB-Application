@@ -210,6 +210,10 @@ When the user indicates which address he wants delivery to and when he requests 
 
 <a href='https://postimg.cc/D47vZ4LK' target='_blank'><img src='https://i.postimg.cc/1Xqfvpz4/Request-Delivery.png' border='0' alt='Request-Delivery'/></a>
 
+### Contracts
+
+
+
 # Scalability
 ### 1. Suggested strategy for data partitioning
 Data partitioning in PostgreSQL is a strategy for organizing large tables to improve query performance and ease data management.
