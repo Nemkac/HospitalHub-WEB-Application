@@ -305,6 +305,7 @@ Load balancers play a pivotal role in distributing incoming network traffic acro
 
   Load balancers can act as a barrier between the internet and backend servers, providing an additional layer of security by concealing server IP addresses and mitigating common web-based attacks such as DDoS (Distributed Denial of Service) attacks.
 
+
 # Authors
 * <a href="https://github.com/NemanjaRanitovic">Nemanja Ranitović
 * <a href="https://github.com/blanusa">Vladimir Blanuša
