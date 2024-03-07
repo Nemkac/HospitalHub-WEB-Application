@@ -202,15 +202,13 @@ When he has completed all the necessary steps, he can complete the order and aft
 <a href='https://postimg.cc/yWFMPWfT' target='_blank'><img src='https://i.postimg.cc/jq9RR7PB/cart.png' border='0' alt='cart'/></a>
 
 ### Delivery tracking
-Once the order has been created, the user can request that the ordered equipment be delivered to the desired address. In addition, delivery tracking is enabled in real time so that the user, at any time, can check where his equipment is located and how long it will take to reach the desired address.
+Once the order has been created, the user can request that the ordered equipment be delivered to the desired address. In addition, delivery tracking is enabled in real-time so that the user, at any time, can check where his equipment is located and how long it will take to reach the desired address.
 
 To implement this functionality, RabbitMQ was used in combination with WebSocket.When the user indicates which address he wants delivery to and when he requests delivery, the route from the company to the desired location is drawn and it is possible to track the movement of the delivery vehicle along that route.
 
 When the user indicates which address he wants delivery to and when he requests delivery, the route from the company to the desired location is drawn and it is possible to track the movement of the delivery vehicle along that route. Every 3 seconds, a message representing the current position of the delivery vehicle is entered into the message queue. The sent message is read from the message queue and forwarded to the WebSocket. The frontend is subscribed to the endpoint to which the WebSocket sends the message and reads it from there. After reading the message, the marker representing the vehicle moves to the received coordinates.
 
 <a href='https://postimg.cc/D47vZ4LK' target='_blank'><img src='https://i.postimg.cc/1Xqfvpz4/Request-Delivery.png' border='0' alt='Request-Delivery'/></a>
-
-### Contracts
 
 
 
